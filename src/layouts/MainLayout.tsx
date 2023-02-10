@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { BottomNavigation, Button, Text } from 'react-native-paper'
-import { Provider as PaperProvider } from 'react-native-paper'
 import { View } from 'react-native'
 import { useLocation, useNavigate } from 'react-router'
+import { Avatar } from 'react-native-paper'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import Icons from 'react-native-vector-icons/MaterialIcons'
 
 const MusicRoute = () => <Text>Music</Text>
 
@@ -41,6 +43,18 @@ const MyComponent = () => {
     notifications: NotificationsRoute,
   })
 
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem('@storage_Key', '1')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const getData = async () => {
+    alert(await AsyncStorage.getItem('@storage_Key'))
+  }
+
   return (
     <View>
       <BottomNavigation
@@ -49,8 +63,21 @@ const MyComponent = () => {
         renderScene={renderScene}
       />
       <Button icon="camera" mode="contained" onPress={() => navigate('/app')}>
-        Press me
+        Press mes
       </Button>
+      <Avatar.Image
+        size={50}
+        source={{
+          uri: `https://api.dicebear.com/5.x/identicon/jpg?seed=${Math.random()}`,
+        }}
+      />
+      <Button icon="camera" mode="contained" onPress={() => saveData()}>
+        Press mess
+      </Button>
+      <Button icon="camera" mode="contained" onPress={() => getData()}>
+        get data
+      </Button>
+      <Icons name={'add'}/>
     </View>
   )
 }
