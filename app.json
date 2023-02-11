@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "app",
+    "name": "工大树洞",
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,17 +19,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.snowingfox.app"
+      "bundleIdentifier": "com.hfuthole.app"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/img.png"
       },
-      "package": "com.snowingfox.app"
+      "package": "com.hfuthole.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/img.png"
     },
     "extra": {
       "eas": {
