@@ -9,7 +9,7 @@ export const PaperProvider: React.FC<{ children: ReactNode }> = ({
     <Provider
       theme={{
         colors,
-        version: 2,
+        version: 3,
       }}
     >
       {children}
