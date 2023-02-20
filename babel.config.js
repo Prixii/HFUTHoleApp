@@ -3,6 +3,7 @@ module.exports = function (api) {
 
   const plugins = [
     ['nativewind/babel'],
+    ['react-native-reanimated/plugin'],
     [
       'module-resolver',
       {

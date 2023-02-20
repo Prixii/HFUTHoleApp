@@ -2,23 +2,31 @@ import { View } from 'react-native'
 import { Avatar, Button, Checkbox } from 'react-native-paper'
 import { Snackbar } from '@/components/snackbar/snackbar'
 import { Text } from 'react-native'
-import { Link } from '@/components/link'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
 import { useNavigation } from '@react-navigation/native'
 
 interface Inputs {
+  username: string
+
   studentId: string
 
   password: string
+
+  hfutPassword: string
 }
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const { control } = useForm<Inputs>()
 
   return (
     <View className={'grid space-y-3'}>
+      <Input<Inputs>
+        control={control}
+        name={'username'}
+        label={'取一个好听的名字吧≖‿≖✧'}
+      />
       <Input<Inputs> control={control} name={'studentId'} label={'学号'} />
       <View>
         <PasswordInput<Inputs>
@@ -28,30 +36,24 @@ const LoginForm = () => {
         />
       </View>
 
-      <View className={'flex flex-row justify-between items-center'}>
-        <Checkbox status={'checked'} />
-        <Link to={'/'}>忘记密码？点我找回</Link>
-      </View>
-
+      <PasswordInput<Inputs>
+        control={control}
+        name={'hfutPassword'}
+        label={'请输入信息门户密码'}
+      />
       <View>
         <Button
           mode={'contained'}
           className={'p-1 rounded-lg shadow-none w-full'}
         >
-          登录
+          注册
         </Button>
-      </View>
-
-      <View className={'pt-10'}>
-        <Link className={'text-center'} to={'register'}>
-          还没有账号？点我注册
-        </Link>
       </View>
     </View>
   )
 }
 
-export function Login() {
+export function Register() {
   const navigation = useNavigation()
 
   return (
@@ -61,18 +63,13 @@ export function Login() {
       <View className={'grid gap-5'}>
         <Avatar.Image source={require('../../../assets/img.png')} size={100} />
         <View className={'grid space-y-2'}>
-          <Text className={'font-bold text-2xl'}>登录HFUTHole</Text>
+          <Text className={'font-bold text-2xl'}>注册HFUTHole</Text>
           <Text className={'text-gray-400'}>请输入你的账号和密码</Text>
         </View>
         <View className={'mt-2'}>
-          <Snackbar
-            text={
-              '第一次登录时并不需要注册，若无账号则直接输入好学号以及预设密码点击登录即可，也可点击下方的注册文字前往注册页面'
-            }
-            icon={'info'}
-          />
+          <Snackbar text={'注册之前需要绑定一下你的信息门户账号来证明你是工大学子哦'} icon={'info'} />
           <View className={'mt-2'}>
-            <LoginForm />
+            <RegisterForm />
           </View>
         </View>
       </View>
