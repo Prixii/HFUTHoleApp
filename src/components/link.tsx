@@ -7,7 +7,7 @@ interface Props {
 
   children: ReactNode
 
-  className?: string
+  size?: 'xs' | 'normal' | 'lg'
 }
 
 export const Link: React.FC<Props> = (props) => {
@@ -19,7 +19,9 @@ export const Link: React.FC<Props> = (props) => {
 
   return (
     <Text
-      className={`text-xs text-[#00AB55] underline font-bold ${props.className}`}
+      className={`text-[#00AB55] text-center underline font-bold ${
+        props.size === 'xs' ? 'text-xs' : props.size === 'lg' ? 'text-lg' : ''
+      }`}
       onPress={handleNavigation}
     >
       {props.children}

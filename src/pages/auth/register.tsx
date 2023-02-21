@@ -1,11 +1,9 @@
 import { View } from 'react-native'
-import { Avatar, Button, Checkbox } from 'react-native-paper'
-import { Snackbar } from '@/components/snackbar/snackbar'
-import { Text } from 'react-native'
+import { Button } from 'react-native-paper'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
-import { useNavigation } from '@react-navigation/native'
+import { AuthView } from '@/pages/auth/AuthView'
 
 interface Inputs {
   username: string
@@ -54,25 +52,13 @@ const RegisterForm = () => {
 }
 
 export function Register() {
-  const navigation = useNavigation()
-
   return (
-    <View
-      className={'bg-white h-screen w-screen overflow-hidden pt-[20px] px-5'}
+    <AuthView
+      title={'注册HFUTHole'}
+      secondary={'请输入你的账号密码'}
+      snackbar={'注册之前需要绑定一下你的信息门户账号来证明你是工大学子哦'}
     >
-      <View className={'grid gap-5'}>
-        <Avatar.Image source={require('../../../assets/img.png')} size={100} />
-        <View className={'grid space-y-2'}>
-          <Text className={'font-bold text-2xl'}>注册HFUTHole</Text>
-          <Text className={'text-gray-400'}>请输入你的账号和密码</Text>
-        </View>
-        <View className={'mt-2'}>
-          <Snackbar text={'注册之前需要绑定一下你的信息门户账号来证明你是工大学子哦'} icon={'info'} />
-          <View className={'mt-2'}>
-            <RegisterForm />
-          </View>
-        </View>
-      </View>
-    </View>
+      <RegisterForm />
+    </AuthView>
   )
 }

@@ -3,7 +3,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true
   },
   "extends": "expo/tsconfig.base"
 }

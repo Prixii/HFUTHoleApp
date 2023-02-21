@@ -2,10 +2,15 @@ import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'https://autumnfish.cn',
+  baseURL: 'http://localhost:8000',
 })
 
-instance.interceptors.response.use((data) => data.data)
+instance.interceptors.response.use(
+  (data) => data.data,
+  (error) => {
+    console.log(error)
+  }
+)
 
 export function request<T = any>(config: AxiosRequestConfig) {
   return instance<T>({

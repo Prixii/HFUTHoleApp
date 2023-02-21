@@ -1,27 +1,48 @@
 import { View } from 'react-native'
-import { Avatar, Button, Checkbox } from 'react-native-paper'
-import { Snackbar } from '@/components/snackbar/snackbar'
-import { Text } from 'react-native'
+import { Button, Checkbox } from 'react-native-paper'
 import { Link } from '@/components/link'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
-import { useNavigation } from '@react-navigation/native'
-
-interface Inputs {
-  studentId: string
-
-  password: string
-}
+import { AuthView } from '@/pages/auth/AuthView'
+import { LoginFormValidator } from '@/pages/auth/validator'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { useDebounceFn } from 'ahooks'
+import { useMutation } from 'react-query'
+import { LoginRequest } from '@/request/apis/auth'
 
 const LoginForm = () => {
-  const { control } = useForm<Inputs>()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValidator>({
+    resolver: classValidatorResolver(LoginFormValidator),
+  })
+
+  const mutation = useMutation({
+    mutationFn: (data: LoginFormValidator) => LoginRequest(data),
+    onError(e) {
+      console.log(e.toString())
+    },
+  })
+
+  const { run: onSubmit } = useDebounceFn(
+    (data: LoginFormValidator) => {
+      mutation.mutate(data)
+    },
+    { wait: 300 }
+  )
 
   return (
     <View className={'grid space-y-3'}>
-      <Input<Inputs> control={control} name={'studentId'} label={'学号'} />
+      <Input<LoginFormValidator>
+        control={control}
+        name={'studentId'}
+        label={'学号'}
+      />
       <View>
-        <PasswordInput<Inputs>
+        <PasswordInput<LoginFormValidator>
           control={control}
           name={'password'}
           label={'密码'}
@@ -30,20 +51,23 @@ const LoginForm = () => {
 
       <View className={'flex flex-row justify-between items-center'}>
         <Checkbox status={'checked'} />
-        <Link to={'/'}>忘记密码？点我找回</Link>
+        <Link size={'xs'} to={'/'}>
+          忘记密码？点我找回
+        </Link>
       </View>
 
       <View>
         <Button
           mode={'contained'}
           className={'p-1 rounded-lg shadow-none w-full'}
+          onPress={handleSubmit(onSubmit)}
         >
           登录
         </Button>
       </View>
 
       <View className={'pt-10'}>
-        <Link className={'text-center'} to={'register'}>
+        <Link size={'normal'} to={'register'}>
           还没有账号？点我注册
         </Link>
       </View>
@@ -52,30 +76,15 @@ const LoginForm = () => {
 }
 
 export function Login() {
-  const navigation = useNavigation()
-
   return (
-    <View
-      className={'bg-white h-screen w-screen overflow-hidden pt-[20px] px-5'}
+    <AuthView
+      title={'登录HFUTHole'}
+      secondary={'请输入你的账号密码'}
+      snackbar={
+        '第一次登录时并不需要注册，若无账号则直接输入好学号以及预设密码点击登录即可，也可点击下方的注册文字前往注册页面'
+      }
     >
-      <View className={'grid gap-5'}>
-        <Avatar.Image source={require('../../../assets/img.png')} size={100} />
-        <View className={'grid space-y-2'}>
-          <Text className={'font-bold text-2xl'}>登录HFUTHole</Text>
-          <Text className={'text-gray-400'}>请输入你的账号和密码</Text>
-        </View>
-        <View className={'mt-2'}>
-          <Snackbar
-            text={
-              '第一次登录时并不需要注册，若无账号则直接输入好学号以及预设密码点击登录即可，也可点击下方的注册文字前往注册页面'
-            }
-            icon={'info'}
-          />
-          <View className={'mt-2'}>
-            <LoginForm />
-          </View>
-        </View>
-      </View>
-    </View>
+      <LoginForm />
+    </AuthView>
   )
 }
