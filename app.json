@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "工大树洞",
-    "slug": "app",
+    "slug": "hfuthole",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -32,8 +32,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "8d093a3b-8780-494f-a8c3-71d55e4c9993"
+        "projectId": "dba5ed50-696a-4891-ab2e-cd94660925e7"
       }
-    }
+    },
+    "owner": "snowingfox"
   }
 }

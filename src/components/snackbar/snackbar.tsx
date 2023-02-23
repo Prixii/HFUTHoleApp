@@ -6,15 +6,31 @@ interface IProps {
   text: string
 
   icon: string
+
+  error?: boolean
 }
 
 export function Snackbar(props: IProps) {
   return (
-    <View className={'bg-[#D0F2FF] rounded-lg flex flex-row space-x-2 p-3'}>
+    <View
+      className={`${
+        props.error ? 'bg-[#FFE7D9]' : 'bg-[#D0F2FF]'
+      } rounded-lg flex flex-row space-x-2 p-3`}
+    >
       <View>
-        <Icons name={props.icon} size={20} color={'#2B9AFF'} />
+        <Icons
+          name={props.icon}
+          size={20}
+          color={props.error ? '#FF5951' : '#2B9AFF'}
+        />
       </View>
-      <Text className={'flex-1 text-[#04297A] text-xs'}>{props.text}</Text>
+      <Text
+        className={`flex-1 ${
+          props.error ? 'text-[#7A0C2E]' : 'text-[#04297A]'
+        } text-xs`}
+      >
+        {props.text}
+      </Text>
     </View>
   )
 }

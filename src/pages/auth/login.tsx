@@ -10,44 +10,57 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { useDebounceFn } from 'ahooks'
 import { useMutation } from 'react-query'
 import { LoginRequest } from '@/request/apis/auth'
+import { AxiosError } from 'axios'
+import { useState } from 'react'
+import { Snackbar } from '@/components/snackbar/snackbar'
 
 const LoginForm = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValidator>({
+  const [snackbarError, setSnackbarError] = useState<string | null>(null)
+
+  const { control, handleSubmit } = useForm<LoginFormValidator>({
     resolver: classValidatorResolver(LoginFormValidator),
+    mode: 'onChange',
   })
 
   const mutation = useMutation({
     mutationFn: (data: LoginFormValidator) => LoginRequest(data),
-    onError(e) {
-      console.log(e.toString())
+    onError(error: AxiosError) {
+      if (error.code) {
+        setSnackbarError((error.response.data as any).msg)
+      }
     },
   })
 
   const { run: onSubmit } = useDebounceFn(
     (data: LoginFormValidator) => {
-      mutation.mutate(data)
+      setSnackbarError(null)
+      mutation.mutate({
+        ...data,
+        studentId: +data.studentId,
+      })
     },
     { wait: 300 }
   )
 
   return (
     <View className={'grid space-y-3'}>
+      {snackbarError && (
+        <View className={'py-3'}>
+          <Snackbar text={snackbarError} icon={'info'} error />
+        </View>
+      )}
+
       <Input<LoginFormValidator>
         control={control}
         name={'studentId'}
         label={'学号'}
       />
-      <View>
-        <PasswordInput<LoginFormValidator>
-          control={control}
-          name={'password'}
-          label={'密码'}
-        />
-      </View>
+
+      <PasswordInput<LoginFormValidator>
+        control={control}
+        name={'password'}
+        label={'密码'}
+      />
 
       <View className={'flex flex-row justify-between items-center'}>
         <Checkbox status={'checked'} />
