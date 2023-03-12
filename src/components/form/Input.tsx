@@ -7,7 +7,7 @@ import {
 } from 'react-hook-form'
 import { PlainObject } from '@/shared/types/utils'
 import { HelperText, TextInput, TextInputProps } from 'react-native-paper'
-import {isNotEmptyObject} from "class-validator";
+import { isNotEmptyObject } from 'class-validator'
 
 type Props<T> = {
   name: FieldPath<T>

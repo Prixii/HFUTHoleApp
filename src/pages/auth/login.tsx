@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import { Button, Checkbox } from 'react-native-paper'
+import { Checkbox } from 'react-native-paper'
 import { Link } from '@/components/link'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
@@ -13,9 +13,13 @@ import { LoginRequest } from '@/request/apis/auth'
 import { AxiosError } from 'axios'
 import { useState } from 'react'
 import { Snackbar } from '@/components/snackbar/snackbar'
+import { Button } from '@/components/button'
+import { useLinkTo } from '@react-navigation/native'
 
 const LoginForm = () => {
   const [snackbarError, setSnackbarError] = useState<string | null>(null)
+
+  const linkTo = useLinkTo()
 
   const { control, handleSubmit } = useForm<LoginFormValidator>({
     resolver: classValidatorResolver(LoginFormValidator),
@@ -26,14 +30,18 @@ const LoginForm = () => {
     mutationFn: (data: LoginFormValidator) => LoginRequest(data),
     onError(error: AxiosError) {
       if (error.code) {
-        setSnackbarError((error.response.data as any).msg)
+        setSnackbarError((error?.response?.data as any)?.msg)
       }
+    },
+    onSuccess() {
+      linkTo('/home/index')
     },
   })
 
   const { run: onSubmit } = useDebounceFn(
     (data: LoginFormValidator) => {
       setSnackbarError(null)
+      console.log(data)
       mutation.mutate({
         ...data,
         studentId: +data.studentId,
@@ -72,8 +80,9 @@ const LoginForm = () => {
       <View>
         <Button
           mode={'contained'}
-          className={'p-1 rounded-lg shadow-none w-full'}
+          className={`p-1 rounded-lg shadow-none w-full`}
           onPress={handleSubmit(onSubmit)}
+          loading={mutation.isLoading}
         >
           登录
         </Button>

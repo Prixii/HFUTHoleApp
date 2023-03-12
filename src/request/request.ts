@@ -2,7 +2,7 @@ import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://172.21.76.21:8000/',
+  baseURL: 'http://172.21.76.52:8000/',
 })
 
 instance.interceptors.response.use((data) => data.data)

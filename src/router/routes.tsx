@@ -2,9 +2,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { WebViewPage } from '@/pages/web-view'
 import { Register } from '@/pages/auth/register'
 import { Login } from '@/pages/auth/login'
+import { Home } from '@/pages/home/home'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
 const AuthStack = createNativeStackNavigator()
+const Drawer = createDrawerNavigator()
 
 const config = {
   animation: 'spring',
@@ -18,7 +21,7 @@ const config = {
   },
 }
 
-export function Auth() {
+function Auth() {
   return (
     <AuthStack.Navigator>
       <AuthStack.Screen
@@ -35,6 +38,18 @@ export function Auth() {
   )
 }
 
+function HomeStacks() {
+  return (
+    <Drawer.Navigator initialRouteName={'home/index'}>
+      <Drawer.Screen
+        name={'home/index'}
+        component={Home}
+        options={{ headerShown: false }}
+      />
+    </Drawer.Navigator>
+  )
+}
+
 export const Routes = () => {
   return (
     <Stack.Navigator>
@@ -42,6 +57,11 @@ export const Routes = () => {
         options={{ headerShown: false }}
         name={'auth'}
         component={Auth}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={'home'}
+        component={HomeStacks}
       />
       <Stack.Screen name={'web-view'} component={WebViewPage} />
     </Stack.Navigator>

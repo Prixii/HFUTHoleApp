@@ -14,9 +14,12 @@ interface Props {
 }
 
 export function AuthView(props: Props) {
-
   return (
-    <View className={'bg-white w-screen overflow-hidden pt-[20px] px-5'}>
+    <View
+      className={
+        'bg-white min-h-screen w-screen overflow-hidden pt-[20px] px-5'
+      }
+    >
       <View className={'grid gap-5'}>
         <Avatar.Image source={require('../../../assets/img.png')} size={100} />
         <View className={'grid space-y-2'}>
