@@ -1,6 +1,7 @@
 import {
   Control,
   Controller,
+  FieldErrors,
   FieldPath,
   get,
   UseControllerProps,
@@ -22,7 +23,6 @@ export function Input<T extends object = PlainObject>({
   ...props
 }: Props<T>) {
   const error = get(control._formState.errors, name)
-  const isError = Boolean(error)
 
   return (
     <Controller
@@ -38,7 +38,7 @@ export function Input<T extends object = PlainObject>({
             outlineColor={'#CCD6E3'}
             placeholderTextColor={'#CCD6E3'}
             mode={'outlined'}
-            error={isNotEmptyObject(control._formState.errors)}
+            error={isNotEmptyObject(error)}
             {...props}
             style={{
               backgroundColor: 'white',
@@ -47,7 +47,7 @@ export function Input<T extends object = PlainObject>({
               ...((props?.style as object) || {}),
             }}
           />
-          <HelperText type="error" visible={isError}>
+          <HelperText type="error" visible={error}>
             {error?.message}
           </HelperText>
         </>

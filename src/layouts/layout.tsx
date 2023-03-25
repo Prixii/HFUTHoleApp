@@ -1,6 +1,5 @@
 import { Routes } from '@/router/routes'
-import { StatusBar, View } from 'react-native'
-import { FAB } from 'react-native-paper'
+import { StatusBar } from 'react-native'
 
 export function Layout() {
   return (

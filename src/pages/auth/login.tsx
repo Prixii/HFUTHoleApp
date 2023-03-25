@@ -5,23 +5,29 @@ import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
 import { AuthView } from '@/pages/auth/AuthView'
-import { LoginFormValidator } from '@/pages/auth/validator'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { useDebounceFn } from 'ahooks'
 import { useMutation } from 'react-query'
 import { LoginRequest } from '@/request/apis/auth'
 import { AxiosError } from 'axios'
-import { useState } from 'react'
 import { Snackbar } from '@/components/snackbar/snackbar'
 import { Button } from '@/components/button'
 import { useLinkTo } from '@react-navigation/native'
+import { LoginFormValidator } from '@/shared/validators/auth'
+import { getQAQFont } from '@/shared/utils/utils'
+import { useAuthStore } from '@/store/auth'
+import { observer } from 'mobx-react-lite'
 
-const LoginForm = () => {
-  const [snackbarError, setSnackbarError] = useState<string | null>(null)
-
+const LoginForm = observer(() => {
   const linkTo = useLinkTo()
+  const store = useAuthStore()
 
-  const { control, handleSubmit } = useForm<LoginFormValidator>({
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+    setError,
+  } = useForm<LoginFormValidator>({
     resolver: classValidatorResolver(LoginFormValidator),
     mode: 'onChange',
   })
@@ -30,18 +36,22 @@ const LoginForm = () => {
     mutationFn: (data: LoginFormValidator) => LoginRequest(data),
     onError(error: AxiosError) {
       if (error.code) {
-        setSnackbarError((error?.response?.data as any)?.msg)
+        setError('reqFailedError', {
+          message:
+            (error?.response?.data as any)?.msg ||
+            `网络连接失败，可能是服务器炸了${getQAQFont('sadness')}`,
+        })
       }
     },
-    onSuccess() {
-      linkTo('/home/index')
+    onSuccess(data) {
+      store.login({ token: data.data.token })
+      linkTo('/hole/index')
     },
+    retry: 1,
   })
 
   const { run: onSubmit } = useDebounceFn(
     (data: LoginFormValidator) => {
-      setSnackbarError(null)
-      console.log(data)
       mutation.mutate({
         ...data,
         studentId: +data.studentId,
@@ -52,9 +62,9 @@ const LoginForm = () => {
 
   return (
     <View className={'grid space-y-3'}>
-      {snackbarError && (
+      {errors?.reqFailedError && (
         <View className={'py-3'}>
-          <Snackbar text={snackbarError} icon={'info'} error />
+          <Snackbar text={errors.reqFailedError.message} icon={'info'} error />
         </View>
       )}
 
@@ -77,10 +87,10 @@ const LoginForm = () => {
         </Link>
       </View>
 
-      <View>
+      <View className={'mt-2'}>
         <Button
           mode={'contained'}
-          className={`p-1 rounded-lg shadow-none w-full`}
+          className={`shadow-none w-full`}
           onPress={handleSubmit(onSubmit)}
           loading={mutation.isLoading}
         >
@@ -95,7 +105,7 @@ const LoginForm = () => {
       </View>
     </View>
   )
-}
+})
 
 export function Login() {
   return (

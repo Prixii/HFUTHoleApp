@@ -2,12 +2,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { WebViewPage } from '@/pages/web-view'
 import { Register } from '@/pages/auth/register'
 import { Login } from '@/pages/auth/login'
-import { Home } from '@/pages/home/home'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { Hole } from '@/pages/hole/hole'
+import { observer } from 'mobx-react-lite'
+import { useAuthStore } from '@/store/auth'
+// import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
 const AuthStack = createNativeStackNavigator()
-const Drawer = createDrawerNavigator()
+const HoleStack = createNativeStackNavigator()
 
 const config = {
   animation: 'spring',
@@ -23,7 +25,7 @@ const config = {
 
 function Auth() {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen
         name={'login'}
         component={Login}
@@ -38,32 +40,36 @@ function Auth() {
   )
 }
 
-function HomeStacks() {
+const HoleStacks = () => {
   return (
-    <Drawer.Navigator initialRouteName={'home/index'}>
-      <Drawer.Screen
-        name={'home/index'}
-        component={Home}
-        options={{ headerShown: false }}
-      />
-    </Drawer.Navigator>
+    <HoleStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <HoleStack.Screen name={'index'} component={Hole} />
+    </HoleStack.Navigator>
   )
 }
 
-export const Routes = () => {
+export const Routes = observer(() => {
+  const authStore = useAuthStore()
+
   return (
     <Stack.Navigator>
+      {!authStore.isLogin && (
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name={'auth'}
+          component={Auth}
+        />
+      )}
       <Stack.Screen
         options={{ headerShown: false }}
-        name={'auth'}
-        component={Auth}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name={'home'}
-        component={HomeStacks}
+        name={'hole'}
+        component={HoleStacks}
       />
       <Stack.Screen name={'web-view'} component={WebViewPage} />
     </Stack.Navigator>
   )
-}
+})
