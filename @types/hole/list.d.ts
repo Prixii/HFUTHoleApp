@@ -12,13 +12,15 @@ interface Item {
   user: User
   votes: Vote[]
   tags: Tag[]
-  totalCount: number
+  voteTotalCount: number
+  commentsCount: number
 }
 
 interface User {
   id: number
   createAt: string
   username: string
+  avatar: string
 }
 
 interface Vote {

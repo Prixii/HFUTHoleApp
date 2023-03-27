@@ -1,12 +1,26 @@
 import { useInfiniteQuery } from 'react-query'
 import { SWRKeys } from '@/swr/utils'
 import { GetHoleListRequest } from '@/request/apis/hole'
-import { AxiosError } from 'axios'
 
 export function useHoleList() {
-  const requestList = () => GetHoleListRequest()
+  return useInfiniteQuery(
+    SWRKeys.hole.list,
+    ({ pageParam = 1 }) => GetHoleListRequest({ limit: 3, page: pageParam }),
+    {
+      getNextPageParam: (lastPages) => {
+        const nextPage = lastPages.meta.currentPage + 1
 
-  return useInfiniteQuery(SWRKeys.hole.list, requestList, {
-    retry: false,
-  })
+        if (nextPage > lastPages.meta.totalPages) {
+          return
+        }
+
+        return nextPage
+      },
+      retry: false,
+      keepPreviousData: true,
+      refetchInterval: false,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+    }
+  )
 }
