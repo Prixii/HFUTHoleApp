@@ -10,7 +10,6 @@ import { RegisterFormValidator } from '@/shared/validators/auth'
 import { AxiosError } from 'axios'
 import { useDebounceFn } from 'ahooks'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
-import { ScreenWrapper } from '@/components/ScrollWrapper'
 
 interface Inputs {
   username: string

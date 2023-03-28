@@ -1,11 +1,15 @@
 import { Routes } from '@/router/routes'
-import { StatusBar } from 'react-native'
+import { StatusBar, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 
 export function Layout() {
   return (
     <>
       <StatusBar />
-      <Routes />
+      <View className={'w-screen min-h-[100vh] px-2'}>
+        <Routes />
+        <Toast />
+      </View>
     </>
   )
 }

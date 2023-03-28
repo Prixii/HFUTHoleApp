@@ -49,6 +49,7 @@ specifiers:
   react-native-shadow-2: ^7.0.6
   react-native-skeleton-content: ^1.0.28
   react-native-svg: 13.4.0
+  react-native-toast-message: ^2.1.6
   react-native-vector-icons: ^9.2.0
   react-native-web: ~0.18.9
   react-native-webview: 11.23.1
@@ -89,6 +90,7 @@ dependencies:
   react-native-shadow-2: 7.0.6_b6gvz53i46zjp2j72aalo24iy4
   react-native-skeleton-content: 1.0.28_g5n74xlwpmc2fiihjdd7n3li2e
   react-native-svg: 13.4.0_tj3nonr5gneraukzjkxpsiy7yu
+  react-native-toast-message: 2.1.6_tj3nonr5gneraukzjkxpsiy7yu
   react-native-vector-icons: 9.2.0
   react-native-web: 0.18.12_ef5jwxihqo6n7gxfmzogljlgcm
   react-native-webview: 11.23.1_tj3nonr5gneraukzjkxpsiy7yu
@@ -3373,7 +3375,6 @@ packages:
 
   /bluebird/3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
-    dev: false
 
   /blueimp-md5/2.19.0:
     resolution: {integrity: sha512-DRQrD6gJyy8FbiE4s+bDoXS9hiW3Vbx5uCdwvcCf3zLHL+Iv7LtGHLpr+GZV8rHG8tK766FGYBwRbu8pELTt+w==}
@@ -3702,7 +3703,7 @@ packages:
       minipass-pipeline: 1.2.4
       mkdirp: 1.0.4
       p-map: 4.0.0
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 3.0.2
       ssri: 8.0.1
       tar: 6.1.13
@@ -9407,14 +9408,6 @@ packages:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
 
-  /promise-inflight/1.0.1:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-
   /promise-inflight/1.0.1_bluebird@3.7.2:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
     peerDependencies:
@@ -9424,7 +9417,6 @@ packages:
         optional: true
     dependencies:
       bluebird: 3.7.2
-    dev: false
 
   /promise/7.3.1:
     resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
@@ -9879,6 +9871,16 @@ packages:
     dependencies:
       css-select: 5.1.0
       css-tree: 1.1.3
+      react: 18.1.0
+      react-native: 0.70.5_rnpvdz5p36pviilrsprn2ditma
+    dev: false
+
+  /react-native-toast-message/2.1.6_tj3nonr5gneraukzjkxpsiy7yu:
+    resolution: {integrity: sha512-VctXuq20vmRa9AE13acaNZhrLcS3FaBS2zEevS3+vhBsnVZYG0FIlWIis9tVnpnNxUb3ART+BWtwQjzSttXTng==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
       react: 18.1.0
       react-native: 0.70.5_rnpvdz5p36pviilrsprn2ditma
     dev: false

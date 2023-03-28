@@ -4,10 +4,8 @@ import {
   IsOptional,
   IsString,
   Length,
-  MaxLength,
   MinLength,
 } from 'class-validator'
-import { NumberLength } from '@/shared/validators/utils'
 
 export class LoginFormValidator {
   @MinLength(10, { message: '学号格式错误' })

@@ -5,7 +5,7 @@ import { GetHoleListRequest } from '@/request/apis/hole'
 export function useHoleList() {
   return useInfiniteQuery(
     SWRKeys.hole.list,
-    ({ pageParam = 1 }) => GetHoleListRequest({ limit: 3, page: pageParam }),
+    ({ pageParam = 1 }) => GetHoleListRequest({ limit: 8, page: pageParam }),
     {
       getNextPageParam: (lastPages) => {
         const nextPage = lastPages.meta.currentPage + 1

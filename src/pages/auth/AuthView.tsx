@@ -16,7 +16,7 @@ interface Props {
 export function AuthView(props: Props) {
   return (
     <ScrollView>
-      <View className={'bg-white min-h-screen w-screen py-[10px] px-5'}>
+      <View className={'bg-white min-h-screen w-screen py-[10px]'}>
         <View className={'grid gap-5'}>
           <Avatar.Image
             source={require('../../../assets/img.png')}

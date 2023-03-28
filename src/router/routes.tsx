@@ -5,6 +5,7 @@ import { Login } from '@/pages/auth/login'
 import { Hole } from '@/pages/hole/hole'
 import { observer } from 'mobx-react-lite'
 import { useAuthStore } from '@/store/auth'
+import { HolePost } from '@/pages/hole/post/post'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
@@ -48,6 +49,7 @@ const HoleStacks = () => {
       }}
     >
       <HoleStack.Screen name={'index'} component={Hole} />
+      <HoleStack.Screen name={'post'} component={HolePost} />
     </HoleStack.Navigator>
   )
 }

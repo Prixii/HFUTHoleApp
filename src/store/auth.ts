@@ -1,7 +1,8 @@
-import { makeAutoObservable } from 'mobx'
-import { makePersistable } from 'mobx-persist-store'
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { makeAutoPersistObservable } from '@/store/utils'
+import { makeAutoObservable } from 'mobx'
+import { makePersistable } from 'mobx-persist-store'
 
 interface Meta {
   token: string
@@ -17,7 +18,7 @@ class Auth {
 
     makePersistable(this, {
       name: Auth.name,
-      properties: ['isLogin', 'meta'],
+      properties: ['meta', 'isLogin'],
       storage: AsyncStorage,
     })
   }

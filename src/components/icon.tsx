@@ -20,3 +20,5 @@ const withMaterialIcon = (name: string) => withIconProps(MaterialIcon, name)
 export const LikeIcon = withFontAV5Icon('thumbs-up')
 
 export const CommentIcon = withMaterialIcon('chat')
+
+export const AddIcon = withMaterialIcon('add')

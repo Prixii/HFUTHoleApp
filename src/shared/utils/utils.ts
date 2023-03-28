@@ -2,6 +2,7 @@ import { getRandomQAQ, type IQAQ } from 'qaq-font'
 import { AuthStore } from '@/store/auth'
 import { formatDistanceToNow, differenceInDays, format } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
+import { Dimensions } from 'react-native'
 
 export const getQAQFont = (key: keyof IQAQ) => getRandomQAQ(key)[0]
 
@@ -27,3 +28,6 @@ export function formatDate(time: string) {
     return format(date, 'YYYY/MM/DD', { locale: zhCN }).toString()
   }
 }
+
+export const { width: ScreenWidth, height: ScreenHeight } =
+  Dimensions.get('screen')
