@@ -2,9 +2,10 @@ import {
   ArrayMaxSize,
   IsArray,
   IsBoolean,
+  IsNotEmpty,
   IsOptional,
-  IsString,
   MaxLength,
+  MinLength,
 } from 'class-validator'
 import { Limit } from '@/shared/config'
 
@@ -12,7 +13,8 @@ export class PostHoleValidator {
   @MaxLength(Limit.holeBodyMaxLength, {
     message: `最多只能有${Limit.holeBodyMaxLength}个字哦`,
   })
-  @IsString()
+  @MinLength(1, { message: '树洞至少要有一个字哦' })
+  @IsNotEmpty({ message: '不能为空哦' })
   body: string
 
   @IsArray()

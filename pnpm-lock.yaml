@@ -12,6 +12,7 @@ specifiers:
   '@types/date-fns': ^2.6.0
   '@types/react': ^18.0.27
   '@types/react-native': ^0.71.2
+  '@types/react-native-tags': ^2.2.1
   '@types/react-native-vector-icons': ^6.4.13
   '@typescript-eslint/eslint-plugin': ^5.51.0
   '@typescript-eslint/parser': ^5.51.0
@@ -30,6 +31,8 @@ specifiers:
   eslint-plugin-react-native: ^4.0.0
   expo: ~47.0.12
   expo-status-bar: ~1.4.2
+  hox: ^2.1.0
+  immer: ^9.0.21
   mobx: ^6.8.0
   mobx-persist-store: ^1.1.3
   mobx-react-lite: ^3.4.3
@@ -49,6 +52,7 @@ specifiers:
   react-native-shadow-2: ^7.0.6
   react-native-skeleton-content: ^1.0.28
   react-native-svg: 13.4.0
+  react-native-tags: ^2.2.1
   react-native-toast-message: ^2.1.6
   react-native-vector-icons: ^9.2.0
   react-native-web: ~0.18.9
@@ -56,6 +60,7 @@ specifiers:
   react-query: ^3.39.3
   tailwindcss: ^3.2.6
   typescript: ^4.9.5
+  use-immer: ^0.8.1
 
 dependencies:
   '@expo/webpack-config': 0.17.4_s3xir6x2lztqgew6d5obagxxuu
@@ -72,6 +77,8 @@ dependencies:
   date-fns: 2.29.3
   dayjs: 1.11.7
   expo-status-bar: 1.4.4
+  hox: 2.1.0_react@18.1.0
+  immer: 9.0.21
   mobx: 6.9.0
   mobx-persist-store: 1.1.3_mobx@6.9.0
   mobx-react-lite: 3.4.3_jlortpqzk3nvyw4m7nqayfsh3e
@@ -90,17 +97,20 @@ dependencies:
   react-native-shadow-2: 7.0.6_b6gvz53i46zjp2j72aalo24iy4
   react-native-skeleton-content: 1.0.28_g5n74xlwpmc2fiihjdd7n3li2e
   react-native-svg: 13.4.0_tj3nonr5gneraukzjkxpsiy7yu
+  react-native-tags: 2.2.1_tj3nonr5gneraukzjkxpsiy7yu
   react-native-toast-message: 2.1.6_tj3nonr5gneraukzjkxpsiy7yu
   react-native-vector-icons: 9.2.0
   react-native-web: 0.18.12_ef5jwxihqo6n7gxfmzogljlgcm
   react-native-webview: 11.23.1_tj3nonr5gneraukzjkxpsiy7yu
   react-query: 3.39.3_2bkajway7msrchxwrvhplxy5ru
+  use-immer: 0.8.1_immer@9.0.21+react@18.1.0
 
 devDependencies:
   '@babel/core': 7.21.3
   '@types/date-fns': 2.6.0
   '@types/react': 18.0.29
   '@types/react-native': 0.71.5
+  '@types/react-native-tags': 2.2.1
   '@types/react-native-vector-icons': 6.4.13
   '@typescript-eslint/eslint-plugin': 5.56.0_iskin7c6dxqunwflhstekcjqmq
   '@typescript-eslint/parser': 5.56.0_vgl77cfdswitgr47lm5swmv43m
@@ -2383,6 +2393,13 @@ packages:
   /@types/q/1.5.5:
     resolution: {integrity: sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ==}
     dev: false
+
+  /@types/react-native-tags/2.2.1:
+    resolution: {integrity: sha512-+U4cJ8cceY3RTzsL4vMg/zRYFDAfyNPckh7q7AjQz8Z4bwYUaCK35BVcOxtKpe4FlM2vL3BN6Cl9eB76dSQEUA==}
+    dependencies:
+      '@types/react': 18.0.29
+      '@types/react-native': 0.71.5
+    dev: true
 
   /@types/react-native-vector-icons/6.4.13:
     resolution: {integrity: sha512-1PqFoKuXTSzMHwGMAr+REdYJBQAbe9xrww3ecZR0FsHcD1K+vGS/rxuAriL4rsI6+p69sZQjDzpEVAbDQcjSwA==}
@@ -6386,6 +6403,15 @@ packages:
     dependencies:
       lru-cache: 6.0.0
 
+  /hox/2.1.0_react@18.1.0:
+    resolution: {integrity: sha512-8TihXk6RTh28295Pvwjj1ohvNuNT1oUbuAuoJzYed4JQ23lumVyfLVc1px2dvgkvdrjKpJXhT/qy7W5uJsCuaQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.1.0
+      use-sync-external-store: 1.2.0_react@18.1.0
+    dev: false
+
   /hpack.js/2.1.6:
     resolution: {integrity: sha512-zJxVehUdMGIKsRaNt7apO2Gqp0BdqW5yaiGHXXmbpvxgBYVZnAql+BJb4RO5ad2MgpbZKn5G6nMnegrH1FcNYQ==}
     dependencies:
@@ -6581,6 +6607,10 @@ packages:
 
   /immer/8.0.1:
     resolution: {integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==}
+    dev: false
+
+  /immer/9.0.21:
+    resolution: {integrity: sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==}
     dev: false
 
   /import-fresh/2.0.0:
@@ -9875,6 +9905,16 @@ packages:
       react-native: 0.70.5_rnpvdz5p36pviilrsprn2ditma
     dev: false
 
+  /react-native-tags/2.2.1_tj3nonr5gneraukzjkxpsiy7yu:
+    resolution: {integrity: sha512-a8ICis9+2c0ttg/Vaq48+AUOqpKQlkvQgz0JXFdUWIIsBr/cWoDWzh4F3Ib4+uT39s1bLhwiNjeZVt/ATDlaIg==}
+    peerDependencies:
+      react: '>=16.13'
+      react-native: '>=0.61'
+    dependencies:
+      react: 18.1.0
+      react-native: 0.70.5_rnpvdz5p36pviilrsprn2ditma
+    dev: false
+
   /react-native-toast-message/2.1.6_tj3nonr5gneraukzjkxpsiy7yu:
     resolution: {integrity: sha512-VctXuq20vmRa9AE13acaNZhrLcS3FaBS2zEevS3+vhBsnVZYG0FIlWIis9tVnpnNxUb3ART+BWtwQjzSttXTng==}
     peerDependencies:
@@ -11633,6 +11673,16 @@ packages:
     dependencies:
       punycode: 1.3.2
       querystring: 0.2.0
+    dev: false
+
+  /use-immer/0.8.1_immer@9.0.21+react@18.1.0:
+    resolution: {integrity: sha512-OfTFf1pL+ICjjcLPn9+ZnaJO/Yg4MBzYZtACEe2mZ/W2A5col28PNUnwowOAaBuOogACOK/37TU17KgsIhUpOw==}
+    peerDependencies:
+      immer: '>=2.0.0'
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0
+    dependencies:
+      immer: 9.0.21
+      react: 18.1.0
     dev: false
 
   /use-latest-callback/0.1.5:

@@ -41,7 +41,7 @@ export function Input<T extends object = PlainObject>({
             error={isNotEmptyObject(error)}
             {...props}
             style={{
-              backgroundColor: 'white',
+              backgroundColor: 'transparent',
               fontSize: 13,
               height: 55,
               ...((props?.style as object) || {}),

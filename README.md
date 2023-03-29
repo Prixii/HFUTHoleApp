@@ -10,3 +10,4 @@
 - [Tailwindcss](https://tailwindcss.com/)
 - [@tanstack/react-query](https://react-query.tanstack.com/)
 - [mobx-react-lite](https://mobx.js.org/react-integration.html)
+
