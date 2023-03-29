@@ -6,7 +6,7 @@ export function Layout() {
   return (
     <>
       <StatusBar />
-      <View className={'w-screen min-h-[100vh] px-2'}>
+      <View className={'w-screen min-h-[100vh] bg-[#F2F2F2]'}>
         <Routes />
         <Toast />
       </View>

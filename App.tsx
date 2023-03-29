@@ -4,6 +4,7 @@ import { PaperProvider } from '@/shared/providers/paper'
 import { NavigationContainer } from '@react-navigation/native'
 import { ReactQueryProvider } from '@/shared/providers/react-query'
 import { setupGlobalConfig } from '@/shared/config'
+import { NativeBaseProvider } from 'native-base'
 
 setupGlobalConfig()
 
@@ -12,7 +13,9 @@ const App = () => {
     <ReactQueryProvider>
       <PaperProvider>
         <NavigationContainer>
-          <Layout />
+          <NativeBaseProvider>
+            <Layout />
+          </NativeBaseProvider>
         </NavigationContainer>
       </PaperProvider>
     </ReactQueryProvider>

@@ -22,8 +22,11 @@ export function RefreshingFlatList<T = any>(props: Props<T>) {
   return (
     <FlatList
       refreshing={refreshing}
-      onEndReachedThreshold={0.01}
+      onEndReachedThreshold={0}
       onEndReached={onRefresh}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
       {...props}
     />
   )

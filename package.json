@@ -30,6 +30,7 @@
     "mobx": "^6.8.0",
     "mobx-persist-store": "^1.1.3",
     "mobx-react-lite": "^3.4.3",
+    "native-base": "^3.4.28",
     "nativewind": "^2.0.11",
     "qaq-font": "^1.0.2",
     "react": "18.1.0",
