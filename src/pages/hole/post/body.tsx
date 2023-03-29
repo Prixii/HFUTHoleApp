@@ -13,19 +13,18 @@ export function HolePostBody() {
   } = useHolePostContext()
 
   return (
-    <View
-      className={'rounded-lg bg-white p-3 grid space-y-3 mt-3 relative'}
-      style={{ height: ScreenHeight * 0.8 }}
-    >
+    <View className={'rounded-lg bg-white p-3 grid space-y-3 mt-3 relative'}>
       <MyAvatar />
-      <Tags tags={tags} />
+      <View>
+        <Tags tags={tags} />
+      </View>
       <View>
         <Input
           name={'body'}
           control={control}
           multiline={true}
           style={{
-            height: ScreenHeight * 0.6,
+            height: ScreenHeight * 0.5,
           }}
         />
       </View>

@@ -14,7 +14,7 @@ export function Tags(props: Props) {
   const theme = useTheme()
 
   return (
-    <View className={'flex flex-row w-screen flex-wrap gap-2'}>
+    <View className={'flex flex-row flex-wrap gap-2'}>
       {props.tags?.map((tag, index) => (
         <Chip
           icon={props.icon}

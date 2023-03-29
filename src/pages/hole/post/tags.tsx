@@ -9,6 +9,7 @@ import { IsString, MaxLength } from 'class-validator'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { Tags } from '@/components/tags'
 import { getQAQFont } from '@/shared/utils/utils'
+import { View } from 'react-native'
 
 enum InputError {
   MaximumExceeded = 'MaximumExceeded',
