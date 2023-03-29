@@ -28,10 +28,14 @@ const LoadMore = () => {
 }
 
 export function HoleList() {
-  const { data, fetchNextPage, isSuccess } = useHoleList()
+  const { data, fetchNextPage, isSuccess, invalidateQuery } = useHoleList()
 
   const onRefresh = async () => {
     await fetchNextPage()
+  }
+
+  const refetchData = async () => {
+    await invalidateQuery()
   }
 
   return (
@@ -42,10 +46,11 @@ export function HoleList() {
           <RefreshingFlatList
             data={data?.pages}
             onRefreshing={onRefresh}
+            onTopRefresh={refetchData}
             ListFooterComponent={LoadMore}
             className={'min-h-80vh'}
-            renderItem={({ item: group }) => (
-              <View className={'px-2 space-y-2'} key={group.items[0].id}>
+            renderItem={({ item: group, index }) => (
+              <View className={'px-2 space-y-2'} key={index}>
                 {group.items.map((item) => (
                   <HoleItem data={item} key={item.id} />
                 ))}

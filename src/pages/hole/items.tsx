@@ -5,10 +5,11 @@ import { UserAvatar } from '@/components/UserAvatar'
 import { Text, useTheme } from 'react-native-paper'
 import { CommentIcon, LikeIcon } from '@/components/icon'
 import { formatDate } from '@/shared/utils/utils'
+import { Badge } from 'native-base'
 
 type Data = InferArrayItem<IHoleListResponse['items']>
 
-const ItemUser: React.FC<{ data: Data }> = ({ data }) => {
+const ItemHeader: React.FC<{ data: Data }> = ({ data }) => {
   const theme = useTheme()
 
   return (
@@ -59,6 +60,13 @@ const ItemBody: React.FC<{ data: Data }> = ({ data }) => {
   return (
     <View className={'flex flex-col space-y-3'}>
       <ItemImages imgs={data.imgs} />
+      <View className={'w-full flex flex-row gap-2 flex-wrap'}>
+        {data.tags.map((tag) => (
+          <Badge colorScheme="success" rounded={'lg'}>
+            {`${tag.body.startsWith('#') ? '' : '#'}${tag.body}`}
+          </Badge>
+        ))}
+      </View>
       <Text variant={'bodyMedium'}>{data.body}</Text>
     </View>
   )
@@ -93,7 +101,7 @@ export const HoleItem: React.FC<{
 }> = ({ data }) => {
   return (
     <View className={'flex flex-col space-y-3 p-4 bg-white rounded-lg mt-2'}>
-      <ItemUser data={data} />
+      <ItemHeader data={data} />
       <View>
         <ItemBody data={data} />
       </View>

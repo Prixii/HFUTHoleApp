@@ -3,9 +3,11 @@ import { FlatList, RefreshControl } from 'react-native'
 import type { FlatListProps } from 'react-native'
 import { Func } from '@/shared/types'
 import { useDebounceFn } from 'ahooks'
+import { RefreshIndicatorControl } from '@/components/RefreshIndicatorControl'
 
 type Props<T> = {
   onRefreshing?: Func
+  onTopRefresh?: Func
 } & FlatListProps<T>
 
 export function RefreshingFlatList<T = any>(props: Props<T>) {
@@ -13,6 +15,7 @@ export function RefreshingFlatList<T = any>(props: Props<T>) {
 
   const { run: onRefresh } = useDebounceFn(
     async () => {
+      console.log('refresh')
       await props.onRefreshing()
       setRefreshing(false)
     },
@@ -22,10 +25,15 @@ export function RefreshingFlatList<T = any>(props: Props<T>) {
   return (
     <FlatList
       refreshing={refreshing}
-      onEndReachedThreshold={0}
+      onEndReachedThreshold={0.1}
       onEndReached={onRefresh}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        props.onTopRefresh && (
+          <RefreshIndicatorControl
+            refreshing={refreshing}
+            onRefresh={props.onTopRefresh}
+          />
+        )
       }
       {...props}
     />

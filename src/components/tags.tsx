@@ -25,8 +25,9 @@ export function Tags(props: Props) {
             style={{
               color: theme.colors.primary,
             }}
+            className={'text-xs'}
           >
-            {tag}
+            {`${tag.startsWith('#') ? '' : '#'}${tag}`}
           </Text>
         </Chip>
       ))}

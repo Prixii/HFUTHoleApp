@@ -47,7 +47,7 @@ const LoginForm = observer(() => {
       store.login({ token: data.data.token })
       linkTo('/hole/index')
     },
-    retry: 1,
+    retry: false,
   })
 
   const { run: onSubmit } = useDebounceFn(

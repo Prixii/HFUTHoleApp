@@ -3,6 +3,7 @@ import { IPagination } from '@/shared/types'
 import { PostHoleValidator } from '@/shared/validators/hole'
 
 export function GetHoleListRequest(params: IPagination) {
+  console.log(params)
   return request<IHoleListResponse>({
     method: 'GET',
     url: '/hole/list',

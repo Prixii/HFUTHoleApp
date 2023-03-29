@@ -6,7 +6,7 @@ import { HolePostHeader } from '@/pages/hole/post/header'
 export function HolePost() {
   return (
     <HolePostContextProvider>
-      <View className={'min-h-screen bg-#EAE8FE space-y-2'}>
+      <View className={'min-h-screen bg-[#43A047]/10 px-2'}>
         <HolePostHeader />
         <HolePostBody />
       </View>
