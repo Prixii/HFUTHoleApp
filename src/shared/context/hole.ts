@@ -3,6 +3,8 @@ import { useImmer } from 'use-immer'
 import { useForm } from 'react-hook-form'
 import { PostHoleValidator } from '@/shared/validators/hole'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator/dist/class-validator'
+import { useState } from 'react'
+import { HoleListMode } from '@/pages/hole/header'
 
 export const [useHolePostContext, HolePostContextProvider] = createStore(() => {
   const [tags, setTags] = useImmer<string[]>([])
@@ -24,5 +26,14 @@ export const [useHolePostContext, HolePostContextProvider] = createStore(() => {
     setImgs,
     votes,
     setVotes,
+  }
+})
+
+export const [useHoleListContext, HoleListContextProvider] = createStore(() => {
+  const [mode, setMode] = useState(HoleListMode.random)
+
+  return {
+    mode,
+    setMode,
   }
 })

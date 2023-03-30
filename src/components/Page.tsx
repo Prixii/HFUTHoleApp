@@ -4,11 +4,7 @@ export function Page(props: ViewProps) {
   return (
     <View
       {...props}
-      style={{
-        backgroundColor: '#EAE8FE',
-        width: '100vw',
-        height: '100vh',
-      }}
+      className={`min-h-screen w-full bg-[#E0E9E0] px-2 ${props.className}`}
     />
   )
 }

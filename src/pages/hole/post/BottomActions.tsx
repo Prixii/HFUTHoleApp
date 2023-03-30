@@ -9,11 +9,7 @@ export function BottomActions() {
       <View className={'flex flex-row justify-between items-center'}>
         <HolePostAddTags />
         <View className={'flex flex-row'}>
-          <IconButton
-            icon={'camera'}
-            className={'bg-[#00AB55]/20'}
-            iconColor={'#00AB55'}
-          />
+          <IconButton icon={'camera'} />
           {/*<IconButton icon={'plus'} />*/}
         </View>
       </View>

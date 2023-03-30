@@ -1,5 +1,9 @@
 import { useHoleList } from '@/swr/hole'
-import { View } from 'react-native'
+import {
+  TouchableWithoutFeedback,
+  TouchableWithoutFeedbackComponent,
+  View,
+} from 'react-native'
 import React from 'react'
 import { Text, useTheme } from 'react-native-paper'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
@@ -7,6 +11,8 @@ import { HoleItem } from '@/pages/hole/items'
 import { getQAQFont } from '@/shared/utils/utils'
 import { LoadingIndicator } from '@/components/LoadingIndicator'
 import { SkeletonLoading } from '@/components/Skeleton'
+import { useLinkTo, useNavigation } from '@react-navigation/native'
+import { HoleHeader, SelectListHoleListMode } from '@/pages/hole/header'
 
 const LoadMore = () => {
   const { hasNextPage } = useHoleList()
@@ -14,7 +20,7 @@ const LoadMore = () => {
 
   return (
     <View
-      className={'h-28 w-screen px-5 justify-center flex flex-row items-center'}
+      className={'w-screen px-5 justify-center flex flex-row items-center py-4'}
     >
       {hasNextPage ? (
         <LoadingIndicator />
@@ -28,6 +34,8 @@ const LoadMore = () => {
 }
 
 export function HoleList() {
+  const navigation = useNavigation()
+
   const { data, fetchNextPage, isSuccess, invalidateQuery } = useHoleList()
 
   const onRefresh = async () => {
@@ -47,12 +55,17 @@ export function HoleList() {
             data={data?.pages}
             onRefreshing={onRefresh}
             onTopRefresh={refetchData}
+            ListHeaderComponent={HoleHeader}
             ListFooterComponent={LoadMore}
-            className={'min-h-80vh'}
             renderItem={({ item: group, index }) => (
-              <View className={'px-2 space-y-2'} key={index}>
+              <View className={'space-y-2'} key={index}>
                 {group.items.map((item) => (
-                  <HoleItem data={item} key={item.id} />
+                  <HoleItem
+                    data={item}
+                    onPress={() =>
+                      navigation.navigate('detail', { id: item.id })
+                    }
+                  />
                 ))}
               </View>
             )}

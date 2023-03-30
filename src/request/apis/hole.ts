@@ -1,9 +1,15 @@
 import { request } from '@/request/request'
 import { IPagination } from '@/shared/types'
 import { PostHoleValidator } from '@/shared/validators/hole'
+import { HoleListMode } from '@/pages/hole/header'
 
-export function GetHoleListRequest(params: IPagination) {
-  console.log(params)
+interface Id {
+  id: number
+}
+
+export function GetHoleListRequest(
+  params: IPagination & { mode: HoleListMode }
+) {
   return request<IHoleListResponse>({
     method: 'GET',
     url: '/hole/list',
@@ -16,5 +22,21 @@ export function PostHoleRequest(data: PostHoleValidator) {
     method: 'POST',
     url: '/hole/create',
     data,
+  })
+}
+
+export function GetHoleDetailRequest(params: Id) {
+  return request<IHoleDetailResponse>({
+    method: 'GET',
+    url: '/hole/detail',
+    params,
+  })
+}
+
+export function GetHoleDetailCommentsRequest(params: Id & IPagination) {
+  return request<IHoleCommentListResponse>({
+    method: 'GET',
+    url: '/hole/comment',
+    params,
   })
 }

@@ -1,5 +1,4 @@
 import { IconButton } from '@/components/IconButton'
-import { Button } from 'react-native-paper'
 import { View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useMutation } from 'react-query'
@@ -8,6 +7,7 @@ import { PostHoleRequest } from '@/request/apis/hole'
 import Toast from 'react-native-toast-message'
 import { useHolePostContext } from '@/shared/context/hole'
 import { useDebounce } from '@/shared/hooks/useDebounce'
+import { Button } from '@/components/button'
 
 export function HolePostHeader() {
   const navigation = useNavigation()
@@ -23,6 +23,7 @@ export function HolePostHeader() {
         type: 'success',
         text1: data.msg,
       })
+      navigation.goBack()
     },
   })
 
@@ -37,9 +38,15 @@ export function HolePostHeader() {
         className={'bg-transparent'}
         onPress={() => navigation.goBack()}
       />
-      <Button mode="contained" onPress={handleSubmit(onSubmit)}>
-        发布
-      </Button>
+      <View>
+        <Button
+          mode="contained"
+          onPress={handleSubmit(onSubmit)}
+          loading={mutation.isLoading}
+        >
+          发布
+        </Button>
+      </View>
     </View>
   )
 }

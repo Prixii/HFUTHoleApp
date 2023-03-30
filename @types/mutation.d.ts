@@ -1,7 +1,7 @@
 declare interface IMutationResponse<T = any> {
   code: number
 
-  msg: string
+  msg: string | string[]
 
   data: T
 }

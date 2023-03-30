@@ -16,14 +16,15 @@ export function SkeletonLoading(props: Props) {
           borderWidth="1"
           space={8}
           overflow="hidden"
-          rounded="md"
-          pb={5}
+          rounded="lg"
+          py={5}
           px={5}
           _dark={{
             borderColor: 'coolGray.500',
           }}
           _light={{
             borderColor: 'coolGray.200',
+            backgroundColor: 'white',
           }}
         >
           <Skeleton size="16" rounded={'full'} />

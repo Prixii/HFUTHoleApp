@@ -1,11 +1,12 @@
 import React from 'react'
-import { InferArrayItem } from '@/shared/types'
-import { Image, View } from 'react-native'
+import { Func, InferArrayItem } from '@/shared/types'
+import { Image, TouchableWithoutFeedback, View } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
 import { Text, useTheme } from 'react-native-paper'
 import { CommentIcon, LikeIcon } from '@/components/icon'
 import { formatDate } from '@/shared/utils/utils'
-import { Badge } from 'native-base'
+import { Badges } from '@/components/Badges'
+import { IdText } from '@/components/Text/Id'
 
 type Data = InferArrayItem<IHoleListResponse['items']>
 
@@ -16,13 +17,7 @@ const ItemHeader: React.FC<{ data: Data }> = ({ data }) => {
     <View className={'flex flex-row items-center space-x-3'}>
       <UserAvatar url={data.user.avatar} />
       <View className={'grid space-y-1'}>
-        <Text
-          className={'font-bold'}
-          variant={'titleSmall'}
-          style={{ color: theme.colors.primary }}
-        >
-          #{data.id}
-        </Text>
+        <IdText id={data.id} />
         <Text variant={'bodySmall'}>{formatDate(data.createAt)}</Text>
       </View>
     </View>
@@ -30,11 +25,11 @@ const ItemHeader: React.FC<{ data: Data }> = ({ data }) => {
 }
 
 const ItemImages: React.FC<{
-  imgs: string[]
+  imgs?: string[]
 }> = ({ imgs }) => {
   return (
     <View>
-      {imgs.length ? (
+      {imgs?.length ? (
         <View className={'flex flex-row gap-2'}>
           {imgs.map((img, index) => (
             <Image
@@ -59,13 +54,9 @@ const ItemImages: React.FC<{
 const ItemBody: React.FC<{ data: Data }> = ({ data }) => {
   return (
     <View className={'flex flex-col space-y-3'}>
-      <ItemImages imgs={data.imgs} />
-      <View className={'w-full flex flex-row gap-2 flex-wrap'}>
-        {data.tags.map((tag) => (
-          <Badge colorScheme="success" rounded={'lg'}>
-            {`${tag.body.startsWith('#') ? '' : '#'}${tag.body}`}
-          </Badge>
-        ))}
+      <ItemImages imgs={data?.imgs} />
+      <View>
+        <Badges data={data.tags} />
       </View>
       <Text variant={'bodyMedium'}>{data.body}</Text>
     </View>
@@ -98,16 +89,19 @@ const ItemIcons: React.FC<{ data: Data }> = ({ data }) => {
 
 export const HoleItem: React.FC<{
   data: Data
-}> = ({ data }) => {
+  onPress?: Func
+}> = ({ data, onPress }) => {
   return (
-    <View className={'flex flex-col space-y-3 p-4 bg-white rounded-lg mt-2'}>
-      <ItemHeader data={data} />
-      <View>
-        <ItemBody data={data} />
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View className={'flex flex-col space-y-3 p-4 bg-white rounded-lg mt-2'}>
+        <ItemHeader data={data} />
+        <View>
+          <ItemBody data={data} />
+        </View>
+        <View>
+          <ItemIcons data={data} />
+        </View>
       </View>
-      <View>
-        <ItemIcons data={data} />
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
