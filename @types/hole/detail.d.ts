@@ -1,4 +1,4 @@
-declare interface IHoleDetailResponse {
+declare interface IHoleDetailResponse extends IHole {
   id: number
   createAt: string
   body: string

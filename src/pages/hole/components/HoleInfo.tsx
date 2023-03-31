@@ -1,5 +1,5 @@
-import React from 'react'
-import { Func, InferArrayItem } from '@/shared/types'
+import React, { ReactNode } from 'react'
+import { Func } from '@/shared/types'
 import { Image, TouchableWithoutFeedback, View } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
 import { Text } from 'react-native-paper'
@@ -10,7 +10,7 @@ import { TimeText } from '@/components/Text/Time'
 
 type Data = IHole
 
-const ItemHeader: React.FC<{ data: Data }> = ({ data }) => {
+const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   return (
     <View className={'flex flex-row items-center space-x-3'}>
       <UserAvatar url={data.user.avatar} />
@@ -22,7 +22,7 @@ const ItemHeader: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-const ItemImages: React.FC<{
+const HoleInfoImages: React.FC<{
   imgs?: string[]
 }> = ({ imgs }) => {
   return (
@@ -49,10 +49,10 @@ const ItemImages: React.FC<{
   )
 }
 
-const ItemBody: React.FC<{ data: Data }> = ({ data }) => {
+const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
   return (
     <View className={'flex flex-col space-y-3'}>
-      <ItemImages imgs={data?.imgs} />
+      <HoleInfoImages imgs={data?.imgs} />
       <View>
         <Badges data={data.tags} />
       </View>
@@ -61,7 +61,7 @@ const ItemBody: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-const ItemIcons: React.FC<{ data: Data }> = ({ data }) => {
+const HoleInfoIcons: React.FC<{ data: Data }> = ({ data }) => {
   const renderList = [
     {
       value: data.favoriteCounts,
@@ -85,20 +85,21 @@ const ItemIcons: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-export const HoleItem: React.FC<{
+interface Props {
   data: Data
   onPress?: Func
-}> = ({ data, onPress }) => {
+  header?: ReactNode
+  body?: ReactNode
+  bottom?: ReactNode
+}
+
+export function HoleInfo({ data, onPress, header, body, bottom }: Props) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View className={'flex flex-col space-y-3 p-4 bg-white rounded-lg mt-2'}>
-        <ItemHeader data={data} />
-        <View>
-          <ItemBody data={data} />
-        </View>
-        <View>
-          <ItemIcons data={data} />
-        </View>
+        <View>{header || <HoleInfoHeader data={data} />}</View>
+        <View>{body || <HoleInfoBody data={data} />}</View>
+        <View>{bottom || <HoleInfoIcons data={data} />}</View>
       </View>
     </TouchableWithoutFeedback>
   )

@@ -21,7 +21,7 @@ export function HolePostHeader() {
     onSuccess(data) {
       Toast.show({
         type: 'success',
-        text1: data.msg,
+        text1: data.msg as string,
       })
       navigation.goBack()
     },

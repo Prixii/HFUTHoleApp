@@ -77,7 +77,9 @@ export function useHoleDetail() {
 export function useHoleComment() {
   const params = useParams<{ id: number }>()
 
-  const query = useInfiniteQuery([SWRKeys.hole.comments, params.id], {
+  const key = [SWRKeys.hole.comments, params.id]
+
+  const query = useInfiniteQuery(key, {
     queryFn: ({ pageParam = 1 }) =>
       GetHoleDetailCommentsRequest({
         limit: 10,
@@ -93,9 +95,24 @@ export function useHoleComment() {
 
       return nextPage
     },
+    refetchOnMount: true,
   })
+
+  const client = useQueryClient()
+
+  const invalidateQuery = async () => {
+    client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
+      // 确保刷新时只更换第一组数据，其他组的数据全都销毁
+      oldData.pages = oldData.pages.slice(0, 1)
+      return oldData
+    })
+    await client.invalidateQueries(key, {
+      refetchPage: (lastPage, index) => index === 0,
+    })
+  }
 
   return {
     ...query,
+    invalidateQuery,
   }
 }

@@ -13,30 +13,13 @@ import { LoadingIndicator } from '@/components/LoadingIndicator'
 import { SkeletonLoading } from '@/components/Skeleton'
 import { useLinkTo, useNavigation } from '@react-navigation/native'
 import { HoleHeader, SelectListHoleListMode } from '@/pages/hole/header'
-
-const LoadMore = () => {
-  const { hasNextPage } = useHoleList()
-  const theme = useTheme()
-
-  return (
-    <View
-      className={'w-screen px-5 justify-center flex flex-row items-center py-4'}
-    >
-      {hasNextPage ? (
-        <LoadingIndicator />
-      ) : (
-        <Text style={{ color: theme.colors.secondary }}>
-          没有更多树洞了哦{getQAQFont('happy')}
-        </Text>
-      )}
-    </View>
-  )
-}
+import { LoadMore } from '@/components/LoadMore'
 
 export function HoleList() {
   const navigation = useNavigation()
 
-  const { data, fetchNextPage, isSuccess, invalidateQuery } = useHoleList()
+  const { data, fetchNextPage, isSuccess, invalidateQuery, hasNextPage } =
+    useHoleList()
 
   const onRefresh = async () => {
     await fetchNextPage()
@@ -56,7 +39,9 @@ export function HoleList() {
             onRefreshing={onRefresh}
             onTopRefresh={refetchData}
             ListHeaderComponent={HoleHeader}
-            ListFooterComponent={LoadMore}
+            ListFooterComponent={() => (
+              <LoadMore text={'没有更多树洞了哦'} hasNextPage={hasNextPage} />
+            )}
             renderItem={({ item: group, index }) => (
               <View className={'space-y-2'} key={index}>
                 {group.items.map((item) => (
