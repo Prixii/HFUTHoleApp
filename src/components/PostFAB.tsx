@@ -12,7 +12,7 @@ export function PostFAB(props: Partial<FABProps>) {
       color={'white'}
       mode={'flat'}
       {...props}
-      className={`absolute bottom-16 right-5 rounded-full p-1 ${props.className}`}
+      className={`absolute bottom-16 right-5 rounded-full ${props.className}`}
     />
   )
 }

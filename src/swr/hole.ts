@@ -13,6 +13,7 @@ import {
 import { useHoleListContext } from '@/shared/context/hole'
 import { useParams } from '@/shared/hooks/useParams'
 
+// TODO 重构逻辑
 export function useHoleList() {
   const { mode } = useHoleListContext()
 
@@ -65,12 +66,18 @@ export function useHoleList() {
 export function useHoleDetail() {
   const params = useParams<{ id: number }>()
 
+  const client = useQueryClient()
+
   const query = useQuery([SWRKeys.hole.detail, params.id], {
     queryFn: () => GetHoleDetailRequest({ id: params.id }),
   })
+  const invalidate = async () => {
+    await client.invalidateQueries([SWRKeys.hole.detail, params.id])
+  }
 
   return {
     ...query,
+    invalidate,
   }
 }
 

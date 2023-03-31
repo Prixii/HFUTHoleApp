@@ -9,4 +9,5 @@ declare interface IHole {
   tags: Tag[]
   voteTotalCount: number
   commentsCount: number
+  isLiked: boolean
 }

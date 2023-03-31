@@ -40,3 +40,19 @@ export function GetHoleDetailCommentsRequest(params: Id & IPagination) {
     params,
   })
 }
+
+export function PostLikeHoleRequest(data: Id) {
+  return request<IMutationResponse>({
+    method: 'POST',
+    url: '/hole/like',
+    data,
+  })
+}
+
+export function DeleteLikeHoleRequest(data: Id) {
+  return request<IMutationResponse>({
+    method: 'DELETE',
+    url: '/hole/like',
+    data,
+  })
+}

@@ -3,12 +3,14 @@ import {
   IconButtonProps,
 } from 'react-native-paper'
 
-export function IconButton(props: IconButtonProps) {
+export function IconButton(props: IconButtonProps & { transparent?: boolean }) {
   return (
     <RNPIconButton
       iconColor={'#00AB55'}
       {...props}
-      className={`bg-[#00AB55]/20 ${props.className}`}
+      className={`bg-[#00AB55]/20 ${props.transparent && 'bg-transparent'} ${
+        props.className
+      }`}
     />
   )
 }

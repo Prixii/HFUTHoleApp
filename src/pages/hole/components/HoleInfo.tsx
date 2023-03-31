@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Func } from '@/shared/types'
+import { Func, IClassName } from '@/shared/types'
 import { Image, TouchableWithoutFeedback, View } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
 import { Text } from 'react-native-paper'
@@ -85,7 +85,7 @@ const HoleInfoIcons: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-interface Props {
+interface Props extends IClassName {
   data: Data
   onPress?: Func
   header?: ReactNode
@@ -93,10 +93,19 @@ interface Props {
   bottom?: ReactNode
 }
 
-export function HoleInfo({ data, onPress, header, body, bottom }: Props) {
+export function HoleInfo({
+  data,
+  onPress,
+  header,
+  body,
+  bottom,
+  className,
+}: Props) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View className={'flex flex-col space-y-3 p-4 bg-white rounded-lg mt-2'}>
+      <View
+        className={`flex flex-col space-y-3 p-4 bg-white rounded-lg ${className}`}
+      >
         <View>{header || <HoleInfoHeader data={data} />}</View>
         <View>{body || <HoleInfoBody data={data} />}</View>
         <View>{bottom || <HoleInfoIcons data={data} />}</View>

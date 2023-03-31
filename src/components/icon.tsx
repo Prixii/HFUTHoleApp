@@ -2,6 +2,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import { IconProps } from 'react-native-vector-icons/Icon'
 import React from 'react'
+import { useTheme } from 'react-native-paper'
 
 export const Icons = (props: IconProps) => <MaterialIcon {...props} />
 
@@ -10,7 +11,15 @@ const withIconProps = (
   name: string
 ) => {
   return (props: Omit<IconProps, 'name'> & { name?: string }) => {
-    return <WrappedIconComponent name={name} {...props} />
+    const theme = useTheme()
+
+    return (
+      <WrappedIconComponent
+        name={name}
+        color={theme.colors.primary}
+        {...props}
+      />
+    )
   }
 }
 

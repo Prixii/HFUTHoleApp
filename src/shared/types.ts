@@ -9,3 +9,7 @@ export interface IPagination {
 export type AwaitAble<T = any> = Promise<T> | T
 
 export type Func<T = any> = (...args: any[]) => AwaitAble<T>
+
+export interface IClassName {
+  className?: string
+}

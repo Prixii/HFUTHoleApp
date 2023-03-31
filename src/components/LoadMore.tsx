@@ -1,4 +1,3 @@
-import { useHoleList } from '@/swr/hole'
 import { Text, useTheme } from 'react-native-paper'
 import { View } from 'react-native'
 import { LoadingIndicator } from '@/components/LoadingIndicator'
@@ -20,7 +19,7 @@ export function LoadMore(props: Props) {
       {props.hasNextPage ? (
         <LoadingIndicator />
       ) : (
-        <Text style={{ color: theme.colors.secondary }}>
+        <Text style={{ color: theme.colors.surfaceVariant }}>
           {`${props.text}${getQAQFont('happy')}`}
         </Text>
       )}
