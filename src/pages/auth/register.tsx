@@ -1,25 +1,15 @@
-import { ScrollView, View } from 'react-native'
+import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
 import { AuthView } from '@/pages/auth/AuthView'
-import { useMutation } from 'react-query'
 import { RegisterRequest } from '@/request/apis/auth'
 import { RegisterFormValidator } from '@/shared/validators/auth'
-import { AxiosError } from 'axios'
-import { useDebounceFn } from 'ahooks'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
-
-interface Inputs {
-  username: string
-
-  studentId: string
-
-  password: string
-
-  hfutPassword: string
-}
+import { Snackbar } from '@/components/snackbar/snackbar'
+import { useDebounce } from '@/shared/hooks/useDebounce'
+import { useAuthMutaion } from './utils'
 
 const RegisterForm = () => {
   const {
@@ -27,40 +17,48 @@ const RegisterForm = () => {
     control,
     handleSubmit,
     setError,
-  } = useForm<Inputs>({
+  } = useForm<RegisterFormValidator>({
     resolver: classValidatorResolver(RegisterFormValidator),
     mode: 'onChange',
   })
 
-  const mutation = useMutation(
-    (data: RegisterFormValidator) => RegisterRequest(data),
-    {
-      onError(error: AxiosError) {
-        console.log(error)
-      },
-    }
-  )
+  const mutation = useAuthMutaion<RegisterFormValidator>({
+    reqFunc: RegisterRequest,
+    setError,
+  })
 
-  const { run: onSubmit } = useDebounceFn((data: RegisterFormValidator) => {
-    console.log(data)
+  const onSubmit = useDebounce((data: RegisterFormValidator) => {
+    mutation.mutate({
+      ...data,
+      studentId: +data.studentId,
+    })
   })
 
   return (
     <View className={''}>
-      <Input<Inputs>
+      {errors?.reqFailedError && (
+        <View className={'py-3'}>
+          <Snackbar text={errors.reqFailedError.message} icon={'info'} error />
+        </View>
+      )}
+      <Input<RegisterFormValidator>
         control={control}
         name={'username'}
         label={'取一个好听的名字吧≖‿≖✧'}
       />
-      <Input<Inputs> control={control} name={'studentId'} label={'学号'} />
+      <Input<RegisterFormValidator>
+        control={control}
+        name={'studentId'}
+        label={'学号'}
+      />
 
-      <PasswordInput<Inputs>
+      <PasswordInput<RegisterFormValidator>
         control={control}
         name={'password'}
         label={'密码'}
       />
 
-      <PasswordInput<Inputs>
+      <PasswordInput<RegisterFormValidator>
         control={control}
         name={'hfutPassword'}
         label={'请输入信息门户密码'}

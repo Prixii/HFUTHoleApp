@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { WebViewPage } from '@/pages/web-view'
 import { Register } from '@/pages/auth/register'
 import { Login } from '@/pages/auth/login'
+import { Forget } from '@/pages/auth/forget'
 import { Hole } from '@/pages/hole/hole'
 import { observer } from 'mobx-react-lite'
 import { useAuthStore } from '@/store/auth'
@@ -37,6 +38,11 @@ function Auth() {
         name={'register'}
         component={Register}
         options={{ title: '注册' }}
+      />
+      <AuthStack.Screen
+        name={'forget'}
+        component={Forget}
+        options={{ title: '找回密码' }}
       />
     </AuthStack.Navigator>
   )

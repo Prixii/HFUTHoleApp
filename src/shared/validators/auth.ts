@@ -39,5 +39,12 @@ export class RegisterFormValidator extends LoginFormValidator {
   @Length(6, 30, { message: '密码格式错误，至少是六位' })
   @IsString()
   @IsNotEmpty()
-  hfutPassowrd: string
+  hfutPassword: string
+}
+
+export class ForgetFormValidator extends LoginFormValidator {
+  @Length(6, 30, { message: '密码格式错误，至少是六位' })
+  @IsString()
+  @IsNotEmpty()
+  hfutPassword: string
 }
