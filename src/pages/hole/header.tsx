@@ -8,6 +8,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import React, { useCallback } from 'react'
 import { useHoleListContext } from '@/shared/context/hole'
+import { HoleListMode } from '@/shared/enums'
 
 const SearchBar = () => {
   return (
@@ -20,11 +21,6 @@ const SearchBar = () => {
       <Text className={'text-gray-500'}>搜索</Text>
     </View>
   )
-}
-
-export enum HoleListMode {
-  random = 'random',
-  timeline = 'timeline',
 }
 
 const Animation = {

@@ -1,20 +1,26 @@
 import { View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import { useState } from 'react'
-
-export enum HoleDetailCommentMode {
-  all = 'all',
-  author = 'author',
-}
+import { HoleDetailCommentMode } from '@/shared/enums'
+import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
+import { useHoleComment } from '@/swr/hole'
+import { useCallback } from 'react'
 
 export function HoleDetailCommentHeader() {
   const theme = useTheme()
 
-  const [mode, setMode] = useState<HoleDetailCommentMode>(
-    HoleDetailCommentMode.all
-  )
+  const { mode, setMode } = useHoleDetailCommentContext()
 
   const isAllMode = mode === HoleDetailCommentMode.all
+
+  const toggleMode = useCallback(
+    (param: HoleDetailCommentMode) => {
+      if (param === mode) {
+        return
+      }
+      setMode(param)
+    },
+    [mode]
+  )
 
   return (
     <View className={'bg-white flex flex-row px-3 py-3'}>
@@ -22,14 +28,14 @@ export function HoleDetailCommentHeader() {
         <Text
           className={isAllMode && 'font-bold'}
           style={{ color: isAllMode ? 'black' : theme.colors.surfaceVariant }}
-          onPress={() => setMode(HoleDetailCommentMode.all)}
+          onPress={() => toggleMode(HoleDetailCommentMode.all)}
         >
           全部评论
         </Text>
         <Text
           className={!isAllMode && 'font-bold'}
           style={{ color: !isAllMode ? 'black' : theme.colors.surfaceVariant }}
-          onPress={() => setMode(HoleDetailCommentMode.author)}
+          onPress={() => toggleMode(HoleDetailCommentMode.author)}
         >
           只看洞主
         </Text>

@@ -1,7 +1,8 @@
 import { request } from '@/request/request'
 import { IPagination } from '@/shared/types'
 import { PostHoleValidator } from '@/shared/validators/hole'
-import { HoleListMode } from '@/pages/hole/header'
+import { HoleDetailCommentMode, HoleListMode } from '@/shared/enums'
+import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
 
 interface Id {
   id: number
@@ -33,11 +34,21 @@ export function GetHoleDetailRequest(params: Id) {
   })
 }
 
-export function GetHoleDetailCommentsRequest(params: Id & IPagination) {
+export function GetHoleDetailCommentsRequest(
+  params: Id & IPagination & { mode: HoleDetailCommentMode }
+) {
   return request<IHoleCommentListResponse>({
     method: 'GET',
     url: '/hole/comment',
     params,
+  })
+}
+
+export function PostHoleDetailCommentRequest(data: HoleDetailPostComment) {
+  return request<IMutationResponse>({
+    method: 'POST',
+    url: '/hole/comment',
+    data,
   })
 }
 

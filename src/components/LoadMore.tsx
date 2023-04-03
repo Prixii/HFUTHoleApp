@@ -14,7 +14,9 @@ export function LoadMore(props: Props) {
 
   return (
     <View
-      className={'w-screen px-5 justify-center flex flex-row items-center py-4'}
+      className={
+        'w-screen px-5 justify-center flex flex-row items-center py-10'
+      }
     >
       {props.hasNextPage ? (
         <LoadingIndicator />

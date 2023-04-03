@@ -1,7 +1,6 @@
 import {
   Control,
   Controller,
-  FieldErrors,
   FieldPath,
   get,
   UseControllerProps,
@@ -27,6 +26,8 @@ export function Input<T extends object = PlainObject>({
   rules,
   ...props
 }: Props<T>) {
+  const theme = useTheme()
+
   const error = get(control._formState.errors, name)
 
   return (
@@ -52,7 +53,11 @@ export function Input<T extends object = PlainObject>({
               ...((props?.style as object) || {}),
             }}
           />
-          <HelperText type="error" visible={error}>
+          <HelperText
+            type="error"
+            visible={error}
+            style={{ color: theme.colors.error }}
+          >
             {error?.message}
           </HelperText>
         </>

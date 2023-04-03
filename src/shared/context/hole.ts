@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { PostHoleValidator } from '@/shared/validators/hole'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator/dist/class-validator'
 import { useState } from 'react'
-import { HoleListMode } from '@/pages/hole/header'
+import { HoleListMode } from '@/shared/enums'
 
 export const [useHolePostContext, HolePostContextProvider] = createStore(() => {
   const [tags, setTags] = useImmer<string[]>([])
