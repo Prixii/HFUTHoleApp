@@ -6,22 +6,15 @@ import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
 import { AuthView } from '@/pages/auth/AuthView'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
-import { useDebounceFn } from 'ahooks'
-import { useMutation } from 'react-query'
 import { LoginRequest } from '@/request/apis/auth'
-import { AxiosError } from 'axios'
 import { Snackbar } from '@/components/snackbar/snackbar'
 import { Button } from '@/components/button'
-import { useLinkTo } from '@react-navigation/native'
 import { LoginFormValidator } from '@/shared/validators/auth'
-import { getQAQFont } from '@/shared/utils/utils'
-import { useAuthStore } from '@/store/auth'
 import { observer } from 'mobx-react-lite'
+import { useAuthMutaion } from './utils'
+import { useDebounce } from '@/shared/hooks/useDebounce'
 
 const LoginForm = observer(() => {
-  const linkTo = useLinkTo()
-  const store = useAuthStore()
-
   const {
     formState: { errors },
     control,
@@ -32,33 +25,17 @@ const LoginForm = observer(() => {
     mode: 'onChange',
   })
 
-  const mutation = useMutation({
-    mutationFn: (data: LoginFormValidator) => LoginRequest(data),
-    onError(error: AxiosError) {
-      if (error.code) {
-        setError('reqFailedError', {
-          message:
-            (error?.response?.data as any)?.msg ||
-            `网络连接失败，可能是服务器炸了${getQAQFont('sadness')}`,
-        })
-      }
-    },
-    onSuccess(data) {
-      store.login({ token: data.data.token })
-      linkTo('/hole/index')
-    },
-    retry: false,
+  const mutation = useAuthMutaion<LoginFormValidator>({
+    reqFunc: LoginRequest,
+    setError,
   })
 
-  const { run: onSubmit } = useDebounceFn(
-    (data: LoginFormValidator) => {
-      mutation.mutate({
-        ...data,
-        studentId: +data.studentId,
-      })
-    },
-    { wait: 300 }
-  )
+  const onSubmit = useDebounce((data: LoginFormValidator) => {
+    mutation.mutate({
+      ...data,
+      studentId: +data.studentId,
+    })
+  })
 
   return (
     <View className={'grid space-y-3'}>
@@ -82,7 +59,7 @@ const LoginForm = observer(() => {
 
       <View className={'flex flex-row justify-between items-center'}>
         <Checkbox status={'checked'} />
-        <Link size={'xs'} to={'/'}>
+        <Link size={'xs'} to={'forget'}>
           忘记密码？点我找回
         </Link>
       </View>

@@ -1,6 +1,7 @@
 import {
   LoginFormValidator,
   RegisterFormValidator,
+  ForgetFormValidator,
 } from '@/shared/validators/auth'
 import axios, { AxiosRequestConfig } from 'axios/index'
 import { Config } from '@/shared/config'
@@ -29,6 +30,14 @@ export function LoginRequest(data: LoginFormValidator) {
 export function RegisterRequest(data: RegisterFormValidator) {
   return request<IAuthResponse>({
     url: '/auth/register',
+    method: 'post',
+    data,
+  })
+}
+
+export function ForgetRequest(data: ForgetFormValidator) {
+  return request<IAuthResponse>({
+    url: '/auth/forget',
     method: 'post',
     data,
   })
