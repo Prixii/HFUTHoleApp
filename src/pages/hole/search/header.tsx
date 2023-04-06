@@ -1,29 +1,55 @@
 import { BackAndButtonHeader } from '@/components/header/BackAndButtonHeader'
 import { View } from 'react-native'
-import { Input } from '@/components/form/Input'
-import { useForm } from 'react-hook-form'
+import { FieldErrors, useForm } from 'react-hook-form'
 import { HoleSearchValidator } from '@/shared/validators/hole/search'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { useNavigation } from '@react-navigation/native'
 import { useParams } from '@/shared/hooks/useParams'
 import { useTheme } from 'react-native-paper'
 import { ISearchResultParams } from '@/pages/hole/search/result/result'
+import { CloseIcon, SearchIcon } from '@/components/icon'
+import { SearchInput } from '@/components/form/Search'
+import { Toast } from '@/shared/utils/toast'
+import { useSearchHistoryStore } from '@/store/hole/search'
 
 export function HoleSearchHeader() {
+  const theme = useTheme()
   const params = useParams<ISearchResultParams>()
+  const navigation = useNavigation()
 
-  const { control, handleSubmit } = useForm<HoleSearchValidator>({
+  const store = useSearchHistoryStore()
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { dirtyFields },
+  } = useForm<HoleSearchValidator>({
     defaultValues: {
       keywords: params?.keywords || '',
     },
   })
-  const navigation = useNavigation()
 
   const onSubmit = useDebounce((data: HoleSearchValidator) => {
+    store.operate((draft) => {
+      draft.unshift(data.keywords)
+    })
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     navigation.navigate('result', { keywords: data.keywords })
   })
 
-  const theme = useTheme()
+  const onError = (error: FieldErrors<HoleSearchValidator>) => {
+    Toast.error({
+      text1: error.keywords.message,
+    })
+  }
+
+  const deleteInput = () => {
+    setValue('keywords', '', { shouldDirty: true })
+  }
+
+  const onHandleSubmit = handleSubmit(onSubmit, onError)
 
   return (
     <View
@@ -32,19 +58,36 @@ export function HoleSearchHeader() {
       }}
     >
       <BackAndButtonHeader
-        onPress={handleSubmit(onSubmit)}
+        onPress={onHandleSubmit}
         loading={false}
         submitText={'搜索'}
-      />
-      <Input
-        name={'keywords'}
-        control={control}
-        placeholder={'搜索内容、#标签、#树洞号'}
-        outlineStyle={{
-          borderWidth: 0,
-          borderBottomWidth: 1,
-        }}
-      />
+        buttonMode={'text'}
+      >
+        <View
+          className={
+            'flex flex-[5] flex-row space-x-2 rounded-full items-center px-2 py-1'
+          }
+          style={{
+            backgroundColor: theme.colors.onBackground,
+          }}
+        >
+          <SearchIcon size={16} />
+          <View className={'h-6 flex-1'}>
+            <SearchInput
+              name={'keywords'}
+              control={control}
+              className={'text-xs'}
+              cursorColor={theme.colors.primary}
+              placeholder={'搜索正文内容、#标签、#树洞号'}
+              maxLength={100}
+              onSubmitEditing={onHandleSubmit}
+            />
+          </View>
+          {dirtyFields.keywords && (
+            <CloseIcon size={16} onPress={deleteInput} />
+          )}
+        </View>
+      </BackAndButtonHeader>
     </View>
   )
 }

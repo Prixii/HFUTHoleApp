@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { makeAutoPersistObservable } from '@/store/utils'
 import { makeAutoObservable } from 'mobx'
 import { makePersistable } from 'mobx-persist-store'
 

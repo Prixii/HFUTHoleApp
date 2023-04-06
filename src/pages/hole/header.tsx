@@ -1,5 +1,5 @@
-import { Text } from 'react-native-paper'
-import { Pressable, TouchableOpacity, View } from 'react-native'
+import { Text, useTheme } from 'react-native-paper'
+import { Alert, Pressable, TouchableOpacity, View } from 'react-native'
 import { SearchIcon } from '@/components/icon'
 import Animated, {
   useAnimatedStyle,
@@ -10,18 +10,27 @@ import React, { useCallback } from 'react'
 import { useHoleListContext } from '@/shared/context/hole'
 import { HoleListMode } from '@/shared/enums'
 import { useLinkTo } from '@react-navigation/native'
+import { useUserProfile } from '@/swr/user/profile'
+import { UserAvatar } from '@/components/UserAvatar'
+import { Box, Popover } from 'native-base'
+import { Button } from '@/components/button'
+import { useAuthStore } from '@/store/auth'
+import { observer } from 'mobx-react-lite'
+import { useAuth } from '@/shared/hooks/useAuth'
 
 const SearchBar = () => {
   const linkTo = useLinkTo()
+  const theme = useTheme()
 
   return (
     <Pressable onPress={() => linkTo('/search')}>
       <View
         className={
-          'bg-white/40 rounded-full w-full py-2 px-3 flex flex-row space-x-2 items-center'
+          'rounded-full w-full py-2 px-3 flex flex-row space-x-2 items-center'
         }
+        style={{ backgroundColor: theme.colors.onBackground }}
       >
-        <SearchIcon color={'gray'} size={20} />
+        <SearchIcon size={20} />
         <Text className={'text-gray-500'}>搜索</Text>
       </View>
     </Pressable>
@@ -39,7 +48,7 @@ const Animation = {
   },
 }
 
-export const SelectListHoleListMode = () => {
+const SelectListHoleListMode = () => {
   const { mode, setMode } = useHoleListContext()
 
   const randomFontsizeShared = useDerivedValue(() => {
@@ -91,7 +100,7 @@ export const SelectListHoleListMode = () => {
   )
 
   return (
-    <View className={'w-full flex flex-row space-x-1 items-center'}>
+    <View className={'flex flex-row space-x-1 items-center'}>
       <TouchableOpacity onPress={() => handleToggle(HoleListMode.random)}>
         <Animated.Text style={[randomStyle]}>随机漫步</Animated.Text>
       </TouchableOpacity>
@@ -108,10 +117,46 @@ export const SelectListHoleListMode = () => {
   )
 }
 
+const UserProfile = observer(() => {
+  const { data } = useUserProfile()
+  const initialFocusRef = React.useRef(null)
+
+  const { logout } = useAuth()
+
+  return (
+    <View>
+      <Box w="100%" alignItems="center">
+        <Popover
+          initialFocusRef={initialFocusRef}
+          trigger={(triggerProps) => {
+            return (
+              <TouchableOpacity {...triggerProps}>
+                <UserAvatar url={data?.avatar} size={40} />
+              </TouchableOpacity>
+            )
+          }}
+        >
+          <Popover.Content width="56" borderWidth={0}>
+            <Popover.Arrow borderWidth={0} />
+            <Popover.Body>
+              <Button mode={'text'} onPress={logout}>
+                注销
+              </Button>
+            </Popover.Body>
+          </Popover.Content>
+        </Popover>
+      </Box>
+    </View>
+  )
+})
+
 export function HoleHeader() {
   return (
-    <View className={'bg-transparent grid space-y-2'}>
-      <SelectListHoleListMode />
+    <View className={'bg-transparent grid space-y-2 px-2'}>
+      <View className={'flex flex-row justify-between'}>
+        <SelectListHoleListMode />
+        <UserProfile />
+      </View>
       <View>
         <SearchBar />
       </View>

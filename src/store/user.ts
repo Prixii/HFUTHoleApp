@@ -1,10 +1,23 @@
 import { makeAutoPersistObservable } from '@/store/utils'
 import { useState } from 'react'
 import { makeAutoObservable } from 'mobx'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 class User {
+  meta: IUserProfile
+
   constructor() {
     makeAutoObservable(this)
+
+    makeAutoPersistObservable(this, {
+      name: User.name,
+      properties: ['meta'],
+      storage: AsyncStorage,
+    })
+  }
+
+  setMeta(meta: IUserProfile) {
+    this.meta = meta
   }
 }
 

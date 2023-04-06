@@ -1,6 +1,5 @@
-import { HoleHeader } from '@/pages/hole/header'
 import { LoadMore } from '@/components/LoadMore'
-import { View } from 'react-native'
+import { FlatListProps, View } from 'react-native'
 import { HoleInfo } from '@/pages/hole/components/HoleInfo'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
 import { UseInfiniteQueryResult } from 'react-query'
@@ -11,6 +10,7 @@ import { Func } from '@/shared/types'
 // TODO 完善类型
 type Props = UseInfiniteQueryResult<IHoleListResponse, unknown> & {
   invalidateQuery: Func
+  ListHeaderComponent?: FlatListProps<any>['ListHeaderComponent']
 }
 
 export function RefreshableHoleList({
@@ -19,6 +19,7 @@ export function RefreshableHoleList({
   hasNextPage,
   fetchNextPage,
   invalidateQuery,
+  ListHeaderComponent,
 }: Props) {
   const navigation = useNavigation()
 
@@ -27,7 +28,7 @@ export function RefreshableHoleList({
       data={data?.pages}
       onRefreshing={fetchNextPage}
       onTopRefresh={invalidateQuery}
-      ListHeaderComponent={HoleHeader}
+      ListHeaderComponent={ListHeaderComponent}
       ListFooterComponent={() => (
         <LoadMore text={'没有更多树洞了哦'} hasNextPage={hasNextPage} />
       )}
@@ -37,7 +38,13 @@ export function RefreshableHoleList({
             {group.items.map((item) => (
               <HoleInfo
                 data={item}
-                onPress={() => navigation.navigate('detail', { id: item.id })}
+                onPress={() =>
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  navigation.navigate('detail', {
+                    id: item.id,
+                  })
+                }
               />
             ))}
           </View>

@@ -34,4 +34,6 @@ export const SearchIcon = withMaterialIcon('search')
 
 export const DeleteIcon = withMaterialIcon('delete')
 
+export const CloseIcon = withMaterialIcon('close')
+
 export const AddIcon = withMaterialIcon('add')

@@ -2,7 +2,6 @@ import { View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { HoleDetailCommentMode } from '@/shared/enums'
 import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
-import { useHoleComment } from '@/swr/hole'
 import { useCallback } from 'react'
 
 export function HoleDetailCommentHeader() {

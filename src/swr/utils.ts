@@ -5,4 +5,7 @@ export const SWRKeys = {
     detail: 'hole.detail',
     comments: 'hole.comments',
   },
+  user: {
+    profile: 'user.profile',
+  },
 }
