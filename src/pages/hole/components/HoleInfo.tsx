@@ -104,7 +104,7 @@ export function HoleInfo({
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View
-        className={`flex flex-col space-y-3 p-4 bg-white rounded-lg ${className}`}
+        className={`flex flex-col space-y-3 p-4 bg-white rounded-lg mt-2 ${className}`}
       >
         <View>{header || <HoleInfoHeader data={data} />}</View>
         <View>{body || <HoleInfoBody data={data} />}</View>

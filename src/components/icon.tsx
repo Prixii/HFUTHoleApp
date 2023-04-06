@@ -32,4 +32,6 @@ export const CommentIcon = withMaterialIcon('chat')
 
 export const SearchIcon = withMaterialIcon('search')
 
+export const DeleteIcon = withMaterialIcon('delete')
+
 export const AddIcon = withMaterialIcon('add')

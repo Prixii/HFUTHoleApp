@@ -9,7 +9,7 @@ import { Button } from 'react-native-paper'
 import { ForgetRequest } from '@/request/apis/auth'
 import { observer } from 'mobx-react-lite'
 import { useDebounce } from '@/shared/hooks/useDebounce'
-import { useAuthMutaion } from './utils'
+import { useAuthMutation } from './utils'
 
 const ForgetForm = observer(() => {
   const {
@@ -22,7 +22,7 @@ const ForgetForm = observer(() => {
     mode: 'onChange',
   })
 
-  const mutation = useAuthMutaion({
+  const mutation = useAuthMutation({
     reqFunc: ForgetRequest,
     setError,
   })

@@ -7,7 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 
 export const Config = {
   request: {
-    baseURL: 'http://172.21.76.39:8000/',
+    baseURL: 'http://192.168.105.34:8000/',
   },
 }
 

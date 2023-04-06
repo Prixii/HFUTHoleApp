@@ -37,7 +37,7 @@ const Form = ({ toggle }: { toggle: Func }) => {
       hideKeyboard()
       refetch<IHoleCommentListResponse>({
         refetchPage: (page, index) => {
-          return page.meta.totalPages - 1 === index
+          return Math.max(page.meta.totalPages - 1, 0) === index
         },
       })
     },
@@ -67,10 +67,10 @@ const Form = ({ toggle }: { toggle: Func }) => {
           name={'body'}
           control={control}
           multiline={true}
+          outlineStyle={{ borderWidth: 0 }}
           style={{
             height: ScreenHeight * 0.2,
           }}
-          outlineStyle={{ borderWidth: 0 }}
           placeholder={`请友善发言，我相信大家不想失去这个平台${getQAQFont(
             'happy'
           )}`}

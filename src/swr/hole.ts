@@ -9,11 +9,12 @@ import {
   GetHoleDetailCommentsRequest,
   GetHoleDetailRequest,
   GetHoleListRequest,
+  SearchHoleRequest,
 } from '@/request/apis/hole'
 import { useHoleListContext } from '@/shared/context/hole'
 import { useParams } from '@/shared/hooks/useParams'
 import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
-import { Updater } from 'react-query/types/core/utils'
+import { ISearchResultParams } from '@/pages/hole/search/result/result'
 
 // TODO 重构逻辑
 export function useHoleList() {
@@ -91,12 +92,57 @@ export function useHoleComment() {
 
   const query = useInfiniteQuery<IHoleCommentListResponse>(key, {
     queryFn: ({ pageParam = 1 }) => {
-      console.log(params)
       return GetHoleDetailCommentsRequest({
         limit: 10,
         page: pageParam,
         id: params.id,
         mode,
+      })
+    },
+    getNextPageParam: (lastPages) => {
+      const nextPage = lastPages.meta.currentPage + 1
+
+      if (nextPage > lastPages.meta.totalPages) {
+        return
+      }
+
+      return nextPage
+    },
+    refetchOnMount: true,
+  })
+
+  const client = useQueryClient()
+
+  const invalidateQuery = async (onlyFirstGroup = true) => {
+    client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
+      if (onlyFirstGroup) {
+        // 确保刷新时只更换第一组数据，其他组的数据全都销毁
+        oldData.pages = oldData.pages.slice(0, 1)
+      }
+      return oldData
+    })
+    await client.invalidateQueries(key, {
+      refetchPage: (lastPage, index) => index === 0,
+    })
+  }
+
+  return {
+    ...query,
+    invalidateQuery,
+  }
+}
+
+export function useHoleSearchResult() {
+  const params = useParams<ISearchResultParams>()
+
+  const key = params.keywords
+
+  const query = useInfiniteQuery(key, {
+    queryFn: ({ pageParam = 1 }) => {
+      return SearchHoleRequest({
+        limit: 10,
+        page: pageParam,
+        keywords: key,
       })
     },
     getNextPageParam: (lastPages) => {

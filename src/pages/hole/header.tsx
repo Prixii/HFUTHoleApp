@@ -1,5 +1,5 @@
-import { Appbar, Text } from 'react-native-paper'
-import { TouchableOpacity, View } from 'react-native'
+import { Text } from 'react-native-paper'
+import { Pressable, TouchableOpacity, View } from 'react-native'
 import { SearchIcon } from '@/components/icon'
 import Animated, {
   useAnimatedStyle,
@@ -9,17 +9,22 @@ import Animated, {
 import React, { useCallback } from 'react'
 import { useHoleListContext } from '@/shared/context/hole'
 import { HoleListMode } from '@/shared/enums'
+import { useLinkTo } from '@react-navigation/native'
 
 const SearchBar = () => {
+  const linkTo = useLinkTo()
+
   return (
-    <View
-      className={
-        'bg-white/40 rounded-full w-full py-2 px-3 flex flex-row space-x-2 items-center'
-      }
-    >
-      <SearchIcon color={'gray'} size={20} />
-      <Text className={'text-gray-500'}>搜索</Text>
-    </View>
+    <Pressable onPress={() => linkTo('/search')}>
+      <View
+        className={
+          'bg-white/40 rounded-full w-full py-2 px-3 flex flex-row space-x-2 items-center'
+        }
+      >
+        <SearchIcon color={'gray'} size={20} />
+        <Text className={'text-gray-500'}>搜索</Text>
+      </View>
+    </Pressable>
   )
 }
 

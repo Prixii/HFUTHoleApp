@@ -14,7 +14,7 @@ export function BaseAppBar(props: Props) {
   return (
     <Appbar
       className={
-        'w-screen overflow-hidden absolute bg-white flex flex-row space-between h-20 border-b-[1px] border-black/5'
+        'w-screen overflow-hidden bg-white flex flex-row space-between h-20 border-b-[1px] border-black/5'
       }
     >
       <Appbar.BackAction onPress={() => navigation.goBack()} />

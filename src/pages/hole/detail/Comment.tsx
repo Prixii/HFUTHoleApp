@@ -38,7 +38,7 @@ export function HoleDetailComment() {
   }
 
   return (
-    <View>
+    <View className={'h-full'}>
       {isCommentSuccess && isSuccess && (
         <RefreshingFlatList
           onRefreshing={onRefresh}

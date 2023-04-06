@@ -1,3 +1,5 @@
+import { PlainObject } from '@/shared/types/utils'
+
 export type InferArrayItem<T extends any[]> = T extends (infer R)[] ? R : never
 
 export interface IPagination {
@@ -15,3 +17,5 @@ export type AwaitFunc<Args = any, R = any> = (...args: Args[]) => Promise<R>
 export interface IClassName {
   className?: string
 }
+
+export type PaginateAble<T> = IPagination & T

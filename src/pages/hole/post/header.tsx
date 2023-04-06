@@ -1,13 +1,11 @@
-import { IconButton } from '@/components/IconButton'
-import { View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { useMutation } from 'react-query'
 import { PostHoleValidator } from '@/shared/validators/hole'
 import { PostHoleRequest } from '@/request/apis/hole'
 import Toast from 'react-native-toast-message'
 import { useHolePostContext } from '@/shared/context/hole'
 import { useDebounce } from '@/shared/hooks/useDebounce'
-import { Button } from '@/components/button'
+import { BackAndButtonHeader } from '@/components/header/BackAndButtonHeader'
+import { useNavigation } from '@react-navigation/native'
 
 export function HolePostHeader() {
   const navigation = useNavigation()
@@ -21,7 +19,7 @@ export function HolePostHeader() {
     onSuccess(data) {
       Toast.show({
         type: 'success',
-        text1: data.msg as string,
+        text1: (data.msg as string) || '成功发布树洞',
       })
       navigation.goBack()
     },
@@ -32,21 +30,10 @@ export function HolePostHeader() {
   })
 
   return (
-    <View className={'flex flex-row justify-between items-center'}>
-      <IconButton
-        icon={'close'}
-        className={'bg-transparent'}
-        onPress={() => navigation.goBack()}
-      />
-      <View>
-        <Button
-          mode="contained"
-          onPress={handleSubmit(onSubmit)}
-          loading={mutation.isLoading}
-        >
-          发布
-        </Button>
-      </View>
-    </View>
+    <BackAndButtonHeader
+      onPress={handleSubmit(onSubmit)}
+      loading={mutation.isLoading}
+      submitText={'发布'}
+    />
   )
 }

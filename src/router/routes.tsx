@@ -8,6 +8,11 @@ import { observer } from 'mobx-react-lite'
 import { useAuthStore } from '@/store/auth'
 import { HolePost } from '@/pages/hole/post/post'
 import { HoleDetail } from '@/pages/hole/detail/detail'
+import { HoleSearch } from '@/pages/hole/search/search'
+import { HoleSearchResult } from '@/pages/hole/search/result/result'
+import { Text } from 'react-native'
+import { HoleSearchHeader } from '@/pages/hole/search/header'
+import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
@@ -48,6 +53,19 @@ function Auth() {
   )
 }
 
+const HoleSearchStacks = () => {
+  return (
+    <HoleStack.Navigator
+      screenOptions={{
+        header: () => <HoleSearchHeader />,
+      }}
+    >
+      <HoleStack.Screen name={'search'} component={HoleSearch} />
+      <HoleStack.Screen name={'result'} component={HoleSearchResult} />
+    </HoleStack.Navigator>
+  )
+}
+
 const HoleStacks = () => {
   return (
     <HoleStack.Navigator
@@ -57,7 +75,15 @@ const HoleStacks = () => {
     >
       <HoleStack.Screen name={'index'} component={Hole} />
       <HoleStack.Screen name={'post'} component={HolePost} />
-      <HoleStack.Screen name={'detail'} component={HoleDetail} />
+      <HoleStack.Screen
+        options={{
+          headerShown: true,
+          header: () => <HoleDetailHeader />,
+        }}
+        name={'detail'}
+        component={HoleDetail}
+      />
+      <HoleStack.Screen name={'search'} component={HoleSearchStacks} />
     </HoleStack.Navigator>
   )
 }

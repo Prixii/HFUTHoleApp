@@ -9,7 +9,7 @@ import { RegisterFormValidator } from '@/shared/validators/auth'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { Snackbar } from '@/components/snackbar/snackbar'
 import { useDebounce } from '@/shared/hooks/useDebounce'
-import { useAuthMutaion } from './utils'
+import { useAuthMutation } from './utils'
 
 const RegisterForm = () => {
   const {
@@ -22,7 +22,7 @@ const RegisterForm = () => {
     mode: 'onChange',
   })
 
-  const mutation = useAuthMutaion<RegisterFormValidator>({
+  const mutation = useAuthMutation<RegisterFormValidator>({
     reqFunc: RegisterRequest,
     setError,
   })

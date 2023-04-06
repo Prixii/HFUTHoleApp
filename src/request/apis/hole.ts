@@ -1,15 +1,16 @@
 import { request } from '@/request/request'
-import { IPagination } from '@/shared/types'
+import { PaginateAble } from '@/shared/types'
 import { PostHoleValidator } from '@/shared/validators/hole'
 import { HoleDetailCommentMode, HoleListMode } from '@/shared/enums'
 import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
+import { HoleSearchValidator } from '@/shared/validators/hole/search'
 
 interface Id {
   id: number
 }
 
 export function GetHoleListRequest(
-  params: IPagination & { mode: HoleListMode }
+  params: PaginateAble<{ mode: HoleListMode }>
 ) {
   return request<IHoleListResponse>({
     method: 'GET',
@@ -35,7 +36,7 @@ export function GetHoleDetailRequest(params: Id) {
 }
 
 export function GetHoleDetailCommentsRequest(
-  params: Id & IPagination & { mode: HoleDetailCommentMode }
+  params: PaginateAble<{ mode: HoleDetailCommentMode } & Id>
 ) {
   return request<IHoleCommentListResponse>({
     method: 'GET',
@@ -65,5 +66,13 @@ export function DeleteLikeHoleRequest(data: Id) {
     method: 'DELETE',
     url: '/hole/like',
     data,
+  })
+}
+
+export function SearchHoleRequest(params: PaginateAble<HoleSearchValidator>) {
+  return request({
+    method: 'GET',
+    url: '/hole/search',
+    params,
   })
 }

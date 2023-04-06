@@ -9,7 +9,24 @@ export function Page(props: ViewProps) {
     <SafeAreaView>
       <View
         {...props}
-        className={`min-h-screen w-full ${props.className}`}
+        className={`min-h-screen w-full px-2 ${props.className}`}
+        style={{
+          backgroundColor: theme.colors.background,
+        }}
+      />
+    </SafeAreaView>
+  )
+}
+
+// 不带px-2的page，RN机制有点蛋疼
+export function PlainPage(props: ViewProps) {
+  const theme = useTheme()
+
+  return (
+    <SafeAreaView>
+      <View
+        {...props}
+        className={`min-h-100vh w-full px-0 ${props.className}`}
         style={{
           backgroundColor: theme.colors.background,
         }}

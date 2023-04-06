@@ -11,7 +11,7 @@ import { Snackbar } from '@/components/snackbar/snackbar'
 import { Button } from '@/components/button'
 import { LoginFormValidator } from '@/shared/validators/auth'
 import { observer } from 'mobx-react-lite'
-import { useAuthMutaion } from './utils'
+import { useAuthMutation } from './utils'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 
 const LoginForm = observer(() => {
@@ -25,7 +25,7 @@ const LoginForm = observer(() => {
     mode: 'onChange',
   })
 
-  const mutation = useAuthMutaion<LoginFormValidator>({
+  const mutation = useAuthMutation<LoginFormValidator>({
     reqFunc: LoginRequest,
     setError,
   })

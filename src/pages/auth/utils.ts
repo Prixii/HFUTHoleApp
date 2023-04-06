@@ -11,7 +11,7 @@ interface Options<T extends FieldValues> {
   setError: UseFormSetError<T & { reqFailedError: string }>
 }
 
-export function useAuthMutaion<T extends FieldValues>(options: Options<T>) {
+export function useAuthMutation<T extends FieldValues>(options: Options<T>) {
   const linkTo = useLinkTo()
   const store = useAuthStore()
 
