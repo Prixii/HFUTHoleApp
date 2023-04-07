@@ -1,5 +1,5 @@
 import { Text, useTheme } from 'react-native-paper'
-import { Alert, Pressable, TouchableOpacity, View } from 'react-native'
+import { Pressable, TouchableOpacity, View } from 'react-native'
 import { SearchIcon } from '@/components/icon'
 import Animated, {
   useAnimatedStyle,

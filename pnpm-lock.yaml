@@ -45,6 +45,7 @@ specifiers:
   react-hook-form: ^7.43.1
   react-native: 0.70.5
   react-native-gesture-handler: ~2.8.0
+  react-native-image-zoom-viewer: ^3.0.1
   react-native-paper: ^5.1.2
   react-native-reanimated: ~2.12.0
   react-native-safe-area-context: 4.4.1
@@ -90,6 +91,7 @@ dependencies:
   react-hook-form: 7.43.8_react@18.1.0
   react-native: 0.70.5_rnpvdz5p36pviilrsprn2ditma
   react-native-gesture-handler: 2.8.0_tj3nonr5gneraukzjkxpsiy7yu
+  react-native-image-zoom-viewer: 3.0.1_tj3nonr5gneraukzjkxpsiy7yu
   react-native-paper: 5.5.1_j4s4rhr2qc6fx6xx2vngn7raku
   react-native-reanimated: 2.12.0_kblrerclldtb7sxeyjogksllmy
   react-native-safe-area-context: 4.4.1_tj3nonr5gneraukzjkxpsiy7yu
@@ -4490,7 +4492,6 @@ packages:
 
   /bluebird/3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
-    dev: false
 
   /blueimp-md5/2.19.0:
     resolution: {integrity: sha512-DRQrD6gJyy8FbiE4s+bDoXS9hiW3Vbx5uCdwvcCf3zLHL+Iv7LtGHLpr+GZV8rHG8tK766FGYBwRbu8pELTt+w==}
@@ -4813,7 +4814,7 @@ packages:
       minipass-pipeline: 1.2.4
       mkdirp: 1.0.4
       p-map: 4.0.0
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 3.0.2
       ssri: 8.0.1
       tar: 6.1.13
@@ -10489,14 +10490,6 @@ packages:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
 
-  /promise-inflight/1.0.1:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-
   /promise-inflight/1.0.1_bluebird@3.7.2:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
     peerDependencies:
@@ -10506,7 +10499,6 @@ packages:
         optional: true
     dependencies:
       bluebird: 3.7.2
-    dev: false
 
   /promise/7.3.1:
     resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
@@ -10815,6 +10807,27 @@ packages:
 
   /react-native-gradle-plugin/0.70.3:
     resolution: {integrity: sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A==}
+
+  /react-native-image-pan-zoom/2.1.12_tj3nonr5gneraukzjkxpsiy7yu:
+    resolution: {integrity: sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      react: 18.1.0
+      react-native: 0.70.5_rnpvdz5p36pviilrsprn2ditma
+    dev: false
+
+  /react-native-image-zoom-viewer/3.0.1_tj3nonr5gneraukzjkxpsiy7yu:
+    resolution: {integrity: sha512-la6s5DNSuq4GCRLsi5CZ29FPjgTpdCuGIRdO5T9rUrAtxrlpBPhhSnHrbmPVxsdtOUvxHacTh2Gfa9+RraMZQA==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      react: 18.1.0
+      react-native: 0.70.5_rnpvdz5p36pviilrsprn2ditma
+      react-native-image-pan-zoom: 2.1.12_tj3nonr5gneraukzjkxpsiy7yu
+    dev: false
 
   /react-native-paper/5.5.1_j4s4rhr2qc6fx6xx2vngn7raku:
     resolution: {integrity: sha512-IEk7fJwQp5+8sY8+zPTie2wbKrS72vOyFCJdatjoYGuiz55BiTn8JJanqKIu0IQFKZjiGAZPlzM44cCWrEkTPw==}
