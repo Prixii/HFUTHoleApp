@@ -31,3 +31,17 @@ export function formatDate(time: string) {
 
 export const { width: ScreenWidth, height: ScreenHeight } =
   Dimensions.get('screen')
+
+export const greetingText = () => {
+  const currentDate = new Date()
+  // 凌晨 早上 中午 晚上
+  const dayPeriod = currentDate.getHours()
+  const qaq = getRandomQAQ('happy')[0]
+  return dayPeriod < 6
+    ? ['凌晨了', `要记得休息噢，${qaq}`]
+    : dayPeriod > 6 && dayPeriod < 12
+    ? ['早上好呀', `今天又是充满希望的一天${qaq}`]
+    : dayPeriod < 18
+    ? ['下午好', `快来喝一杯下午茶吧${qaq}`]
+    : ['晚上好', '不要熬夜到太晚哦٩(ˊ〇ˋ*)و']
+}

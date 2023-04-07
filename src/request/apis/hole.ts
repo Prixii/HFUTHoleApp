@@ -70,7 +70,7 @@ export function DeleteLikeHoleRequest(data: Id) {
 }
 
 export function SearchHoleRequest(params: PaginateAble<HoleSearchValidator>) {
-  return request({
+  return request<ISearchHoleResponse>({
     method: 'GET',
     url: '/hole/search',
     params,

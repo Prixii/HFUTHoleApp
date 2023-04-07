@@ -5,12 +5,12 @@ import { CloseIcon, DeleteIcon } from '@/components/icon'
 import { useSearchHistoryStore } from '@/store/hole/search'
 import { observer } from 'mobx-react-lite'
 import { useImmer } from 'use-immer'
-import { useNavigation } from '@react-navigation/native'
+import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 
 export const HoleSearchHistory = observer(() => {
   const store = useSearchHistoryStore()
   const theme = useTheme()
-  const navigation = useNavigation()
+  const { searchWithKeywords } = useSearchNavigation()
 
   const [deleteAble, setDeleteAble] = useImmer<number[]>([])
 
@@ -42,7 +42,7 @@ export const HoleSearchHistory = observer(() => {
         {store.data.map((tag, index) => (
           <Pressable
             onLongPress={() => addDeleteAble(index)}
-            onPress={() => navigation.navigate('result', { keywords: tag })}
+            onPress={() => searchWithKeywords(tag)}
           >
             <View
               key={index}

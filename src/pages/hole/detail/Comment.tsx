@@ -45,7 +45,7 @@ export function HoleDetailComment() {
           onTopRefresh={onTopRefresh}
           ListHeaderComponent={() => (
             <>
-              <HoleInfo data={data} bottom={<LikeHole />} />
+              <HoleInfo data={data} bottom={<LikeHole />} showComment={false} />
               <Separator />
               <HoleDetailCommentHeader />
             </>

@@ -3,7 +3,6 @@ import { View } from 'react-native'
 import { FieldErrors, useForm } from 'react-hook-form'
 import { HoleSearchValidator } from '@/shared/validators/hole/search'
 import { useDebounce } from '@/shared/hooks/useDebounce'
-import { useNavigation } from '@react-navigation/native'
 import { useParams } from '@/shared/hooks/useParams'
 import { useTheme } from 'react-native-paper'
 import { ISearchResultParams } from '@/pages/hole/search/result/result'
@@ -11,11 +10,12 @@ import { CloseIcon, SearchIcon } from '@/components/icon'
 import { SearchInput } from '@/components/form/Search'
 import { Toast } from '@/shared/utils/toast'
 import { useSearchHistoryStore } from '@/store/hole/search'
+import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 
 export function HoleSearchHeader() {
   const theme = useTheme()
   const params = useParams<ISearchResultParams>()
-  const navigation = useNavigation()
+  const { searchWithKeywords } = useSearchNavigation()
 
   const store = useSearchHistoryStore()
 
@@ -36,7 +36,7 @@ export function HoleSearchHeader() {
     })
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    navigation.navigate('result', { keywords: data.keywords })
+    searchWithKeywords(data.keywords)
   })
 
   const onError = (error: FieldErrors<HoleSearchValidator>) => {

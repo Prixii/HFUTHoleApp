@@ -7,6 +7,7 @@ import { CommentIcon, LikeIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
 import { IdText } from '@/components/Text/Id'
 import { TimeText } from '@/components/Text/Time'
+import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 
 type Data = IHole
 
@@ -50,11 +51,16 @@ const HoleInfoImages: React.FC<{
 }
 
 const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
+  const { searchWithKeywords } = useSearchNavigation()
+
   return (
     <View className={'flex flex-col space-y-3'}>
       <HoleInfoImages imgs={data?.imgs} />
       <View>
-        <Badges data={data.tags} />
+        <Badges
+          data={data.tags}
+          onPress={(tag) => searchWithKeywords(`#${tag}`)}
+        />
       </View>
       <Text variant={'bodyMedium'}>{data.body}</Text>
     </View>
@@ -91,6 +97,7 @@ interface Props extends IClassName {
   header?: ReactNode
   body?: ReactNode
   bottom?: ReactNode
+  showComment?: boolean
 }
 
 export function HoleInfo({
@@ -100,6 +107,7 @@ export function HoleInfo({
   body,
   bottom,
   className,
+  showComment = true,
 }: Props) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -109,6 +117,26 @@ export function HoleInfo({
         <View>{header || <HoleInfoHeader data={data} />}</View>
         <View>{body || <HoleInfoBody data={data} />}</View>
         <View>{bottom || <HoleInfoIcons data={data} />}</View>
+        {showComment && (
+          <View className={'w-full grid gap-2'}>
+            {data.comments.map((comment) => (
+              <View
+                className={
+                  'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/5'
+                }
+              >
+                <Text className={'font-bold'}>{comment.user.username}</Text>
+                <Text
+                  className={'text-xs'}
+                  ellipsizeMode={'tail'}
+                  numberOfLines={1}
+                >
+                  {comment.body}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
       </View>
     </TouchableWithoutFeedback>
   )

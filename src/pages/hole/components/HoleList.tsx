@@ -23,7 +23,7 @@ export function RefreshableHoleList({
 }: Props) {
   const navigation = useNavigation()
 
-  return (
+  return isSuccess ? (
     <RefreshingFlatList
       data={data?.pages}
       onRefreshing={fetchNextPage}
@@ -32,26 +32,24 @@ export function RefreshableHoleList({
       ListFooterComponent={() => (
         <LoadMore text={'没有更多树洞了哦'} hasNextPage={hasNextPage} />
       )}
-      renderItem={({ item: group, index }) =>
-        isSuccess ? (
-          <View className={'space-y-2'} key={index}>
-            {group.items.map((item) => (
-              <HoleInfo
-                data={item}
-                onPress={() =>
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  navigation.navigate('detail', {
-                    id: item.id,
-                  })
-                }
-              />
-            ))}
-          </View>
-        ) : (
-          <SkeletonLoading nums={3} />
-        )
-      }
+      renderItem={({ item: group, index }) => (
+        <View className={'space-y-2'} key={index}>
+          {group.items.map((item) => (
+            <HoleInfo
+              data={item}
+              onPress={() =>
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                navigation.navigate('detail', {
+                  id: item.id,
+                })
+              }
+            />
+          ))}
+        </View>
+      )}
     />
+  ) : (
+    <SkeletonLoading nums={3} />
   )
 }

@@ -7,12 +7,10 @@ interface Props {
 
 export function SkeletonLoading(props: Props) {
   return (
-    <View className={'grid gap-2'}>
+    <View className={'grid gap-3'}>
       {Array.from({ length: props.nums }).map((_, index) => (
         <VStack
           key={index}
-          w="100%"
-          maxW="400"
           borderWidth="1"
           space={8}
           overflow="hidden"
