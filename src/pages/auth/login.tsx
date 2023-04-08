@@ -89,9 +89,7 @@ export function Login() {
     <AuthView
       title={'登录HFUTHole'}
       secondary={'请输入你的账号密码'}
-      snackbar={
-        '第一次登录时并不需要注册，若无账号则直接输入好学号以及预设密码点击登录即可，也可点击下方的注册文字前往注册页面'
-      }
+      snackbar={'欢迎来到HFUTHole'}
     >
       <LoginForm />
     </AuthView>

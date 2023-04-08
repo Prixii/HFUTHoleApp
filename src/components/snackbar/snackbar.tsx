@@ -15,7 +15,7 @@ export function Snackbar(props: IProps) {
     <View
       className={`${
         props.error ? 'bg-[#FFE7D9]' : 'bg-[#D0F2FF]'
-      } rounded-lg flex flex-row space-x-2 p-3`}
+      } rounded-lg flex flex-row space-x-2 p-3 items-center`}
     >
       <View>
         <Icons

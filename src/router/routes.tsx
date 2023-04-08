@@ -14,7 +14,6 @@ import { View } from 'react-native'
 import { HoleSearchHeader } from '@/pages/hole/search/header'
 import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 import { HoleHeader } from '@/pages/hole/header'
-import { useLinkTo, useRoute } from '@react-navigation/native'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
@@ -34,13 +33,6 @@ const config = {
 }
 
 const Auth = observer(() => {
-  const store = useAuthStore()
-  const linkTo = useLinkTo()
-
-  if (store.isLogin) {
-    linkTo('/hole')
-  }
-
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen
@@ -80,13 +72,6 @@ const HoleSearchStacks = () => {
 }
 
 const HoleStacks = observer(() => {
-  const store = useAuthStore()
-  const linkTo = useLinkTo()
-
-  if (!store.isLogin) {
-    linkTo('/auth')
-  }
-
   return (
     <HoleStack.Navigator
       screenOptions={{
@@ -119,18 +104,23 @@ export const Routes = observer(() => {
   const store = useAuthStore()
 
   return (
-    <Stack.Navigator initialRouteName={!store.isLogin ? 'auth' : 'hole'}>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name={'auth'}
-        component={Auth}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name={'hole'}
-        component={HoleStacks}
-      />
-      <Stack.Screen name={'web-view'} component={WebViewPage} />
+    <Stack.Navigator>
+      {store.isLogin ? (
+        <>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name={'hole'}
+            component={HoleStacks}
+          />
+          <Stack.Screen name={'web-view'} component={WebViewPage} />
+        </>
+      ) : (
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name={'auth'}
+          component={Auth}
+        />
+      )}
     </Stack.Navigator>
   )
 })

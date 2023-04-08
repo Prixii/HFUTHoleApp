@@ -11,22 +11,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#2F6F31"
     },
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "树洞需要权限获取你的相册才能拿到图片哦"
-        }
-      ],
-      [
-        "expo-media-library",
-        {
-          "photosPermission": "是否允许树洞访问你的相册",
-          "savePhotosPermission": "是否允许树洞保存图片到相册",
-          "isAccessMediaLocationEnabled": true
-        }
-      ]
-    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -37,12 +21,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/img.png"
+        "foregroundImage": "./assets/splash.jpg"
       },
       "package": "com.hfuthole.app"
     },
     "web": {
-      "favicon": "./assets/img.png"
+      "favicon": "./assets/splash.jpg"
     },
     "extra": {
       "eas": {

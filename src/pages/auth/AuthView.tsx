@@ -19,7 +19,7 @@ export function AuthView(props: Props) {
       <View className={'bg-white min-h-screen w-screen py-[10px] px-5'}>
         <View className={'grid gap-5'}>
           <Avatar.Image
-            source={require('../../../assets/img.png')}
+            source={require('../../../assets/splash.jpg')}
             size={100}
           />
           <View className={'grid space-y-2'}>
