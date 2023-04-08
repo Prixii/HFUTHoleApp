@@ -6,6 +6,7 @@ import { useSearchHistoryStore } from '@/store/hole/search'
 import { observer } from 'mobx-react-lite'
 import { useImmer } from 'use-immer'
 import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
+import { Closeable } from '@/components/Closeable'
 
 export const HoleSearchHistory = observer(() => {
   const store = useSearchHistoryStore()
@@ -41,6 +42,7 @@ export const HoleSearchHistory = observer(() => {
       <View className={'flex flex-row gap-2 flex-wrap'}>
         {store.data.map((tag, index) => (
           <Pressable
+            key={index}
             onLongPress={() => addDeleteAble(index)}
             onPress={() => searchWithKeywords(tag)}
           >
@@ -50,18 +52,7 @@ export const HoleSearchHistory = observer(() => {
             >
               <Text className={'text-xs'}>{tag}</Text>
               {deleteAble.includes(index) && (
-                <Pressable
-                  className={'absolute right-[-4]'}
-                  onPress={() => deleteHistory(index)}
-                >
-                  <View
-                    className={
-                      'w-3 h-3 rounded-full bg-gray-500/40 items-center justify-center'
-                    }
-                  >
-                    <CloseIcon size={8} />
-                  </View>
-                </Pressable>
+                <Closeable onPress={() => deleteHistory(index)} />
               )}
             </View>
           </Pressable>

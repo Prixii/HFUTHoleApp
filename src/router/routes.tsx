@@ -10,11 +10,11 @@ import { HolePost } from '@/pages/hole/post/post'
 import { HoleDetail } from '@/pages/hole/detail/detail'
 import { HoleSearch } from '@/pages/hole/search/search'
 import { HoleSearchResult } from '@/pages/hole/search/result/result'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { HoleSearchHeader } from '@/pages/hole/search/header'
 import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 import { HoleHeader } from '@/pages/hole/header'
-import { useLinkTo } from '@react-navigation/native'
+import { useLinkTo, useRoute } from '@react-navigation/native'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
@@ -79,7 +79,14 @@ const HoleSearchStacks = () => {
   )
 }
 
-const HoleStacks = () => {
+const HoleStacks = observer(() => {
+  const store = useAuthStore()
+  const linkTo = useLinkTo()
+
+  if (!store.isLogin) {
+    linkTo('/auth')
+  }
+
   return (
     <HoleStack.Navigator
       screenOptions={{
@@ -106,13 +113,13 @@ const HoleStacks = () => {
       <HoleStack.Screen name={'search'} component={HoleSearchStacks} />
     </HoleStack.Navigator>
   )
-}
+})
 
 export const Routes = observer(() => {
   const store = useAuthStore()
 
   return (
-    <Stack.Navigator initialRouteName={store.isLogin ? 'auth' : 'hole'}>
+    <Stack.Navigator initialRouteName={!store.isLogin ? 'auth' : 'hole'}>
       <Stack.Screen
         options={{ headerShown: false }}
         name={'auth'}

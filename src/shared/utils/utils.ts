@@ -3,10 +3,13 @@ import { AuthStore } from '@/store/auth'
 import { formatDistanceToNow, differenceInDays, format } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 import { Dimensions } from 'react-native'
+import * as MediaLibrary from 'expo-media-library'
+import { Toast } from '@/shared/utils/toast'
+import * as FileSystem from 'expo-file-system'
 
 export const getQAQFont = (key: keyof IQAQ) => getRandomQAQ(key)[0]
 
-export const packStorageToken = () => `Bearer ${AuthStore.meta.token}`
+export const packStorageToken = () => `Bearer ${AuthStore?.meta?.token}`
 
 export function formatDate(time: string) {
   const date = new Date(time)
@@ -44,4 +47,21 @@ export const greetingText = () => {
     : dayPeriod < 18
     ? ['下午好', `快来喝一杯下午茶吧${qaq}`]
     : ['晚上好', '不要熬夜到太晚哦٩(ˊ〇ˋ*)و']
+}
+
+export const saveToAlbum = async (url: string) => {
+  try {
+    const { status } = await MediaLibrary.requestPermissionsAsync()
+    if (status === 'granted') {
+      const localUri = await FileSystem.downloadAsync(
+        url,
+        FileSystem.documentDirectory + 'a.jpg'
+      )
+      await MediaLibrary.saveToLibraryAsync(localUri.uri)
+      Toast.success({ text1: '保存图片成功' })
+    }
+  } catch (error) {
+    console.log(error)
+    Toast.error({ text1: '保存图片失败', text2: error.stack.toString() })
+  }
 }

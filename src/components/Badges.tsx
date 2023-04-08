@@ -12,7 +12,7 @@ export function Badges(props: Props) {
   return (
     <View className={'w-full flex flex-row gap-2 flex-wrap'}>
       {props.data.map((tag) => (
-        <Pressable onPress={() => props.onPress(tag.body)}>
+        <Pressable onPress={() => props.onPress(tag.body)} key={tag.id}>
           <Badge colorScheme="success" rounded={'lg'}>
             {`${tag.body.startsWith('#') ? '' : '#'}${tag.body}`}
           </Badge>

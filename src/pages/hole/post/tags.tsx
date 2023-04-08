@@ -9,7 +9,6 @@ import { IsString, MaxLength } from 'class-validator'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { Tags } from '@/components/tags'
 import { getQAQFont } from '@/shared/utils/utils'
-import { View } from 'react-native'
 
 enum InputError {
   MaximumExceeded = 'MaximumExceeded',
@@ -24,6 +23,7 @@ class Validator {
   tag: string
 }
 
+// TODO 抽象成基础组件
 export function HolePostAddTags() {
   const {
     control,
@@ -44,7 +44,6 @@ export function HolePostAddTags() {
     form: { setValue: setRootValue },
   } = useHolePostContext()
 
-  // TODO 抽象成组件
   const handleTagsInput = useDebounce(
     () => {
       if (tags.length > Limit.holeTagsMaxLength) {

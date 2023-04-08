@@ -78,20 +78,19 @@ const HoleInfoImages: React.FC<{
           <Modal visible={visible} transparent={true} onRequestClose={close}>
             <ZoomImage
               imageUrls={imgs.map((img) => ({ url: img }))}
-              onSwipeDown={close}
-              onCancel={close}
               index={index}
+              close={close}
             />
           </Modal>
           <View className={'w-full'}>
             <View className={'flex flex-row'}>
               {imgs.slice(0, 2).map((img, index) => (
-                <ImageRenderItem img={img} i={index} />
+                <ImageRenderItem img={img} i={index} key={index} />
               ))}
             </View>
             <View className={'flex flex-row mt-2'}>
               {imgs.slice(2, 4).map((img, index) => (
-                <ImageRenderItem img={img} i={index} />
+                <ImageRenderItem img={img} i={index + 2} key={index + 2} />
               ))}
             </View>
           </View>
@@ -136,8 +135,8 @@ const HoleInfoIcons: React.FC<{ data: Data }> = ({ data }) => {
 
   return (
     <View className={'flex flex-row justify-between'}>
-      {renderList.map((icon) => (
-        <View className={'flex flex-row items-center space-x-2'}>
+      {renderList.map((icon, index) => (
+        <View className={'flex flex-row items-center space-x-2'} key={index}>
           {icon.element}
           <Text className={'text-[#686E87]'}>{icon.value}</Text>
         </View>

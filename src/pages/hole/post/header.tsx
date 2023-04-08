@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
 import { PostHoleValidator } from '@/shared/validators/hole'
-import { PostHoleRequest } from '@/request/apis/hole'
+import { PostHoleRequest, UploadHoleImgRequest } from '@/request/apis/hole'
 import Toast from 'react-native-toast-message'
 import { useHolePostContext } from '@/shared/context/hole'
 import { useDebounce } from '@/shared/hooks/useDebounce'
@@ -12,6 +12,7 @@ export function HolePostHeader() {
 
   const {
     form: { handleSubmit },
+    imgs,
   } = useHolePostContext()
 
   const mutation = useMutation({
@@ -25,8 +26,12 @@ export function HolePostHeader() {
     },
   })
 
-  const onSubmit = useDebounce((data: PostHoleValidator) => {
-    mutation.mutate(data)
+  const onSubmit = useDebounce(async (data: PostHoleValidator) => {
+    const result = await UploadHoleImgRequest(imgs)
+    mutation.mutate({
+      ...data,
+      imgs: result,
+    })
   })
 
   return (

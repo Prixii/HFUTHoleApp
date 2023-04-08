@@ -33,9 +33,10 @@ export function RefreshableHoleList({
         <LoadMore text={'没有更多树洞了哦'} hasNextPage={hasNextPage} />
       )}
       renderItem={({ item: group, index }) => (
-        <View className={'space-y-2'} key={index}>
+        <View className={'space-y-2'} key={`${group.items?.[0]?.id}${index}`}>
           {group.items.map((item) => (
             <HoleInfo
+              key={item.id}
               data={item}
               onPress={() =>
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -1,8 +1,9 @@
 import type { AxiosError, AxiosRequestConfig } from 'axios'
-import axios from 'axios'
+import axios, { HttpStatusCode } from 'axios'
 import { Config } from '@/shared/config'
 import { getQAQFont, packStorageToken } from '@/shared/utils/utils'
 import Toast from 'react-native-toast-message'
+import { AuthStore } from '@/store/auth'
 
 const instance = axios.create({
   baseURL: Config.request.baseURL,
@@ -19,6 +20,10 @@ instance.interceptors.response.use(
   (error: AxiosError) => {
     const msg = (error.response.data as IMutationResponse).msg
 
+    if (error.response.status === HttpStatusCode.Unauthorized) {
+      AuthStore.logout()
+    }
+
     Toast.show({
       type: 'error',
       text1: `请求失败了${getQAQFont('sadness')}`,
@@ -34,6 +39,7 @@ export function request<T = any>(config: AxiosRequestConfig) {
     ...config,
     headers: {
       authorization: packStorageToken(),
+      ...config.headers,
     },
   }) as Promise<T>
 }

@@ -17,6 +17,7 @@ export class PostHoleValidator {
   @IsNotEmpty({ message: '不能为空哦' })
   body: string
 
+  @ArrayMaxSize(4, { message: '最多只能上传4张图片哦' })
   @IsArray()
   @IsOptional()
   imgs?: string[]

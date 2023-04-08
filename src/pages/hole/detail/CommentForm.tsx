@@ -20,6 +20,7 @@ import { useHoleDetailId } from '@/shared/hooks/useHoleDetailId'
 import { hideKeyboard } from '@/shared/utils/keyboard'
 import { useHoleComment } from '@/swr/hole'
 
+// TODO KeyboardAvoidingView
 const Form = ({ toggle }: { toggle: Func }) => {
   const id = useHoleDetailId()
   const { control, handleSubmit } = useForm<HoleDetailPostComment>()

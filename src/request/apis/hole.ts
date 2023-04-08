@@ -4,6 +4,9 @@ import { PostHoleValidator } from '@/shared/validators/hole'
 import { HoleDetailCommentMode, HoleListMode } from '@/shared/enums'
 import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
 import { HoleSearchValidator } from '@/shared/validators/hole/search'
+import { ImagePickerResult } from 'expo-image-picker'
+import axios, { AxiosError } from 'axios'
+import { Config } from '@/shared/config'
 
 interface Id {
   id: number
@@ -74,5 +77,27 @@ export function SearchHoleRequest(params: PaginateAble<HoleSearchValidator>) {
     method: 'GET',
     url: '/hole/search',
     params,
+  })
+}
+
+export function UploadHoleImgRequest(imgs: ImagePickerResult['assets']) {
+  const data = new FormData()
+  for (const img of imgs) {
+    // TODO solve any type
+    data.append('upload[]', {
+      uri: img.uri,
+      type: 'image/jpeg',
+      name: 'photo.jpg',
+    } as any)
+  }
+
+  return request<string[]>({
+    baseURL: Config.request.imgBaseURL,
+    method: 'POST',
+    url: '/upload',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data,
   })
 }
