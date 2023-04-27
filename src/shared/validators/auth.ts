@@ -33,18 +33,18 @@ export class LoginFormValidator {
 export class RegisterFormValidator extends LoginFormValidator {
   @Length(1, 10, { message: '用户名长度为1-10个字符哦' })
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '用户名不能为空' })
   username: string
 
   @Length(6, 30, { message: '密码格式错误，至少是六位' })
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '信息门户密码不能为空' })
   hfutPassword: string
 }
 
 export class ForgetFormValidator extends LoginFormValidator {
   @Length(6, 30, { message: '密码格式错误，至少是六位' })
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '信息门户密码不能为空' })
   hfutPassword: string
 }

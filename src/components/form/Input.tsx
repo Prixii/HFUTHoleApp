@@ -48,7 +48,6 @@ export function Input<T extends object = PlainObject>({
             {...props}
             style={{
               backgroundColor: 'white',
-              height: 55,
               ...((props?.style as object) || {}),
             }}
           />

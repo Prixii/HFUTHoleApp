@@ -1,17 +1,17 @@
-declare interface IHoleCommentListResponse {
-  items: IHoleCommentListItem[]
+declare interface IHoleReplyListResponse {
+  items: IHoleReplyListItem[]
   meta: Meta
 }
 
-declare interface IHoleCommentListItem {
+declare interface IHoleReplyListItem {
   id: string
   createAt: string
   body: string
   favoriteCounts: number
   user: User
-  replies: Reply[]
-  repliesCount: number
+  comment: Comment
   isLiked: boolean
+  replyUser: User
 }
 
 interface User {
@@ -21,19 +21,17 @@ interface User {
   avatar: string
 }
 
+interface Comment {
+  id: string
+  createAt: string
+  body: string
+  favoriteCounts: number
+}
+
 interface Meta {
   totalItems: number
   itemCount: number
   itemsPerPage: number
   totalPages: number
   currentPage: number
-}
-
-interface Reply {
-  id: string
-  createAt: string
-  body: string
-  favoriteCounts: number
-  user: User
-  replyUser: any
 }

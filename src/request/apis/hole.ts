@@ -5,7 +5,6 @@ import { HoleDetailCommentMode, HoleListMode } from '@/shared/enums'
 import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
 import { HoleSearchValidator } from '@/shared/validators/hole/search'
 import { ImagePickerResult } from 'expo-image-picker'
-import axios, { AxiosError } from 'axios'
 import { Config } from '@/shared/config'
 
 interface Id {
@@ -98,6 +97,58 @@ export function UploadHoleImgRequest(imgs: ImagePickerResult['assets']) {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
+    data,
+  })
+}
+
+export function PostHoleCommentReplyRequest(data: {
+  commentId: string
+  body: string
+  replyId?: string
+}) {
+  return request({
+    method: 'POST',
+    url: '/hole/comment/reply',
+    data,
+  })
+}
+
+export function GetHoleReplyRequest(params: PaginateAble<{ id: string }>) {
+  return request<IHoleReplyListResponse>({
+    method: 'GET',
+    url: '/hole/comment/replies',
+    params,
+  })
+}
+
+export function LikeReplyRequest(data: { id: string }) {
+  return request({
+    method: 'POST',
+    url: '/hole/comment/reply/like',
+    data,
+  })
+}
+
+export function DeleteReplyLikeRequest(data: { id: string }) {
+  return request({
+    method: 'DELETE',
+    url: '/hole/comment/reply/like',
+    data,
+  })
+}
+
+export function LikeCommentRequest(data: { id: string }) {
+  return request({
+    method: 'POST',
+    url: '/hole/comment/like',
+    data,
+  })
+}
+
+export function DeleteCommentLikeRequest(data: { id: string }) {
+  return request({
+    method: 'DELETE',
+    url: '/hole/comment/like',
     data,
   })
 }

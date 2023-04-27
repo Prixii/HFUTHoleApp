@@ -115,7 +115,9 @@ const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
         />
       </View>
       <View>
-        <Text variant={'bodyMedium'}>{data.body}</Text>
+        <Text variant={'bodyMedium'} selectable={true}>
+          {data.body}
+        </Text>
       </View>
     </View>
   )
@@ -128,7 +130,7 @@ const HoleInfoIcons: React.FC<{ data: Data }> = ({ data }) => {
       element: <LikeIcon size={20} color={'#686E87'} />,
     },
     {
-      value: data.commentsCount,
+      value: data.commentCounts,
       element: <CommentIcon size={20} color={'#686E87'} />,
     },
   ]

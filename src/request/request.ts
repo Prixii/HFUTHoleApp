@@ -7,6 +7,7 @@ import { AuthStore } from '@/store/auth'
 
 const instance = axios.create({
   baseURL: Config.request.baseURL,
+  timeout: Config.request.timeout,
 })
 
 instance.interceptors.response.use(
@@ -18,17 +19,22 @@ instance.interceptors.response.use(
     }
   },
   (error: AxiosError) => {
-    const msg = (error.response.data as IMutationResponse).msg
+    const msg = (error?.response?.data as IMutationResponse)?.msg
 
-    if (error.response.status === HttpStatusCode.Unauthorized) {
+    if (error.response?.status === HttpStatusCode.Unauthorized) {
       AuthStore.logout()
     }
 
     Toast.show({
       type: 'error',
       text1: `请求失败了${getQAQFont('sadness')}`,
-      text2: Array.isArray(msg) ? msg.map((i) => `${i}`).join('\n') : msg,
+      text2: !msg
+        ? '可能是服务器炸了，去问问管理员吧'
+        : Array.isArray(msg)
+        ? msg.map((i) => `${i}`).join('\n')
+        : msg,
     })
+
     throw error
   }
 )

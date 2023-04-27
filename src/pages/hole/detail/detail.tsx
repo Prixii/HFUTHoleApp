@@ -1,7 +1,7 @@
 import { StatusBar, View } from 'react-native'
-import { HoleDetailComment } from '@/pages/hole/detail/Comment'
+import { HoleDetailComment } from '@/pages/hole/detail/components/Comment'
 import { HoleDetailCommentContextProvider } from '@/shared/context/hole_detail'
-import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
+import React from 'react'
 
 export function HoleDetail() {
   return (

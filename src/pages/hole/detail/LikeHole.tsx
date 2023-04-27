@@ -32,9 +32,7 @@ export const LikeHole = () => {
   return (
     <View className={'flex justify-center items-center'}>
       <IconButton
-        icon={() => (
-          <LikeIcon {...(data.isLiked ? {} : { color: 'gray' })} size={20} />
-        )}
+        icon={() => <LikeIcon active={data.isLiked} size={20} />}
         transparent={true}
         onPress={likeHole}
       />

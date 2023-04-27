@@ -14,6 +14,7 @@ import { View } from 'react-native'
 import { HoleSearchHeader } from '@/pages/hole/search/header'
 import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 import { HoleHeader } from '@/pages/hole/header'
+import { HoleReply } from '@/pages/hole/detail/reply/HoleReply'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
@@ -71,6 +72,19 @@ const HoleSearchStacks = () => {
   )
 }
 
+const HoleDetailStacks = () => {
+  return (
+    <HoleStack.Navigator
+      screenOptions={{
+        header: () => <HoleDetailHeader />,
+      }}
+    >
+      <HoleStack.Screen name={'index'} component={HoleDetail} />
+      <HoleStack.Screen name={'reply'} component={HoleReply} />
+    </HoleStack.Navigator>
+  )
+}
+
 const HoleStacks = observer(() => {
   return (
     <HoleStack.Navigator
@@ -87,15 +101,8 @@ const HoleStacks = observer(() => {
         component={Hole}
       />
       <HoleStack.Screen name={'post'} component={HolePost} />
-      <HoleStack.Screen
-        options={{
-          headerShown: true,
-          header: () => <HoleDetailHeader />,
-        }}
-        name={'detail'}
-        component={HoleDetail}
-      />
       <HoleStack.Screen name={'search'} component={HoleSearchStacks} />
+      <HoleStack.Screen name={'detail'} component={HoleDetailStacks} />
     </HoleStack.Navigator>
   )
 })

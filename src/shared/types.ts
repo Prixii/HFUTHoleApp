@@ -1,5 +1,3 @@
-import { PlainObject } from '@/shared/types/utils'
-
 export type InferArrayItem<T extends any[]> = T extends (infer R)[] ? R : never
 
 export interface IPagination {

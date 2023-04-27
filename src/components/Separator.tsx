@@ -6,7 +6,7 @@ export function Separator() {
 
   return (
     <View
-      className={'h-2'}
+      className={'h-2 w-full'}
       style={{ backgroundColor: theme.colors.background }}
     />
   )

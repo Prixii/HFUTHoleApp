@@ -10,13 +10,15 @@ const withIconProps = (
   WrappedIconComponent: React.ComponentType<IconProps>,
   name: string
 ) => {
-  return (props: Omit<IconProps, 'name'> & { name?: string }) => {
+  return (
+    props: Omit<IconProps, 'name'> & { name?: string; active?: boolean }
+  ) => {
     const theme = useTheme()
 
     return (
       <WrappedIconComponent
         name={name}
-        color={theme.colors.primary}
+        color={props.active ? theme.colors.primary : 'grey'}
         {...props}
       />
     )
@@ -26,7 +28,9 @@ const withIconProps = (
 const withFontAV5Icon = (name: string) => withIconProps(FontAwesome5Icon, name)
 const withMaterialIcon = (name: string) => withIconProps(MaterialIcon, name)
 
-export const LikeIcon = withFontAV5Icon('thumbs-up')
+export const LikeIcon = withMaterialIcon('thumb-up')
+
+export const MenuIcon = withMaterialIcon('menu')
 
 export const CommentIcon = withMaterialIcon('chat')
 
@@ -35,5 +39,7 @@ export const SearchIcon = withMaterialIcon('search')
 export const DeleteIcon = withMaterialIcon('delete')
 
 export const CloseIcon = withMaterialIcon('close')
+
+export const RightIcon = withMaterialIcon('chevron-right')
 
 export const AddIcon = withMaterialIcon('add')

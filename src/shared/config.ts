@@ -7,8 +7,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 
 export const Config = {
   request: {
-    baseURL: 'http://101.43.64.164:9001/',
-    imgBaseURL: 'http://101.43.64.164:8080/',
+    baseURL: 'http://192.168.249.34:8000/',
+    imgBaseURL: 'http://192.168.249.34:8080/',
+    timeout: 5000,
   },
 }
 

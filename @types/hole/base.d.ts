@@ -8,10 +8,9 @@ declare interface IHole {
   votes: Vote[]
   tags: Tag[]
   voteTotalCount: number
-  commentsCount: number
   isLiked: boolean
-
   comments: Comment[]
+  commentCounts: number
 }
 
 interface Comment {

@@ -15,6 +15,7 @@ import { useHoleListContext } from '@/shared/context/hole'
 import { useParams } from '@/shared/hooks/useParams'
 import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
 import { ISearchResultParams } from '@/pages/hole/search/result/result'
+import { useRoute } from '@react-navigation/native'
 
 // TODO 重构逻辑
 export function useHoleList() {
@@ -111,6 +112,8 @@ export function useHoleComment() {
     refetchOnMount: true,
   })
 
+  const isDataEmpty = query.data?.pages?.[0]?.items.length > 0
+
   const client = useQueryClient()
 
   const invalidateQuery = async (onlyFirstGroup = true) => {
@@ -126,9 +129,15 @@ export function useHoleComment() {
     })
   }
 
+  const invalidAll = async () => {
+    await client.invalidateQueries(key)
+  }
+
   return {
     ...query,
+    invalidAll,
     invalidateQuery,
+    isDataEmpty,
   }
 }
 

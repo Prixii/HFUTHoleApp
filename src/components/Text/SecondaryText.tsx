@@ -3,5 +3,13 @@ import { Text, TextProps, useTheme } from 'react-native-paper'
 export function SecondaryText(props: TextProps<any>) {
   const theme = useTheme()
 
-  return <Text {...props} style={{ color: theme.colors.surfaceVariant }}></Text>
+  return (
+    <Text
+      {...props}
+      style={{
+        color: theme.colors.surfaceVariant,
+        ...((props.style as object) || {}),
+      }}
+    ></Text>
+  )
 }

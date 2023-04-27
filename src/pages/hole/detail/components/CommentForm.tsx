@@ -5,8 +5,8 @@ import Animated, {
 } from 'react-native-reanimated'
 import { View } from 'react-native'
 import { getQAQFont, ScreenHeight } from '@/shared/utils/utils'
-import { CommentPostFAB } from '@/pages/hole/detail/CommentPostFAB'
-import { useState } from 'react'
+import { CommentPostFAB } from '@/pages/hole/detail/components/CommentPostFAB'
+import React, { useState } from 'react'
 import { IconButton } from '@/components/IconButton'
 import { Button } from '@/components/button'
 import { Input } from '@/components/form/Input'
@@ -72,9 +72,7 @@ const Form = ({ toggle }: { toggle: Func }) => {
           style={{
             height: ScreenHeight * 0.2,
           }}
-          placeholder={`请友善发言，我相信大家不想失去这个平台${getQAQFont(
-            'happy'
-          )}`}
+          placeholder={`请友善发言${getQAQFont('happy')}`}
         />
         <View className={'w-screen justify-between'}>
           <IconButton icon={'camera'} />

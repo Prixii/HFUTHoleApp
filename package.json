@@ -7,11 +7,15 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
+    "web": "npx cross-env NODE_OPTIONS=--openssl-legacy-provider expo start --web",
     "build:android": "eas build -p android --profile preview"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
+    "@gorhom/bottom-sheet": "^4.4.5",
     "@hookform/resolvers": "^2.9.11",
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-camera-roll/camera-roll": "^5.3.1",

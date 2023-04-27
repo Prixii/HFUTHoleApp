@@ -42,7 +42,10 @@ export function RefreshableHoleList({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 navigation.navigate('detail', {
-                  id: item.id,
+                  screen: 'index',
+                  params: {
+                    id: item.id,
+                  },
                 })
               }
             />

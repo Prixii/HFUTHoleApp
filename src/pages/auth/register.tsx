@@ -1,4 +1,11 @@
-import { View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import { Button } from 'react-native-paper'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
@@ -35,7 +42,7 @@ const RegisterForm = () => {
   })
 
   return (
-    <View className={''}>
+    <View>
       {errors?.reqFailedError && (
         <View className={'py-3'}>
           <Snackbar text={errors.reqFailedError.message} icon={'info'} error />

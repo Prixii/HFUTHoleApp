@@ -8,6 +8,7 @@ import { Config } from '@/shared/config'
 
 const instance = axios.create({
   baseURL: Config.request.baseURL,
+  timeout: Config.request.timeout,
 })
 
 instance.interceptors.response.use((data) => data.data)

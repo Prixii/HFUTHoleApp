@@ -4,6 +4,8 @@ export const SWRKeys = {
     post: 'hole.post',
     detail: 'hole.detail',
     comments: 'hole.comments',
+    mutateCommentReply: 'hole.mutateCommentReply',
+    getCommentReply: 'hole.getCommentReply',
   },
   user: {
     profile: 'user.profile',
