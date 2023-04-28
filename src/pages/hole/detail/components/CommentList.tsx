@@ -15,6 +15,7 @@ export function HoleDetailCommentList() {
     hasNextPage,
     invalidateQuery,
     isDataEmpty,
+    isFetching,
   } = useHoleComment()
 
   const { data, isSuccess, refetch } = useHoleDetail()
@@ -32,7 +33,9 @@ export function HoleDetailCommentList() {
     isSuccess && (
       <RefreshingFlatList
         onRefreshing={onRefresh}
+        hasNextPage={hasNextPage}
         onTopRefresh={onTopRefresh}
+        refreshing={isFetching}
         ListHeaderComponent={() => (
           <>
             <HoleInfo data={data} bottom={<LikeHole />} showComment={false} />
@@ -48,7 +51,7 @@ export function HoleDetailCommentList() {
         )}
         data={commentData.pages}
         renderItem={(itemProps) => (
-          <HoleDetailCommentItem {...itemProps} key={itemProps.index} />
+          <HoleDetailCommentItem data={itemProps.item} page={itemProps.index} />
         )}
       />
     )

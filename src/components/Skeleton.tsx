@@ -1,11 +1,15 @@
-import { Skeleton, VStack, Center } from 'native-base'
+import { Skeleton, VStack, Center, ISkeletonProps } from 'native-base'
 import { View } from 'react-native'
+import { useTheme } from 'react-native-paper'
+import React from 'react'
 
 interface Props {
   nums: number
 }
 
 export function SkeletonLoading(props: Props) {
+  const theme = useTheme()
+
   return (
     <View className={'grid gap-3'}>
       {Array.from({ length: props.nums }).map((_, index) => (
@@ -31,5 +35,17 @@ export function SkeletonLoading(props: Props) {
         </VStack>
       ))}
     </View>
+  )
+}
+
+export function ImageSkeleton(props: ISkeletonProps) {
+  return (
+    <Skeleton
+      h="56"
+      rounded={'lg'}
+      startColor={'coolGray.300'}
+      endColor={'coolGray.200'}
+      {...props}
+    />
   )
 }

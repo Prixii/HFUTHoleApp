@@ -11,17 +11,17 @@ import { View } from 'react-native'
 import { Input } from '@/components/form/Input'
 import { ScreenHeight } from '@/shared/utils/utils'
 import { Button } from 'react-native-paper'
-import React from 'react'
+import React, { useState } from 'react'
 import { AwaitAble, AwaitFunc, Func } from '@/shared/types'
 
 interface Props {
   data: IHoleCommentListItem
   closeModal: Func
   reqFunc: (body: string) => AwaitAble
-  invalidAll: AwaitFunc
+  onReply?: (body: string) => AwaitAble
 }
 
-export function ReplyForm({ data, closeModal, reqFunc, invalidAll }: Props) {
+export function ReplyForm({ data, closeModal, reqFunc, onReply }: Props) {
   const { control, handleSubmit } = useForm<CommentReplyValidator>({
     mode: 'all',
     resolver: classValidatorResolver(CommentReplyValidator),
@@ -30,12 +30,12 @@ export function ReplyForm({ data, closeModal, reqFunc, invalidAll }: Props) {
   const mutation = useMutation({
     mutationKey: SWRKeys.hole.mutateCommentReply,
     mutationFn: ({ body }: CommentReplyValidator) => reqFunc(body),
-    onSuccess() {
+    onSuccess(_, variables) {
       Toast.success({
         text1: '回复成功',
       })
       closeModal()
-      invalidAll()
+      onReply?.(variables.body)
     },
   })
 

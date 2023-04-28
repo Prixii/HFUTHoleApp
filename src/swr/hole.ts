@@ -15,7 +15,10 @@ import { useHoleListContext } from '@/shared/context/hole'
 import { useParams } from '@/shared/hooks/useParams'
 import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
 import { ISearchResultParams } from '@/pages/hole/search/result/result'
-import { useRoute } from '@react-navigation/native'
+import { Updater } from 'react-query/types/core/utils'
+import { AwaitAble } from '@/shared/types'
+import { useUserProfile } from '@/swr/user/profile'
+import { useId } from 'react'
 
 // TODO 重构逻辑
 export function useHoleList() {
@@ -33,7 +36,10 @@ export function useHoleList() {
       getNextPageParam: (lastPages) => {
         const nextPage = lastPages.meta.currentPage + 1
 
-        if (nextPage > lastPages.meta.totalPages) {
+        if (
+          nextPage > lastPages.meta.totalPages ||
+          lastPages.items.length === 0
+        ) {
           return
         }
 
@@ -72,24 +78,42 @@ export function useHoleDetail() {
 
   const client = useQueryClient()
 
-  const query = useQuery([SWRKeys.hole.detail, params.id], {
+  const key = [SWRKeys.hole.detail, params.id]
+
+  const query = useQuery(key, {
     queryFn: () => GetHoleDetailRequest({ id: params.id }),
   })
   const invalidate = async () => {
-    await client.invalidateQueries([SWRKeys.hole.detail, params.id])
+    await client.invalidateQueries(key)
+  }
+
+  const toggleIsLike = async () => {
+    client.setQueryData<IHoleDetailResponse>(key, (oldData) => {
+      oldData.isLiked = !oldData.isLiked
+      if (oldData.isLiked) {
+        oldData.favoriteCounts++
+      } else {
+        oldData.favoriteCounts--
+      }
+
+      return oldData
+    })
   }
 
   return {
     ...query,
     invalidate,
+    toggleIsLike,
   }
 }
 
 export function useHoleComment() {
   const params = useParams<{ id: number }>()
-  const { mode } = useHoleDetailCommentContext()
+  const { mode, order } = useHoleDetailCommentContext()
+  const user = useUserProfile()
+  const id = useId()
 
-  const key = [SWRKeys.hole.comments, params.id, mode]
+  const key = [SWRKeys.hole.comments, params.id, mode, order]
 
   const query = useInfiniteQuery<IHoleCommentListResponse>(key, {
     queryFn: ({ pageParam = 1 }) => {
@@ -98,18 +122,21 @@ export function useHoleComment() {
         page: pageParam,
         id: params.id,
         mode,
+        order,
       })
     },
     getNextPageParam: (lastPages) => {
       const nextPage = lastPages.meta.currentPage + 1
 
-      if (nextPage > lastPages.meta.totalPages) {
+      if (
+        nextPage > lastPages.meta.totalPages ||
+        lastPages.items.length === 0
+      ) {
         return
       }
 
       return nextPage
     },
-    refetchOnMount: true,
   })
 
   const isDataEmpty = query.data?.pages?.[0]?.items.length > 0
@@ -133,11 +160,79 @@ export function useHoleComment() {
     await client.invalidateQueries(key)
   }
 
+  const setData = async <T = InfiniteData<IHoleCommentListResponse>>(
+    updater: Updater<T | undefined, T>
+  ) => {
+    await client.setQueryData<InfiniteData<IHoleCommentListResponse>>(
+      key,
+      updater as any
+    )
+  }
+
+  const setTargetData = async (
+    data: IHoleCommentListItem,
+    pageIndex = 0,
+    func: (target: IHoleCommentListItem) => AwaitAble
+  ) => {
+    await setData((oldData) => {
+      const pageTarget = oldData?.pages?.[pageIndex]
+
+      if (pageTarget) {
+        const targetIndex = pageTarget.items.findIndex(
+          (item) => item.id === data.id
+        )
+
+        if (targetIndex !== -1) {
+          const target = pageTarget.items[targetIndex]
+
+          func(target)
+        }
+      }
+
+      return oldData
+    })
+  }
+
+  const setIsLiked = async (data: IHoleCommentListItem, pageIndex = 0) => {
+    await setTargetData(data, pageIndex, (target) => {
+      target.isLiked = !target.isLiked
+
+      if (target.isLiked) {
+        target.favoriteCounts++
+      } else {
+        target.favoriteCounts--
+      }
+    })
+  }
+
+  const setReply = async (
+    data: IHoleCommentListItem,
+    pageIndex = 0,
+    body: string
+  ) => {
+    await setTargetData(data, pageIndex, (target) => {
+      target.replies.push({
+        createAt: '',
+        favoriteCounts: 0,
+        replyUser: null,
+        id,
+        body,
+        user: user.data,
+      })
+
+      target.repliesCount++
+    })
+  }
+
   return {
     ...query,
     invalidAll,
     invalidateQuery,
     isDataEmpty,
+    setData,
+    setIsLiked,
+    setTargetData,
+    setReply,
   }
 }
 
@@ -157,7 +252,10 @@ export function useHoleSearchResult() {
     getNextPageParam: (lastPages) => {
       const nextPage = lastPages.meta.currentPage + 1
 
-      if (nextPage > lastPages.meta.totalPages) {
+      if (
+        nextPage > lastPages.meta.totalPages ||
+        lastPages.items.length === 0
+      ) {
         return
       }
 

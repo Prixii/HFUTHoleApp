@@ -3,7 +3,7 @@ import Animated, {
   useDerivedValue,
   withSpring,
 } from 'react-native-reanimated'
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import { getQAQFont, ScreenHeight } from '@/shared/utils/utils'
 import { CommentPostFAB } from '@/pages/hole/detail/components/CommentPostFAB'
 import React, { useState } from 'react'
@@ -11,23 +11,32 @@ import { IconButton } from '@/components/IconButton'
 import { Button } from '@/components/button'
 import { Input } from '@/components/form/Input'
 import { useForm } from 'react-hook-form'
-import { Func } from '@/shared/types'
+import { Func, IdAble } from '@/shared/types'
 import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
 import { useMutation } from 'react-query'
-import { PostHoleDetailCommentRequest } from '@/request/apis/hole'
+import {
+  PostHoleDetailCommentRequest,
+  UploadHoleImgRequest,
+} from '@/request/apis/hole'
 import Toast from 'react-native-toast-message'
 import { useHoleDetailId } from '@/shared/hooks/useHoleDetailId'
 import { hideKeyboard } from '@/shared/utils/keyboard'
 import { useHoleComment } from '@/swr/hole'
+import * as ImagePicker from 'expo-image-picker'
+import { useSelectImage } from '@/shared/hooks/useSelectImage'
+import { FormImage } from '@/components/form/FormImage'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator/dist/class-validator'
 
 // TODO KeyboardAvoidingView
 const Form = ({ toggle }: { toggle: Func }) => {
   const id = useHoleDetailId()
-  const { control, handleSubmit } = useForm<HoleDetailPostComment>()
+  const { control, handleSubmit } = useForm<HoleDetailPostComment>({
+    resolver: classValidatorResolver(HoleDetailPostComment),
+  })
   const { refetch } = useHoleComment()
 
   const mutation = useMutation({
-    mutationFn: (data: HoleDetailPostComment) =>
+    mutationFn: (data: HoleDetailPostComment & IdAble<number>) =>
       PostHoleDetailCommentRequest(data),
     onSuccess() {
       Toast.show({
@@ -44,9 +53,15 @@ const Form = ({ toggle }: { toggle: Func }) => {
     },
   })
 
-  const onSubmit = (data: { body: string }) => {
+  const { onSelectImage, imgs, setImgs } = useSelectImage({
+    selectionLimit: 2,
+  })
+
+  const onSubmit = async (data: { body: string }) => {
+    const result = await UploadHoleImgRequest(imgs)
     mutation.mutate({
-      ...data,
+      body: data.body,
+      imgs: result,
       id,
     })
   }
@@ -63,6 +78,16 @@ const Form = ({ toggle }: { toggle: Func }) => {
           发送
         </Button>
       </View>
+
+      <FormImage
+        imgs={imgs}
+        onCloseable={(index) =>
+          setImgs((draft) => {
+            draft.splice(index, 1)
+          })
+        }
+      />
+
       <View>
         <Input
           name={'body'}
@@ -75,7 +100,7 @@ const Form = ({ toggle }: { toggle: Func }) => {
           placeholder={`请友善发言${getQAQFont('happy')}`}
         />
         <View className={'w-screen justify-between'}>
-          <IconButton icon={'camera'} />
+          <IconButton icon={'camera'} onPress={onSelectImage} />
         </View>
       </View>
     </>

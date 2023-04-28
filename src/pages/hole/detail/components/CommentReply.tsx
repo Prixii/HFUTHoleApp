@@ -4,8 +4,11 @@ import { useHoleComment } from '@/swr/hole'
 import { BottomSheetReply, ReplyProps } from '@/components/reply/reply'
 import { ReplyForm } from '@/components/reply/Form'
 
-export function HoleCommentReply(props: Omit<ReplyProps, 'children'>) {
-  const { invalidAll } = useHoleComment()
+// TODO 重构乐观更新
+export function HoleCommentReply(
+  props: Omit<ReplyProps, 'children'> & { page: number }
+) {
+  const { setReply } = useHoleComment()
 
   return (
     <BottomSheetReply {...props}>
@@ -18,7 +21,7 @@ export function HoleCommentReply(props: Omit<ReplyProps, 'children'>) {
             commentId: props.data.id,
           })
         }
-        invalidAll={invalidAll}
+        onReply={(body) => setReply(props.data, props.page, body)}
       />
     </BottomSheetReply>
   )

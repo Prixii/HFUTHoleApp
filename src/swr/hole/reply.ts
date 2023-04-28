@@ -2,6 +2,7 @@ import { useParams } from '@/shared/hooks/useParams'
 import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
 import { GetHoleReplyRequest, SearchHoleRequest } from '@/request/apis/hole'
 import { SWRKeys } from '@/swr/utils'
+import { Updater } from 'react-query/types/core/utils'
 
 export const useHoleReplyList = () => {
   const params = useParams<{ commentId: string }>()
@@ -58,6 +59,41 @@ export const useHoleReplyList = () => {
     await Promise.all([await query.refetch()])
   }
 
+  const setData = async <T = InfiniteData<IHoleReplyListResponse>>(
+    updater: Updater<T | undefined, T>
+  ) => {
+    await client.setQueryData<InfiniteData<IHoleCommentListResponse>>(
+      key,
+      updater as any
+    )
+  }
+
+  const setIsLiked = async (data: IHoleReplyListItem, pageIndex = 0) => {
+    await setData((oldData) => {
+      const pageTarget = oldData?.pages?.[pageIndex]
+
+      if (pageTarget) {
+        const targetIndex = pageTarget.items.findIndex(
+          (item) => item.id === data.id
+        )
+
+        if (targetIndex !== -1) {
+          const target = pageTarget.items[targetIndex]
+
+          target.isLiked = !target.isLiked
+
+          if (target.isLiked) {
+            target.favoriteCounts++
+          } else {
+            target.favoriteCounts--
+          }
+        }
+      }
+
+      return oldData
+    })
+  }
+
   return {
     ...query,
     invalidateQuery,
@@ -65,5 +101,6 @@ export const useHoleReplyList = () => {
     onRefresh,
     onTopRefresh,
     isDataEmpty,
+    setIsLiked,
   }
 }

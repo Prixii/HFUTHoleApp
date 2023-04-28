@@ -1,4 +1,5 @@
 import {
+  FlatList,
   ListRenderItem,
   Pressable,
   TouchableNativeFeedback,
@@ -28,6 +29,7 @@ const RenderItemReplyList: React.FC<{ data: IHoleCommentListItem }> = ({
   const navigate = useNavigation()
   const holeId = useHoleDetailId()
 
+  // TODO 统一管理
   const navigateToReply = () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -63,11 +65,14 @@ const RenderItemReplyList: React.FC<{ data: IHoleCommentListItem }> = ({
   )
 }
 
-const RenderItem: React.FC<{ data: IHoleCommentListResponse }> = ({ data }) => {
+const RenderItem: React.FC<{
+  data: IHoleCommentListResponse
+  page: number
+}> = ({ data, page }) => {
   const [replyOpen, setReplyOpen] = useState(false)
   const [replyData, setReplyData] = useState<IHoleCommentListItem>(null)
 
-  const { invalidAll } = useHoleComment()
+  const { setIsLiked } = useHoleComment()
 
   const handleReply = (data: IHoleCommentListItem) => {
     setReplyOpen(true)
@@ -76,22 +81,30 @@ const RenderItem: React.FC<{ data: IHoleCommentListResponse }> = ({ data }) => {
 
   return (
     <View className={'px-3'}>
-      {data.items.map((item) => (
-        <CommentItem
-          data={item}
-          key={item.id}
-          onBodyPress={handleReply}
-          bottom={
-            item.replies.length > 0 && <RenderItemReplyList data={item} />
-          }
-          reqFunc={item.isLiked ? DeleteCommentLikeRequest : LikeCommentRequest}
-          onLikePress={() => invalidAll()}
-        />
-      ))}
+      <FlatList
+        data={data.items}
+        renderItem={({ item }) => {
+          return (
+            <CommentItem
+              data={item}
+              key={item.id}
+              onBodyPress={handleReply}
+              bottom={
+                item.replies.length > 0 && <RenderItemReplyList data={item} />
+              }
+              reqFunc={
+                item.isLiked ? DeleteCommentLikeRequest : LikeCommentRequest
+              }
+              onLikePress={() => setIsLiked(item, page)}
+            />
+          )
+        }}
+      />
       <HoleCommentReply
         data={replyData}
         open={replyOpen}
         setOpen={setReplyOpen}
+        page={page}
       />
     </View>
   )
@@ -101,7 +114,7 @@ const EmptyItem = () => {
   const { isAllMode } = useHoleDetailCommentContext()
 
   return (
-    <View>
+    <View className={'py-2'}>
       <Empty
         text={
           isAllMode ? '树洞空空的，洞主正在期待第一个评论' : '洞主还没填楼噢'
@@ -111,16 +124,17 @@ const EmptyItem = () => {
   )
 }
 
-export const HoleDetailCommentItem: ListRenderItem<IHoleCommentListResponse> = (
-  props
-) => {
+export const HoleDetailCommentItem: React.FC<{
+  data: IHoleCommentListResponse
+  page: number
+}> = (props) => {
   const { data } = useHoleComment()
 
   const isCommentEmpty = data?.pages?.[0]?.items.length > 0
 
   return (
     <View className={'grid space-y-2'}>
-      {isCommentEmpty ? <RenderItem data={props.item} /> : <EmptyItem />}
+      {isCommentEmpty ? <RenderItem {...props} /> : <EmptyItem />}
     </View>
   )
 }

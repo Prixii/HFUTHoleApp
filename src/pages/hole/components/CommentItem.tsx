@@ -11,6 +11,7 @@ import { useMutation } from 'react-query'
 import { IconButton } from '@/components/IconButton'
 import { PrimaryText } from '@/components/Text/PrimaryText'
 import { ReplyBody } from '@/components/reply/body'
+import { ImageList } from '@/components/image/ImageList'
 
 type Data =
   | (Omit<IHoleCommentListItem, 'replies' | 'repliesCount'> &
@@ -36,10 +37,12 @@ export function CommentItem({
 }: Props) {
   const mutation = useMutation({
     mutationFn: () => reqFunc({ id: data.id }),
-    onSuccess() {
-      onLikePress()
-    },
   })
+
+  const onLikeIconPress = () => {
+    mutation.mutate()
+    onLikePress?.()
+  }
 
   return (
     <View
@@ -52,32 +55,37 @@ export function CommentItem({
         <UserAvatar url={data.user.avatar} size={30} />
       </View>
       <View className={'grid space-y-2 w-11/12'}>
-        <TouchableNativeFeedback onPress={() => onBodyPress?.(data)}>
-          <View className={'w-full grid gap-2'}>
-            <View className={'flex space-y-2'}>
-              <UserText username={data.user.username} />
-              <TimeText time={data.createAt} />
-              <ReplyBody
-                data={data as IHoleReplyListItem}
-                selectable={selectable}
-              />
-            </View>
-            <View className={'flex flex-row items-center space-x-1'}>
-              <LikeIcon
-                active={data.isLiked}
-                size={16}
-                onPress={() => {
-                  mutation.mutate()
-                }}
-              />
-              <View>
-                <SecondaryText style={{ fontSize: 16 }}>
-                  {data.favoriteCounts}
-                </SecondaryText>
+        <View className={'w-full grid gap-2'}>
+          <View>
+            <Pressable onPress={() => onBodyPress?.(data)}>
+              <View className={'flex space-y-2'}>
+                <UserText username={data.user.username} />
+                <TimeText time={data.createAt} />
+                <View>
+                  <ImageList imgs={data.imgs} />
+                </View>
+                <View>
+                  <ReplyBody
+                    data={data as IHoleReplyListItem}
+                    selectable={selectable}
+                  />
+                </View>
               </View>
+            </Pressable>
+          </View>
+          <View className={'flex flex-row items-center space-x-1'}>
+            <LikeIcon
+              active={data.isLiked}
+              size={16}
+              onPress={onLikeIconPress}
+            />
+            <View>
+              <SecondaryText style={{ fontSize: 16 }}>
+                {data.favoriteCounts}
+              </SecondaryText>
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </View>
         <View>{bottom}</View>
       </View>
     </View>

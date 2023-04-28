@@ -6,6 +6,10 @@ export interface IPagination {
   page: number
 }
 
+export type IdAble<T extends string | number = string> = {
+  id: T
+}
+
 export type AwaitAble<T = any> = Promise<T> | T
 
 export type Func<T = any> = (...args: any[]) => AwaitAble<T>

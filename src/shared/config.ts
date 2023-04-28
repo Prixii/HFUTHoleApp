@@ -20,6 +20,7 @@ export const Limit = {
   holeTagsMaxLength: 5,
   holeCommentBodyMaxLength: 1000,
   holeCommentBodyMinLength: 1,
+  commentMaxImgLength: 2,
 }
 
 export function setupGlobalConfig() {

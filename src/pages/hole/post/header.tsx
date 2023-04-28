@@ -27,11 +27,8 @@ export function HolePostHeader() {
   })
 
   const onSubmit = useDebounce(async (data: PostHoleValidator) => {
-    let result: string[] = []
+    const result = await UploadHoleImgRequest(imgs)
 
-    if (imgs.length > 0) {
-      result = await UploadHoleImgRequest(imgs)
-    }
     mutation.mutate({
       ...data,
       imgs: result,

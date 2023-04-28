@@ -1,7 +1,11 @@
 import { request } from '@/request/request'
 import { PaginateAble } from '@/shared/types'
 import { PostHoleValidator } from '@/shared/validators/hole'
-import { HoleDetailCommentMode, HoleListMode } from '@/shared/enums'
+import {
+  HoleDetailCommentMode,
+  HoleDetailCommentOrderMode,
+  HoleListMode,
+} from '@/shared/enums'
 import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
 import { HoleSearchValidator } from '@/shared/validators/hole/search'
 import { ImagePickerResult } from 'expo-image-picker'
@@ -38,7 +42,9 @@ export function GetHoleDetailRequest(params: Id) {
 }
 
 export function GetHoleDetailCommentsRequest(
-  params: PaginateAble<{ mode: HoleDetailCommentMode } & Id>
+  params: PaginateAble<
+    { mode: HoleDetailCommentMode; order: HoleDetailCommentOrderMode } & Id
+  >
 ) {
   return request<IHoleCommentListResponse>({
     method: 'GET',
@@ -80,6 +86,10 @@ export function SearchHoleRequest(params: PaginateAble<HoleSearchValidator>) {
 }
 
 export function UploadHoleImgRequest(imgs: ImagePickerResult['assets']) {
+  if (!imgs.length) {
+    return []
+  }
+
   const data = new FormData()
   for (const img of imgs) {
     // TODO solve any type

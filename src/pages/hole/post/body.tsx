@@ -7,6 +7,7 @@ import { Tags } from '@/components/tags'
 import { MyAvatar } from '@/components/MyAvatar'
 import { Image } from 'react-native'
 import { Closeable } from '@/components/Closeable'
+import { FormImage } from '@/components/form/FormImage'
 
 export function HolePostBody() {
   const {
@@ -22,24 +23,14 @@ export function HolePostBody() {
       <View>
         <Tags tags={tags} />
       </View>
-      <View className={'flex flex-row space-x-2'}>
-        {imgs.map((img, index) => (
-          <View>
-            <Image
-              source={{ uri: img.uri }}
-              resizeMode={'cover'}
-              className={'w-20 h-20 rounded-lg'}
-            />
-            <Closeable
-              onPress={() => {
-                setImgs((draft) => {
-                  draft.splice(index, 1)
-                })
-              }}
-            />
-          </View>
-        ))}
-      </View>
+      <FormImage
+        imgs={imgs}
+        onCloseable={(index) =>
+          setImgs((draft) => {
+            draft.splice(index, 1)
+          })
+        }
+      />
       <View>
         <Input
           name={'body'}

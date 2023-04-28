@@ -26,6 +26,7 @@ export function RefreshableHoleList({
   return isSuccess ? (
     <RefreshingFlatList
       data={data?.pages}
+      hasNextPage={hasNextPage}
       onRefreshing={fetchNextPage}
       onTopRefresh={invalidateQuery}
       ListHeaderComponent={ListHeaderComponent}

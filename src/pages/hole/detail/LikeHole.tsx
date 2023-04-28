@@ -1,3 +1,4 @@
+import React from 'react'
 import { useHoleDetail } from '@/swr/hole'
 import { useMutation } from 'react-query'
 import { DeleteLikeHoleRequest, PostLikeHoleRequest } from '@/request/apis/hole'
@@ -6,10 +7,9 @@ import { View } from 'react-native'
 import { IconButton } from '@/components/IconButton'
 import { LikeIcon } from '@/components/icon'
 import { Text } from 'react-native-paper'
-import React from 'react'
 
 export const LikeHole = () => {
-  const { invalidate, data } = useHoleDetail()
+  const { toggleIsLike, data } = useHoleDetail()
 
   const mutation = useMutation(
     ['like', data],
@@ -20,14 +20,17 @@ export const LikeHole = () => {
     },
     {
       async onSuccess() {
-        await invalidate()
+        await toggleIsLike()
       },
     }
   )
 
-  const likeHole = useDebounce(async () => {
-    mutation.mutate(data.id)
-  })
+  const likeHole = useDebounce(
+    async () => {
+      mutation.mutate(data.id)
+    },
+    { wait: 50 }
+  )
 
   return (
     <View className={'flex justify-center items-center'}>

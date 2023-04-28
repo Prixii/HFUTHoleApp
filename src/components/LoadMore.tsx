@@ -22,7 +22,7 @@ export function LoadMore(props: Props) {
         <LoadingIndicator />
       ) : (
         <Text style={{ color: theme.colors.surfaceVariant }}>
-          {`${props.text}${getQAQFont('happy')}`}
+          {`${props.text}${props.text && getQAQFont('happy')}`}
         </Text>
       )}
     </View>

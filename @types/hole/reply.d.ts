@@ -1,6 +1,7 @@
 declare interface IHoleReplyListResponse {
   items: IHoleReplyListItem[]
   meta: Meta
+  comment: IHoleCommentListItem
 }
 
 declare interface IHoleReplyListItem {
@@ -12,6 +13,7 @@ declare interface IHoleReplyListItem {
   comment: Comment
   isLiked: boolean
   replyUser: User
+  imgs: string[]
 }
 
 interface User {
