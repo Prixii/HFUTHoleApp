@@ -1,7 +1,6 @@
-import { useParams } from '@/shared/hooks/useParams'
 import { useHoleReplyList } from '@/swr/hole/reply'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { CommentItem } from '@/pages/hole/components/CommentItem'
 import {
   DeleteCommentLikeRequest,
@@ -109,6 +108,9 @@ export function HoleReply() {
               commentId: comment.id,
             })
           }
+          onReply={() => {
+            invalidAll()
+          }}
         />
       </BottomSheetReply>
     </View>

@@ -110,6 +110,9 @@ export function HolePostAddTags() {
               mode={'flat'}
               onTextInput={handleTagsInput}
               placeholder={`输入标签按空格就能添加了哦${getQAQFont('happy')}`}
+              style={{
+                backgroundColor: 'transparent',
+              }}
             />
           </Dialog.Content>
           <Dialog.Actions>
