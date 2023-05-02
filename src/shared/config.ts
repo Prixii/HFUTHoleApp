@@ -38,21 +38,4 @@ export function setupGlobalConfig() {
   dayjs.extend(localizedFormat)
   dayjs.extend(relativeTime)
   dayjs.locale('zh-cn')
-
-  configurePersistable({
-    storage: {
-      setItem: async (key, value) => {
-        await AsyncStorage.setItem(key, value)
-        return Promise.resolve()
-      },
-      getItem: async (key) => {
-        const value = await AsyncStorage.getItem(key)
-        return Promise.resolve(value)
-      },
-      removeItem: async (key) => {
-        await AsyncStorage.removeItem(key)
-        return Promise.resolve()
-      },
-    },
-  })
 }

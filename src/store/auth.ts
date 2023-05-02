@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { makeAutoObservable } from 'mobx'
-import { hydrateStore, makePersistable } from 'mobx-persist-store'
+import {
+  configurePersistable,
+  hydrateStore,
+  makePersistable,
+} from 'mobx-persist-store'
 
 interface Meta {
   token: string
@@ -31,6 +35,23 @@ export class Auth {
     this.meta = null
   }
 }
+
+configurePersistable({
+  storage: {
+    setItem: async (key, value) => {
+      await AsyncStorage.setItem(key, value)
+      return Promise.resolve()
+    },
+    getItem: async (key) => {
+      const value = await AsyncStorage.getItem(key)
+      return Promise.resolve(value)
+    },
+    removeItem: async (key) => {
+      await AsyncStorage.removeItem(key)
+      return Promise.resolve()
+    },
+  },
+})
 
 export const AuthStore = new Auth()
 
