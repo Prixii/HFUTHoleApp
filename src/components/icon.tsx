@@ -43,3 +43,5 @@ export const CloseIcon = withMaterialIcon('close')
 export const RightIcon = withMaterialIcon('chevron-right')
 
 export const AddIcon = withMaterialIcon('add')
+
+export const VotedIcon = withMaterialIcon('where-to-vote')

@@ -100,7 +100,7 @@ export function HolePostAddTags() {
   return (
     <>
       <Portal>
-        <Dialog visible={visible}>
+        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
           <Dialog.Title>添加标签</Dialog.Title>
           <Dialog.Content>
             <Tags tags={tags} onTagClick={handleTagClose} icon={'close'} />

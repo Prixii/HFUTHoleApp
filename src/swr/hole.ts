@@ -23,9 +23,10 @@ import { useId } from 'react'
 // TODO 重构逻辑
 export function useHoleList() {
   const { mode } = useHoleListContext()
+  const key = [SWRKeys.hole.list, mode]
 
   const query = useInfiniteQuery(
-    [SWRKeys.hole.list, mode],
+    key,
     ({ pageParam = 1 }) =>
       GetHoleListRequest({
         limit: 10,
@@ -53,28 +54,35 @@ export function useHoleList() {
   const client = useQueryClient()
 
   const invalidateQuery = async () => {
-    client.setQueryData<InfiniteData<IHoleListResponse>>(
-      [SWRKeys.hole.list, mode],
-      (oldData) => {
-        // 确保刷新时只更换第一组数据，其他组的数据全都销毁
-        oldData.pages = oldData.pages.slice(0, 1)
-        return oldData
-      }
-    )
-    await client.invalidateQueries([SWRKeys.hole.list, mode], {
+    client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
+      // 确保刷新时只更换第一组数据，其他组的数据全都销毁
+      oldData.pages = oldData.pages.slice(0, 1)
+      return oldData
+    })
+    await client.invalidateQueries(key, {
       refetchPage: (lastPage, index) => index === 0,
     })
+  }
+
+  const setData = async <T = InfiniteData<IHoleListResponse>>(
+    updater: Updater<T | undefined, T>
+  ) => {
+    await client.setQueryData<InfiniteData<IHoleListResponse>>(
+      key,
+      updater as any
+    )
   }
 
   return {
     ...query,
     client,
     invalidateQuery,
+    setData,
   }
 }
 
 export function useHoleDetail() {
-  const params = useParams<{ id: number }>()
+  const params = useParams<{ id?: number }>()
 
   const client = useQueryClient()
 
@@ -100,10 +108,17 @@ export function useHoleDetail() {
     })
   }
 
+  const setData = async <T = IHoleDetailResponse>(
+    updater: Updater<T | undefined, T>
+  ) => {
+    await client.setQueryData<IHoleDetailResponse>(key, updater as any)
+  }
+
   return {
     ...query,
     invalidate,
     toggleIsLike,
+    setData,
   }
 }
 

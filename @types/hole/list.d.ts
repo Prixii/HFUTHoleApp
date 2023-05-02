@@ -13,9 +13,20 @@ interface User {
 interface Vote {
   id: string
   createAt: string
+  type: string
+  endTime: string
+  items: VoteItem[]
+  isVoted: boolean | number
+  totalCount: number
+  isExpired: boolean
+}
+
+interface VoteItem {
+  id: string
+  createAt: string
   option: string
   count: number
-  type: string
+  isVoted: number | boolean
 }
 
 interface Tag {

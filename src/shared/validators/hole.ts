@@ -6,8 +6,11 @@ import {
   IsOptional,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator'
 import { Limit } from '@/shared/config'
+import { Type } from 'class-transformer'
+import { HolePostVoteClassValidator } from '@/shared/validators/hole/post'
 
 export class PostHoleValidator {
   @MaxLength(Limit.holeBodyMaxLength, {
@@ -31,16 +34,10 @@ export class PostHoleValidator {
   @IsOptional()
   tags: string[] = []
 
-  @ArrayMaxSize(Limit.holeVoteMaxLength, {
-    message: `最多只能创建${Limit.holeVoteMaxLength}个选项哦`,
-  })
-  @MaxLength(Limit.holeVoteOptionLength, {
-    each: true,
-    message: `每个选项最长只能是${Limit.holeVoteOptionLength}个字符哦`,
-  })
-  @IsArray()
+  @ValidateNested()
+  @Type(() => HolePostVoteClassValidator)
   @IsOptional()
-  votes: string[] = []
+  vote: HolePostVoteClassValidator
 
   @IsBoolean()
   @IsOptional()

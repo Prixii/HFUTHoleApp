@@ -51,13 +51,15 @@ export function Input<T extends object = PlainObject>({
               ...((props?.style as object) || {}),
             }}
           />
-          <HelperText
-            type="error"
-            visible={error}
-            style={{ color: theme.colors.error }}
-          >
-            {error?.message}
-          </HelperText>
+          {error?.message && (
+            <HelperText
+              type="error"
+              visible={error}
+              style={{ color: theme.colors.error }}
+            >
+              {error.message}
+            </HelperText>
+          )}
         </>
       )}
     />

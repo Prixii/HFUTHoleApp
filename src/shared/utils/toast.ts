@@ -17,4 +17,11 @@ export const Toast = {
       text1: `${params.text1}${getQAQFont('sadness')}`,
     })
   },
+  info(params: ToastShowParams) {
+    RNToast.show({
+      type: 'info',
+      ...params,
+      text1: `${params.text1}${getQAQFont('happy')}`,
+    })
+  },
 }

@@ -65,3 +65,6 @@ export const saveToAlbum = async (url: string) => {
     Toast.error({ text1: '保存图片失败', text2: error.stack.toString() })
   }
 }
+
+export const isNullOrUndefined = (val: unknown): val is null | undefined =>
+  val === null || val === undefined

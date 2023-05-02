@@ -5,7 +5,7 @@ declare interface IHole {
   imgs: string[]
   favoriteCounts: number
   user: User
-  votes: Vote[]
+  vote: Vote
   tags: Tag[]
   voteTotalCount: number
   isLiked: boolean

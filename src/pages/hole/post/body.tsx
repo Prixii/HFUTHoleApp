@@ -5,8 +5,6 @@ import { BottomActions } from '@/pages/hole/post/BottomActions'
 import { useHolePostContext } from '@/shared/context/hole'
 import { Tags } from '@/components/tags'
 import { MyAvatar } from '@/components/MyAvatar'
-import { Image } from 'react-native'
-import { Closeable } from '@/components/Closeable'
 import { FormImage } from '@/components/form/FormImage'
 
 export function HolePostBody() {

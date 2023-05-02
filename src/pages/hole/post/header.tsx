@@ -5,6 +5,7 @@ import Toast from 'react-native-toast-message'
 import { useHolePostContext } from '@/shared/context/hole'
 import { BackAndButtonHeader } from '@/components/header/BackAndButtonHeader'
 import { useNavigation } from '@react-navigation/native'
+import { format } from 'date-fns'
 
 export function HolePostHeader() {
   const navigation = useNavigation()
@@ -12,10 +13,22 @@ export function HolePostHeader() {
   const {
     form: { handleSubmit },
     imgs,
+    votes,
   } = useHolePostContext()
 
   const mutation = useMutation({
-    mutationFn: (data: PostHoleValidator) => PostHoleRequest(data),
+    mutationFn: async (data: PostHoleValidator) => {
+      const resultImage = await UploadHoleImgRequest(imgs)
+
+      return PostHoleRequest({
+        ...data,
+        imgs: resultImage,
+        vote: {
+          items: votes.items.map((i) => i.value),
+          endTime: format(votes.endTime, 'yyyy-MM-dd HH:mm:ss'),
+        },
+      })
+    },
     onSuccess(data) {
       Toast.show({
         type: 'success',
@@ -26,13 +39,7 @@ export function HolePostHeader() {
   })
 
   const onSubmit = async (data: PostHoleValidator) => {
-    const result = await UploadHoleImgRequest(imgs)
-
-    console.log(data)
-    mutation.mutate({
-      ...data,
-      imgs: result,
-    })
+    mutation.mutate(data)
   }
 
   return (

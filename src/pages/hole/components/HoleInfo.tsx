@@ -1,16 +1,79 @@
-import React, { ReactNode } from 'react'
-import { Func, IClassName } from '@/shared/types'
+import React, { ReactNode, useState } from 'react'
+import { Func, IClassName, InferArrayItem } from '@/shared/types'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
-import { Text, useTheme } from 'react-native-paper'
+import { Text } from 'react-native-paper'
 import { CommentIcon, LikeIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
 import { IdText } from '@/components/Text/Id'
 import { TimeText } from '@/components/Text/Time'
 import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 import { ImageList } from '@/components/image/ImageList'
+import { useMutation } from 'react-query'
+import { PostHoleVoteRequest } from '@/request/apis/hole'
+import { Toast } from '@/shared/utils/toast'
+import { HoleVoteItem } from '@/pages/hole/components/VoteItem'
+import { useImmer } from 'use-immer'
+import { useHoleList } from '@/swr/hole'
+import { SecondaryText } from '@/components/Text/SecondaryText'
 
 type Data = IHole
+
+type VoteItem = InferArrayItem<Data['vote']['items']>
+
+const HoleInfoVote: React.FC<{ data: Data }> = ({ data }) => {
+  const [onSuccess, setOnSuccess] = useState<Func>()
+
+  const mutation = useMutation({
+    mutationKey: [data.vote.id, data.vote.isVoted],
+    mutationFn: (ids: string[]) =>
+      PostHoleVoteRequest({
+        id: data.vote.id,
+        ids,
+      }),
+    onSuccess() {
+      Toast.success({
+        text1: '投票成功',
+      })
+      // onSuccess?.()
+    },
+  })
+
+  const onVotePress = (item: VoteItem, func) => {
+    if (data.vote.isVoted) {
+      return
+    }
+
+    if (data.vote.type === 'single') {
+      mutation.mutate([item.id])
+    }
+
+    setOnSuccess(func)
+  }
+
+  return (
+    <View>
+      <View className={'grid space-y-2'}>
+        {data.vote.items.map((item) => (
+          <View>
+            <HoleVoteItem
+              data={item}
+              hole={data}
+              onPress={(item, func) => onVotePress(item, func)}
+            />
+          </View>
+        ))}
+        {data.vote.isVoted && (
+          <View className={'flex flex-row justify-end w-full'}>
+            <SecondaryText>
+              一共有{data.vote.totalCount}人参与投票
+            </SecondaryText>
+          </View>
+        )}
+      </View>
+    </View>
+  )
+}
 
 const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   return (
@@ -94,6 +157,7 @@ export function HoleInfo({
       >
         <View>{header || <HoleInfoHeader data={data} />}</View>
         <View>{body || <HoleInfoBody data={data} />}</View>
+        <View>{data.vote && <HoleInfoVote data={data} />}</View>
         <View>{bottom || <HoleInfoIcons data={data} />}</View>
         {showComment && (
           <View className={'w-full grid gap-2'}>

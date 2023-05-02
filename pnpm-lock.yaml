@@ -12,6 +12,7 @@ specifiers:
   '@hookform/resolvers': ^2.9.11
   '@react-native-async-storage/async-storage': ^1.17.11
   '@react-native-camera-roll/camera-roll': ^5.3.1
+  '@react-native-community/datetimepicker': 6.5.2
   '@react-native-community/netinfo': 9.3.5
   '@react-navigation/material-bottom-tabs': ^6.2.12
   '@react-navigation/native': ^6.1.3
@@ -56,7 +57,10 @@ specifiers:
   react-native: 0.70.8
   react-native-gesture-handler: ~2.8.0
   react-native-image-zoom-viewer: ^3.0.1
+  react-native-modal-datetime-picker: ^15.0.0
   react-native-paper: ^5.1.2
+  react-native-paper-dates: ^0.16.1
+  react-native-paper-dropdown: ^1.0.7
   react-native-reanimated: ~2.12.0
   react-native-safe-area-context: 4.4.1
   react-native-screens: ~3.18.0
@@ -69,6 +73,7 @@ specifiers:
   react-native-web: ~0.18.9
   react-native-webview: 11.23.1
   react-query: ^3.39.3
+  reflect-metadata: ^0.1.13
   tailwindcss: ^3.2.6
   typescript: ^4.9.5
   use-immer: ^0.8.1
@@ -79,6 +84,7 @@ dependencies:
   '@hookform/resolvers': 2.9.11_react-hook-form@7.43.8
   '@react-native-async-storage/async-storage': 1.17.12_react-native@0.70.8
   '@react-native-camera-roll/camera-roll': 5.3.1_react-native@0.70.8
+  '@react-native-community/datetimepicker': 6.5.2
   '@react-native-community/netinfo': 9.3.5_react-native@0.70.8
   '@react-navigation/material-bottom-tabs': 6.2.15_dxdbrx6jmpjq2n3katurfaf3xe
   '@react-navigation/native': 6.1.6_rou7e4tzf7wt6gfzzwzm2xjc4q
@@ -107,7 +113,10 @@ dependencies:
   react-native: 0.70.8_rnpvdz5p36pviilrsprn2ditma
   react-native-gesture-handler: 2.8.0_rou7e4tzf7wt6gfzzwzm2xjc4q
   react-native-image-zoom-viewer: 3.0.1_rou7e4tzf7wt6gfzzwzm2xjc4q
+  react-native-modal-datetime-picker: 15.0.0_stwtglfmyxdi4pwjmyy6qh6hsq
   react-native-paper: 5.5.1_q5npiehyjgclynfzk4lpyodkgq
+  react-native-paper-dates: 0.16.1_ym7ca6f57544e7wel76mrhg2dq
+  react-native-paper-dropdown: 1.0.7_ehinyrsuaykvzaap22nldtnu7q
   react-native-reanimated: 2.12.0_piwp6xtxno2c5v7gd3hwoc2heu
   react-native-safe-area-context: 4.4.1_rou7e4tzf7wt6gfzzwzm2xjc4q
   react-native-screens: 3.18.2_rou7e4tzf7wt6gfzzwzm2xjc4q
@@ -119,6 +128,7 @@ dependencies:
   react-native-web: 0.18.12_ef5jwxihqo6n7gxfmzogljlgcm
   react-native-webview: 11.23.1_rou7e4tzf7wt6gfzzwzm2xjc4q
   react-query: 3.39.3_qj24jcuzdb53uwdh4cogu3nbti
+  reflect-metadata: 0.1.13
   use-immer: 0.8.1_immer@9.0.21+react@18.1.0
 
 devDependencies:
@@ -2727,6 +2737,12 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+
+  /@react-native-community/datetimepicker/6.5.2:
+    resolution: {integrity: sha512-9K3zhIH1zmpIGSG3GJTWLIoAx+sR4kJ1wqpGKMwWJ5IYXBsFxMdvGw023t0pz2CQStlnNbbNhnZY/HMYFBCsCg==}
+    dependencies:
+      invariant: 2.2.4
+    dev: false
 
   /@react-native-community/netinfo/9.3.5_react-native@0.70.8:
     resolution: {integrity: sha512-Mqbh/J8YCfc+EqSjq5OJn2USmcD8On4048pKEfyCsCDty3lQs1SNcmHqJdu9idNU2v//aM73T8F+re59cf78Ig==}
@@ -10855,6 +10871,50 @@ packages:
       react-native-image-pan-zoom: 2.1.12_rou7e4tzf7wt6gfzzwzm2xjc4q
     dev: false
 
+  /react-native-modal-datetime-picker/15.0.0_stwtglfmyxdi4pwjmyy6qh6hsq:
+    resolution: {integrity: sha512-cHeFEYHUhyIk+Mt9C6RVseg/VMGR4XcxdU9SibF5RMCXiXhrwMkFy7203xg1S331pzCF/Oqhvi4Jh0pYMrTFtQ==}
+    peerDependencies:
+      '@react-native-community/datetimepicker': '>=6.7.0'
+      react-native: '>=0.65.0'
+    dependencies:
+      '@react-native-community/datetimepicker': 6.5.2
+      prop-types: 15.8.1
+      react-native: 0.70.8_rnpvdz5p36pviilrsprn2ditma
+    dev: false
+
+  /react-native-paper-dates/0.16.1_ym7ca6f57544e7wel76mrhg2dq:
+    resolution: {integrity: sha512-7V1Oeq/E4gwAsGeAGDSbiPDk9TGybmf48LnAPBdNRJa7/VIziop0dFgtMOOUqAd9L3IzU/msKvo9gq1T7Ui8OQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-paper: '*'
+      react-native-vector-icons: '*'
+    dependencies:
+      color: 3.2.1
+      react: 18.1.0
+      react-native: 0.70.8_rnpvdz5p36pviilrsprn2ditma
+      react-native-paper: 5.5.1_q5npiehyjgclynfzk4lpyodkgq
+      react-native-vector-icons: 9.2.0
+    dev: false
+
+  /react-native-paper-dropdown/1.0.7_ehinyrsuaykvzaap22nldtnu7q:
+    resolution: {integrity: sha512-St0rZFw5sC7mbXtFCOGsyEa0fIBaG6Cfz78RsjFNzTj+rKd1i9qlDY2O7eOa2zAUEnFlL+C7FXdXUY9RUNELNw==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-native': '*'
+      react: '*'
+      react-native: '*'
+      react-native-paper: '*'
+      typescript: '*'
+    dependencies:
+      '@types/react': 18.0.29
+      '@types/react-native': 0.71.5
+      react: 18.1.0
+      react-native: 0.70.8_rnpvdz5p36pviilrsprn2ditma
+      react-native-paper: 5.5.1_q5npiehyjgclynfzk4lpyodkgq
+      typescript: 4.9.5
+    dev: false
+
   /react-native-paper/5.5.1_q5npiehyjgclynfzk4lpyodkgq:
     resolution: {integrity: sha512-IEk7fJwQp5+8sY8+zPTie2wbKrS72vOyFCJdatjoYGuiz55BiTn8JJanqKIu0IQFKZjiGAZPlzM44cCWrEkTPw==}
     peerDependencies:
@@ -11166,6 +11226,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       minimatch: 3.0.4
+    dev: false
+
+  /reflect-metadata/0.1.13:
+    resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
     dev: false
 
   /regenerate-unicode-properties/10.1.0:

@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { enGB, registerTranslation } from 'react-native-paper-dates'
 
 export const Config = {
   request: {
@@ -23,10 +24,16 @@ export const Limit = {
   commentMaxImgLength: 2,
 }
 
+function setupDatePicker() {
+  registerTranslation('en-GB', enGB)
+}
+
 export function setupGlobalConfig() {
   configurePersistable({
     storage: AsyncStorage,
   })
+
+  setupDatePicker()
 
   dayjs.extend(localizedFormat)
   dayjs.extend(relativeTime)

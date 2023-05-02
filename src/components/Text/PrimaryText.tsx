@@ -7,7 +7,7 @@ export function PrimaryText(props: TextProps<any>) {
     <Text
       {...props}
       className={props.className}
-      style={{ color: theme.colors.primary }}
+      style={{ color: theme.colors.primary, ...(props.style as object) }}
     ></Text>
   )
 }

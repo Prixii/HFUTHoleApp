@@ -1,5 +1,5 @@
 import { request } from '@/request/request'
-import { PaginateAble } from '@/shared/types'
+import { IdAble, PaginateAble } from '@/shared/types'
 import { PostHoleValidator } from '@/shared/validators/hole'
 import {
   HoleDetailCommentMode,
@@ -25,7 +25,11 @@ export function GetHoleListRequest(
   })
 }
 
-export function PostHoleRequest(data: PostHoleValidator) {
+export function PostHoleRequest(
+  data: Omit<PostHoleValidator, 'vote'> & {
+    vote: { items: string[]; endTime: string }
+  }
+) {
   return request<IMutationResponse>({
     method: 'POST',
     url: '/hole/create',
@@ -159,6 +163,14 @@ export function DeleteCommentLikeRequest(data: { id: string }) {
   return request({
     method: 'DELETE',
     url: '/hole/comment/like',
+    data,
+  })
+}
+
+export function PostHoleVoteRequest(data: { ids: string[] } & IdAble) {
+  return request({
+    method: 'POST',
+    url: '/hole/vote',
     data,
   })
 }
