@@ -22,7 +22,6 @@ export function makeAutoPersistObservable<
     {
       ...storageOptions,
       name: target.name,
-      storage: AsyncStorage,
     },
     reactionOptions
   )

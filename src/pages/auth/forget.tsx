@@ -35,32 +35,39 @@ const ForgetForm = observer(() => {
   })
 
   return (
-    <View className={''}>
-      <Input<ForgetFormValidator>
-        control={control}
-        name={'studentId'}
-        label={'学号'}
-      />
+    <View className={'grid space-y-2'}>
+      <View>
+        <Input<ForgetFormValidator>
+          control={control}
+          name={'studentId'}
+          label={'学号'}
+        />
+      </View>
 
-      <PasswordInput<ForgetFormValidator>
-        control={control}
-        name={'password'}
-        label={'密码'}
-      />
+      <View>
+        <PasswordInput<ForgetFormValidator>
+          control={control}
+          name={'password'}
+          label={'密码'}
+        />
+      </View>
 
-      <PasswordInput<ForgetFormValidator>
-        control={control}
-        name={'hfutPassword'}
-        label={'请输入信息门户密码'}
-      />
-
-      <Button
-        mode={'contained'}
-        className={'shadow-none w-full'}
-        onPress={handleSubmit(onSubmit)}
-      >
-        重置密码
-      </Button>
+      <View>
+        <PasswordInput<ForgetFormValidator>
+          control={control}
+          name={'hfutPassword'}
+          label={'请输入信息门户密码'}
+        />
+      </View>
+      <View>
+        <Button
+          mode={'contained'}
+          className={'shadow-none w-full'}
+          onPress={handleSubmit(onSubmit)}
+        >
+          重置密码
+        </Button>
+      </View>
     </View>
   )
 })

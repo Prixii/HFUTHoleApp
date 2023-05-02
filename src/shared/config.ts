@@ -1,10 +1,10 @@
 import { configurePersistable } from 'mobx-persist-store'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { enGB, registerTranslation } from 'react-native-paper-dates'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Config = {
   request: {
@@ -38,4 +38,21 @@ export function setupGlobalConfig() {
   dayjs.extend(localizedFormat)
   dayjs.extend(relativeTime)
   dayjs.locale('zh-cn')
+
+  configurePersistable({
+    storage: {
+      setItem: async (key, value) => {
+        await AsyncStorage.setItem(key, value)
+        return Promise.resolve()
+      },
+      getItem: async (key) => {
+        const value = await AsyncStorage.getItem(key)
+        return Promise.resolve(value)
+      },
+      removeItem: async (key) => {
+        await AsyncStorage.removeItem(key)
+        return Promise.resolve()
+      },
+    },
+  })
 }

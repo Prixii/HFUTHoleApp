@@ -1,11 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native'
+import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
@@ -42,42 +35,52 @@ const RegisterForm = () => {
   })
 
   return (
-    <View>
+    <View className={'grid space-y-2'}>
       {errors?.reqFailedError && (
         <View className={'py-3'}>
           <Snackbar text={errors.reqFailedError.message} icon={'info'} error />
         </View>
       )}
-      <Input<RegisterFormValidator>
-        control={control}
-        name={'username'}
-        label={'取一个好听的名字吧≖‿≖✧'}
-      />
-      <Input<RegisterFormValidator>
-        control={control}
-        name={'studentId'}
-        label={'学号'}
-      />
+      <View>
+        <Input<RegisterFormValidator>
+          control={control}
+          name={'username'}
+          label={'取一个好听的名字吧≖‿≖✧'}
+        />
+      </View>
+      <View>
+        <Input<RegisterFormValidator>
+          control={control}
+          name={'studentId'}
+          label={'学号'}
+        />
+      </View>
 
-      <PasswordInput<RegisterFormValidator>
-        control={control}
-        name={'password'}
-        label={'密码'}
-      />
+      <View>
+        <PasswordInput<RegisterFormValidator>
+          control={control}
+          name={'password'}
+          label={'密码'}
+        />
+      </View>
 
-      <PasswordInput<RegisterFormValidator>
-        control={control}
-        name={'hfutPassword'}
-        label={'请输入信息门户密码'}
-      />
+      <View>
+        <PasswordInput<RegisterFormValidator>
+          control={control}
+          name={'hfutPassword'}
+          label={'请输入信息门户密码'}
+        />
+      </View>
 
-      <Button
-        mode={'contained'}
-        className={'shadow-none w-full'}
-        onPress={handleSubmit(onSubmit)}
-      >
-        注册
-      </Button>
+      <View className={'mt-2'}>
+        <Button
+          mode={'contained'}
+          className={'shadow-none w-full'}
+          onPress={handleSubmit(onSubmit)}
+        >
+          注册
+        </Button>
+      </View>
     </View>
   )
 }

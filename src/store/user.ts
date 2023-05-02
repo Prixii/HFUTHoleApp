@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { makeAutoObservable } from 'mobx'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-class User {
+export class User {
   meta: IUserProfile
 
   constructor() {
