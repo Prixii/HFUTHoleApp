@@ -23,10 +23,14 @@ export function HolePostHeader() {
       return PostHoleRequest({
         ...data,
         imgs: resultImage,
-        vote: {
-          items: votes.items.map((i) => i.value),
-          endTime: format(votes.endTime, 'yyyy-MM-dd HH:mm:ss'),
-        },
+        ...(votes.items.length > 0
+          ? {
+              vote: {
+                endTime: format(votes.endTime, 'yyyy-MM-dd HH:mm:ss'),
+                items: votes.items.map((i) => i.value),
+              },
+            }
+          : ({} as any)),
       })
     },
     onSuccess(data) {

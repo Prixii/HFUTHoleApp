@@ -27,7 +27,7 @@ export function GetHoleListRequest(
 
 export function PostHoleRequest(
   data: Omit<PostHoleValidator, 'vote'> & {
-    vote: { items: string[]; endTime: string }
+    vote?: { items: string[]; endTime: string }
   }
 ) {
   return request<IMutationResponse>({
