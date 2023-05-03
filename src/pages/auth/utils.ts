@@ -5,6 +5,8 @@ import { useMutation } from 'react-query'
 import { useLinkTo } from '@react-navigation/native'
 import { useAuthStore } from '@/store/auth'
 import { getQAQFont } from '@/shared/utils/utils'
+import { useDispatch } from 'react-redux'
+import { useAuth } from '@/shared/hooks/useAuth'
 
 interface Options<T extends FieldValues> {
   reqFunc: AwaitFunc<T>
@@ -13,7 +15,7 @@ interface Options<T extends FieldValues> {
 
 export function useAuthMutation<T extends FieldValues>(options: Options<T>) {
   const linkTo = useLinkTo()
-  const store = useAuthStore()
+  const { login } = useAuth()
 
   const mutation = useMutation({
     mutationFn: (data: T) => options.reqFunc(data),
@@ -27,7 +29,7 @@ export function useAuthMutation<T extends FieldValues>(options: Options<T>) {
       }
     },
     onSuccess(data) {
-      store.login({ token: data.data.token })
+      login(data.data.token)
       linkTo('/hole/index')
     },
     retry: false,

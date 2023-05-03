@@ -5,18 +5,17 @@ import { Login } from '@/pages/auth/login'
 import { Forget } from '@/pages/auth/forget'
 import { Hole } from '@/pages/hole/hole'
 import { observer } from 'mobx-react-lite'
-import { useAuthStore } from '@/store/auth'
 import { HolePost } from '@/pages/hole/post/post'
 import { HoleDetail } from '@/pages/hole/detail/detail'
 import { HoleSearch } from '@/pages/hole/search/search'
 import { HoleSearchResult } from '@/pages/hole/search/result/result'
-import { View } from 'react-native'
 import { HoleSearchHeader } from '@/pages/hole/search/header'
 import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 import { HoleHeader } from '@/pages/hole/header'
 import { HoleReply } from '@/pages/hole/detail/reply/HoleReply'
 import { UserFavoriteHole } from '@/pages/user/hole/Favorite'
 import { UserPostedHole } from '@/pages/user/hole/Posted'
+import { useAuth } from '@/shared/hooks/useAuth'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
@@ -117,23 +116,17 @@ export const UserStacks = () => {
         name={'favorite'}
         component={UserFavoriteHole}
       />
-      <UserStack.Screen
-        options={{
-          headerTitle: '我的树洞',
-        }}
-        name={'posted'}
-        component={UserPostedHole}
-      />
+      <UserStack.Screen name={'posted'} component={UserPostedHole} />
     </UserStack.Navigator>
   )
 }
 
-export const Routes = observer(() => {
-  const store = useAuthStore()
+export const Routes = () => {
+  const { isLogin } = useAuth()
 
   return (
     <Stack.Navigator>
-      {store.isLogin ? (
+      {isLogin ? (
         <>
           <Stack.Screen
             options={{ headerShown: false }}
@@ -156,4 +149,4 @@ export const Routes = observer(() => {
       )}
     </Stack.Navigator>
   )
-})
+}

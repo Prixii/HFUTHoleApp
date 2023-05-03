@@ -14,6 +14,7 @@ export class SearchHistory {
     makePersistable(this, {
       name: SearchHistory.name,
       properties: ['data'],
+      storage: AsyncStorage,
     })
   }
 

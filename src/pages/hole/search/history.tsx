@@ -1,19 +1,22 @@
 import { Pressable, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { SecondaryText } from '@/components/Text/SecondaryText'
-import { CloseIcon, DeleteIcon } from '@/components/icon'
-import { useSearchHistoryStore } from '@/store/hole/search'
+import { DeleteIcon } from '@/components/icon'
 import { observer } from 'mobx-react-lite'
 import { useImmer } from 'use-immer'
 import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 import { Closeable } from '@/components/Closeable'
+import { store, useAppDispatch, useAppSelector } from '@/store/store'
+import { operateSearchData } from '@/store/reducer/search'
 
 export const HoleSearchHistory = observer(() => {
-  const store = useSearchHistoryStore()
   const theme = useTheme()
   const { searchWithKeywords } = useSearchNavigation()
 
   const [deleteAble, setDeleteAble] = useImmer<number[]>([])
+
+  const data = useAppSelector((state) => state.search.data) as string[]
+  const dispatch = useAppDispatch()
 
   const addDeleteAble = (index: number) => {
     setDeleteAble((draft) => {
@@ -22,25 +25,29 @@ export const HoleSearchHistory = observer(() => {
   }
 
   const deleteHistory = (index: number) => {
-    store.operate((draft) => {
-      draft.splice(index, 1)
-    })
+    dispatch(
+      operateSearchData((draft) => {
+        draft.splice(index, 1)
+      })
+    )
     setDeleteAble((draft) => {
       draft.splice(index, 1)
     })
   }
 
   const deleteAllHistory = () => {
-    store.operate((draft) => {
-      return []
-    })
+    dispatch(
+      operateSearchData(() => {
+        return []
+      })
+    )
   }
 
   return (
     <View className={'grid gap-4'}>
       <Text variant={'titleMedium'}>搜索历史</Text>
       <View className={'flex flex-row gap-2 flex-wrap'}>
-        {store.data.map((tag, index) => (
+        {data.map((tag, index) => (
           <Pressable
             key={index}
             onLongPress={() => addDeleteAble(index)}

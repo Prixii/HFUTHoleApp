@@ -4,6 +4,8 @@ import { Config } from '@/shared/config'
 import { getQAQFont, packStorageToken } from '@/shared/utils/utils'
 import Toast from 'react-native-toast-message'
 import { AuthStore } from '@/store/auth'
+import { store } from '@/store/store'
+import { logout } from '@/store/reducer/user'
 
 const instance = axios.create({
   baseURL: Config.request.baseURL,
@@ -22,7 +24,7 @@ instance.interceptors.response.use(
     const msg = (error?.response?.data as IMutationResponse)?.msg
 
     if (error.response?.status === HttpStatusCode.Unauthorized) {
-      AuthStore.logout()
+      store.dispatch(logout())
     }
 
     Toast.show({

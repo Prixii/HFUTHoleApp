@@ -10,26 +10,33 @@ import {
   HolePostContextProvider,
 } from '@/shared/context/hole'
 import { StatusBarContextProvider } from '@/shared/context/statusbar'
+import { Provider } from 'react-redux'
+import { persistor, store } from '@/store/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 setupGlobalConfig()
 
 const App = () => {
   return (
-    <ReactQueryProvider>
-      <PaperProvider>
-        <HoleListContextProvider>
-          <HolePostContextProvider>
-            <NavigationContainer>
-              <NativeBaseProvider>
-                <StatusBarContextProvider>
-                  <Layout />
-                </StatusBarContextProvider>
-              </NativeBaseProvider>
-            </NavigationContainer>
-          </HolePostContextProvider>
-        </HoleListContextProvider>
-      </PaperProvider>
-    </ReactQueryProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ReactQueryProvider>
+          <PaperProvider>
+            <HoleListContextProvider>
+              <HolePostContextProvider>
+                <NavigationContainer>
+                  <NativeBaseProvider>
+                    <StatusBarContextProvider>
+                      <Layout />
+                    </StatusBarContextProvider>
+                  </NativeBaseProvider>
+                </NavigationContainer>
+              </HolePostContextProvider>
+            </HoleListContextProvider>
+          </PaperProvider>
+        </ReactQueryProvider>
+      </PersistGate>
+    </Provider>
   )
 }
 

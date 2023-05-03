@@ -35,24 +35,14 @@ export const ImageListItem = React.memo(
     }, [img])
 
     const getSize = () => {
-      if (Number.isNaN(percent)) {
-        return
-      }
-
-      let width = ''
+      let width = 'w-full'
       let height = 'h-56'
 
       if (length !== 2) {
-        if (percent < 1) {
+        if (percent < 1 && percent !== 0) {
           width = 'w-1/2'
-          if (percent > 0.75) {
-            height = 'h-72'
-          } else {
-            height = 'h-52'
-          }
         } else {
           width = 'w-full'
-          height = 'h-56'
         }
       }
 
@@ -71,7 +61,7 @@ export const ImageListItem = React.memo(
           source={{
             uri: img,
           }}
-          className={`rounded-lg ${length > 2 ? 'h-40' : 'h-56'}`}
+          className={`rounded-lg ${getSize()}`}
           style={{
             resizeMode: 'cover',
             backgroundColor: theme.colors.onBackground,

@@ -6,10 +6,12 @@ import { Dimensions } from 'react-native'
 import * as MediaLibrary from 'expo-media-library'
 import { Toast } from '@/shared/utils/toast'
 import * as FileSystem from 'expo-file-system'
+import { store } from '@/store/store'
 
 export const getQAQFont = (key: keyof IQAQ) => getRandomQAQ(key)[0]
 
-export const packStorageToken = () => `Bearer ${AuthStore?.meta?.token}`
+export const packStorageToken = () =>
+  `Bearer ${store.getState().user?.meta?.token}`
 
 export function formatDate(time: string) {
   const date = new Date(time)

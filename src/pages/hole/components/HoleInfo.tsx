@@ -13,8 +13,6 @@ import { useMutation } from 'react-query'
 import { PostHoleVoteRequest } from '@/request/apis/hole'
 import { Toast } from '@/shared/utils/toast'
 import { HoleVoteItem } from '@/pages/hole/components/VoteItem'
-import { useImmer } from 'use-immer'
-import { useHoleList } from '@/swr/hole'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 
 type Data = IHole
@@ -100,7 +98,7 @@ const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
         />
       </View>
       <View>
-        <Text variant={'bodyMedium'} selectable={true}>
+        <Text variant={'bodyLarge'} selectable={true}>
           {data.body}
         </Text>
       </View>
@@ -169,11 +167,7 @@ export function HoleInfo({
                   }
                 >
                   <Text className={'font-bold'}>{comment.user.username}</Text>
-                  <Text
-                    className={'text-xs'}
-                    ellipsizeMode={'tail'}
-                    numberOfLines={1}
-                  >
+                  <Text ellipsizeMode={'tail'} numberOfLines={1}>
                     {comment.body}
                   </Text>
                 </View>

@@ -1,19 +1,16 @@
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { makeAutoObservable } from 'mobx'
-import {
-  configurePersistable,
-  hydrateStore,
-  makePersistable,
-} from 'mobx-persist-store'
+import { configurePersistable, makePersistable } from 'mobx-persist-store'
 
 interface Meta {
   token: string
+  isLogin: boolean
 }
 
-export class Auth {
-  isLogin = false
+export const AuthKey = 'auth'
 
+export class Auth {
   meta: Meta = null
 
   constructor() {
@@ -21,37 +18,24 @@ export class Auth {
 
     makePersistable(this, {
       name: Auth.name,
-      properties: ['meta', 'isLogin'],
+      properties: ['meta'],
     })
   }
 
-  login(meta: Meta) {
-    this.isLogin = true
-    this.meta = meta
+  login(token: string) {
+    this.meta = {
+      isLogin: true,
+      token,
+    }
   }
 
   async logout() {
-    this.isLogin = false
-    this.meta = null
+    this.meta = {
+      isLogin: false,
+      token: null,
+    }
   }
 }
-
-configurePersistable({
-  storage: {
-    setItem: async (key, value) => {
-      await AsyncStorage.setItem(key, value)
-      return Promise.resolve()
-    },
-    getItem: async (key) => {
-      const value = await AsyncStorage.getItem(key)
-      return Promise.resolve(value)
-    },
-    removeItem: async (key) => {
-      await AsyncStorage.removeItem(key)
-      return Promise.resolve()
-    },
-  },
-})
 
 export const AuthStore = new Auth()
 

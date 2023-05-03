@@ -1,4 +1,4 @@
-import { configurePersistable } from 'mobx-persist-store'
+import * as SecureStore from 'expo-secure-store'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -31,13 +31,24 @@ function setupDatePicker() {
 }
 
 export function setupGlobalConfig() {
-  configurePersistable({
-    storage: AsyncStorage,
-  })
-
   setupDatePicker()
 
   dayjs.extend(localizedFormat)
   dayjs.extend(relativeTime)
   dayjs.locale('zh-cn')
+}
+
+export const ExpoStorage = {
+  setItem: async (key, value) => {
+    await SecureStore.setItemAsync(key, JSON.stringify(value))
+    return Promise.resolve()
+  },
+  getItem: async (key) => {
+    const value = await SecureStore.getItemAsync(key)
+    return Promise.resolve(JSON.parse(value))
+  },
+  removeItem: async (key) => {
+    await SecureStore.deleteItemAsync(key)
+    return Promise.resolve()
+  },
 }

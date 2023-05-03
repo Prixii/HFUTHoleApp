@@ -17,6 +17,7 @@ specifiers:
   '@react-navigation/material-bottom-tabs': ^6.2.12
   '@react-navigation/native': ^6.1.3
   '@react-navigation/native-stack': ^6.9.9
+  '@reduxjs/toolkit': ^1.9.5
   '@types/date-fns': ^2.6.0
   '@types/react': ^18.0.27
   '@types/react-native': ^0.71.2
@@ -41,6 +42,7 @@ specifiers:
   expo-file-system: ~15.1.1
   expo-image-picker: ~14.0.2
   expo-media-library: ~15.0.0
+  expo-secure-store: ~12.0.0
   expo-status-bar: ~1.4.2
   hox: ^2.1.0
   immer: ^9.0.21
@@ -74,6 +76,9 @@ specifiers:
   react-native-web: ~0.18.9
   react-native-webview: 11.23.1
   react-query: ^3.39.3
+  react-redux: ^8.0.5
+  redux-persist: ^6.0.0
+  redux-persist-expo-securestore: ^2.0.0
   reflect-metadata: ^0.1.13
   tailwindcss: ^3.2.6
   typescript: ^4.9.5
@@ -90,6 +95,7 @@ dependencies:
   '@react-navigation/material-bottom-tabs': 6.2.15_dxdbrx6jmpjq2n3katurfaf3xe
   '@react-navigation/native': 6.1.6_rou7e4tzf7wt6gfzzwzm2xjc4q
   '@react-navigation/native-stack': 6.9.12_2f7r4kmrhqiw2uzpdqmubjthh4
+  '@reduxjs/toolkit': 1.9.5_vemw7bozoxwrumimjreoymxa4u
   ahooks: 3.7.6_react@18.1.0
   axios: 1.3.4
   class-transformer: 0.5.1
@@ -99,6 +105,7 @@ dependencies:
   expo-file-system: 15.1.1_expo@47.0.13
   expo-image-picker: 14.0.3_expo@47.0.13
   expo-media-library: 15.0.0_expo@47.0.13
+  expo-secure-store: 12.0.0_expo@47.0.13
   expo-status-bar: 1.4.4
   hox: 2.1.0_react@18.1.0
   immer: 9.0.21
@@ -130,6 +137,9 @@ dependencies:
   react-native-web: 0.18.12_ef5jwxihqo6n7gxfmzogljlgcm
   react-native-webview: 11.23.1_rou7e4tzf7wt6gfzzwzm2xjc4q
   react-query: 3.39.3_qj24jcuzdb53uwdh4cogu3nbti
+  react-redux: 8.0.5_pvmpm422diwz3n7fgwblnt6oaq
+  redux-persist: 6.0.0_react@18.1.0+redux@4.2.1
+  redux-persist-expo-securestore: 2.0.0_expo-secure-store@12.0.0
   reflect-metadata: 0.1.13
   use-immer: 0.8.1_immer@9.0.21+react@18.1.0
 
@@ -3318,6 +3328,25 @@ packages:
       react: 18.1.0
     dev: false
 
+  /@reduxjs/toolkit/1.9.5_vemw7bozoxwrumimjreoymxa4u:
+    resolution: {integrity: sha512-Rt97jHmfTeaxL4swLRNPD/zV4OxTes4la07Xc4hetpUW/vc75t5m1ANyxG6ymnEQ2FsLQsoMlYB2vV1sO3m8tQ==}
+    peerDependencies:
+      react: ^16.9.0 || ^17.0.0 || ^18
+      react-redux: ^7.2.1 || ^8.0.2
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-redux:
+        optional: true
+    dependencies:
+      immer: 9.0.21
+      react: 18.1.0
+      react-redux: 8.0.5_pvmpm422diwz3n7fgwblnt6oaq
+      redux: 4.2.1
+      redux-thunk: 2.4.2_redux@4.2.1
+      reselect: 4.1.8
+    dev: false
+
   /@segment/loosely-validate-event/2.0.0:
     resolution: {integrity: sha512-ZMCSfztDBqwotkl848ODgVcAmN4OItEWDCkshcKz0/W6gGSQayuuCtWV/MlodFivAZD793d6UgANd6wCXUfrIw==}
     dependencies:
@@ -3501,6 +3530,13 @@ packages:
     resolution: {integrity: sha512-ewXv/ceBaJprikMcxCmWU1FKyMAQ2X7a9Gtmzw8fcg2kIePI1crERDM818W+XYrxqdBBOdlf2rm137bU+BltCA==}
     dev: false
 
+  /@types/hoist-non-react-statics/3.3.1:
+    resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
+    dependencies:
+      '@types/react': 18.0.29
+      hoist-non-react-statics: 3.3.2
+    dev: false
+
   /@types/html-minifier-terser/5.1.2:
     resolution: {integrity: sha512-h4lTMgMJctJybDp8CQrxTUiiYmedihHWkjnF/8Pxseu2S6Nlfcy8kwboQ8yejh456rP2yWoEVm1sS/FVsfM48w==}
     dev: false
@@ -3598,6 +3634,10 @@ packages:
     resolution: {integrity: sha512-GkewRA4i5oXacU/n4MA9+bLgt5/L3F1mKrYvFGm7r2ouLXhRKjuWwo9XHNnbx6WF3vlGW21S3fCvgqxvxXXc5g==}
     dependencies:
       source-map: 0.6.1
+    dev: false
+
+  /@types/use-sync-external-store/0.0.3:
+    resolution: {integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==}
     dev: false
 
   /@types/validator/13.7.14:
@@ -4346,7 +4386,7 @@ packages:
       find-babel-config: 1.2.0
       glob: 7.2.3
       pkg-up: 3.1.0
-      reselect: 4.1.7
+      reselect: 4.1.8
       resolve: 1.22.1
 
   /babel-plugin-module-resolver/5.0.0:
@@ -6624,6 +6664,14 @@ packages:
       update-check: 1.5.3
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /expo-secure-store/12.0.0_expo@47.0.13:
+    resolution: {integrity: sha512-Rz5lYr2NxrnFvIPwuWcseUSbdUjFxNZG0oVulqM9puuK7t5lDG3/SAy+J22ELBhaltuci2VVO6hCdFwRoRiG/Q==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 47.0.13_@babel+core@7.21.3
     dev: false
 
   /expo-status-bar/1.4.4:
@@ -11154,6 +11202,40 @@ packages:
       react-native: 0.70.8_rnpvdz5p36pviilrsprn2ditma
     dev: false
 
+  /react-redux/8.0.5_pvmpm422diwz3n7fgwblnt6oaq:
+    resolution: {integrity: sha512-Q2f6fCKxPFpkXt1qNRZdEDLlScsDWyrgSj0mliK59qU6W5gvBiKkdMEG2lJzhd1rCctf0hb6EtePPLZ2e0m1uw==}
+    peerDependencies:
+      '@types/react': ^16.8 || ^17.0 || ^18.0
+      '@types/react-dom': ^16.8 || ^17.0 || ^18.0
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+      react-native: '>=0.59'
+      redux: ^4
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+      redux:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/react': 18.0.29
+      '@types/use-sync-external-store': 0.0.3
+      hoist-non-react-statics: 3.3.2
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+      react-is: 18.2.0
+      react-native: 0.70.8_rnpvdz5p36pviilrsprn2ditma
+      redux: 4.2.1
+      use-sync-external-store: 1.2.0_react@18.1.0
+    dev: false
+
   /react-refresh/0.4.3:
     resolution: {integrity: sha512-Hwln1VNuGl/6bVwnd0Xdn1e84gT/8T9aYNL+HAKDArLCS7LWjwr7StE30IEYbIkx0Vi3vs+coQxe+SQDbGbbpA==}
     engines: {node: '>=0.10.0'}
@@ -11243,6 +11325,41 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       minimatch: 3.0.4
+    dev: false
+
+  /redux-persist-expo-securestore/2.0.0_expo-secure-store@12.0.0:
+    resolution: {integrity: sha512-swD6sC6QCCHyKBV0hFQIBEiO8ph2Nc6Bs96hZ7Qq5iciO/Mk2T6ZDRR8e23jWDjGK5I8uCr4in7ZVb+RPbENQA==}
+    peerDependencies:
+      expo-secure-store: ^5.0.1
+    dependencies:
+      expo-secure-store: 12.0.0_expo@47.0.13
+    dev: false
+
+  /redux-persist/6.0.0_react@18.1.0+redux@4.2.1:
+    resolution: {integrity: sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==}
+    peerDependencies:
+      react: '>=16'
+      redux: '>4.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.1.0
+      redux: 4.2.1
+    dev: false
+
+  /redux-thunk/2.4.2_redux@4.2.1:
+    resolution: {integrity: sha512-+P3TjtnP0k/FEjcBL5FZpoovtvrTNT/UXd4/sluaSyrURlSlhLSzEdfsTBW7WsKB6yPvgd7q/iZPICFjW4o57Q==}
+    peerDependencies:
+      redux: ^4
+    dependencies:
+      redux: 4.2.1
+    dev: false
+
+  /redux/4.2.1:
+    resolution: {integrity: sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==}
+    dependencies:
+      '@babel/runtime': 7.21.0
     dev: false
 
   /reflect-metadata/0.1.13:
@@ -11370,6 +11487,10 @@ packages:
 
   /reselect/4.1.7:
     resolution: {integrity: sha512-Zu1xbUt3/OPwsXL46hvOOoQrap2azE7ZQbokq61BQfiXvhewsKDwhMeZjTX9sX0nvw1t/U5Audyn1I9P/m9z0A==}
+    dev: true
+
+  /reselect/4.1.8:
+    resolution: {integrity: sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ==}
 
   /resize-observer-polyfill/1.5.1:
     resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}

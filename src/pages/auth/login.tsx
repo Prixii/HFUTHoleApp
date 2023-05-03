@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import { Checkbox } from 'react-native-paper'
 import { Link } from '@/components/link'
 import { useForm } from 'react-hook-form'
@@ -45,17 +45,21 @@ const LoginForm = observer(() => {
         </View>
       )}
 
-      <Input<LoginFormValidator>
-        control={control}
-        name={'studentId'}
-        label={'学号'}
-      />
+      <View>
+        <Input<LoginFormValidator>
+          control={control}
+          name={'studentId'}
+          label={'学号'}
+        />
+      </View>
 
-      <PasswordInput<LoginFormValidator>
-        control={control}
-        name={'password'}
-        label={'密码'}
-      />
+      <View>
+        <PasswordInput<LoginFormValidator>
+          control={control}
+          name={'password'}
+          label={'密码'}
+        />
+      </View>
 
       <View className={'flex flex-row justify-between items-center'}>
         <Checkbox status={'checked'} />

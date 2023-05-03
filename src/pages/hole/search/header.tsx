@@ -11,13 +11,15 @@ import { SearchInput } from '@/components/form/Search'
 import { Toast } from '@/shared/utils/toast'
 import { useSearchHistoryStore } from '@/store/hole/search'
 import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
+import { useAppDispatch, useAppSelector } from '@/store/store'
+import { operateSearchData } from '@/store/reducer/search'
 
 export function HoleSearchHeader() {
   const theme = useTheme()
   const params = useParams<ISearchResultParams>()
   const { searchWithKeywords } = useSearchNavigation()
 
-  const store = useSearchHistoryStore()
+  const data = useAppSelector((state) => state.search.data) as string[]
 
   const {
     control,
@@ -30,10 +32,14 @@ export function HoleSearchHeader() {
     },
   })
 
+  const dispatch = useAppDispatch()
+
   const onSubmit = useDebounce((data: HoleSearchValidator) => {
-    store.operate((draft) => {
-      draft.unshift(data.keywords)
-    })
+    dispatch(
+      operateSearchData((draft) => {
+        draft.unshift(data.keywords)
+      })
+    )
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     searchWithKeywords(data.keywords)
