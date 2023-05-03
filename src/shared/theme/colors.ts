@@ -79,7 +79,7 @@ export const colors = {
   onError: ERROR.lighter,
   errorContainer: ERROR.main,
   onErrorContainer: ERROR.lighter,
-  background: GREY['200'],
+  background: GREY['100'],
   onBackground: GREY['300'],
   surface: GREY['400'],
   onSurface: GREY['800'],

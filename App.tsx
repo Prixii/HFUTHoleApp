@@ -9,6 +9,7 @@ import {
   HoleListContextProvider,
   HolePostContextProvider,
 } from '@/shared/context/hole'
+import { StatusBarContextProvider } from '@/shared/context/statusbar'
 
 setupGlobalConfig()
 
@@ -20,7 +21,9 @@ const App = () => {
           <HolePostContextProvider>
             <NavigationContainer>
               <NativeBaseProvider>
-                <Layout />
+                <StatusBarContextProvider>
+                  <Layout />
+                </StatusBarContextProvider>
               </NativeBaseProvider>
             </NavigationContainer>
           </HolePostContextProvider>

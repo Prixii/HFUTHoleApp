@@ -161,22 +161,23 @@ export function HoleInfo({
         <View>{bottom || <HoleInfoIcons data={data} />}</View>
         {showComment && (
           <View className={'w-full grid gap-2'}>
-            {data.comments.map((comment) => (
-              <View
-                className={
-                  'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/5'
-                }
-              >
-                <Text className={'font-bold'}>{comment.user.username}</Text>
-                <Text
-                  className={'text-xs'}
-                  ellipsizeMode={'tail'}
-                  numberOfLines={1}
+            {data.comments?.length > 0 &&
+              data.comments.map((comment) => (
+                <View
+                  className={
+                    'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/5'
+                  }
                 >
-                  {comment.body}
-                </Text>
-              </View>
-            ))}
+                  <Text className={'font-bold'}>{comment.user.username}</Text>
+                  <Text
+                    className={'text-xs'}
+                    ellipsizeMode={'tail'}
+                    numberOfLines={1}
+                  >
+                    {comment.body}
+                  </Text>
+                </View>
+              ))}
           </View>
         )}
       </View>

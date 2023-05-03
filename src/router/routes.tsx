@@ -15,6 +15,8 @@ import { HoleSearchHeader } from '@/pages/hole/search/header'
 import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 import { HoleHeader } from '@/pages/hole/header'
 import { HoleReply } from '@/pages/hole/detail/reply/HoleReply'
+import { UserFavoriteHole } from '@/pages/user/hole/Favorite'
+import { UserPostedHole } from '@/pages/user/hole/Posted'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createNativeStackNavigator()
@@ -59,11 +61,7 @@ const HoleSearchStacks = () => {
   return (
     <HoleStack.Navigator
       screenOptions={{
-        header: () => (
-          <View className={'px-2'}>
-            <HoleSearchHeader />
-          </View>
-        ),
+        header: () => <HoleSearchHeader />,
       }}
     >
       <HoleStack.Screen name={'index'} component={HoleSearch} />
@@ -107,6 +105,29 @@ const HoleStacks = observer(() => {
   )
 })
 
+const UserStack = createNativeStackNavigator()
+
+export const UserStacks = () => {
+  return (
+    <UserStack.Navigator>
+      <UserStack.Screen
+        options={{
+          headerTitle: '点赞的树洞',
+        }}
+        name={'favorite'}
+        component={UserFavoriteHole}
+      />
+      <UserStack.Screen
+        options={{
+          headerTitle: '我的树洞',
+        }}
+        name={'posted'}
+        component={UserPostedHole}
+      />
+    </UserStack.Navigator>
+  )
+}
+
 export const Routes = observer(() => {
   const store = useAuthStore()
 
@@ -118,6 +139,11 @@ export const Routes = observer(() => {
             options={{ headerShown: false }}
             name={'hole'}
             component={HoleStacks}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name={'user'}
+            component={UserStacks}
           />
           <Stack.Screen name={'web-view'} component={WebViewPage} />
         </>

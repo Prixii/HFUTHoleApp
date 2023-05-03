@@ -1,13 +1,17 @@
 import { StatusBar, View } from 'react-native'
 import { HoleDetailComment } from '@/pages/hole/detail/components/Comment'
 import { HoleDetailCommentContextProvider } from '@/shared/context/hole_detail'
-import React, { useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native'
+import React from 'react'
+import { useStatusBarContext } from '@/shared/context/statusbar'
 
 export function HoleDetail() {
+  const { setWhiteColor } = useStatusBarContext()
+
+  setWhiteColor()
+
   return (
     <HoleDetailCommentContextProvider>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+      <StatusBar backgroundColor={'#fff'} />
       <View className={'bg-white'}>
         <HoleDetailComment />
       </View>

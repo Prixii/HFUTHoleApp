@@ -1,0 +1,3 @@
+export function Report() {
+  return <></>
+}

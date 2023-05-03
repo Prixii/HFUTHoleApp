@@ -18,6 +18,7 @@ import { observer } from 'mobx-react-lite'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import { greetingText } from '@/shared/utils/utils'
+import { UserPopover } from '@/pages/hole/UserPopover'
 
 const SearchBar = () => {
   const linkTo = useLinkTo()
@@ -118,58 +119,17 @@ const SelectListHoleListMode = () => {
   )
 }
 
-const UserProfile = observer(() => {
-  const { data, isSuccess } = useUserProfile()
-  const initialFocusRef = React.useRef(null)
-
-  const { logout } = useAuth()
-
-  return (
-    isSuccess && (
-      <View>
-        <Box w="100%" alignItems="center">
-          <Popover
-            initialFocusRef={initialFocusRef}
-            trigger={(triggerProps) => {
-              return (
-                <TouchableOpacity {...triggerProps}>
-                  <UserAvatar url={data?.avatar} size={40} />
-                </TouchableOpacity>
-              )
-            }}
-          >
-            <Popover.Content width="56" borderWidth={0}>
-              <Popover.Arrow borderWidth={0} />
-              <Popover.Body>
-                <View className={'flex gap-2'}>
-                  <View className={'flex'}>
-                    <Text>{data.username},</Text>
-                    <SecondaryText>{greetingText()}</SecondaryText>
-                  </View>
-                  <View
-                    className={
-                      'border-dashed border-t-[1px] border-black/20 w-full'
-                    }
-                  ></View>
-                  <Button mode={'text'} onPress={logout}>
-                    注销
-                  </Button>
-                </View>
-              </Popover.Body>
-            </Popover.Content>
-          </Popover>
-        </Box>
-      </View>
-    )
-  )
-})
-
 export function HoleHeader() {
+  const theme = useTheme()
+
   return (
-    <View className={'bg-transparent grid space-y-2 px-2'}>
+    <View
+      className={'grid space-y-2 px-2'}
+      style={{ backgroundColor: theme.colors.background }}
+    >
       <View className={'flex flex-row justify-between'}>
         <SelectListHoleListMode />
-        <UserProfile />
+        <UserPopover />
       </View>
       <View>
         <SearchBar />

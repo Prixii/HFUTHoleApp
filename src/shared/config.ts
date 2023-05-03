@@ -8,8 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Config = {
   request: {
-    baseURL: 'http://192.168.249.34:8000/',
-    imgBaseURL: 'http://192.168.249.34:8080/',
+    baseURL: 'http://121.5.130.107:8000/',
+    imgBaseURL: 'http://121.5.130.107:8080/',
     timeout: 5000,
   },
 }
@@ -22,6 +22,8 @@ export const Limit = {
   holeCommentBodyMaxLength: 1000,
   holeCommentBodyMinLength: 1,
   commentMaxImgLength: 2,
+  reportReasonMaxLength: 500,
+  reportReasonMinLength: 10,
 }
 
 function setupDatePicker() {

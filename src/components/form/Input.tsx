@@ -18,12 +18,14 @@ type Props<T> = {
   name: FieldPath<T>
   control: Control<T>
   rules?: UseControllerProps<T>['rules']
+  transparent?: boolean
 } & TextInputProps
 
 export function Input<T extends object = PlainObject>({
   name,
   control,
   rules,
+  transparent,
   ...props
 }: Props<T>) {
   const theme = useTheme()
@@ -47,7 +49,7 @@ export function Input<T extends object = PlainObject>({
             error={isNotEmptyObject(error)}
             {...props}
             style={{
-              backgroundColor: 'white',
+              backgroundColor: transparent ? 'transparent' : 'white',
               ...((props?.style as object) || {}),
             }}
           />

@@ -60,11 +60,14 @@ export function HoleReply() {
                       : LikeCommentRequest
                   }
                   onLikePress={onLikePress}
+                  isReply={true}
                 />
               </View>
               <Separator />
               <View className={'p-3'}>
-                <SecondaryText>共有{comment.repliesCount}条评论</SecondaryText>
+                <SecondaryText>
+                  共有{data?.pages?.[0]?.meta.totalItems}条回复
+                </SecondaryText>
               </View>
             </>
           }

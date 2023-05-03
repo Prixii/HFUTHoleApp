@@ -12,3 +12,9 @@ export enum HoleDetailCommentOrderMode {
   favorite = 'favorite',
   time = 'time',
 }
+
+export enum Role {
+  User = 'user',
+  Admin = 'admin',
+  Banned = 'banned',
+}

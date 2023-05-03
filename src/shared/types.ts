@@ -1,3 +1,5 @@
+import { PlainObject } from '@/shared/types/utils'
+
 export type InferArrayItem<T extends any[]> = T extends (infer R)[] ? R : never
 
 export interface IPagination {
@@ -20,4 +22,4 @@ export interface IClassName {
   className?: string
 }
 
-export type PaginateAble<T> = IPagination & T
+export type PaginateAble<T = {}> = IPagination & T

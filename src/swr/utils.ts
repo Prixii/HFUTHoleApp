@@ -9,5 +9,7 @@ export const SWRKeys = {
   },
   user: {
     profile: 'user.profile',
+    favoriteHoleList: 'user.favoriteHoleList',
+    postedHoleList: 'user.postedHoleList',
   },
 }

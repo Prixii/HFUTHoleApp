@@ -1,5 +1,5 @@
 import RNToast from 'react-native-toast-message'
-import { ToastShowParams } from 'react-native-toast-message/lib/src/types'
+import type { ToastShowParams } from 'react-native-toast-message'
 import { getQAQFont } from '@/shared/utils/utils'
 
 export const Toast = {

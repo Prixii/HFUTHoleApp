@@ -28,7 +28,6 @@ export function AuthView(props: Props) {
       keyboardVerticalOffset={0}
     >
       <View className={'flex-1 justify-around'}>
-        <StatusBar backgroundColor={'#fff'} />
         <SafeAreaView
           className={'bg-white min-h-screen w-screen py-[10px] px-5'}
         >

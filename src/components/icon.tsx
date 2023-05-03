@@ -45,3 +45,5 @@ export const RightIcon = withMaterialIcon('chevron-right')
 export const AddIcon = withMaterialIcon('add')
 
 export const VotedIcon = withMaterialIcon('where-to-vote')
+
+export const MoreIcon = withMaterialIcon('more-vert')

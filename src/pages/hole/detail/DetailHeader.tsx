@@ -7,6 +7,8 @@ import { LikeHole } from '@/pages/hole/detail/LikeHole'
 import { BaseAppBar } from '@/components/BaseAppBar'
 import React from 'react'
 import { useHoleDetail } from '@/swr/hole'
+import { ReportAction } from '@/pages/hole/detail/ReportAction'
+import { ReportType } from '@/shared/validators/report'
 
 export function HoleDetailHeader() {
   const { data, isSuccess } = useHoleDetail()
@@ -35,7 +37,12 @@ export function HoleDetailHeader() {
               </View>
             </View>
           </View>
-          <LikeHole />
+          <View className={'flex flex-row space-x-2 items-center px-2'}>
+            <LikeHole />
+            <View>
+              <ReportAction type={ReportType.hole} holeId={data.id} />
+            </View>
+          </View>
         </>
       )}
     </BaseAppBar>
