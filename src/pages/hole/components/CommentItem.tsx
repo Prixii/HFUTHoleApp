@@ -73,17 +73,17 @@ export function CommentItem({
         <View className={'flex flex-row space-x-2'}>
           <View className={'w-1/12'} />
           <View className={'w-11/12 grid space-y-2'}>
-            <View>
-              <ImageList imgs={data.imgs} />
-            </View>
-            <View>
-              <Pressable onPress={() => onBodyPress?.(data)}>
-                <ReplyBody
-                  data={data as IHoleReplyListItem}
-                  selectable={selectable}
-                />
-              </Pressable>
-            </View>
+            <Pressable onPress={() => onBodyPress?.(data)}>
+              <View className={'grid space-y-2'}>
+                <ImageList imgs={data.imgs} />
+                <View className={'w-11/12'}>
+                  <ReplyBody
+                    data={data as IHoleReplyListItem}
+                    selectable={selectable}
+                  />
+                </View>
+              </View>
+            </Pressable>
             <View className={'flex flex-row items-center space-x-1'}>
               <LikeIcon
                 active={data.isLiked}

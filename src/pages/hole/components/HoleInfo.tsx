@@ -158,16 +158,20 @@ export function HoleInfo({
         <View>{data.vote && <HoleInfoVote data={data} />}</View>
         <View>{bottom || <HoleInfoIcons data={data} />}</View>
         {showComment && (
-          <View className={'w-full grid gap-2'}>
+          <View className={'grid gap-2'}>
             {data.comments?.length > 0 &&
               data.comments.map((comment) => (
                 <View
                   className={
-                    'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/5'
+                    'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/10'
                   }
                 >
                   <Text className={'font-bold'}>{comment.user.username}</Text>
-                  <Text ellipsizeMode={'tail'} numberOfLines={1}>
+                  <Text
+                    className={'flex-1'}
+                    ellipsizeMode={'tail'}
+                    numberOfLines={2}
+                  >
                     {comment.body}
                   </Text>
                 </View>

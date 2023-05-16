@@ -2,29 +2,36 @@
   "expo": {
     "name": "工大树洞",
     "slug": "hfuthole",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/splash.jpg",
+    "icon": "./assets/splash.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.jpg",
-      "resizeMode": "contain",
-      "backgroundColor": "#2F6F31"
+      "image": "./assets/bg.png",
+      "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/dba5ed50-696a-4891-ab2e-cd94660925e7"
     },
-    "assetBundlePatterns": ["**/*"],
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "snowingfox"
+        }
+      ]
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hfuthole.app",
-      "config": {
-        "usesNonExemptEncryption": false
-      }
+      "bundleIdentifier": "com.hfuthole.app"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/splash.jpg"
+        "foregroundImage": "./assets/splash.png"
       },
       "permissions": [
         "WRITE_EXTERNAL_STORAGE",
@@ -33,13 +40,16 @@
       "package": "com.hfuthole.app"
     },
     "web": {
-      "favicon": "./assets/splash.jpg"
+      "favicon": "./assets/splash.png"
     },
     "extra": {
       "eas": {
         "projectId": "dba5ed50-696a-4891-ab2e-cd94660925e7"
       }
     },
-    "owner": "snowingfox"
+    "owner": "snowingfox",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }

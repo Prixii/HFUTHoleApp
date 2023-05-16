@@ -98,6 +98,7 @@ const Form = ({ toggle }: { toggle: Func }) => {
             height: ScreenHeight * 0.2,
           }}
           placeholder={`请友善发言${getQAQFont('happy')}`}
+          autoFocus={true}
         />
         <View className={'w-screen justify-between'}>
           <IconButton icon={'camera'} onPress={onSelectImage} />

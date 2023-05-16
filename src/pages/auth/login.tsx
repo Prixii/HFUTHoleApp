@@ -10,11 +10,10 @@ import { LoginRequest } from '@/request/apis/auth'
 import { Snackbar } from '@/components/snackbar/snackbar'
 import { Button } from '@/components/button'
 import { LoginFormValidator } from '@/shared/validators/auth'
-import { observer } from 'mobx-react-lite'
 import { useAuthMutation } from './utils'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 
-const LoginForm = observer(() => {
+const LoginForm = () => {
   const {
     formState: { errors },
     control,
@@ -86,7 +85,7 @@ const LoginForm = observer(() => {
       </View>
     </View>
   )
-})
+}
 
 export function Login() {
   return (

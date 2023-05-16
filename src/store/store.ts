@@ -5,11 +5,14 @@ import { UserReducer } from './reducer/user'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { combineReducers } from '@reduxjs/toolkit'
 import { SearchReducer } from '@/store/reducer/search'
+import createSecureStore from 'redux-persist-expo-securestore'
+
+const SecureStorage = createSecureStore()
 
 const userPersistReducer = persistReducer(
   {
     key: 'user',
-    storage: AsyncStorage,
+    storage: SecureStorage,
   },
   UserReducer
 )

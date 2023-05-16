@@ -57,7 +57,6 @@ export function ReplyForm({ data, closeModal, reqFunc, onReply }: Props) {
           name={'body'}
           multiline={true}
           numberOfLines={4}
-          autoFocus={true}
           style={{
             height: ScreenHeight * 0.2,
             fontSize: 14,

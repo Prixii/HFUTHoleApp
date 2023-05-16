@@ -2,14 +2,13 @@ import { Pressable, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import { DeleteIcon } from '@/components/icon'
-import { observer } from 'mobx-react-lite'
 import { useImmer } from 'use-immer'
 import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 import { Closeable } from '@/components/Closeable'
-import { store, useAppDispatch, useAppSelector } from '@/store/store'
+import { useAppDispatch, useAppSelector } from '@/store/store'
 import { operateSearchData } from '@/store/reducer/search'
 
-export const HoleSearchHistory = observer(() => {
+export const HoleSearchHistory = () => {
   const theme = useTheme()
   const { searchWithKeywords } = useSearchNavigation()
 
@@ -75,4 +74,4 @@ export const HoleSearchHistory = observer(() => {
       </View>
     </View>
   )
-})
+}

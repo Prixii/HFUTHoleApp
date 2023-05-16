@@ -7,11 +7,10 @@ import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
 import { Button } from 'react-native-paper'
 import { ForgetRequest } from '@/request/apis/auth'
-import { observer } from 'mobx-react-lite'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { useAuthMutation } from './utils'
 
-const ForgetForm = observer(() => {
+const ForgetForm = () => {
   const {
     formState: { errors },
     control,
@@ -70,7 +69,7 @@ const ForgetForm = observer(() => {
       </View>
     </View>
   )
-})
+}
 
 export function Forget() {
   return (

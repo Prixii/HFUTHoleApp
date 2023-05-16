@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import { useUserProfile } from '@/swr/user/profile'
 import React, { useMemo } from 'react'
 import { useAuth } from '@/shared/hooks/useAuth'
@@ -13,7 +12,7 @@ import { DashBorderSeparator } from '@/components/Separator'
 import { Role } from '@/shared/enums'
 import { useLinkTo } from '@react-navigation/native'
 
-export const UserPopover = observer(() => {
+export const UserPopover = () => {
   const { data, isSuccess } = useUserProfile()
   const linkTo = useLinkTo()
 
@@ -60,6 +59,9 @@ export const UserPopover = observer(() => {
               <UserAvatar url={data.avatar} size={40} />
             </TouchableOpacity>
           }
+          backgroundStyle={{
+            borderRadius: 25,
+          }}
         >
           <View className={'p-3'}>
             <DashBorderSeparator>
@@ -87,4 +89,4 @@ export const UserPopover = observer(() => {
       </View>
     )
   )
-})
+}

@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  ListRenderItem,
-  Pressable,
-  TouchableNativeFeedback,
-  View,
-} from 'react-native'
+import { FlatList, TouchableNativeFeedback, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { Empty } from '@/components/svg/Empty'
 import { useHoleComment } from '@/swr/hole'

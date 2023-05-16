@@ -4,7 +4,6 @@ import { Register } from '@/pages/auth/register'
 import { Login } from '@/pages/auth/login'
 import { Forget } from '@/pages/auth/forget'
 import { Hole } from '@/pages/hole/hole'
-import { observer } from 'mobx-react-lite'
 import { HolePost } from '@/pages/hole/post/post'
 import { HoleDetail } from '@/pages/hole/detail/detail'
 import { HoleSearch } from '@/pages/hole/search/search'
@@ -22,19 +21,7 @@ const Stack = createNativeStackNavigator()
 const AuthStack = createNativeStackNavigator()
 const HoleStack = createNativeStackNavigator()
 
-const config = {
-  animation: 'spring',
-  config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: true,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-}
-
-const Auth = observer(() => {
+const Auth = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen
@@ -54,7 +41,7 @@ const Auth = observer(() => {
       />
     </AuthStack.Navigator>
   )
-})
+}
 
 const HoleSearchStacks = () => {
   return (
@@ -82,7 +69,7 @@ const HoleDetailStacks = () => {
   )
 }
 
-const HoleStacks = observer(() => {
+const HoleStacks = () => {
   return (
     <HoleStack.Navigator
       screenOptions={{
@@ -102,7 +89,7 @@ const HoleStacks = observer(() => {
       <HoleStack.Screen name={'detail'} component={HoleDetailStacks} />
     </HoleStack.Navigator>
   )
-})
+}
 
 const UserStack = createNativeStackNavigator()
 
@@ -111,12 +98,18 @@ export const UserStacks = () => {
     <UserStack.Navigator>
       <UserStack.Screen
         options={{
-          headerTitle: '点赞的树洞',
+          headerTitle: '私藏小洞',
         }}
         name={'favorite'}
         component={UserFavoriteHole}
       />
-      <UserStack.Screen name={'posted'} component={UserPostedHole} />
+      <UserStack.Screen
+        options={{
+          headerTitle: '我的树洞',
+        }}
+        name={'posted'}
+        component={UserPostedHole}
+      />
     </UserStack.Navigator>
   )
 }

@@ -13,6 +13,7 @@ import { StatusBarContextProvider } from '@/shared/context/statusbar'
 import { Provider } from 'react-redux'
 import { persistor, store } from '@/store/store'
 import { PersistGate } from 'redux-persist/integration/react'
+import { Updater } from '@/components/Update/Updater'
 
 setupGlobalConfig()
 
@@ -22,17 +23,19 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <ReactQueryProvider>
           <PaperProvider>
-            <HoleListContextProvider>
-              <HolePostContextProvider>
-                <NavigationContainer>
-                  <NativeBaseProvider>
-                    <StatusBarContextProvider>
-                      <Layout />
-                    </StatusBarContextProvider>
-                  </NativeBaseProvider>
-                </NavigationContainer>
-              </HolePostContextProvider>
-            </HoleListContextProvider>
+            <Updater>
+              <HoleListContextProvider>
+                <HolePostContextProvider>
+                  <NavigationContainer>
+                    <NativeBaseProvider>
+                      <StatusBarContextProvider>
+                        <Layout />
+                      </StatusBarContextProvider>
+                    </NativeBaseProvider>
+                  </NavigationContainer>
+                </HolePostContextProvider>
+              </HoleListContextProvider>
+            </Updater>
           </PaperProvider>
         </ReactQueryProvider>
       </PersistGate>

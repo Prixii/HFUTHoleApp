@@ -3,9 +3,7 @@ import { AxiosError } from 'axios'
 import type { FieldValues, UseFormSetError } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { useLinkTo } from '@react-navigation/native'
-import { useAuthStore } from '@/store/auth'
 import { getQAQFont } from '@/shared/utils/utils'
-import { useDispatch } from 'react-redux'
 import { useAuth } from '@/shared/hooks/useAuth'
 
 interface Options<T extends FieldValues> {

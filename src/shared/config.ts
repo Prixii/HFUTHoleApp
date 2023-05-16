@@ -1,11 +1,3 @@
-import * as SecureStore from 'expo-secure-store'
-import dayjs from 'dayjs'
-import 'dayjs/locale/zh-cn'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import { enGB, registerTranslation } from 'react-native-paper-dates'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
 export const Config = {
   request: {
     baseURL: 'http://121.5.130.107:8000/',
@@ -26,29 +18,4 @@ export const Limit = {
   reportReasonMinLength: 10,
 }
 
-function setupDatePicker() {
-  registerTranslation('en-GB', enGB)
-}
-
-export function setupGlobalConfig() {
-  setupDatePicker()
-
-  dayjs.extend(localizedFormat)
-  dayjs.extend(relativeTime)
-  dayjs.locale('zh-cn')
-}
-
-export const ExpoStorage = {
-  setItem: async (key, value) => {
-    await SecureStore.setItemAsync(key, JSON.stringify(value))
-    return Promise.resolve()
-  },
-  getItem: async (key) => {
-    const value = await SecureStore.getItemAsync(key)
-    return Promise.resolve(JSON.parse(value))
-  },
-  removeItem: async (key) => {
-    await SecureStore.deleteItemAsync(key)
-    return Promise.resolve()
-  },
-}
+export function setupGlobalConfig() {}

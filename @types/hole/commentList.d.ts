@@ -12,6 +12,7 @@ declare interface IHoleCommentListItem {
   replies: Reply[]
   isLiked: boolean
   imgs: string[]
+  repliesCount: number
 }
 
 interface User {
