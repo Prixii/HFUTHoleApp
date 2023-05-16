@@ -11,3 +11,8 @@
 - [@tanstack/react-query](https://react-query.tanstack.com/)
 - [mobx-react-lite](https://mobx.js.org/react-integration.html)
 
+
+
+## TODOLIST
+
+- [ ] 自动根据release tag更新App
