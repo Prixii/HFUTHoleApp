@@ -7,8 +7,8 @@ import { Text } from 'react-native'
 import { Button } from '@/components/button'
 
 export function Updater({ children }: { children: ReactNode }) {
-  const [visible, setVisible] = useState(true)
-  const [loading, setLoading] = useState(true)
+  const [visible, setVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useMount(() => {
     onFetchUpdateAsync()
@@ -36,6 +36,8 @@ export function Updater({ children }: { children: ReactNode }) {
 
   const downloadLatestVersion = async () => {
     try {
+      setVisible(true)
+      setLoading(true)
       await Updates.fetchUpdateAsync()
       setLoading(false)
       await Updates.reloadAsync()
