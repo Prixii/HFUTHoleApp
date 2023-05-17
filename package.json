@@ -1,7 +1,6 @@
 {
   "name": "com.hfuthole.app",
   "version": "1.0.0",
-  "packageManager": "pnpm@7.4.0",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

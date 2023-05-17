@@ -47,9 +47,6 @@
         "projectId": "dba5ed50-696a-4891-ab2e-cd94660925e7"
       }
     },
-    "owner": "snowingfox",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    }
+    "owner": "snowingfox"
   }
 }
