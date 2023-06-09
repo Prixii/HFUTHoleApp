@@ -47,3 +47,5 @@ export const AddIcon = withMaterialIcon('add')
 export const VotedIcon = withMaterialIcon('where-to-vote')
 
 export const MoreIcon = withMaterialIcon('more-vert')
+
+export const HomeIcon = withFontAV5Icon('home')
