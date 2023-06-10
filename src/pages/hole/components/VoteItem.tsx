@@ -1,17 +1,13 @@
 import { Pressable, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import { PrimaryText } from '@/components/Text/PrimaryText'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { AwaitAble, Func, InferArrayItem } from '@/shared/types'
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated'
-import { RightIcon, VotedIcon } from '@/components/icon'
-import { useHoleList } from '@/swr/hole'
+import { VotedIcon } from '@/components/icon'
 import { useVoteItem } from '@/pages/hole/components/useVoteItem'
 
 type Data = InferArrayItem<IHole['vote']['items']>

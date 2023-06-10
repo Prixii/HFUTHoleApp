@@ -1,11 +1,12 @@
 import { SvgProps } from 'react-native-svg'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
+import { isBoolean } from 'class-validator'
 
 type Props = {
-  active: boolean
-  size: number
   SvgComponent: React.ComponentType<SvgProps>
+  size: number
+  active?: boolean
 } & SvgProps
 
 export function Svg({ active, SvgComponent, size, ...props }: Props) {
@@ -13,7 +14,13 @@ export function Svg({ active, SvgComponent, size, ...props }: Props) {
 
   return (
     <SvgComponent
-      color={active ? theme.colors.primary : theme.colors.surfaceVariant}
+      color={
+        isBoolean(active)
+          ? active
+            ? theme.colors.primary
+            : theme.colors.surfaceVariant
+          : ''
+      }
       width={size}
       height={size}
       {...props}

@@ -19,11 +19,11 @@ import { Updater } from 'react-query/types/core/utils'
 import { AwaitAble } from '@/shared/types'
 import { useUserProfile } from '@/swr/user/profile'
 import { useId } from 'react'
+import { HoleListMode } from '@/shared/enums'
 
 // TODO 重构逻辑
 export function useHoleList() {
-  const { mode } = useHoleListContext()
-  const key = [SWRKeys.hole.list, mode]
+  const key = SWRKeys.hole.list
 
   const query = useInfiniteQuery(
     key,
@@ -31,7 +31,7 @@ export function useHoleList() {
       GetHoleListRequest({
         limit: 10,
         page: pageParam,
-        mode,
+        mode: HoleListMode.timeline,
       }),
     {
       getNextPageParam: (lastPages) => {

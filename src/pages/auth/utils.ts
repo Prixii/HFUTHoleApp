@@ -28,7 +28,7 @@ export function useAuthMutation<T extends FieldValues>(options: Options<T>) {
     },
     onSuccess(data) {
       login(data.data.token)
-      linkTo('/hole/index')
+      linkTo('/index')
     },
     retry: false,
   })

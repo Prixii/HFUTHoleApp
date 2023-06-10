@@ -4,10 +4,12 @@ import { Register } from '@/pages/auth/register'
 import { Login } from '@/pages/auth/login'
 import { Forget } from '@/pages/auth/forget'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { BottomTabs } from '@/router/bottomTabs'
+import { BottomTabs } from '@/router/BottomTabs'
+import { HoleNestedStacks } from '@/router/TopTabs'
 
 const Stack = createNativeStackNavigator()
 const AuthStack = createNativeStackNavigator()
+const IndexStack = createNativeStackNavigator()
 
 const Auth = () => {
   return (
@@ -31,6 +33,15 @@ const Auth = () => {
   )
 }
 
+export function IndexStacks() {
+  return (
+    <IndexStack.Navigator screenOptions={{ headerShown: false }}>
+      <IndexStack.Screen name={'index'} component={BottomTabs} />
+      <IndexStack.Screen name={'hole'} component={HoleNestedStacks} />
+    </IndexStack.Navigator>
+  )
+}
+
 export const Routes = () => {
   const { isLogin } = useAuth()
 
@@ -39,7 +50,7 @@ export const Routes = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLogin ? (
           <>
-            <Stack.Screen name={'index'} component={BottomTabs} />
+            <Stack.Screen name={'index'} component={IndexStacks} />
             <Stack.Screen name={'web-view'} component={WebViewPage} />
           </>
         ) : (

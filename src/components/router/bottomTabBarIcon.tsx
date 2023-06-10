@@ -10,7 +10,7 @@ interface Props {
 }
 
 const IconsMap = {
-  hole: HomeSvg,
+  home: HomeSvg,
   course: CourseSvg,
   notify: NotifySvg,
   user: MineSvg,
@@ -19,6 +19,6 @@ const IconsMap = {
 export function BottomTabBarIcon(props: Props) {
   const route = props.route.split('-')[0]
   return (
-    <Svg SvgComponent={IconsMap[route]} size={22} active={props.isFocused} />
+    <Svg SvgComponent={IconsMap[route]} size={24} active={props.isFocused} />
   )
 }

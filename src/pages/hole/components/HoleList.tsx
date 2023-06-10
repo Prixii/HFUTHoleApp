@@ -3,9 +3,9 @@ import { FlatListProps, View } from 'react-native'
 import { HoleInfo } from '@/pages/hole/components/HoleInfo'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
 import { UseInfiniteQueryResult } from 'react-query'
-import { useNavigation } from '@react-navigation/native'
 import { SkeletonLoading } from '@/components/Skeleton'
 import { Func } from '@/shared/types'
+import { useHoleDetailRoute } from '@/shared/hooks/route/useHoleDetailRoute'
 
 // TODO 完善类型
 type Props = UseInfiniteQueryResult<IHoleListResponse, unknown> & {
@@ -21,7 +21,7 @@ export function RefreshableHoleList({
   invalidateQuery,
   ListHeaderComponent,
 }: Props) {
-  const navigation = useNavigation()
+  const { go } = useHoleDetailRoute()
 
   return isSuccess ? (
     <RefreshingFlatList
@@ -36,20 +36,7 @@ export function RefreshableHoleList({
       renderItem={({ item: group, index }) => (
         <View className={'space-y-2'} key={`${group.items?.[0]?.id}${index}`}>
           {group.items.map((item) => (
-            <HoleInfo
-              key={item.id}
-              data={item}
-              onPress={() =>
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                navigation.navigate('detail', {
-                  screen: 'index',
-                  params: {
-                    id: item.id,
-                  },
-                })
-              }
-            />
+            <HoleInfo key={item.id} data={item} onPress={() => go(item.id)} />
           ))}
         </View>
       )}

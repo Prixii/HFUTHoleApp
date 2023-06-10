@@ -98,7 +98,7 @@ const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
         />
       </View>
       <View>
-        <Text variant={'bodyLarge'} selectable={true}>
+        <Text variant={'bodyMedium'} selectable={true}>
           {data.body}
         </Text>
       </View>
@@ -163,12 +163,12 @@ export function HoleInfo({
               data.comments.map((comment) => (
                 <View
                   className={
-                    'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/10'
+                    'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/10 text-xs'
                   }
                 >
                   <Text className={'font-bold'}>{comment.user.username}</Text>
                   <Text
-                    className={'flex-1'}
+                    className={'flex-1 text-xs'}
                     ellipsizeMode={'tail'}
                     numberOfLines={2}
                   >
