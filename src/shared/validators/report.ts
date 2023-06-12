@@ -2,7 +2,7 @@ import { IsEnum, IsNumber, IsOptional, IsString, Length } from 'class-validator'
 import { Limit } from '@/shared/config'
 
 export enum ReportType {
-  hole = Tab,
+  hole = 'hole',
   comment = 'comment',
   reply = 'reply',
 }

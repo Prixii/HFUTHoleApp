@@ -1,25 +1,42 @@
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
-import { View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated'
+import { useLinkTo } from '@react-navigation/native'
+import { useCallback } from 'react'
 
-export function TopTabBar({ state, descriptors }: MaterialTopTabBarProps) {
+export function TopTabBar({
+  state,
+  descriptors,
+  jumpTo,
+}: MaterialTopTabBarProps) {
+  const theme = useTheme()
+
+  const handlePress = useCallback((route: string) => {
+    jumpTo(route)
+  }, [])
+
   return (
-    <View className={'flex-row space-x-3 px-6 py-4 items-center'}>
+    <View
+      className={'flex-row space-x-3 px-6 py-4 items-center'}
+      style={{
+        backgroundColor: theme.colors.background,
+      }}
+    >
       {state.routes.map((route, index) => {
         const options = descriptors[route.key].options
 
         return (
-          <View>
+          <Pressable onPress={() => handlePress(route.key)}>
             <TabBarItem
               isFocused={state.index === index}
               name={options.title}
             />
-          </View>
+          </Pressable>
         )
       })}
     </View>
@@ -58,11 +75,11 @@ const TabBarItem = ({
 
   const style = useAnimatedStyle(() => {
     return {
-      fontSize: withTiming(fontSize.value, { duration: 250 }),
-      color: withTiming(color.value, { duration: 250 }),
+      fontSize: withTiming(fontSize.value),
+      color: withTiming(color.value),
       fontWeight: isFocused ? 'bold' : 'normal',
     }
-  }, [isFocused])
+  })
 
   return (
     <View>

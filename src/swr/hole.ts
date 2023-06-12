@@ -11,19 +11,29 @@ import {
   GetHoleListRequest,
   SearchHoleRequest,
 } from '@/request/apis/hole'
-import { useHoleListContext } from '@/shared/context/hole'
 import { useParams } from '@/shared/hooks/useParams'
 import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
 import { ISearchResultParams } from '@/pages/hole/search/result/result'
 import { Updater } from 'react-query/types/core/utils'
 import { AwaitAble } from '@/shared/types'
 import { useUserProfile } from '@/swr/user/profile'
-import { useId } from 'react'
+import { useId, useMemo } from 'react'
 import { HoleListMode } from '@/shared/enums'
+import { useRoute } from '@react-navigation/native'
 
 // TODO 重构逻辑
 export function useHoleList() {
-  const key = SWRKeys.hole.list
+  const route = useRoute()
+
+  const mode = useMemo(() => {
+    if (route.name === 'latest') {
+      return HoleListMode.latest
+    } else if (route.name === 'hot') {
+      return HoleListMode.hot
+    }
+  }, [route])
+
+  const key = [SWRKeys.hole.list, mode]
 
   const query = useInfiniteQuery(
     key,
@@ -31,7 +41,7 @@ export function useHoleList() {
       GetHoleListRequest({
         limit: 10,
         page: pageParam,
-        mode: HoleListMode.timeline,
+        mode,
       }),
     {
       getNextPageParam: (lastPages) => {

@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { BottomSheetReply } from '@/components/reply/reply'
 import { ReplyForm } from '@/components/reply/Form'
 import { LoadMore } from '@/components/LoadMore'
+import { LoadingScreen } from '@/components/LoadingScreen'
 
 // TODO 重写回复区，尤其是展示特定的评论
 export function HoleReply() {
@@ -43,8 +44,8 @@ export function HoleReply() {
   }
 
   return (
-    <View className={'bg-white h-full'}>
-      {isSuccess && (
+    <LoadingScreen isLoading={isLoading}>
+      <View className={'bg-white h-full'}>
         <RefreshingFlatList
           data={data?.pages}
           refreshing={isLoading}
@@ -99,23 +100,23 @@ export function HoleReply() {
             </View>
           )}
         />
-      )}
-      <BottomSheetReply open={open} setOpen={setOpen} data={replyData}>
-        <ReplyForm
-          data={replyData}
-          closeModal={closeModal}
-          reqFunc={(body) =>
-            PostHoleCommentReplyRequest({
-              body,
-              replyId: replyData.id,
-              commentId: comment.id,
-            })
-          }
-          onReply={() => {
-            invalidAll()
-          }}
-        />
-      </BottomSheetReply>
-    </View>
+        <BottomSheetReply open={open} setOpen={setOpen} data={replyData}>
+          <ReplyForm
+            data={replyData}
+            closeModal={closeModal}
+            reqFunc={(body) =>
+              PostHoleCommentReplyRequest({
+                body,
+                replyId: replyData.id,
+                commentId: comment.id,
+              })
+            }
+            onReply={() => {
+              invalidAll()
+            }}
+          />
+        </BottomSheetReply>
+      </View>
+    </LoadingScreen>
   )
 }

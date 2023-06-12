@@ -1,9 +1,5 @@
-import { TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import Popover from 'react-native-popover-view'
-import { IconButton } from '@/components/IconButton'
-import { MoreIcon } from '@/components/icon'
-import { Dialog, List, Modal, Portal } from 'react-native-paper'
+import React from 'react'
+import { Dialog, Portal } from 'react-native-paper'
 import { Button } from '@/components/button'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/form/Input'
@@ -14,14 +10,19 @@ import { useMutation } from 'react-query'
 import { ReportRequest } from '@/request/apis/report'
 import { Toast } from '@/shared/utils/toast'
 
-interface Props
-  extends Pick<ReportValidator, 'commentId' | 'holeId' | 'replyId' | 'type'> {}
+export interface ReportActionProps {
+  type: ReportValidator['type']
+  visible: boolean
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  id: string | number
+}
 
 // TODO 重构Dialog为白色或者暗黑色
-export function ReportAction(props: Props) {
-  const [visible, setVisible] = useState(false)
-  const [popoverVisible, setPopoverVisible] = useState(false)
-
+export function ReportAction({
+  visible,
+  setVisible,
+  ...props
+}: ReportActionProps) {
   const {
     control,
     formState: { errors },
@@ -32,11 +33,23 @@ export function ReportAction(props: Props) {
   })
 
   const mutation = useMutation(
-    (reason: string) =>
-      ReportRequest({
+    (reason: string) => {
+      const params = {}
+
+      if (props.type === 'comment') {
+        params['commentId'] = props.id
+      } else if (props.type === 'reply') {
+        params['replyId'] = props.id
+      } else {
+        params['holeId'] = props.id
+      }
+
+      return ReportRequest({
         reason,
-        ...props,
-      }),
+        type: props.type,
+        ...params,
+      })
+    },
     {
       onSuccess() {
         Toast.success({
@@ -57,31 +70,6 @@ export function ReportAction(props: Props) {
 
   return (
     <>
-      <Popover
-        from={
-          <TouchableOpacity onPress={() => setPopoverVisible(true)}>
-            <IconButton
-              icon={() => <MoreIcon size={20} />}
-              transparent={true}
-            />
-          </TouchableOpacity>
-        }
-        isVisible={popoverVisible}
-        onRequestClose={() => setPopoverVisible(false)}
-      >
-        <View className={'p-3 min-w-[50vw]'}>
-          <List.Section>
-            <List.Item
-              title={'举报'}
-              onPress={() => {
-                openDialog()
-                setPopoverVisible(false)
-              }}
-            />
-          </List.Section>
-        </View>
-      </Popover>
-
       <Portal>
         <Dialog
           visible={visible}

@@ -8,7 +8,7 @@ import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
 import { ArticleCategoryEnum } from '@/shared/enums'
 import { View } from 'react-native'
 import { Svg } from '@/components/svg/Svg'
-import { Text } from 'react-native-paper'
+import { Text, TouchableRipple } from 'react-native-paper'
 
 const Categories = [
   { name: ArticleCategoryEnum.hfutLife, svg: HFUTLifeSvg },
@@ -23,17 +23,21 @@ const Categories = [
 export function HomeCategories() {
   return (
     <View className={'bg-white p-2 rounded-lg'}>
-      <View className={'flex flex-row flex-wrap space-y-4 items-center'}>
+      <View className={'flex flex-row flex-wrap space-y-6 items-center'}>
         {Categories.map((category) => {
           return (
-            <View
-              key={category.name}
-              className={
-                'w-1/5 flex flex-col justify-center items-center space-y-2'
-              }
-            >
-              <Svg size={26} SvgComponent={category.svg} />
-              <Text variant={'bodySmall'}>{category.name}</Text>
+            <View className={'overflow-hidden rounded-lg w-1/5'}>
+              <TouchableRipple onPress={() => {}}>
+                <View
+                  key={category.name}
+                  className={
+                    'flex flex-col justify-center items-center space-y-2 py-2'
+                  }
+                >
+                  <Svg size={30} SvgComponent={category.svg} />
+                  <Text variant={'bodySmall'}>{category.name}</Text>
+                </View>
+              </TouchableRipple>
             </View>
           )
         })}

@@ -6,6 +6,8 @@
     },
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "extends": "expo/tsconfig.base",
   "include": [

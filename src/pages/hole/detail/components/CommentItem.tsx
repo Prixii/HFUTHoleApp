@@ -1,6 +1,5 @@
 import { FlatList, TouchableNativeFeedback, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import { Empty } from '@/components/svg/Empty'
 import { useHoleComment } from '@/swr/hole'
 import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
 import React, { useState } from 'react'
@@ -15,6 +14,7 @@ import {
 } from '@/request/apis/hole'
 import { HoleCommentReply } from '@/pages/hole/detail/components/CommentReply'
 import { ReplyBody } from '@/components/reply/body'
+import { Empty } from '@/components/image/Empty'
 
 const RenderItemReplyList: React.FC<{ data: IHoleCommentListItem }> = ({
   data,
@@ -74,7 +74,7 @@ const RenderItem: React.FC<{
   }
 
   return (
-    <View className={'px-3'}>
+    <>
       <FlatList
         data={data.items}
         renderItem={({ item }) => {
@@ -100,7 +100,7 @@ const RenderItem: React.FC<{
         setOpen={setReplyOpen}
         page={page}
       />
-    </View>
+    </>
   )
 }
 
@@ -113,6 +113,7 @@ const EmptyItem = () => {
         text={
           isAllMode ? '树洞空空的，洞主正在期待第一个评论' : '洞主还没填楼噢'
         }
+        size={200}
       />
     </View>
   )

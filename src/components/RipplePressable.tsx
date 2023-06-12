@@ -6,9 +6,5 @@ type Props = {
 } & TouchableRippleProps
 
 export function RipplePressable({ children, ...props }: Props) {
-  return (
-    <TouchableRipple style={{ borderRadius: 9999 }} {...props}>
-      {children}
-    </TouchableRipple>
-  )
+  return <TouchableRipple {...props}>{children}</TouchableRipple>
 }

@@ -1,20 +1,28 @@
-import { StatusBar, View } from 'react-native'
-import { HoleDetailComment } from '@/pages/hole/detail/components/Comment'
-import { HoleDetailCommentContextProvider } from '@/shared/context/hole_detail'
-import React from 'react'
 import { useStatusBarContext } from '@/shared/context/statusbar'
+import { useHoleComment, useHoleDetail } from '@/swr/hole'
+import { LoadingScreen } from '@/components/LoadingScreen'
+import { HoleDetailComment } from '@/pages/hole/detail/components/Comment'
+import { StatusBar, View } from 'react-native'
 
 export function HoleDetail() {
   const { setWhiteColor } = useStatusBarContext()
 
+  const { isSuccess: isCommentSuccess } = useHoleComment()
+
+  const { isSuccess } = useHoleDetail()
+
+  const isAllSuccess = isCommentSuccess && isSuccess
+
   setWhiteColor()
 
   return (
-    <HoleDetailCommentContextProvider>
-      <StatusBar backgroundColor={'#fff'} />
-      <View className={'bg-white'}>
-        <HoleDetailComment />
-      </View>
-    </HoleDetailCommentContextProvider>
+    <>
+      <LoadingScreen isLoading={!isAllSuccess}>
+        <StatusBar backgroundColor={'#fff'} />
+        <View className={'bg-white'}>
+          <HoleDetailComment />
+        </View>
+      </LoadingScreen>
+    </>
   )
 }

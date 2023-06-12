@@ -1,6 +1,6 @@
 export enum HoleListMode {
-  random = 'random',
-  timeline = 'timeline',
+  latest = 'latest',
+  hot = 'hot',
 }
 
 export enum HoleDetailCommentMode {

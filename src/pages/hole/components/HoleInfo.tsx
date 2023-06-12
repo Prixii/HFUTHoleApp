@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react'
 import { Func, IClassName, InferArrayItem } from '@/shared/types'
-import { TouchableWithoutFeedback, View } from 'react-native'
+import { View } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
-import { Text } from 'react-native-paper'
+import { Button, Text, TouchableRipple, useTheme } from 'react-native-paper'
 import { CommentIcon, LikeIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
 import { IdText } from '@/components/Text/Id'
@@ -14,6 +14,7 @@ import { PostHoleVoteRequest } from '@/request/apis/hole'
 import { Toast } from '@/shared/utils/toast'
 import { HoleVoteItem } from '@/pages/hole/components/VoteItem'
 import { SecondaryText } from '@/components/Text/SecondaryText'
+import { HoleBottomAction } from '@/pages/hole/components/sheet/HoleBottomAction'
 
 type Data = IHole
 
@@ -75,11 +76,16 @@ const HoleInfoVote: React.FC<{ data: Data }> = ({ data }) => {
 
 const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   return (
-    <View className={'flex flex-row items-center space-x-3'}>
-      <UserAvatar url={data.user.avatar} />
-      <View className={'grid space-y-1'}>
-        <IdText id={data.id} />
-        <TimeText time={data.createAt} />
+    <View className={'flex flex-row justify-between'}>
+      <View className={'flex flex-row items-center space-x-3'}>
+        <UserAvatar url={data.user.avatar} />
+        <View className={'grid space-y-1'}>
+          <IdText id={data.id} />
+          <TimeText time={data.createAt} />
+        </View>
+      </View>
+      <View>
+        <HoleBottomAction data={data as IHoleDetailResponse} />
       </View>
     </View>
   )
@@ -106,26 +112,45 @@ const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-const HoleInfoIcons: React.FC<{ data: Data }> = ({ data }) => {
+const HoleInfoBottom: React.FC<{ data: Data }> = ({ data }) => {
+  const theme = useTheme()
+
   const renderList = [
     {
       value: data.favoriteCounts,
-      element: <LikeIcon size={20} color={'#686E87'} />,
+      element: <LikeIcon size={16} color={theme.colors.surfaceVariant} />,
     },
     {
       value: data.commentCounts,
-      element: <CommentIcon size={20} color={'#686E87'} />,
+      element: <CommentIcon size={16} color={theme.colors.surfaceVariant} />,
     },
   ]
 
   return (
     <View className={'flex flex-row justify-between'}>
-      {renderList.map((icon, index) => (
-        <View className={'flex flex-row items-center space-x-2'} key={index}>
-          {icon.element}
-          <Text className={'text-[#686E87]'}>{icon.value}</Text>
-        </View>
-      ))}
+      <View className={'flex flex-row space-x-3'}>
+        {renderList.map((icon, index) => (
+          <View className={'flex flex-row items-center space-x-2'} key={index}>
+            {icon.element}
+            <Text
+              className={'text-xs'}
+              style={{ color: theme.colors.surfaceVariant }}
+            >
+              {icon.value}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <View>
+        <Button
+          mode={'text'}
+          onPress={() => {
+            console.log(1)
+          }}
+        >
+          {data.category.category}
+        </Button>
+      </View>
     </View>
   )
 }
@@ -149,36 +174,36 @@ export function HoleInfo({
   showComment = true,
 }: Props) {
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <View
-        className={`flex flex-col space-y-3 p-4 bg-white rounded-lg mt-2 ${className}`}
-      >
-        <View>{header || <HoleInfoHeader data={data} />}</View>
-        <View>{body || <HoleInfoBody data={data} />}</View>
-        <View>{data.vote && <HoleInfoVote data={data} />}</View>
-        <View>{bottom || <HoleInfoIcons data={data} />}</View>
-        {showComment && (
-          <View className={'grid gap-2'}>
-            {data.comments?.length > 0 &&
-              data.comments.map((comment) => (
-                <View
-                  className={
-                    'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/10 text-xs'
-                  }
-                >
-                  <Text className={'font-bold'}>{comment.user.username}</Text>
-                  <Text
-                    className={'flex-1 text-xs'}
-                    ellipsizeMode={'tail'}
-                    numberOfLines={2}
+    <View className={'bg-white rounded-lg mt-2 overflow-hidden'}>
+      <TouchableRipple onPress={onPress}>
+        <View className={`flex flex-col space-y-3 p-4 ${className}`}>
+          <View>{header || <HoleInfoHeader data={data} />}</View>
+          <View>{body || <HoleInfoBody data={data} />}</View>
+          <View>{data.vote && <HoleInfoVote data={data} />}</View>
+          <View>{bottom || <HoleInfoBottom data={data} />}</View>
+          {showComment && (
+            <View className={'grid gap-2'}>
+              {data.comments?.length > 0 &&
+                data.comments.map((comment) => (
+                  <View
+                    className={
+                      'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/10 text-xs'
+                    }
                   >
-                    {comment.body}
-                  </Text>
-                </View>
-              ))}
-          </View>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+                    <Text className={'font-bold'}>{comment.user.username}</Text>
+                    <Text
+                      className={'flex-1 text-xs'}
+                      ellipsizeMode={'tail'}
+                      numberOfLines={2}
+                    >
+                      {comment.body}
+                    </Text>
+                  </View>
+                ))}
+            </View>
+          )}
+        </View>
+      </TouchableRipple>
+    </View>
   )
 }

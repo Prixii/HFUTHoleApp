@@ -7,7 +7,7 @@ export const BottomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   return (
     <View
       className={
-        'flex-row absolute bottom-0 bg-white border-t-[1px] border-t-black/5'
+        'flex-row bottom-0 bg-white border-t-[1px] border-t-black/5 h-16 items-center'
       }
     >
       {state.routes.map((route, index) => {
@@ -26,17 +26,17 @@ export const BottomTabBar = ({ state, navigation }: BottomTabBarProps) => {
         }
 
         return (
-          <View key={index} className={'flex-1 rounded-full'}>
-            <RipplePressable onPress={onPress}>
-              <View
-                className={
-                  'flex flex-1 items-center justify-center rounded-full py-4'
-                }
-              >
-                <BottomTabBarIcon route={route.key} isFocused={isFocused} />
-              </View>
-            </RipplePressable>
-          </View>
+          <RipplePressable
+            onPress={onPress}
+            key={index}
+            className={'flex-1 rounded-full'}
+          >
+            <View
+              className={'flex flex-1 items-center justify-center rounded-full'}
+            >
+              <BottomTabBarIcon route={route.key} isFocused={isFocused} />
+            </View>
+          </RipplePressable>
         )
       })}
     </View>

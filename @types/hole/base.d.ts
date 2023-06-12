@@ -11,6 +11,10 @@ declare interface IHole {
   isLiked: boolean
   comments: Comment[]
   commentCounts: number
+  category: {
+    id: number
+    category: string
+  }
 }
 
 interface Comment {

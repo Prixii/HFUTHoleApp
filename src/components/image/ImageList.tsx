@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useTheme } from 'react-native-paper'
 import { Modal, View } from 'react-native'
 import { ZoomImage } from '@/components/image/ZoomImage'
 import { ImageListItem } from '@/components/image/ImageListItem'

@@ -2,9 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Image, Pressable, TouchableNativeFeedback, View } from 'react-native'
 import { Func } from '@/shared/types'
 import { useTheme } from 'react-native-paper'
-import { ImageSkeleton, SkeletonLoading } from '@/components/Skeleton'
 import { getImageSize } from '@/shared/utils/imageSize'
-import { Skeleton } from 'native-base'
 
 export const ImageListItem = React.memo(
   ({

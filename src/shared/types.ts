@@ -1,4 +1,5 @@
 import { PlainObject } from '@/shared/types/utils'
+import { ReportActionProps } from '@/pages/hole/detail/components/ReportAction'
 
 export type InferArrayItem<T extends any[]> = T extends (infer R)[] ? R : never
 
@@ -23,3 +24,8 @@ export interface IClassName {
 }
 
 export type PaginateAble<T = {}> = IPagination & T
+
+export type PartialExcludeField<T extends object, K extends keyof T> = Partial<
+  Omit<T, K>
+> &
+  Pick<T, K>

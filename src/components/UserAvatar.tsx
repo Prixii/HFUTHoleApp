@@ -9,7 +9,7 @@ interface Props {
 export function UserAvatar(props: Props) {
   return (
     <Avatar.Image
-      size={props.size || 50}
+      size={props.size || 30}
       source={{
         uri: props.url,
       }}

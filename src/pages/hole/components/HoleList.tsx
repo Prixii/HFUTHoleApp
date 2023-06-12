@@ -31,7 +31,9 @@ export function RefreshableHoleList({
       onTopRefresh={invalidateQuery}
       ListHeaderComponent={ListHeaderComponent}
       ListFooterComponent={() => (
-        <LoadMore text={'没有更多树洞了哦'} hasNextPage={hasNextPage} />
+        <View>
+          <LoadMore text={'没有更多树洞了哦'} hasNextPage={hasNextPage} />
+        </View>
       )}
       renderItem={({ item: group, index }) => (
         <View className={'space-y-2'} key={`${group.items?.[0]?.id}${index}`}>
