@@ -5,10 +5,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { ReactQueryProvider } from '@/shared/providers/react-query'
 import { setupGlobalConfig } from '@/shared/config'
 import { NativeBaseProvider } from 'native-base'
-import {
-  HoleListContextProvider,
-  HolePostContextProvider,
-} from '@/shared/context/hole'
+import { HolePostContextProvider } from '@/shared/context/hole'
 import { StatusBarContextProvider } from '@/shared/context/statusbar'
 import { Provider } from 'react-redux'
 import { persistor, store } from '@/store/store'
@@ -32,21 +29,19 @@ const App = () => {
               <NavigationContainer>
                 <Updater>
                   <KeyboardContextProvider>
-                    <HoleListContextProvider>
-                      <HolePostContextProvider>
-                        <BottomCommentContext>
-                          <NativeBaseProvider>
-                            <StatusBarContextProvider>
-                              <GestureHandlerRootView style={{ flex: 1 }}>
-                                <BottomSheetModalProvider>
-                                  <Layout />
-                                </BottomSheetModalProvider>
-                              </GestureHandlerRootView>
-                            </StatusBarContextProvider>
-                          </NativeBaseProvider>
-                        </BottomCommentContext>
-                      </HolePostContextProvider>
-                    </HoleListContextProvider>
+                    <HolePostContextProvider>
+                      <BottomCommentContext>
+                        <NativeBaseProvider>
+                          <StatusBarContextProvider>
+                            <GestureHandlerRootView style={{ flex: 1 }}>
+                              <BottomSheetModalProvider>
+                                <Layout />
+                              </BottomSheetModalProvider>
+                            </GestureHandlerRootView>
+                          </StatusBarContextProvider>
+                        </NativeBaseProvider>
+                      </BottomCommentContext>
+                    </HolePostContextProvider>
                   </KeyboardContextProvider>
                 </Updater>
               </NavigationContainer>

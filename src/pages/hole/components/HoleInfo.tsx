@@ -82,7 +82,7 @@ const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
       <View className={'flex flex-row items-center space-x-3'}>
         <UserAvatar url={data.user.avatar} />
         <View className={'grid space-y-1'}>
-          <IdText id={data.id} />
+          <Text>{data.user.username}</Text>
           <TimeText time={data.createAt} />
         </View>
       </View>
@@ -183,32 +183,32 @@ export function HoleInfo({
           <View>{body || <HoleInfoBody data={data} />}</View>
           <View>{data.vote && <HoleInfoVote data={data} />}</View>
           <View>{bottom || <HoleInfoBottom data={data} />}</View>
-          {showComment && (
-            <View className={'grid gap-2'}>
-              {data.comments?.length > 0 &&
-                data.comments.map((comment) => (
-                  <View
-                    className={
-                      'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'
-                    }
-                  >
-                    <Text
-                      className={'font-bold'}
-                      ellipsizeMode={'tail'}
-                      numberOfLines={1}
-                      style={{ maxWidth: '20%' }}
-                    >
-                      {comment.user.username}
-                    </Text>
-                    <View>
-                      <EmojiableText
-                        body={sliceHoleInfoCommentBody(comment.body)}
-                      />
-                    </View>
-                  </View>
-                ))}
-            </View>
-          )}
+          {/*{showComment && (*/}
+          {/*  <View className={'grid gap-2'}>*/}
+          {/*    {data.comments?.length > 0 &&*/}
+          {/*      data.comments.map((comment) => (*/}
+          {/*        <View*/}
+          {/*          className={*/}
+          {/*            'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'*/}
+          {/*          }*/}
+          {/*        >*/}
+          {/*          <Text*/}
+          {/*            className={'font-bold'}*/}
+          {/*            ellipsizeMode={'tail'}*/}
+          {/*            numberOfLines={1}*/}
+          {/*            style={{ maxWidth: '20%' }}*/}
+          {/*          >*/}
+          {/*            {comment.user.username}*/}
+          {/*          </Text>*/}
+          {/*          <View>*/}
+          {/*            <EmojiableText*/}
+          {/*              body={sliceHoleInfoCommentBody(comment.body)}*/}
+          {/*            />*/}
+          {/*          </View>*/}
+          {/*        </View>*/}
+          {/*      ))}*/}
+          {/*  </View>*/}
+          {/*)}*/}
         </View>
       </TouchableRipple>
     </View>

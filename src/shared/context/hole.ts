@@ -34,12 +34,3 @@ export const [useHolePostContext, HolePostContextProvider] = createStore(() => {
     setVotes,
   }
 })
-
-export const [useHoleListContext, HoleListContextProvider] = createStore(() => {
-  const [mode, setMode] = useState(HoleListMode.random)
-
-  return {
-    mode,
-    setMode,
-  }
-})

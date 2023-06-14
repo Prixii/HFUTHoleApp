@@ -96,7 +96,7 @@ export function CommentInputForm(props: Props) {
                 maxHeight: 16 * 4,
               }}
               onFocus={() => setShowEmojiArea(false)}
-              autoFocus
+              autoFocus={true}
             />
           </View>
           <View
