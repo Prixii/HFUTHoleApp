@@ -53,3 +53,9 @@ export const HomeIcon = withFontAV5Icon('home')
 export const DangerIcon = withFontAV5Icon('exclamation-triangle')
 
 export const CopyIcon = withFontAV5Icon('copy')
+
+export const CameraIcon = withFontAV5Icon('camera')
+
+export const AtIcon = withFontAV5Icon('at')
+
+export const EmojiIcon = withFontAV5Icon('grin-beam')

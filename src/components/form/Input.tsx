@@ -44,7 +44,7 @@ export function Input<T extends object = PlainObject>({
             onChangeText={field.onChange}
             value={field.value}
             outlineColor={'#CCD6E3'}
-            placeholderTextColor={'#CCD6E3'}
+            placeholderTextColor={theme.colors.surfaceVariant}
             mode={'outlined'}
             error={isNotEmptyObject(error)}
             {...props}

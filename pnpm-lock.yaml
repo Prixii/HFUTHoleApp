@@ -9,6 +9,7 @@ specifiers:
   '@babel/core': ^7.12.9
   '@expo/webpack-config': ^0.17.2
   '@gorhom/bottom-sheet': ^4.4.5
+  '@gorhom/portal': ^1.0.14
   '@hookform/resolvers': ^2.9.11
   '@react-native-async-storage/async-storage': ^1.17.11
   '@react-native-camera-roll/camera-roll': ^5.3.1
@@ -42,7 +43,8 @@ specifiers:
   eslint-plugin-react: ^7.32.2
   eslint-plugin-react-native: ^4.0.0
   expo: ~47.0.12
-  expo-clipboard: ^4.1.2
+  expo-asset: ~8.7.0
+  expo-clipboard: ~4.0.1
   expo-file-system: ~15.1.1
   expo-image: ^1.2.3
   expo-image-picker: ~14.0.2
@@ -89,6 +91,7 @@ specifiers:
 dependencies:
   '@expo/webpack-config': 0.17.4_w7444hmpdgu7pwtea4avuggv6m
   '@gorhom/bottom-sheet': 4.4.5_b3tz3cufd4qpj2symdm242b6ia
+  '@gorhom/portal': 1.0.14_rou7e4tzf7wt6gfzzwzm2xjc4q
   '@hookform/resolvers': 2.9.11_react-hook-form@7.43.8
   '@react-native-async-storage/async-storage': 1.17.12_react-native@0.70.8
   '@react-native-camera-roll/camera-roll': 5.3.1_react-native@0.70.8
@@ -107,7 +110,8 @@ dependencies:
   class-validator: 0.14.0
   date-fns: 2.29.3
   dayjs: 1.11.7
-  expo-clipboard: 4.1.2_expo@47.0.14
+  expo-asset: 8.7.0_expo@47.0.14
+  expo-clipboard: 4.0.2_expo@47.0.14
   expo-file-system: 15.1.1_expo@47.0.14
   expo-image: 1.2.3_expo@47.0.14
   expo-image-picker: 14.0.3_expo@47.0.14
@@ -6626,8 +6630,8 @@ packages:
       - expo
       - supports-color
 
-  /expo-clipboard/4.1.2_expo@47.0.14:
-    resolution: {integrity: sha512-YSuIs4CV+3gypl7X74sp2ruwAVuhnOngsWs7EGkcvRdX0BBrZZMk3GXGw9a59sU6SW4wGWAfwrhyCT41GUaN+A==}
+  /expo-clipboard/4.0.2_expo@47.0.14:
+    resolution: {integrity: sha512-Iq0k5JKrLk3YlD0ZGIcDPBzwdzw7qt7NWwn8JTtzhre/7oKyH8JPDAODAL9zMR5Jmahv+Uysn9Igsbp6Ttuu1Q==}
     peerDependencies:
       expo: '*'
     dependencies:

@@ -16,6 +16,9 @@ export const Limit = {
   commentMaxImgLength: 2,
   reportReasonMaxLength: 500,
   reportReasonMinLength: 10,
+  hole: {
+    maxInfoCommentBodyLength: 50,
+  },
 }
 
 export function setupGlobalConfig() {}

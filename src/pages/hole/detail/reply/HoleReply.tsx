@@ -16,6 +16,8 @@ import { BottomSheetReply } from '@/components/reply/reply'
 import { ReplyForm } from '@/components/reply/Form'
 import { LoadMore } from '@/components/LoadMore'
 import { LoadingScreen } from '@/components/LoadingScreen'
+import { useBottomCommentContext } from '@/shared/context/hole/comment'
+import { CommentBottomInput } from '@/pages/hole/detail/components/CommentBottomInput'
 
 // TODO 重写回复区，尤其是展示特定的评论
 export function HoleReply() {
@@ -32,12 +34,7 @@ export function HoleReply() {
   } = useHoleReplyList()
   const comment = data?.pages?.[0]?.comment
 
-  const [open, setOpen] = useState(false)
-  const [replyData, setReplyData] = useState<IHoleCommentListItem>()
-
-  const closeModal = () => {
-    setOpen(false)
-  }
+  const { openInput } = useBottomCommentContext()
 
   const onLikePress = () => {
     invalidAll()
@@ -92,30 +89,24 @@ export function HoleReply() {
                   }
                   onLikePress={() => setIsLiked(item, index)}
                   onBodyPress={(data) => {
-                    setReplyData(data as any)
-                    setOpen(true)
+                    openInput({
+                      commentId: comment?.id,
+                      replyId: data.id,
+                      body: data.body,
+                      user: data.user,
+                    })
                   }}
                 />
               ))}
             </View>
           )}
         />
-        <BottomSheetReply open={open} setOpen={setOpen} data={replyData}>
-          <ReplyForm
-            data={replyData}
-            closeModal={closeModal}
-            reqFunc={(body) =>
-              PostHoleCommentReplyRequest({
-                body,
-                replyId: replyData.id,
-                commentId: comment.id,
-              })
-            }
-            onReply={() => {
-              invalidAll()
-            }}
-          />
-        </BottomSheetReply>
+        <CommentBottomInput
+          data={{
+            commentId: comment?.id,
+            user: comment.user,
+          }}
+        />
       </View>
     </LoadingScreen>
   )

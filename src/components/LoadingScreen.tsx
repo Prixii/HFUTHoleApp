@@ -16,7 +16,7 @@ export function LoadingScreen(props: Props) {
     if (!props.isLoading) {
       setTimeout(() => {
         setLoading(false)
-      }, 3000)
+      }, 500)
     }
   }, [props.isLoading])
 

@@ -1,12 +1,21 @@
 import { formatDate } from '@/shared/utils/utils'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 
 interface Props {
   time: string
 }
 
 export function TimeText(props: Props) {
+  const theme = useTheme()
+
   return (
-    <Text className={'text-gray-500/50 text-xs'}>{formatDate(props.time)}</Text>
+    <Text
+      className={'text-xs'}
+      style={{
+        color: theme.colors.surface,
+      }}
+    >
+      {formatDate(props.time)}
+    </Text>
   )
 }

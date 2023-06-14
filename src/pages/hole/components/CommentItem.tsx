@@ -33,7 +33,6 @@ export function CommentItem({
   data,
   bottom,
   onBodyPress,
-  selectable,
   reqFunc,
   onLikePress,
   isReply,
@@ -77,15 +76,10 @@ export function CommentItem({
           </View>
           <View className={'flex flex-row space-x-2'}>
             <View className={'w-1/12'} />
-            <View className={'w-11/12 grid space-y-2'}>
+            <View className={'w-10/12 grid space-y-2'}>
               <View className={'grid space-y-2'}>
                 <ImageList imgs={data.imgs} />
-                <View className={'w-11/12'}>
-                  <ReplyBody
-                    data={data as IHoleReplyListItem}
-                    selectable={selectable}
-                  />
-                </View>
+                <ReplyBody data={data as IHoleReplyListItem} />
               </View>
               <View className={'flex flex-row items-center space-x-1'}>
                 <LikeIcon

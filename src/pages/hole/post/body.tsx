@@ -1,6 +1,6 @@
 import { Input } from '@/components/form/Input'
 import { ScreenHeight } from '@/shared/utils/utils'
-import { Image, View } from 'react-native'
+import { View } from 'react-native'
 import { BottomActions } from '@/pages/hole/post/BottomActions'
 import { useHolePostContext } from '@/shared/context/hole'
 import { Tags } from '@/components/tags'
@@ -30,11 +30,6 @@ export function HolePostBody() {
         }
       />
       <View>
-        <Image
-          source={require('@/assets/emoji/0_[微笑]_weixiao.png')}
-          style={{ resizeMode: 'cover' }}
-          className={'w-6 h-6'}
-        />
         <Input
           name={'body'}
           control={control}

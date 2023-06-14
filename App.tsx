@@ -16,6 +16,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { Updater } from '@/components/Update/Updater'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { PortalProvider } from '@gorhom/portal'
+import { KeyboardContextProvider } from '@/shared/context/keyboard'
+import { BottomCommentContext } from '@/shared/context/hole/comment'
 
 setupGlobalConfig()
 
@@ -24,25 +27,31 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ReactQueryProvider>
-          <PaperProvider>
-            <Updater>
-              <HoleListContextProvider>
-                <HolePostContextProvider>
-                  <NavigationContainer>
-                    <NativeBaseProvider>
-                      <StatusBarContextProvider>
-                        <GestureHandlerRootView style={{ flex: 1 }}>
-                          <BottomSheetModalProvider>
-                            <Layout />
-                          </BottomSheetModalProvider>
-                        </GestureHandlerRootView>
-                      </StatusBarContextProvider>
-                    </NativeBaseProvider>
-                  </NavigationContainer>
-                </HolePostContextProvider>
-              </HoleListContextProvider>
-            </Updater>
-          </PaperProvider>
+          <PortalProvider>
+            <PaperProvider>
+              <NavigationContainer>
+                <Updater>
+                  <KeyboardContextProvider>
+                    <HoleListContextProvider>
+                      <HolePostContextProvider>
+                        <BottomCommentContext>
+                          <NativeBaseProvider>
+                            <StatusBarContextProvider>
+                              <GestureHandlerRootView style={{ flex: 1 }}>
+                                <BottomSheetModalProvider>
+                                  <Layout />
+                                </BottomSheetModalProvider>
+                              </GestureHandlerRootView>
+                            </StatusBarContextProvider>
+                          </NativeBaseProvider>
+                        </BottomCommentContext>
+                      </HolePostContextProvider>
+                    </HoleListContextProvider>
+                  </KeyboardContextProvider>
+                </Updater>
+              </NavigationContainer>
+            </PaperProvider>
+          </PortalProvider>
         </ReactQueryProvider>
       </PersistGate>
     </Provider>

@@ -6,10 +6,6 @@ export function hideKeyboard() {
   Keyboard.dismiss()
 }
 
-export function showKeyboard() {
-  Keyboard
-}
-
 export const copyToClipboard = (text: string) => {
   Clipboard.setString(text)
   Toast.success({

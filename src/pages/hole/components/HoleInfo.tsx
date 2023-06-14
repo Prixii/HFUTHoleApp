@@ -15,6 +15,8 @@ import { Toast } from '@/shared/utils/toast'
 import { HoleVoteItem } from '@/pages/hole/components/VoteItem'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import { HoleBottomAction } from '@/pages/hole/components/sheet/HoleBottomAction'
+import { EmojiableText } from '@/components/Text/EmojiableText'
+import { sliceHoleInfoCommentBody } from '@/pages/hole/components/utils'
 
 type Data = IHole
 
@@ -187,17 +189,22 @@ export function HoleInfo({
                 data.comments.map((comment) => (
                   <View
                     className={
-                      'flex flex-row space-x-5 items-center py-3 border-b-[1px] border-black/10 text-xs'
+                      'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'
                     }
                   >
-                    <Text className={'font-bold'}>{comment.user.username}</Text>
                     <Text
-                      className={'flex-1 text-xs'}
+                      className={'font-bold'}
                       ellipsizeMode={'tail'}
-                      numberOfLines={2}
+                      numberOfLines={1}
+                      style={{ maxWidth: '20%' }}
                     >
-                      {comment.body}
+                      {comment.user.username}
                     </Text>
+                    <View>
+                      <EmojiableText
+                        body={sliceHoleInfoCommentBody(comment.body)}
+                      />
+                    </View>
                   </View>
                 ))}
             </View>

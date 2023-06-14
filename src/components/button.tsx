@@ -19,9 +19,6 @@ export const Button: React.FC<Props> = ({ children, ...props }) => {
       <RNPButton {...props} onPress={onPress}>
         {children}
       </RNPButton>
-      {props.loading && (
-        <View className={'w-full h-full bg-black/20 absolute rounded-full'} />
-      )}
     </View>
   )
 }

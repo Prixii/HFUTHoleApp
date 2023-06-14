@@ -12,9 +12,9 @@ import {
   DeleteCommentLikeRequest,
   LikeCommentRequest,
 } from '@/request/apis/hole'
-import { HoleCommentReply } from '@/pages/hole/detail/components/CommentReply'
 import { ReplyBody } from '@/components/reply/body'
 import { Empty } from '@/components/image/Empty'
+import { useBottomCommentContext } from '@/shared/context/hole/comment'
 
 const RenderItemReplyList: React.FC<{ data: IHoleCommentListItem }> = ({
   data,
@@ -40,11 +40,9 @@ const RenderItemReplyList: React.FC<{ data: IHoleCommentListItem }> = ({
       style={{ backgroundColor: theme.colors.background }}
     >
       {data.replies.map((reply) => (
-        <View className={'flex flex-row'} key={reply.id}>
-          <Text className={'text-sm flex-1'}>
-            <PrimaryText children={`${reply.user.username}：`} />
-            <ReplyBody data={reply as IHoleReplyListItem} />
-          </Text>
+        <View className={'flex flex-row flex-wrap'} key={reply.id}>
+          <PrimaryText children={`${reply.user.username}：`} />
+          <ReplyBody data={reply as IHoleReplyListItem} />
         </View>
       ))}
       <TouchableNativeFeedback onPress={navigateToReply}>
@@ -63,14 +61,14 @@ const RenderItem: React.FC<{
   data: IHoleCommentListResponse
   page: number
 }> = ({ data, page }) => {
-  const [replyOpen, setReplyOpen] = useState(false)
-  const [replyData, setReplyData] = useState<IHoleCommentListItem>(null)
-
   const { setIsLiked } = useHoleComment()
+  const { openInput } = useBottomCommentContext()
 
   const handleReply = (data: IHoleCommentListItem) => {
-    setReplyOpen(true)
-    setReplyData(data)
+    openInput({
+      commentId: data.id,
+      ...(data as any),
+    })
   }
 
   return (
@@ -93,12 +91,6 @@ const RenderItem: React.FC<{
             />
           )
         }}
-      />
-      <HoleCommentReply
-        data={replyData}
-        open={replyOpen}
-        setOpen={setReplyOpen}
-        page={page}
       />
     </>
   )

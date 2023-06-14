@@ -20,6 +20,8 @@ export function HoleDetailCommentList() {
 
   const { data, isSuccess, refetch } = useHoleDetail()
 
+  const isAllSuccess = isCommentSuccess && isSuccess
+
   const onRefresh = async () => {
     await fetchNextPage()
   }
@@ -28,32 +30,31 @@ export function HoleDetailCommentList() {
     await Promise.all([await refetch(), await invalidateQuery()])
   }
 
-  return (
-    isCommentSuccess &&
-    isSuccess && (
-      <RefreshingFlatList
-        onRefreshing={onRefresh}
-        hasNextPage={hasNextPage}
-        onTopRefresh={onTopRefresh}
-        refreshing={isFetching}
-        ListHeaderComponent={() => (
-          <>
-            <HoleInfo data={data} bottom={<LikeHole />} showComment={false} />
-            <Separator />
-            <HoleDetailCommentHeader />
-          </>
-        )}
-        ListFooterComponent={() => (
-          <LoadMore
-            text={isDataEmpty ? '没有更多评论了哦' : ''}
-            hasNextPage={hasNextPage}
-          />
-        )}
-        data={commentData.pages}
-        renderItem={(itemProps) => (
-          <HoleDetailCommentItem data={itemProps.item} page={itemProps.index} />
-        )}
-      />
-    )
+  return isAllSuccess ? (
+    <RefreshingFlatList
+      onRefreshing={onRefresh}
+      hasNextPage={hasNextPage}
+      onTopRefresh={onTopRefresh}
+      refreshing={isFetching}
+      ListHeaderComponent={() => (
+        <>
+          <HoleInfo data={data} bottom={<LikeHole />} showComment={false} />
+          <Separator />
+          <HoleDetailCommentHeader />
+        </>
+      )}
+      ListFooterComponent={() => (
+        <LoadMore
+          text={isDataEmpty ? '没有更多评论了哦' : ''}
+          hasNextPage={hasNextPage}
+        />
+      )}
+      data={commentData.pages}
+      renderItem={(itemProps) => (
+        <HoleDetailCommentItem data={itemProps.item} page={itemProps.index} />
+      )}
+    />
+  ) : (
+    <></>
   )
 }

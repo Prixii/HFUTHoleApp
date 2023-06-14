@@ -13,6 +13,8 @@ export const [useStatusBarContext, StatusBarContextProvider] = createStore(
     const setWhiteColor = () => setColor('#fff')
     const setBackgroundColor = () => setColor(theme.colors.background)
 
+    const setOverlapColor = () => setColor('rgba(0,0,0,.2)')
+
     return {
       color,
       setColor,
@@ -20,6 +22,7 @@ export const [useStatusBarContext, StatusBarContextProvider] = createStore(
       setBarStyle,
       setWhiteColor,
       setBackgroundColor,
+      setOverlapColor,
     }
   }
 )

@@ -1,5 +1,5 @@
 const PRIMARY = {
-  lighter: '#C8FACD',
+  lighter: '#fff',
   light: '#5BE584',
   main: '#00AB55',
   dark: '#007B55',
