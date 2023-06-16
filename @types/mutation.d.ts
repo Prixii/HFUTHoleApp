@@ -5,3 +5,9 @@ declare interface IMutationResponse<T = any> {
 
   data: T
 }
+
+declare interface ISpaceResponse<T = any> {
+  code: number
+  msg: string
+  data: T
+}

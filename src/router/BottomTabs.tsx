@@ -5,20 +5,12 @@ import { Course } from '@/pages/course/Course'
 import { BottomTabBar } from '@/components/router/bottomTabs'
 import { Notify } from '@/pages/notify/Notify'
 import { TopTabs } from '@/router/TopTabs'
+import { CourseTopTabs } from '@/router/CourseTopTabs'
 import { User } from '@/pages/user/User'
 
 const Tab = createBottomTabNavigator()
-const CourseStack = createNativeStackNavigator()
 const NotifyStack = createNativeStackNavigator()
 const UserStack = createNativeStackNavigator()
-
-const CourseStacks = () => {
-  return (
-    <CourseStack.Navigator screenOptions={{ headerShown: false }}>
-      <CourseStack.Screen name={'index'} component={Course} />
-    </CourseStack.Navigator>
-  )
-}
 
 const NotifyStacks = () => {
   return (
@@ -46,7 +38,7 @@ export function BottomTabs() {
       tabBar={(props) => <BottomTabBar {...props} />}
     >
       <Tab.Screen name={'home'} component={TopTabs} />
-      <Tab.Screen name={'course'} component={CourseStacks} />
+      <Tab.Screen name={'course'} component={CourseTopTabs} />
       <Tab.Screen name={'notify'} component={NotifyStacks} />
       <Tab.Screen name={'user'} component={UserStacks} />
     </Tab.Navigator>

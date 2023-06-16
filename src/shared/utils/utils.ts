@@ -9,8 +9,10 @@ import { store } from '@/store/store'
 
 export const getQAQFont = (key: keyof IQAQ) => getRandomQAQ(key)[0]
 
-export const packStorageToken = () =>
-  `Bearer ${store.getState().user?.meta?.token}`
+export const packStorageToken = (isSpace?: boolean) =>
+  isSpace
+    ? `Bearer ${store.getState().spaceUser?.meta?.token}`
+    : `Bearer ${store.getState().user?.meta?.token}`
 
 export function formatDate(time: string) {
   const date = new Date(time)
