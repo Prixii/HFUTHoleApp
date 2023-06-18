@@ -75,6 +75,7 @@ export function TopTabs() {
       >
         {TabScreens.map((item) => (
           <Tab.Screen
+            key={item.name}
             name={item.name}
             component={item.component}
             options={{ title: item.title }}

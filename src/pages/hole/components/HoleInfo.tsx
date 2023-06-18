@@ -56,7 +56,7 @@ const HoleInfoVote: React.FC<{ data: Data }> = ({ data }) => {
     <View>
       <View className={'grid space-y-2'}>
         {data.vote.items.map((item) => (
-          <View>
+          <View key={item.id}>
             <HoleVoteItem
               data={item}
               hole={data}

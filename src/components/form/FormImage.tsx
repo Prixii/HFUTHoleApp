@@ -11,7 +11,7 @@ export function FormImage(props: Props) {
   return (
     <View className={'flex flex-row space-x-2'}>
       {props.imgs.map((img, index) => (
-        <View>
+        <View key={index}>
           <Image
             source={{ uri: img.uri }}
             resizeMode={'cover'}

@@ -23,7 +23,10 @@ export function EmojiArea(props: Props) {
           <View className={'flex-row space-y-4 items-center flex-wrap'}>
             {EmojiList.map((emoji) => {
               return (
-                <Pressable onPress={() => props.onEmojiSelect(emoji)}>
+                <Pressable
+                  onPress={() => props.onEmojiSelect(emoji)}
+                  key={emoji.name}
+                >
                   <View className={'flex mx-3 justify-center items-center'}>
                     <Emoji asset={emoji.asset} />
                   </View>

@@ -26,7 +26,10 @@ export function HomeCategories() {
       <View className={'flex flex-row flex-wrap space-y-6 items-center'}>
         {Categories.map((category) => {
           return (
-            <View className={'overflow-hidden rounded-lg w-1/5'}>
+            <View
+              key={category.name}
+              className={'overflow-hidden rounded-lg w-1/5'}
+            >
               <TouchableRipple onPress={() => {}}>
                 <View
                   key={category.name}

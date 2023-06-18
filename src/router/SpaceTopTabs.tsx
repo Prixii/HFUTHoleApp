@@ -2,8 +2,8 @@ import { useTheme } from 'react-native-paper'
 import { StatusBar } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { TopTabBar } from '@/components/router/TopTabBar'
-import { DaySchedule } from '@/pages/course/day-schedule/DaySchedule'
-import { WeekSchedule } from '@/pages/course/week-schedule/WeekSchedule'
+import { DaySchedule } from '@/pages/space/day-schedule/DaySchedule'
+import { WeekSchedule } from '@/pages/space/week-schedule/WeekSchedule'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -12,7 +12,7 @@ const TabScreens = [
   { name: 'week', component: WeekSchedule, title: '课表' },
 ]
 
-export const CourseTopTabs = () => {
+export const SpaceTopTabs = () => {
   const theme = useTheme()
   return (
     <>

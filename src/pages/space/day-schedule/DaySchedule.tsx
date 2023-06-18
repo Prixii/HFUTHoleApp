@@ -5,31 +5,27 @@ import {
   KeyboardAvoidingView,
 } from 'react-native'
 import { Dialog, Button } from 'react-native-paper'
-import { Page } from '@/components/Page'
-import { useCallback, useState } from 'react'
+import { PlainPage } from '@/components/Page'
+import { useCallback } from 'react'
 import { useAuth } from '@/shared/hooks/useSpaceAuth'
-import { LoginForm } from '@/pages/course/day-schedule/components/LoginForm'
+import { LoginForm } from '@/pages/space/day-schedule/components/LoginForm'
 import { getQAQFont } from '@/shared/utils/utils'
+import { useSpaceCourse } from '@/swr/space/course'
+import { Header } from '@/pages/space/day-schedule/components/Header'
 
 export const DaySchedule = () => {
-  const [refreshing, setRefreshing] = useState(false)
-
   const { isLogin, logout } = useAuth()
+  const { refetch, isLoading } = useSpaceCourse()
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true)
-    setTimeout(() => {
-      setRefreshing(false)
-    }, 2000)
-  }, [])
+  const onRefresh = useCallback(() => refetch(false), [refetch])
 
   return (
     <KeyboardAvoidingView behavior="padding">
-      <Page>
+      <PlainPage>
         <ScrollView
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={isLoading}
               enabled={isLogin}
               onRefresh={onRefresh}
             />
@@ -40,8 +36,9 @@ export const DaySchedule = () => {
               logout()
             }}
           >
-            退出
+            退出登录
           </Button>
+          <Header />
         </ScrollView>
 
         <Dialog visible={!isLogin} dismissable={false}>
@@ -50,7 +47,7 @@ export const DaySchedule = () => {
             <LoginForm />
           </Dialog.Content>
         </Dialog>
-      </Page>
+      </PlainPage>
     </KeyboardAvoidingView>
   )
 }

@@ -3,13 +3,24 @@ import { Config } from '@/shared/config'
 import { getQAQFont, packStorageToken } from '@/shared/utils/utils'
 import Toast from 'react-native-toast-message'
 
+const headers = {
+  'User-Agent': 'wechatdevtools/1.05.2204250 MicroMessenger/8.0.5',
+}
+
 const instance = axios.create({
   baseURL: Config.request.spaceBaseURL,
   timeout: Config.request.timeout,
+  headers,
 })
 
 instance.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    if (res.data.data) {
+      return res.data.data
+    } else {
+      return res.data
+    }
+  },
   (error: AxiosError) => {
     const msg = (error?.response?.data as IMutationResponse)?.msg
     Toast.show({
@@ -34,7 +45,5 @@ export function request<T = any>(config: AxiosRequestConfig) {
 
 export const loginInstance = axios.create({
   baseURL: 'https://login.hfut-space.top',
-  headers: {
-    'User-Agent': 'wechatdevtools/1.05.2204250 MicroMessenger/8.0.5',
-  },
+  headers,
 })

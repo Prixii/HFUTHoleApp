@@ -1,6 +1,6 @@
 import MineSvg from '@/assets/svg/mine.svg'
 import HomeSvg from '@/assets/svg/home.svg'
-import CourseSvg from '@/assets/svg/deno.svg'
+import SpaceSvg from '@/assets/svg/deno.svg'
 import NotifySvg from '@/assets/svg/notify.svg'
 import { Svg } from '@/components/svg/Svg'
 
@@ -11,7 +11,7 @@ interface Props {
 
 const IconsMap = {
   home: HomeSvg,
-  course: CourseSvg,
+  space: SpaceSvg,
   notify: NotifySvg,
   user: MineSvg,
 }

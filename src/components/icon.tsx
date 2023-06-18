@@ -59,3 +59,7 @@ export const CameraIcon = withFontAV5Icon('camera')
 export const AtIcon = withFontAV5Icon('at')
 
 export const EmojiIcon = withFontAV5Icon('grin-beam')
+
+export const AngleLeftIcon = withFontAV5Icon('angle-left')
+
+export const AngleRightIcon = withFontAV5Icon('angle-right')
