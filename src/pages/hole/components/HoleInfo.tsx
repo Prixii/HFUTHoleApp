@@ -107,7 +107,7 @@ const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
       </View>
       <View>
         <Text variant={'bodyMedium'} selectable={true}>
-          {data.body}
+          <EmojiableText body={data.body} />
         </Text>
       </View>
     </View>

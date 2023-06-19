@@ -7,6 +7,8 @@ import { BackAndButtonHeader } from '@/components/header/BackAndButtonHeader'
 import { useNavigation } from '@react-navigation/native'
 import { format } from 'date-fns'
 
+interface Props {}
+
 export function HolePostHeader() {
   const navigation = useNavigation()
 
@@ -26,7 +28,6 @@ export function HolePostHeader() {
         ...(votes.items.length > 0
           ? {
               vote: {
-                endTime: format(votes.endTime, 'yyyy-MM-dd HH:mm:ss'),
                 items: votes.items.map((i) => i.value),
               },
             }
@@ -51,6 +52,7 @@ export function HolePostHeader() {
       onPress={handleSubmit(onSubmit)}
       loading={mutation.isLoading}
       submitText={'发布'}
+      buttonMode={'text'}
     />
   )
 }

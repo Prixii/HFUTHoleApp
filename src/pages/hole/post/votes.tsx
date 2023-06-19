@@ -1,24 +1,18 @@
 import { View } from 'react-native'
-import { IconButton } from '@/components/IconButton'
 import { Button, Dialog, Portal } from 'react-native-paper'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useMount } from 'ahooks'
 import { Input } from '@/components/form/Input'
-import { AddIcon, CloseIcon } from '@/components/icon'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { formatDate } from '@/shared/utils/utils'
+import { AddIcon } from '@/components/icon'
 import { Snackbar } from '@/components/snackbar/snackbar'
-import { add, format, formatDistanceToNow } from 'date-fns'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { HolePostVoteClassValidator } from '@/shared/validators/hole/post'
 import { useHolePostContext } from '@/shared/context/hole'
-import { zhCN } from 'date-fns/locale'
+import { IconButton } from '@/components/IconButton'
 
 export function HolePostVote() {
   const [visible, setVisible] = useState(false)
-  const [date, setDate] = useState<Date>(add(Date.now(), { days: 1 }))
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
 
   const { setVotes } = useHolePostContext()
 
@@ -51,7 +45,6 @@ export function HolePostVote() {
   const onSubmit = (data: HolePostVoteClassValidator) => {
     setVotes((draft) => {
       draft.items = data.items
-      draft.endTime = date
     })
     close()
   }
@@ -80,12 +73,6 @@ export function HolePostVote() {
           <Dialog.Content>
             <View className={'p-0 grid space-y-2'}>
               <View className={'grid space-y-2'}>
-                <Snackbar
-                  text={`该投票在 ${formatDistanceToNow(date, {
-                    locale: zhCN,
-                  })}后结束`}
-                  icon={'info'}
-                />
                 <View>
                   {errors.items?.length > 0 ||
                     (errors.items?.message.length > 0 && (
@@ -125,23 +112,6 @@ export function HolePostVote() {
                   </View>
                 )
               })}
-            </View>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode={'datetime'}
-              onConfirm={(date) => {
-                setDate(date)
-              }}
-              date={date}
-              onCancel={() => setDatePickerVisibility(false)}
-            />
-            <View className={'mt-2'}>
-              <Button
-                icon={'calendar'}
-                onPress={() => setDatePickerVisibility(true)}
-              >
-                选择时间
-              </Button>
             </View>
           </Dialog.Content>
           <Dialog.Actions>

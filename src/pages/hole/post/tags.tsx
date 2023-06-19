@@ -2,13 +2,14 @@ import { useForm } from 'react-hook-form'
 import { useHolePostContext } from '@/shared/context/hole'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { Limit } from '@/shared/config'
-import { Button, Dialog, Portal } from 'react-native-paper'
+import { Button, Dialog, IconButton, Portal } from 'react-native-paper'
 import { Input } from '@/components/form/Input'
 import React, { useState } from 'react'
 import { IsString, MaxLength } from 'class-validator'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { Tags } from '@/components/tags'
 import { getQAQFont } from '@/shared/utils/utils'
+import { TagIcon } from '@/components/icon'
 
 enum InputError {
   MaximumExceeded = 'MaximumExceeded',
@@ -100,7 +101,11 @@ export function HolePostAddTags() {
   return (
     <>
       <Portal>
-        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+        <Dialog
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          style={{ backgroundColor: 'white' }}
+        >
           <Dialog.Title>添加标签</Dialog.Title>
           <Dialog.Content>
             <Tags tags={tags} onTagClick={handleTagClose} icon={'close'} />
@@ -121,9 +126,7 @@ export function HolePostAddTags() {
         </Dialog>
       </Portal>
 
-      <Button mode={'contained'} onPress={() => setVisible(true)}>
-        选择标签
-      </Button>
+      <IconButton icon={() => <TagIcon />} onPress={() => setVisible(true)} />
     </>
   )
 }

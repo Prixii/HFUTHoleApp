@@ -1,4 +1,5 @@
 import { Avatar } from 'react-native-paper'
+import { useUserProfile } from '@/swr/user/profile'
 
 interface Props {
   url: string
@@ -15,4 +16,10 @@ export function UserAvatar(props: Props) {
       }}
     />
   )
+}
+
+export function MyAvatar(props: Omit<Props, 'url'>) {
+  const { data } = useUserProfile()
+
+  return <UserAvatar url={data?.avatar} {...props} />
 }

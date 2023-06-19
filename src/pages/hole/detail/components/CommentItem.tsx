@@ -102,9 +102,7 @@ const EmptyItem = () => {
   return (
     <View className={'py-2'}>
       <Empty
-        text={
-          isAllMode ? '树洞空空的，洞主正在期待第一个评论' : '洞主还没填楼噢'
-        }
+        text={isAllMode ? 'lz正在期待第一个评论' : 'lz还没填楼噢'}
         size={200}
       />
     </View>

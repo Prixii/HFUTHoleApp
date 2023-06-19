@@ -62,8 +62,7 @@ const CHART_COLORS = {
   red: ['#FF6C40', '#FF8F6D', '#FFBD98', '#FFF2D4'],
 }
 
-// TODO 用@theme文件夹下的变量，考虑到打包可能出现失误，日后有空再研究
-export const colors = {
+module.exports.colors = {
   primary: PRIMARY.main,
   onPrimary: PRIMARY.lighter,
   primaryContainer: PRIMARY.light,

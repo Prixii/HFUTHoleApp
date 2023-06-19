@@ -55,7 +55,7 @@ export function HoleDetailCommentHeader() {
             }}
             onPress={() => toggleMode(HoleDetailCommentMode.author)}
           >
-            只看洞主
+            只看楼主
           </Text>
         </View>
         <Pressable onPress={toggleOrder}>

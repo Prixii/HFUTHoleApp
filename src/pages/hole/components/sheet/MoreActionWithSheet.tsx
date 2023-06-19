@@ -2,7 +2,7 @@ import { Appbar, Text, TouchableRipple, useTheme } from 'react-native-paper'
 import React, { useMemo, useRef, useState } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
-import { GestureResponderEvent, View } from 'react-native'
+import { GestureResponderEvent, Vibration, View } from 'react-native'
 import {
   ReportAction,
   ReportActionProps,
@@ -46,6 +46,8 @@ export function MoreActionWithSheet(props: Props) {
   )
 
   const openSheet = () => {
+    Vibration.vibrate(3)
+
     sheetRef.current?.present()
   }
 

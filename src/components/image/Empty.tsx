@@ -15,8 +15,8 @@ export function Empty({ text = '没有更多数据了哦', ...props }: Props) {
         source={require('@/assets/img/empty.png')}
         {...props}
         style={{
-          width: props.size || 100,
-          height: props.size || 100,
+          width: props.size || 200,
+          height: props.size || 200,
           ...props,
         }}
       />

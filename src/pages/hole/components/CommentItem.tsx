@@ -84,11 +84,11 @@ export function CommentItem({
               <View className={'flex flex-row items-center space-x-1'}>
                 <LikeIcon
                   active={data.isLiked}
-                  size={16}
+                  size={14}
                   onPress={onLikeIconPress}
                 />
                 <View>
-                  <SecondaryText style={{ fontSize: 16 }}>
+                  <SecondaryText style={{ fontSize: 14 }}>
                     {data.favoriteCounts}
                   </SecondaryText>
                 </View>

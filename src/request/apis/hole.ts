@@ -2,6 +2,7 @@ import { request } from '@/request/request'
 import { IdAble, PaginateAble } from '@/shared/types'
 import { PostHoleValidator } from '@/shared/validators/hole'
 import {
+  ArticleCategoryEnum,
   HoleDetailCommentMode,
   HoleDetailCommentOrderMode,
   HoleListMode,
@@ -16,7 +17,7 @@ interface Id {
 }
 
 export function GetHoleListRequest(
-  params: PaginateAble<{ mode: HoleListMode }>
+  params: PaginateAble<{ mode: HoleListMode; category?: ArticleCategoryEnum }>
 ) {
   return request<IHoleListResponse>({
     method: 'GET',

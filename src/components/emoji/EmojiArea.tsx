@@ -17,7 +17,7 @@ export function EmojiArea(props: Props) {
     <>
       {props.expandArea ? (
         <ScrollView
-          className={'h-56 pt-2'}
+          className={'h-56 py-2'}
           style={{ backgroundColor: theme.colors.background }}
         >
           <View className={'flex-row space-y-4 items-center flex-wrap'}>
@@ -33,19 +33,21 @@ export function EmojiArea(props: Props) {
           </View>
         </ScrollView>
       ) : (
-        <FlatList
-          data={EmojiList}
-          renderItem={({ item: emoji }) => (
-            <Pressable onPress={() => props.onEmojiSelect(emoji)}>
-              <View className={'flex justify-center items-center mx-3'}>
-                <Emoji asset={emoji.asset} size={28} />
-              </View>
-            </Pressable>
-          )}
-          contentContainerStyle={{ flexDirection: 'row', flexWrap: 'nowrap' }}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
+        <View className={'py-2'}>
+          <FlatList
+            data={EmojiList}
+            renderItem={({ item: emoji }) => (
+              <Pressable onPress={() => props.onEmojiSelect(emoji)}>
+                <View className={'flex justify-center items-center mx-3'}>
+                  <Emoji asset={emoji.asset} size={28} />
+                </View>
+              </Pressable>
+            )}
+            contentContainerStyle={{ flexDirection: 'row', flexWrap: 'nowrap' }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
       )}
     </>
   )

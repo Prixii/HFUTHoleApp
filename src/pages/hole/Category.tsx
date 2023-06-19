@@ -9,6 +9,7 @@ import { ArticleCategoryEnum } from '@/shared/enums'
 import { View } from 'react-native'
 import { Svg } from '@/components/svg/Svg'
 import { Text, TouchableRipple } from 'react-native-paper'
+import { useHoleCategoryRoute } from '@/shared/hooks/route/useHoleCategoryRoute'
 
 const Categories = [
   { name: ArticleCategoryEnum.hfutLife, svg: HFUTLifeSvg },
@@ -21,13 +22,15 @@ const Categories = [
 ]
 
 export function HomeCategories() {
+  const { go } = useHoleCategoryRoute()
+
   return (
     <View className={'bg-white p-2 rounded-lg'}>
       <View className={'flex flex-row flex-wrap space-y-6 items-center'}>
         {Categories.map((category) => {
           return (
             <View className={'overflow-hidden rounded-lg w-1/5'}>
-              <TouchableRipple onPress={() => {}}>
+              <TouchableRipple onPress={() => go(category.name)}>
                 <View
                   key={category.name}
                   className={

@@ -40,7 +40,12 @@ export const NativeInput = <T extends object = PlainObject>({
             value={field.value}
             placeholderTextColor={theme.colors.surfaceVariant}
             cursorColor={theme.colors.primary}
+            textAlignVertical={'top'}
             {...props}
+            style={{
+              fontSize: 16,
+              ...(props.style as object),
+            }}
           />
         </>
       )}

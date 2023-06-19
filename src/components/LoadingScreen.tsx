@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Lottie from 'lottie-react-native'
 import { View } from 'react-native'
 import { SecondaryText } from '@/components/Text/SecondaryText'
@@ -6,11 +6,22 @@ import { SecondaryText } from '@/components/Text/SecondaryText'
 interface Props {
   isLoading: boolean
   children: React.ReactNode
+  id?: number
 }
 
 export function LoadingScreen(props: Props) {
   const animationRef = useRef<Lottie>(null)
   const [loading, setLoading] = useState(true)
+
+  const lottieSource = useMemo(() => {
+    const id = props.id || 0
+
+    if (id === 0) {
+      return require('@/assets/lottie/loading.json')
+    } else if (id === 1) {
+      return require('@/assets/lottie/loading-1.json')
+    }
+  }, [props.id])
 
   useEffect(() => {
     if (!props.isLoading) {
@@ -31,7 +42,7 @@ export function LoadingScreen(props: Props) {
           <View className={'flex space-y-1 items-center'}>
             <Lottie
               ref={animationRef}
-              source={require('@/assets/lottie/loading.json')}
+              source={lottieSource}
               style={{
                 width: 200,
                 height: 200,

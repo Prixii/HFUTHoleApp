@@ -12,10 +12,12 @@ import { HoleLatest } from '@/pages/hole/latest/HoleLatest'
 import { StatusBar } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { HoleDetailCommentContextProvider } from '@/shared/context/hole_detail'
+import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
+import { HoleCategoryHeader } from '@/pages/hole/category/Header'
 
 const Tab = createMaterialTopTabNavigator()
 const HoleStack = createNativeStackNavigator()
-const HomeStack = createNativeStackNavigator()
+const HoleCategoryTab = createMaterialTopTabNavigator()
 
 const HoleSearchStacks = () => {
   return (
@@ -42,6 +44,26 @@ const HoleDetailStacks = () => {
   )
 }
 
+const HoleCategoryTabs = () => {
+  return (
+    <HoleCategoryTab.Navigator
+      initialRouteName={'index'}
+      tabBar={(props) => <TopTabBar {...props} />}
+    >
+      <HoleCategoryTab.Screen
+        name={'latest'}
+        component={HoleCategoryScreen}
+        options={{ title: '最新' }}
+      />
+      <HoleCategoryTab.Screen
+        name={'hot'}
+        component={HoleCategoryScreen}
+        options={{ title: '热门' }}
+      />
+    </HoleCategoryTab.Navigator>
+  )
+}
+
 export const HoleNestedStacks = () => {
   return (
     <HoleDetailCommentContextProvider>
@@ -53,6 +75,7 @@ export const HoleNestedStacks = () => {
         <HoleStack.Screen name={'post'} component={HolePost} />
         <HoleStack.Screen name={'search'} component={HoleSearchStacks} />
         <HoleStack.Screen name={'detail'} component={HoleDetailStacks} />
+        <HoleStack.Screen name={'category'} component={HoleCategoryTabs} />
       </HoleStack.Navigator>
     </HoleDetailCommentContextProvider>
   )

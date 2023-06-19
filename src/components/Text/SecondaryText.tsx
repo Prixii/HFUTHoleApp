@@ -6,6 +6,7 @@ export function SecondaryText(props: TextProps<any>) {
   return (
     <Text
       {...props}
+      className={props.className}
       style={{
         color: theme.colors.surfaceVariant,
         ...((props.style as object) || {}),

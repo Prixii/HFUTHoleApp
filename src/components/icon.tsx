@@ -19,6 +19,7 @@ const withIconProps = (
       <WrappedIconComponent
         name={name}
         color={props.active ? theme.colors.primary : 'grey'}
+        size={20}
         {...props}
       />
     )
@@ -59,3 +60,5 @@ export const CameraIcon = withFontAV5Icon('camera')
 export const AtIcon = withFontAV5Icon('at')
 
 export const EmojiIcon = withFontAV5Icon('grin-beam')
+
+export const TagIcon = withFontAV5Icon('tag')

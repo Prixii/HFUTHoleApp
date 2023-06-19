@@ -1,19 +1,16 @@
 import {
   IconButton as RNPIconButton,
   IconButtonProps,
+  useTheme,
 } from 'react-native-paper'
 import { View } from 'react-native'
 
 export function IconButton(props: IconButtonProps & { transparent?: boolean }) {
+  const theme = useTheme()
+
   return (
     <View>
-      <RNPIconButton
-        iconColor={'#00AB55'}
-        {...props}
-        className={`bg-[#00AB55]/20 ${props.transparent && 'bg-transparent'} ${
-          props.className
-        }`}
-      />
+      <RNPIconButton iconColor={theme.colors.surfaceVariant} {...props} />
     </View>
   )
 }

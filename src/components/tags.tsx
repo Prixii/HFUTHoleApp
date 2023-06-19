@@ -20,7 +20,7 @@ export function Tags(props: Props) {
           icon={props.icon}
           onPress={() => props.onTagClick?.(index)}
           key={tag}
-          style={{ backgroundColor: theme.colors.onPrimary }}
+          style={{ backgroundColor: theme.colors.background }}
         >
           <Text
             style={{

@@ -21,7 +21,7 @@ export function EmojiableText({ body }: Props) {
         return <Emoji asset={emoji.asset} key={index} size={22} />
       } else {
         return (
-          <Text variant={'bodyMedium'} key={index}>
+          <Text variant={'bodyLarge'} key={index}>
             {part}
           </Text>
         )

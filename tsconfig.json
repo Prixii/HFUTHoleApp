@@ -7,7 +7,9 @@
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "checkJs": true,
   },
   "extends": "expo/tsconfig.base",
   "include": [
@@ -15,6 +17,8 @@
     "App.tsx",
     "app.d.ts",
     "@types/**/**.d.ts",
-    "@types/**.d.ts"
+    "@types/**.d.ts",
+    "@theme/**.js",
+    "**.**.js",
   ]
 }

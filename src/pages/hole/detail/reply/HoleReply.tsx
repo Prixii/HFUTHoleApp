@@ -104,7 +104,7 @@ export function HoleReply() {
         <CommentBottomInput
           data={{
             commentId: comment?.id,
-            user: comment.user,
+            user: comment?.user,
           }}
         />
       </View>

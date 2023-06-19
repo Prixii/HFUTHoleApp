@@ -9,10 +9,10 @@
 - [ReactNative](https://reactnative.dev/)
 - [Tailwindcss](https://tailwindcss.com/)
 - [@tanstack/react-query](https://react-query.tanstack.com/)
-- [mobx-react-lite](https://mobx.js.org/react-integration.html)
 
 
 
 ## TODOLIST
 
 - [ ] 自动根据release tag更新App
+- [ ] 发布页面自动保存历史记录

@@ -1,19 +1,30 @@
 import { View } from 'react-native'
-import { IconButton } from '@/components/IconButton'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { HolePostAddTags } from '@/pages/hole/post/tags'
 import * as ImagePicker from 'expo-image-picker'
 import { useHolePostContext } from '@/shared/context/hole'
 import { Toast } from '@/shared/utils/toast'
 import { HolePostVote } from '@/pages/hole/post/votes'
+import { IconButton } from '@/components/IconButton'
+import { EmojiItem } from '@/assets/emoji'
+import { EmojiIcon } from '@/components/icon'
+import { Badges } from '@/components/Badges'
+import { EmojiArea } from '@/components/emoji/EmojiArea'
+import { Tags } from '@/components/tags'
 
+// TODO @实现
 export function BottomActions() {
   const {
-    imgs,
     setImgs,
-    votes,
-    form: { setValue },
+    tags,
+    form: { setValue, getValues },
   } = useHolePostContext()
+
+  const [expand, setExpand] = useState(false)
+
+  const onEmojiSelect = useCallback((emoji: EmojiItem) => {
+    setValue('body', `${getValues('body') || ''}${emoji.name}`)
+  }, [])
 
   const onSelectImage = async () => {
     try {
@@ -41,14 +52,26 @@ export function BottomActions() {
   }
 
   return (
-    <>
-      <View className={'flex flex-row justify-between items-center'}>
-        <HolePostAddTags />
-        <View className={'flex flex-row'}>
-          <IconButton icon={'camera'} onPress={onSelectImage} />
-          <HolePostVote />
+    <View className={'pt-2 border-t-[1px] border-t-black/5'}>
+      <View className={'px-2'}>
+        <Badges data={tags} />
+        <View className={'flex flex-row justify-between items-center'}>
+          <View className={'flex flex-row'}>
+            <IconButton
+              icon={() => <EmojiIcon />}
+              onPress={() => setExpand((prev) => !prev)}
+            />
+            <IconButton icon={'image'} onPress={onSelectImage} />
+            {/*<IconButton icon={() => <AtIcon />} onPress={() => {}} />*/}
+          </View>
+          <View className={'flex flex-row'}>
+            <HolePostAddTags />
+            <HolePostVote />
+          </View>
         </View>
       </View>
-    </>
+
+      <EmojiArea onEmojiSelect={onEmojiSelect} expandArea={expand} />
+    </View>
   )
 }

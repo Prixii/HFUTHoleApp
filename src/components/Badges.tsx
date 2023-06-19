@@ -4,20 +4,24 @@ import { Pressable, View } from 'react-native'
 import { AwaitAble, InferArrayItem } from '@/shared/types'
 
 interface Props {
-  data: InferArrayItem<IHoleListResponse['items']>['tags']
+  data: InferArrayItem<IHoleListResponse['items']>['tags'] | string[]
   onPress?: (tag: string) => AwaitAble
 }
 
 export function Badges(props: Props) {
   return (
     <View className={'w-full flex flex-row gap-2 flex-wrap'}>
-      {props.data.map((tag) => (
-        <Pressable onPress={() => props.onPress(tag.body)} key={tag.id}>
-          <Badge colorScheme="success" rounded={'lg'}>
-            {`${tag.body.startsWith('#') ? '' : '#'}${tag.body}`}
-          </Badge>
-        </Pressable>
-      ))}
+      {props.data.map((tag) => {
+        const body = tag?.body || tag
+
+        return (
+          <Pressable onPress={() => props?.onPress?.(body)} key={body}>
+            <Badge colorScheme="success" rounded={'lg'}>
+              {`${body.startsWith('#') ? '' : '#'}${body}`}
+            </Badge>
+          </Pressable>
+        )
+      })}
     </View>
   )
 }
