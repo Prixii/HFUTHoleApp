@@ -27,7 +27,9 @@ export function RefreshableHoleList({
 
   const isHoleListEmpty = data?.pages[0].items.length === 0
 
-  const flatListData = isHoleListEmpty ? [] : data?.pages
+  const flatListData = isHoleListEmpty
+    ? []
+    : data?.pages.map((page) => page.items).flat(1)
 
   return isSuccess ? (
     <RefreshingFlatList
@@ -46,12 +48,8 @@ export function RefreshableHoleList({
           </View>
         )
       }
-      renderItem={({ item: group, index }) => (
-        <View className={'space-y-2'} key={`${group.items?.[0]?.id}${index}`}>
-          {group.items.map((item) => (
-            <HoleInfo key={item.id} data={item} onPress={() => go(item.id)} />
-          ))}
-        </View>
+      renderItem={({ item }) => (
+        <HoleInfo key={item.id} data={item} onPress={() => go(item.id)} />
       )}
     />
   ) : (

@@ -9,7 +9,7 @@ import {
 } from 'react-hook-form'
 import { isNotEmptyObject } from 'class-validator'
 import { TextInput, TextInputProps } from 'react-native'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useRef } from 'react'
 
 type Props<T> = {
   name: FieldPath<T>
@@ -26,6 +26,11 @@ export const NativeInput = <T extends object = PlainObject>({
   ...props
 }: Props<T>) => {
   const theme = useTheme()
+  const inputRef = useRef<TextInput>()
+
+  useEffect(() => {
+    inputRef.current.focus()
+  }, [])
 
   return (
     <Controller
@@ -41,6 +46,7 @@ export const NativeInput = <T extends object = PlainObject>({
             placeholderTextColor={theme.colors.surfaceVariant}
             cursorColor={theme.colors.primary}
             textAlignVertical={'top'}
+            ref={inputRef}
             {...props}
             style={{
               fontSize: 16,

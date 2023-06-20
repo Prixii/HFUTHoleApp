@@ -14,6 +14,10 @@ export function EmojiableText({ body }: Props) {
     const reg = /(\[.*?\])/g
     const parts = body.split(reg)
 
+    if (parts.length === 1 && !reg.test(body)) {
+      return <Text variant={'bodyLarge'}>{body}</Text>
+    }
+
     return parts.map((part, index) => {
       const emoji = EmojiList.find((item) => item.name === part)
 

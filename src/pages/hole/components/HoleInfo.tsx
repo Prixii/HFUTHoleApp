@@ -2,10 +2,15 @@ import React, { ReactNode, useState } from 'react'
 import { Func, IClassName, InferArrayItem } from '@/shared/types'
 import { View } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
-import { Button, Text, TouchableRipple, useTheme } from 'react-native-paper'
+import {
+  Button,
+  IconButton,
+  Text,
+  TouchableRipple,
+  useTheme,
+} from 'react-native-paper'
 import { CommentIcon, LikeIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
-import { IdText } from '@/components/Text/Id'
 import { TimeText } from '@/components/Text/Time'
 import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 import { ImageList } from '@/components/image/ImageList'
@@ -16,7 +21,8 @@ import { HoleVoteItem } from '@/pages/hole/components/VoteItem'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import { HoleBottomAction } from '@/pages/hole/components/sheet/HoleBottomAction'
 import { EmojiableText } from '@/components/Text/EmojiableText'
-import { sliceHoleInfoCommentBody } from '@/pages/hole/components/utils'
+import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
+import { Svg } from '@/components/svg/Svg'
 
 type Data = IHole
 
@@ -93,7 +99,7 @@ const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
+export const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
   const { searchWithKeywords } = useSearchNavigation()
 
   return (
@@ -106,9 +112,7 @@ const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
         />
       </View>
       <View>
-        <Text variant={'bodyMedium'} selectable={true}>
-          <EmojiableText body={data.body} />
-        </Text>
+        <EmojiableText body={data.body} />
       </View>
     </View>
   )
@@ -143,15 +147,9 @@ const HoleInfoBottom: React.FC<{ data: Data }> = ({ data }) => {
           </View>
         ))}
       </View>
-      <View>
-        <Button
-          mode={'text'}
-          onPress={() => {
-            console.log(1)
-          }}
-        >
-          {data.category.category}
-        </Button>
+      <View className={'flex flex-row space-x-2 items-center'}>
+        <Svg SvgComponent={BilibiliSvg} size={20} />
+        <Button mode={'text'}>{data.category.category}</Button>
       </View>
     </View>
   )

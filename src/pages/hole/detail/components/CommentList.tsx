@@ -1,11 +1,14 @@
 import { useHoleComment, useHoleDetail } from '@/swr/hole'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
-import { HoleInfo } from '@/pages/hole/components/HoleInfo'
+import { HoleInfo, HoleInfoBody } from '@/pages/hole/components/HoleInfo'
 import { LikeHole } from '@/pages/hole/detail/LikeHole'
 import { Separator } from '@/components/Separator'
 import { HoleDetailCommentHeader } from '@/pages/hole/detail/components/CommentHeader'
 import { LoadMore } from '@/components/LoadMore'
 import { HoleDetailCommentItem } from '@/pages/hole/detail/components/CommentItem'
+import { BilibiliPlayer } from '@/components/player/BilibiliPlayer'
+import React from 'react'
+import { View } from 'react-native'
 
 export function HoleDetailCommentList() {
   const {
@@ -30,6 +33,13 @@ export function HoleDetailCommentList() {
     await Promise.all([await refetch(), await invalidateQuery()])
   }
 
+  const BodyRender = (
+    <View>
+      <BilibiliPlayer bvid={'BV1vi4y1K7o'} />
+      <HoleInfoBody data={data} />
+    </View>
+  )
+
   return isAllSuccess ? (
     <RefreshingFlatList
       onRefreshing={onRefresh}
@@ -38,7 +48,12 @@ export function HoleDetailCommentList() {
       refreshing={isFetching}
       ListHeaderComponent={() => (
         <>
-          <HoleInfo data={data} bottom={<LikeHole />} showComment={false} />
+          <HoleInfo
+            data={data}
+            bottom={<LikeHole />}
+            body={BodyRender}
+            showComment={false}
+          />
           <Separator />
           <HoleDetailCommentHeader />
         </>
