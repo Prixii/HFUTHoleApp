@@ -63,3 +63,5 @@ export const EmojiIcon = withFontAV5Icon('grin-beam')
 export const AngleLeftIcon = withFontAV5Icon('angle-left')
 
 export const AngleRightIcon = withFontAV5Icon('angle-right')
+
+export const LogoutIcon = withMaterialIcon('login')

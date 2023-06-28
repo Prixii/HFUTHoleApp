@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { calculateWeekAndDay } from '@/shared/utils/spaceCourse'
+import { calculateWeekAndDay } from '@/pages/space/@utils/utils'
+import { resetStoreState } from '@/shared/utils/store'
 
 export type VisibleSchedule = {
   weekIdx: number
@@ -7,13 +8,13 @@ export type VisibleSchedule = {
 }
 
 export type SpaceCourseState = {
-  courseInfo: ICourseResponse
+  courseInfo: ICourse
   currentWeekIdx: number
   daySchedule: VisibleSchedule
   weekSchedule: VisibleSchedule
 }
 
-const initialState: SpaceCourseState = {
+const initialState: SpaceCourseState = Object.freeze({
   courseInfo: {
     lessons: [],
     mainInfo: {
@@ -35,13 +36,13 @@ const initialState: SpaceCourseState = {
     weekIdx: 0,
     dayIdx: 0,
   },
-}
+})
 
 export const spaceCourseSlice = createSlice({
   name: 'spaceCourse',
   initialState,
   reducers: {
-    changeCourseInfo(state, action: PayloadAction<ICourseResponse>) {
+    changeCourseInfo(state, action: PayloadAction<ICourse>) {
       state.courseInfo = action.payload
     },
     changeSchedule(
@@ -58,11 +59,25 @@ export const spaceCourseSlice = createSlice({
       }
       state.daySchedule = scheduleIdx
       state.weekSchedule = scheduleIdx
-      state.currentWeekIdx = week
+    },
+    resetStore(state) {
+      resetStoreState(state, initialState)
+    },
+    setDaySchedule(state, action: PayloadAction<VisibleSchedule>) {
+      state.daySchedule = action.payload
+    },
+    setWeekSchedule(state, action: PayloadAction<VisibleSchedule>) {
+      state.weekSchedule = action.payload
     },
   },
 })
 
-export const { changeCourseInfo, changeSchedule } = spaceCourseSlice.actions
+export const {
+  changeCourseInfo,
+  changeSchedule,
+  resetStore,
+  setDaySchedule,
+  setWeekSchedule,
+} = spaceCourseSlice.actions
 
 export const SpaceCourseReducer = spaceCourseSlice.reducer

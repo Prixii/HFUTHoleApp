@@ -12,7 +12,12 @@ export const SWRKeys = {
     favoriteHoleList: 'user.favoriteHoleList',
     postedHoleList: 'user.postedHoleList',
   },
-  spaceCourse: {
-    all: 'spaceCourse.all',
+  space: {
+    course: {
+      all: 'space.course.all',
+    },
+    user: {
+      info: 'space.user.info',
+    },
   },
 }

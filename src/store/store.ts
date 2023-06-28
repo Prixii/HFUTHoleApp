@@ -11,8 +11,6 @@ import {
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { combineReducers } from '@reduxjs/toolkit'
 import createSecureStore from 'redux-persist-expo-securestore'
-import { spaceCourseTransform } from '@/store/transform/spaceCourse'
-// import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
 const SecureStorage = createSecureStore()
 
@@ -44,8 +42,6 @@ const spaceCoursePersistReducer = persistReducer<SpaceCourseState>(
   {
     key: 'spaceCourse',
     storage: AsyncStorage,
-    transforms: [spaceCourseTransform],
-    // stateReconciler: hardSet,
   },
   SpaceCourseReducer
 )

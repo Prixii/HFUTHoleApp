@@ -71,3 +71,20 @@ export const saveToAlbum = async (url: string) => {
 
 export const isNullOrUndefined = (val: unknown): val is null | undefined =>
   val === null || val === undefined
+
+export function deepClone<T>(obj: T): T {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepClone(item)) as any
+  }
+
+  const copiedObj: any = {}
+  Object.keys(obj).forEach((key) => {
+    copiedObj[key] = deepClone(obj[key])
+  })
+
+  return copiedObj as T
+}

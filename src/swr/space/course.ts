@@ -2,14 +2,18 @@ import { SWRKeys } from '@/swr/utils'
 import { useQuery } from 'react-query'
 import { getCourseListRequest } from '@/request/spaceApis/course'
 import { useAppDispatch } from '@/store/store'
-import { changeCourseInfo } from '@/store/reducer/spaceCourse'
+import { changeCourseInfo, changeSchedule } from '@/store/reducer/spaceCourse'
+import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 
-// TODO 未登录时，不要发请求
+const courseAllKey = [SWRKeys.space.course.all, false, 214] // TODO semester 先写死
+
 export const useSpaceCourse = () => {
-  const key = [SWRKeys.spaceCourse.all, false]
   const dispatch = useAppDispatch()
+  const { isLogin } = useAuth()
 
-  const query = useQuery<ICourseResponse>(key, {
+  const query = useQuery<ICourse>(courseAllKey, {
+    enabled: isLogin,
+    retry: false,
     queryFn: ({ queryKey }) =>
       getCourseListRequest(
         queryKey[1] as boolean,
@@ -17,12 +21,13 @@ export const useSpaceCourse = () => {
       ),
     onSuccess(data) {
       dispatch(changeCourseInfo(data))
+      dispatch(changeSchedule(undefined))
     },
   })
 
   const refetch = (refresh = false, semesterId?: number) =>
     query.refetch({
-      queryKey: [...key, refresh, semesterId],
+      queryKey: [...courseAllKey, refresh, semesterId],
     })
 
   return {

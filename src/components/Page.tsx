@@ -26,7 +26,7 @@ export function PlainPage(props: ViewProps) {
     <SafeAreaView>
       <View
         {...props}
-        className={`min-h-100vh w-full px-0 ${props.className}`}
+        className={`min-h-full w-full px-0 ${props.className}`}
         style={{
           backgroundColor: theme.colors.background,
         }}

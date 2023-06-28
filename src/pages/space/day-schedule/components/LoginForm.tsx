@@ -4,7 +4,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { LoginFormValidator } from '@/shared/validators/space/auth'
 import { useMutation } from 'react-query'
 import { LoginRequest } from '@/request/spaceApis/auth'
-import { useAuth } from '@/shared/hooks/useSpaceAuth'
+import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { AxiosError } from 'axios'
 import { getQAQFont } from '@/shared/utils/utils'
@@ -13,7 +13,11 @@ import { Input } from '@/components/form/Input'
 import { PasswordInput } from '@/components/form/PasswordInput'
 import { Button } from '@/components/button'
 
-export const LoginForm = () => {
+interface Props {
+  onLogin?: () => void
+}
+
+export const LoginForm = ({ onLogin }: Props) => {
   const {
     formState: { errors },
     control,
@@ -40,6 +44,7 @@ export const LoginForm = () => {
     },
     onSuccess({ data }) {
       login(data.data.token)
+      onLogin?.()
     },
   })
 

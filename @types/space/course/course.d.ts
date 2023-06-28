@@ -1,4 +1,4 @@
-declare interface ICourseResponse {
+declare interface ICourse {
   mainInfo: IMainInfo
   lessons: ILesson[]
   mooc: IMooc[]
