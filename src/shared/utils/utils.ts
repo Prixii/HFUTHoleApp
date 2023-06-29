@@ -10,8 +10,10 @@ import { StatusBar } from 'react-native'
 
 export const getQAQFont = (key: keyof IQAQ) => getRandomQAQ(key)[0]
 
-export const packStorageToken = () =>
-  `Bearer ${store.getState().user?.meta?.token}`
+export const packStorageToken = (isSpace?: boolean) =>
+  isSpace
+    ? `Bearer ${store.getState().spaceUser?.meta?.token}`
+    : `Bearer ${store.getState().user?.meta?.token}`
 
 export function formatDate(time: string) {
   const date = new Date(time)
@@ -73,3 +75,20 @@ export const saveToAlbum = async (url: string) => {
 
 export const isNullOrUndefined = (val: unknown): val is null | undefined =>
   val === null || val === undefined
+
+export function deepClone<T>(obj: T): T {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepClone(item)) as any
+  }
+
+  const copiedObj: any = {}
+  Object.keys(obj).forEach((key) => {
+    copiedObj[key] = deepClone(obj[key])
+  })
+
+  return copiedObj as T
+}
