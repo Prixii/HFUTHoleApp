@@ -6,6 +6,7 @@ import { BottomTabBar } from '@/components/router/bottomTabs'
 import { Notify } from '@/pages/notify/Notify'
 import { TopTabs } from '@/router/TopTabs'
 import { User } from '@/pages/user/User'
+import { ProfileScreen } from '@/pages/user/profile/ProfileScreen'
 
 const Tab = createBottomTabNavigator()
 const CourseStack = createNativeStackNavigator()
@@ -31,7 +32,7 @@ const NotifyStacks = () => {
 export const UserStacks = () => {
   return (
     <UserStack.Navigator screenOptions={{ headerShown: false }}>
-      <UserStack.Screen name={'index'} component={User} />
+      <UserStack.Screen name={'profile'} component={ProfileScreen} />
     </UserStack.Navigator>
   )
 }
@@ -48,7 +49,7 @@ export function BottomTabs() {
       <Tab.Screen name={'home'} component={TopTabs} />
       <Tab.Screen name={'course'} component={CourseStacks} />
       <Tab.Screen name={'notify'} component={NotifyStacks} />
-      <Tab.Screen name={'user'} component={UserStacks} />
+      <Tab.Screen name={'user'} component={User} />
     </Tab.Navigator>
   )
 }

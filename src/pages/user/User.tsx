@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { MyAvatar } from '@/components/UserAvatar'
 import { useUserProfile } from '@/swr/user/profile'
 import { SecondaryText } from '@/components/Text/SecondaryText'
@@ -7,17 +7,24 @@ import { Text, TouchableRipple, useTheme } from 'react-native-paper'
 import { Svg } from '@/components/svg/Svg'
 import { UserIcons } from '@/pages/user/Icons'
 import SettingSvg from '@/assets/svg/setting.svg'
+import { useUserProfileRoute } from '@/shared/hooks/route/useUserProfileRoute'
 
 export function User() {
   const { data } = useUserProfile()
   const theme = useTheme()
 
+  const { goTo } = useUserProfileRoute()
+
   return (
     <ScrollView className={'flex space-y-4 px-2 py-4 bg-white/20'}>
       <View className={'flex flex-row space-x-4 items-center'}>
-        <View>
+        <TouchableOpacity
+          onPress={() => {
+            goTo()
+          }}
+        >
           <MyAvatar size={75} />
-        </View>
+        </TouchableOpacity>
         <View className={'space-y-1'}>
           <View className={'flex-row justify-between items-center'}>
             <Text className={'text-xl'}>{data?.username}</Text>
