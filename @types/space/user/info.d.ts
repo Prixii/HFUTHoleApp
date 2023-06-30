@@ -1,4 +1,4 @@
-declare interface IUserInfo {
+declare interface IUserInfoResponse {
   name: string
   studentId: number
   grade: string

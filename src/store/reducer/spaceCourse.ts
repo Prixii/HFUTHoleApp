@@ -8,7 +8,7 @@ export type VisibleSchedule = {
 }
 
 export type SpaceCourseState = {
-  courseInfo: ICourse
+  courseInfo: ICourseResponse
   currentWeekIdx: number
   daySchedule: VisibleSchedule
   weekSchedule: VisibleSchedule
@@ -42,7 +42,7 @@ export const spaceCourseSlice = createSlice({
   name: 'spaceCourse',
   initialState,
   reducers: {
-    changeCourseInfo(state, action: PayloadAction<ICourse>) {
+    changeCourseInfo(state, action: PayloadAction<ICourseResponse>) {
       state.courseInfo = action.payload
     },
     changeSchedule(

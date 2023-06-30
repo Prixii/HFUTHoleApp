@@ -5,9 +5,6 @@ import Toast from 'react-native-toast-message'
 import { useHolePostContext } from '@/shared/context/hole'
 import { BackAndButtonHeader } from '@/components/header/BackAndButtonHeader'
 import { useNavigation } from '@react-navigation/native'
-import { format } from 'date-fns'
-
-interface Props {}
 
 export function HolePostHeader() {
   const navigation = useNavigation()

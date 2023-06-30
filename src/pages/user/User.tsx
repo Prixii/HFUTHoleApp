@@ -18,22 +18,13 @@ export function User() {
   return (
     <ScrollView className={'flex space-y-4 px-2 py-4 bg-white/20'}>
       <View className={'flex flex-row space-x-4 items-center'}>
-        <TouchableOpacity
-          onPress={() => {
-            goTo()
-          }}
-        >
+        <TouchableOpacity onPress={goTo}>
           <MyAvatar size={75} />
         </TouchableOpacity>
         <View className={'space-y-1'}>
           <View className={'flex-row justify-between items-center'}>
             <Text className={'text-xl'}>{data?.username}</Text>
-            <Svg
-              SvgComponent={SettingSvg}
-              size={25}
-              color={'#000'}
-              onPress={() => {}}
-            />
+            <Svg SvgComponent={SettingSvg} size={25} color={'#000'} />
           </View>
           <View className={'flex-row space-x-2 justify-between items-center'}>
             <View>
