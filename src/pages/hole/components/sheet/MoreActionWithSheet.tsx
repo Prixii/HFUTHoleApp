@@ -66,7 +66,10 @@ export function MoreActionWithSheet(props: Props) {
             }
 
             return (
-              <View className={'bg-white rounded-lg overflow-hidden'}>
+              <View
+                key={Item.text}
+                className={'bg-white rounded-lg overflow-hidden'}
+              >
                 <TouchableRipple onPress={onPress}>
                   <View className={'p-4 flex-row items-center space-x-4'}>
                     <Item.icon

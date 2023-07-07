@@ -31,7 +31,7 @@ export function TopTabBar({
         const options = descriptors[route.key].options
 
         return (
-          <Pressable onPress={() => handlePress(route.key)}>
+          <Pressable key={route.key} onPress={() => handlePress(route.key)}>
             <TabBarItem
               isFocused={state.index === index}
               name={options.title}
