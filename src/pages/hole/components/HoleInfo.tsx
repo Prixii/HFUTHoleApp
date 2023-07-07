@@ -148,7 +148,7 @@ const HoleInfoBottom: React.FC<{ data: Data }> = ({ data }) => {
         ))}
       </View>
       <View className={'flex flex-row space-x-2 items-center'}>
-        <Svg SvgComponent={BilibiliSvg} size={20} />
+        {data.bilibili && <Svg SvgComponent={BilibiliSvg} size={20} />}
         <Button mode={'text'}>{data.category.category}</Button>
       </View>
     </View>

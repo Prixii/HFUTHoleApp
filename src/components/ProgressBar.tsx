@@ -18,9 +18,9 @@ export function ProgressBar() {
   }, [])
 
   return (
-    <View className={'rounded-full h-2 bg-gray-400 w-[150px]'}>
+    <View className={'rounded-full h-2 bg-gray-300 w-[130px]'}>
       <Animated.View
-        className={'absolute rounded-full h-2 bg-[#1E4BF5] left-0'}
+        className={'absolute rounded-full h-2 bg-[#1E4BF5]/80 left-0'}
         style={progressStyle}
       />
     </View>

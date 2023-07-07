@@ -7,6 +7,7 @@ import { Notify } from '@/pages/notify/Notify'
 import { TopTabs } from '@/router/TopTabs'
 import { User } from '@/pages/user/User'
 import { ProfileScreen } from '@/pages/user/profile/ProfileScreen'
+import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
 
 const Tab = createBottomTabNavigator()
 const CourseStack = createNativeStackNavigator()

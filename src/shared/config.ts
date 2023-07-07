@@ -1,7 +1,7 @@
 export const Config = {
   request: {
-    baseURL: 'http://192.168.47.34:8000/',
-    imgBaseURL: 'http://121.5.130.107:8080/',
+    baseURL: 'http://192.168.244.34:8000/',
+    imgBaseURL: 'http://192.168.244.34:8080/',
     timeout: 5000,
   },
 }

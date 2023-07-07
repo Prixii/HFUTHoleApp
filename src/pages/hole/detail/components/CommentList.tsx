@@ -33,9 +33,9 @@ export function HoleDetailCommentList() {
     await Promise.all([await refetch(), await invalidateQuery()])
   }
 
-  const BodyRender = (
+  const HoleDetailBody = () => (
     <View>
-      <BilibiliPlayer bvid={'BV1vi4y1K7o'} />
+      {data.bilibili && <BilibiliPlayer bvid={data.bilibili} />}
       <HoleInfoBody data={data} />
     </View>
   )
@@ -50,8 +50,8 @@ export function HoleDetailCommentList() {
         <>
           <HoleInfo
             data={data}
+            body={<HoleDetailBody />}
             bottom={<LikeHole />}
-            body={BodyRender}
             showComment={false}
           />
           <Separator />

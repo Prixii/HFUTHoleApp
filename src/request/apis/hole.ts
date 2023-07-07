@@ -91,7 +91,7 @@ export function SearchHoleRequest(params: PaginateAble<HoleSearchValidator>) {
 }
 
 export function UploadHoleImgRequest(imgs: ImagePickerResult['assets']) {
-  if (!imgs.length) {
+  if (!imgs?.length) {
     return []
   }
 

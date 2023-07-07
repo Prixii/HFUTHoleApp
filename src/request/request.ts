@@ -3,7 +3,6 @@ import axios, { HttpStatusCode } from 'axios'
 import { Config } from '@/shared/config'
 import { getQAQFont, packStorageToken } from '@/shared/utils/utils'
 import Toast from 'react-native-toast-message'
-import { AuthStore } from '@/store/auth'
 import { store } from '@/store/store'
 import { logout } from '@/store/reducer/user'
 

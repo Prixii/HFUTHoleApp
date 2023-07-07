@@ -2,8 +2,15 @@ import { View } from 'react-native'
 import { RipplePressable } from '@/components/RipplePressable'
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { BottomTabBarIcon } from '@/components/router/bottomTabBarIcon'
+import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
+
+import { Text, useTheme } from 'react-native-paper'
+import { Badge } from '@/components/Badge'
 
 export const BottomTabBar = ({ state, navigation }: BottomTabBarProps) => {
+  const { totalCount } = useBaseNotificationsQuery()
+  const theme = useTheme()
+
   return (
     <View
       className={
@@ -12,6 +19,7 @@ export const BottomTabBar = ({ state, navigation }: BottomTabBarProps) => {
     >
       {state.routes.map((route, index) => {
         const isFocused = state.index === index
+        const isNotifyRoute = route.name === 'notify'
 
         const onPress = () => {
           const event = navigation.emit({
@@ -34,7 +42,14 @@ export const BottomTabBar = ({ state, navigation }: BottomTabBarProps) => {
             <View
               className={'flex flex-1 items-center justify-center rounded-full'}
             >
-              <BottomTabBarIcon route={route.key} isFocused={isFocused} />
+              <View className={'relative'}>
+                <BottomTabBarIcon route={route.key} isFocused={isFocused} />
+                {isNotifyRoute && (
+                  <View className={'absolute top-[-10] right-[-20]'}>
+                    <Badge>{totalCount}</Badge>
+                  </View>
+                )}
+              </View>
             </View>
           </RipplePressable>
         )

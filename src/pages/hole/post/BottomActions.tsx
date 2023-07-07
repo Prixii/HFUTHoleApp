@@ -10,7 +10,9 @@ import { EmojiItem } from '@/assets/emoji'
 import { EmojiIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
 import { EmojiArea } from '@/components/emoji/EmojiArea'
-import { Tags } from '@/components/tags'
+import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
+import { Svg } from '@/components/svg/Svg'
+import { HolePostBilibili } from '@/pages/hole/post/HolePostBilibili'
 
 // TODO @实现
 export function BottomActions() {
@@ -62,9 +64,9 @@ export function BottomActions() {
               onPress={() => setExpand((prev) => !prev)}
             />
             <IconButton icon={'image'} onPress={onSelectImage} />
-            {/*<IconButton icon={() => <AtIcon />} onPress={() => {}} />*/}
           </View>
           <View className={'flex flex-row'}>
+            <HolePostBilibili />
             <HolePostAddTags />
             <HolePostVote />
           </View>

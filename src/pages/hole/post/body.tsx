@@ -19,7 +19,6 @@ export function HolePostBody() {
     form: { control },
   } = useHolePostContext()
 
-  const theme = useTheme()
   const [bottomHeight, setBottomHeight] = useState(0)
   const [headerHeight, setHeaderHeight] = useState(0)
 
@@ -43,43 +42,6 @@ export function HolePostBody() {
       >
         <BottomActions />
       </View>
-    </View>
-  )
-}
-
-export function HolePostBodys() {
-  const {
-    tags,
-    imgs,
-    setImgs,
-    form: { control },
-  } = useHolePostContext()
-
-  return (
-    <View className={'rounded-lg bg-white p-3 grid space-y-3 mt-3 relative'}>
-      <MyAvatar />
-      <View>
-        <Tags tags={tags} />
-      </View>
-      <FormImage
-        imgs={imgs}
-        onCloseable={(index) =>
-          setImgs((draft) => {
-            draft.splice(index, 1)
-          })
-        }
-      />
-      <View>
-        <Input
-          name={'body'}
-          control={control}
-          multiline={true}
-          style={{
-            height: ScreenHeight * 0.5,
-          }}
-        />
-      </View>
-      <BottomActions />
     </View>
   )
 }

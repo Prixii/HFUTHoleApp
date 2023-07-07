@@ -1,6 +1,7 @@
 declare interface IHole {
   id: number
   createAt: string
+  bilibili: string | null
   body: string
   imgs: string[]
   favoriteCounts: number

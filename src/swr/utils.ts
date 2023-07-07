@@ -7,6 +7,9 @@ export const SWRKeys = {
     mutateCommentReply: 'hole.mutateCommentReply',
     getCommentReply: 'hole.getCommentReply',
   },
+  notify: {
+    base: 'notify.base',
+  },
   user: {
     profile: 'user.profile',
     favoriteHoleList: 'user.favoriteHoleList',

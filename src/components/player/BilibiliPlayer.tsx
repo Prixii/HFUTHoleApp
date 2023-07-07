@@ -11,7 +11,7 @@ export function BilibiliPlayer(props: Props) {
     <View className={'w-full h-48 rounded-lg overflow-hidden'}>
       <WebView
         source={{
-          uri: `player.bilibili.com/player.html?bvid=${props.bvid}A&cid=829156678&page=3&high_quality=1&autoplay=false`,
+          uri: `player.bilibili.com/player.html?bvid=${props.bvid}&cid=829156678&page=3&high_quality=1`,
         }}
         style={{ flex: 1 }}
         className={'bg-surface'}

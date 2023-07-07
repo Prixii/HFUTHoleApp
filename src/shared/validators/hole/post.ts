@@ -4,9 +4,12 @@ import {
   IsArray,
   IsDate,
   IsOptional,
+  IsString,
+  Length,
   MaxLength,
   MinDate,
   MinLength,
+  Validate,
   ValidateNested,
 } from 'class-validator'
 import { Limit } from '@/shared/config'
@@ -35,4 +38,13 @@ export class HolePostVoteClassValidator {
   @IsArray()
   @Type(() => VoteItem)
   items: VoteItem[]
+}
+
+export class HoleAddBilibliClassValidator {
+  @Validate((value: string) => value.startsWith('BV'), {
+    message: 'BV号格式不正确',
+  })
+  @Length(12, 12, { message: '请输入正确的B站的BV视频号哦' })
+  @IsString()
+  body: string
 }

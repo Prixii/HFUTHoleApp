@@ -1,9 +1,5 @@
 import useKeyboardHeight from '@/shared/hooks/useKeyboardHeight'
-import Animated, {
-  useAnimatedStyle,
-  useDerivedValue,
-  withSpring,
-} from 'react-native-reanimated'
+
 import { WindowHeight } from '@/shared/utils/utils'
 import { NativeInput } from '@/components/form/NativeInput'
 import { View } from 'react-native'

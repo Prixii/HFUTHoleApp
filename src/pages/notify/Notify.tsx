@@ -1,45 +1,42 @@
-import { FlatList, Image, View } from 'react-native'
-import { Avatar, List, Text, TouchableRipple } from 'react-native-paper'
-import { AtIcon, CommentIcon, NotifyIcon } from '@/components/icon'
+import { FlatList, View } from 'react-native'
+import { Avatar, Text, TouchableRipple } from 'react-native-paper'
+import { AtIcon, NotifyIcon } from '@/components/icon'
 import { SecondaryText } from '@/components/Text/SecondaryText'
-import { UserAvatar } from '@/components/UserAvatar'
+import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
+import { useMemo } from 'react'
+import { Badge } from '@/components/Badge'
 
 export function Notify() {
-  const list = [
-    {
-      color: '#717DFE',
-      title: '@我',
-      body: '亚里士多德等50人@了你',
-      icon: AtIcon,
-    },
-    {
-      color: '#2FCC7E',
-      title: '回复',
-      body: '亚里士多德等50人回复了你的评论',
-      icon: CommentIcon,
-    },
-    {
-      color: '#FF9F23',
-      title: '通知',
-      body: '你今天18:30p.m.有一场考试，请不要忘记',
-      icon: NotifyIcon,
-    },
-    {
-      title: '班级团支书',
-      body: '做一下青年大学习啊',
-      img: 'https://c-ssl.duitang.com/uploads/blog/202208/08/20220808165611_1ba7f.jpeg',
-    },
-    {
-      title: 'newbee',
-      body: '教我暴富啊',
-      img: 'https://c-ssl.duitang.com/uploads/item/201711/04/20171104131321_Xtr2A.jpeg',
-    },
-    {
-      title: 'Alice',
-      body: '你好啊',
-      img: 'https://c-ssl.duitang.com/uploads/blog/202305/18/wgSJWbBph9bdy2g.png',
-    },
-  ]
+  const { data } = useBaseNotificationsQuery()
+
+  const { interaction, system } = data
+
+  const list = useMemo(
+    () => [
+      {
+        color: '#717DFE',
+        title: '互动消息',
+        body: interaction?.data?.body || '暂时没有互动消息',
+        icon: AtIcon,
+        count: interaction?.totalCount,
+        onPress: () => {},
+      },
+      {
+        color: '#FF9F23',
+        title: '通知',
+        body: system?.data?.body || '暂时没有通知',
+        icon: NotifyIcon,
+        count: 0,
+      },
+      {
+        title: '班级团支书',
+        body: '做一下青年大学习',
+        img: 'https://c-ssl.duitang.com/uploads/blog/202208/08/20220808165611_1ba7f.jpeg',
+        count: 0,
+      },
+    ],
+    [data]
+  )
 
   return (
     <View className={'bg-white h-full'}>
@@ -84,6 +81,7 @@ export function Notify() {
                   </SecondaryText>
                 </View>
               </View>
+              {item.count && <Badge>{item.count}</Badge>}
             </View>
           </TouchableRipple>
         )}
