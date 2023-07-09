@@ -80,6 +80,6 @@ export function isLaunchPeriod(timeStr: string) {
   return timeStr === '12:00' || timeStr === '12:10'
 }
 
-export function getTeachers(teachers: string[]) {
-  return teachers.join('/')
+export function getTeachers(teachers?: string[]) {
+  return teachers ? teachers?.join('/') : ''
 }

@@ -13,13 +13,13 @@ export function useAuth() {
   const logout = useCallback(() => {
     dispatch(storeLogout())
     dispatch(resetStore())
-  }, [dispatch, storeLogout, resetStore])
+  }, [dispatch])
 
   const login = useCallback(
     (token: string) => {
       dispatch(storeLogin(token))
     },
-    [dispatch, storeLogin]
+    [dispatch]
   )
 
   return {

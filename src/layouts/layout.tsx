@@ -44,7 +44,7 @@ export function Layout() {
   return (
     <>
       <StatusBar backgroundColor={color} barStyle={barStyle} />
-      <View className={'w-screen min-h-[100vh]'}>
+      <View className="w-full flex-1">
         <Routes />
         <Toast />
       </View>

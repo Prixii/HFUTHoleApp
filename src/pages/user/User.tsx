@@ -8,12 +8,15 @@ import { Svg } from '@/components/svg/Svg'
 import { UserIcons } from '@/pages/user/Icons'
 import SettingSvg from '@/assets/svg/setting.svg'
 import { useUserProfileRoute } from '@/shared/hooks/route/useUserProfileRoute'
+import { Button } from '@/components/button'
+import { useAuth } from '@/shared/hooks/useAuth'
 
 export function User() {
   const { data } = useUserProfile()
   const theme = useTheme()
 
   const { goTo } = useUserProfileRoute()
+  const { logout } = useAuth()
 
   return (
     <ScrollView className={'flex space-y-4 px-2 py-4 bg-white/20'}>
@@ -62,6 +65,7 @@ export function User() {
       <View>
         <UserIcons />
       </View>
+      <Button onPress={logout}>退出登录</Button>
     </ScrollView>
   )
 }
