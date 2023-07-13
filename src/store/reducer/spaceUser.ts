@@ -6,7 +6,7 @@ interface SpaceUserState {
   meta: {
     token: string
   }
-  info: IUserInfo
+  info: IUserInfoResponse
 }
 
 // TODO 冻结对象好像也不对😅
@@ -40,7 +40,7 @@ export const spaceUserSlice = createSlice({
     logout(state) {
       resetStoreState(state, initialState)
     },
-    setUserInfo(state, action: PayloadAction<IUserInfo>) {
+    setUserInfo(state, action: PayloadAction<IUserInfoResponse>) {
       state.info = action.payload
     },
   },

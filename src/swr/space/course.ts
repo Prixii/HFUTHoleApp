@@ -11,7 +11,7 @@ export const useSpaceCourse = () => {
   const dispatch = useAppDispatch()
   const { isLogin } = useAuth()
 
-  const query = useQuery<ICourse>(courseAllKey, {
+  const query = useQuery<ICourseResponse>(courseAllKey, {
     enabled: isLogin,
     retry: false,
     queryFn: ({ queryKey }) =>

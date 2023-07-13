@@ -4,7 +4,7 @@ module.exports = {
     project: 'tsconfig.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin', 'react', 'react-native'],
+  plugins: ['@typescript-eslint/eslint-plugin', 'react', 'react-native', 'react-hooks'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -31,6 +31,9 @@ module.exports = {
         '@typescript-eslint/consistent-type-imports': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
         'new-cap': 'off',
+        'react/jsx-key': 'error',
+        "react-hooks/rules-of-hooks": "warn",
+        "react-hooks/exhaustive-deps": "warn"
       },
     },
   ],

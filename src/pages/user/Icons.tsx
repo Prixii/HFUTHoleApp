@@ -8,7 +8,7 @@ export function UserIcons() {
   return (
     <View className={'space-y-4'}>
       {Array.from({ length: 2 }).map((_, index) => (
-        <View className={'bg-white px-2 py-4 rounded-xl'}>
+        <View key={index} className={'bg-white px-2 py-4 rounded-xl'}>
           <View className={'flex-row items-center space-x-2 px-2'}>
             <Svg SvgComponent={DenoSvg} size={25} color={'#000'} />
             <Text variant={'titleMedium'}>课表服务</Text>
