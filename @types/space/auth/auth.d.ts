@@ -1,3 +1,3 @@
-declare interface ISpaceAuth {
+declare interface ISpaceAuthResponse {
   token: string
 }

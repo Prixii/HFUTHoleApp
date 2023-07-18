@@ -10,7 +10,7 @@ export function IndexStacks() {
     <IndexStack.Navigator screenOptions={{ headerShown: false }}>
       <IndexStack.Screen name={'index'} component={BottomTabs} />
       <IndexStack.Screen name={'hole'} component={HoleNestedStacks} />
-      <IndexStack.Screen name={'user'} component={UserStacks} />
+      <IndexStack.Screen name={'user-nested'} component={UserStacks} />
       <IndexStack.Screen name={'notify-nested'} component={NotifyStacks} />
     </IndexStack.Navigator>
   )
