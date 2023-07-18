@@ -14,6 +14,7 @@ export function HolePostHeader() {
     imgs,
     votes,
     bilibili,
+    category,
   } = useHolePostContext()
 
   const mutation = useMutation({
@@ -24,6 +25,7 @@ export function HolePostHeader() {
         ...data,
         bilibili,
         imgs: resultImage,
+        category,
         ...(votes.items.length > 0
           ? {
               vote: {

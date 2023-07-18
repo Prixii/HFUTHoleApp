@@ -7,17 +7,14 @@ import {
   DeleteReplyLikeRequest,
   LikeCommentRequest,
   LikeReplyRequest,
-  PostHoleCommentReplyRequest,
 } from '@/request/apis/hole'
 import { Separator } from '@/components/Separator'
 import { SecondaryText } from '@/components/Text/SecondaryText'
-import { useState } from 'react'
-import { BottomSheetReply } from '@/components/reply/reply'
-import { ReplyForm } from '@/components/reply/Form'
 import { LoadMore } from '@/components/LoadMore'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { useBottomCommentContext } from '@/shared/context/hole/comment'
 import { CommentBottomInput } from '@/pages/hole/detail/components/CommentBottomInput'
+import { BilibiliPlayer } from '@/components/player/BilibiliPlayer'
 
 // TODO 重写回复区，尤其是展示特定的评论
 export function HoleReply() {
@@ -29,7 +26,6 @@ export function HoleReply() {
     onTopRefresh,
     isDataEmpty,
     setIsLiked,
-    isSuccess,
     isLoading,
   } = useHoleReplyList()
   const comment = data?.pages?.[0]?.comment
@@ -51,7 +47,7 @@ export function HoleReply() {
             <>
               <View className={'px-3'}>
                 <CommentItem
-                  data={comment}
+                  data={comment!}
                   reqFunc={
                     comment?.isLiked
                       ? DeleteCommentLikeRequest
@@ -72,7 +68,7 @@ export function HoleReply() {
           ListFooterComponent={() => (
             <LoadMore
               text={isDataEmpty ? '没有更多回复了哦' : ''}
-              hasNextPage={hasNextPage}
+              hasNextPage={hasNextPage!}
             />
           )}
           onRefreshing={onRefresh}

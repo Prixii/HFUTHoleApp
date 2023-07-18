@@ -48,7 +48,7 @@ export function HolePostForm({ bottomHeight, headerHeight }: Props) {
           imgs={imgs}
           onCloseable={(index) =>
             setImgs((draft) => {
-              draft.splice(index, 1)
+              draft!.splice(index, 1)
             })
           }
         />

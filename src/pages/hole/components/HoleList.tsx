@@ -8,6 +8,7 @@ import { Func } from '@/shared/types'
 import { useHoleDetailRoute } from '@/shared/hooks/route/useHoleDetailRoute'
 import { useMemo } from 'react'
 import { Empty } from '@/components/image/Empty'
+import { flatInfiniteQueryData } from '@/swr/utils'
 
 // TODO 完善类型
 type Props = UseInfiniteQueryResult<IHoleListResponse, unknown> & {
@@ -25,11 +26,8 @@ export function RefreshableHoleList({
 }: Props) {
   const { go } = useHoleDetailRoute()
 
-  const isHoleListEmpty = data?.pages[0].items.length === 0
-
-  const flatListData = isHoleListEmpty
-    ? []
-    : data?.pages.map((page) => page.items).flat(1)
+  const { data: flatListData, isEmpty: isHoleListEmpty } =
+    flatInfiniteQueryData(data)
 
   return isSuccess ? (
     <RefreshingFlatList

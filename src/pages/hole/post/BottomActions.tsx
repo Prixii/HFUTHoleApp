@@ -10,9 +10,8 @@ import { EmojiItem } from '@/assets/emoji'
 import { EmojiIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
 import { EmojiArea } from '@/components/emoji/EmojiArea'
-import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
-import { Svg } from '@/components/svg/Svg'
 import { HolePostBilibili } from '@/pages/hole/post/HolePostBilibili'
+import { PostCategorySelector } from '@/pages/hole/post/PostCategorySelector'
 
 // TODO @实现
 export function BottomActions() {
@@ -39,12 +38,12 @@ export function BottomActions() {
 
       if (!result.canceled) {
         setImgs((draft) => {
-          for (const assets of result.assets) {
-            if (draft.length >= 4) {
+          for (const assets of result.assets!) {
+            if (draft!.length >= 4) {
               Toast.error({ text1: '最多只能选4张图片哦' })
               return
             }
-            draft.push(assets)
+            draft!.push(assets)
           }
         })
       }
@@ -56,6 +55,7 @@ export function BottomActions() {
   return (
     <View className={'pt-2 border-t-[1px] border-t-black/5'}>
       <View className={'px-2'}>
+        <PostCategorySelector />
         <Badges data={tags} />
         <View className={'flex flex-row justify-between items-center'}>
           <View className={'flex flex-row'}>

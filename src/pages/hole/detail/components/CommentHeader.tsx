@@ -42,14 +42,14 @@ export function HoleDetailCommentHeader() {
       <View className={'bg-white flex flex-row p-3 justify-between'}>
         <View className={'flex flex-row space-x-10'}>
           <Text
-            className={isAllMode && 'font-bold'}
+            className={`${isAllMode && 'font-bold'}`}
             style={{ color: isAllMode ? 'black' : theme.colors.surfaceVariant }}
             onPress={() => toggleMode(HoleDetailCommentMode.all)}
           >
             全部评论
           </Text>
           <Text
-            className={!isAllMode && 'font-bold'}
+            className={`${!isAllMode && 'font-bold'}`}
             style={{
               color: !isAllMode ? 'black' : theme.colors.surfaceVariant,
             }}
@@ -67,9 +67,9 @@ export function HoleDetailCommentHeader() {
           </View>
         </Pressable>
       </View>
-      {data.commentCounts > 0 && (
+      {data!.commentCounts > 0 && (
         <View className={'px-3'}>
-          <SecondaryText>共有{data.commentCounts}条评论</SecondaryText>
+          <SecondaryText>共有{data!.commentCounts}条评论</SecondaryText>
         </View>
       )}
     </>

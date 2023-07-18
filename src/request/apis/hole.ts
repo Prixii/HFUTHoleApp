@@ -19,6 +19,7 @@ interface Id {
 export function GetHoleListRequest(
   params: PaginateAble<{ mode: HoleListMode; category?: ArticleCategoryEnum }>
 ) {
+  console.log(params)
   return request<IHoleListResponse>({
     method: 'GET',
     url: '/hole/list',
@@ -38,7 +39,7 @@ export function PostHoleRequest(
   })
 }
 
-export function GetHoleDetailRequest(params: Id) {
+export function GetHoleDetailRequest(params: Id & { commentId?: string }) {
   return request<IHoleDetailResponse>({
     method: 'GET',
     url: '/hole/detail',
@@ -48,7 +49,11 @@ export function GetHoleDetailRequest(params: Id) {
 
 export function GetHoleDetailCommentsRequest(
   params: PaginateAble<
-    { mode: HoleDetailCommentMode; order: HoleDetailCommentOrderMode } & Id
+    {
+      mode: HoleDetailCommentMode
+      order: HoleDetailCommentOrderMode
+      commentId?: string
+    } & Id
   >
 ) {
   return request<IHoleCommentListResponse>({

@@ -2,21 +2,19 @@ import { EmojiList } from '@/assets/emoji'
 import { Emoji } from '@/components/emoji/Emoji'
 import { Text } from 'react-native-paper'
 import { View } from 'react-native'
-import { PrimaryText } from '@/components/Text/PrimaryText'
 import React from 'react'
+import { VariantProp } from 'react-native-paper/lib/typescript/src/components/Typography/types'
 
 interface Props {
   body: string
+  variant?: VariantProp<any>
+  secondary?: boolean
 }
 
-export function EmojiableText({ body }: Props) {
+export function EmojiableText({ body, variant, secondary }: Props) {
   const renderBody = () => {
     const reg = /(\[.*?\])/g
     const parts = body.split(reg)
-
-    if (parts.length === 1 && !reg.test(body)) {
-      return <Text variant={'bodyLarge'}>{body}</Text>
-    }
 
     return parts.map((part, index) => {
       const emoji = EmojiList.find((item) => item.name === part)
@@ -25,7 +23,11 @@ export function EmojiableText({ body }: Props) {
         return <Emoji asset={emoji.asset} key={index} size={22} />
       } else {
         return (
-          <Text variant={'bodyLarge'} key={index}>
+          <Text
+            className={`${secondary && 'text-surfaceVariant'}`}
+            variant={variant || 'bodyLarge'}
+            key={index}
+          >
             {part}
           </Text>
         )

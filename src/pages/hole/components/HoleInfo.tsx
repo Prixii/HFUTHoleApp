@@ -82,7 +82,7 @@ const HoleInfoVote: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
+export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   return (
     <View className={'flex flex-row justify-between'}>
       <View className={'flex flex-row items-center space-x-3'}>
@@ -99,26 +99,32 @@ const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-export const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
+export const HoleInfoBody: React.FC<{ data: Data }> = React.memo(({ data }) => {
   const { searchWithKeywords } = useSearchNavigation()
 
   return (
-    <View className={'flex flex-col space-y-3'}>
-      <ImageList imgs={data?.imgs} />
-      <View>
-        <Badges
-          data={data.tags}
-          onPress={(tag) => searchWithKeywords(`#${tag}`)}
-        />
-      </View>
+    <View className={'flex space-y-2'}>
       <View>
         <EmojiableText body={data.body} />
       </View>
+      {data.imgs.length && (
+        <View>
+          <ImageList imgs={data?.imgs} />
+        </View>
+      )}
+      {data.tags.length && (
+        <View>
+          <Badges
+            data={data.tags}
+            onPress={(tag) => searchWithKeywords(`#${tag}`)}
+          />
+        </View>
+      )}
     </View>
   )
-}
+})
 
-const HoleInfoBottom: React.FC<{ data: Data }> = ({ data }) => {
+const HoleInfoBottom: React.FC<{ data: Data }> = React.memo(({ data }) => {
   const theme = useTheme()
 
   const renderList = [
@@ -153,7 +159,7 @@ const HoleInfoBottom: React.FC<{ data: Data }> = ({ data }) => {
       </View>
     </View>
   )
-}
+})
 
 interface Props extends IClassName {
   data: Data
@@ -164,51 +170,53 @@ interface Props extends IClassName {
   showComment?: boolean
 }
 
-export function HoleInfo({
-  data,
-  onPress,
-  header,
-  body,
-  bottom,
-  className,
-  showComment = true,
-}: Props) {
-  return (
-    <View className={'bg-white rounded-lg mt-2 overflow-hidden'}>
-      <TouchableRipple onPress={onPress}>
-        <View className={`flex flex-col space-y-3 p-4 ${className}`}>
-          <View>{header || <HoleInfoHeader data={data} />}</View>
-          <View>{body || <HoleInfoBody data={data} />}</View>
-          <View>{data.vote && <HoleInfoVote data={data} />}</View>
-          <View>{bottom || <HoleInfoBottom data={data} />}</View>
-          {/*{showComment && (*/}
-          {/*  <View className={'grid gap-2'}>*/}
-          {/*    {data.comments?.length > 0 &&*/}
-          {/*      data.comments.map((comment) => (*/}
-          {/*        <View*/}
-          {/*          className={*/}
-          {/*            'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'*/}
-          {/*          }*/}
-          {/*        >*/}
-          {/*          <Text*/}
-          {/*            className={'font-bold'}*/}
-          {/*            ellipsizeMode={'tail'}*/}
-          {/*            numberOfLines={1}*/}
-          {/*            style={{ maxWidth: '20%' }}*/}
-          {/*          >*/}
-          {/*            {comment.user.username}*/}
-          {/*          </Text>*/}
-          {/*          <View>*/}
-          {/*            <EmojiableText*/}
-          {/*              body={sliceHoleInfoCommentBody(comment.body)}*/}
-          {/*            />*/}
-          {/*          </View>*/}
-          {/*        </View>*/}
-          {/*      ))}*/}
-          {/*  </View>*/}
-          {/*)}*/}
-        </View>
-      </TouchableRipple>
-    </View>
-  )
-}
+export const HoleInfo = React.memo(
+  ({
+    data,
+    onPress,
+    header,
+    body,
+    bottom,
+    className,
+    showComment = true,
+  }: Props) => {
+    return (
+      <View className={'bg-white rounded-lg mt-2 overflow-hidden'}>
+        <TouchableRipple onPress={onPress}>
+          <View className={`flex flex-col space-y-3 p-4 ${className}`}>
+            <View>{header || <HoleInfoHeader data={data} />}</View>
+            <View>{body || <HoleInfoBody data={data} />}</View>
+            <View>{data.vote && <HoleInfoVote data={data} />}</View>
+            <View>{bottom || <HoleInfoBottom data={data} />}</View>
+            {/*{showComment && (*/}
+            {/*  <View className={'grid gap-2'}>*/}
+            {/*    {data.comments?.length > 0 &&*/}
+            {/*      data.comments.map((comment) => (*/}
+            {/*        <View*/}
+            {/*          className={*/}
+            {/*            'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'*/}
+            {/*          }*/}
+            {/*        >*/}
+            {/*          <Text*/}
+            {/*            className={'font-bold'}*/}
+            {/*            ellipsizeMode={'tail'}*/}
+            {/*            numberOfLines={1}*/}
+            {/*            style={{ maxWidth: '20%' }}*/}
+            {/*          >*/}
+            {/*            {comment.user.username}*/}
+            {/*          </Text>*/}
+            {/*          <View>*/}
+            {/*            <EmojiableText*/}
+            {/*              body={sliceHoleInfoCommentBody(comment.body)}*/}
+            {/*            />*/}
+            {/*          </View>*/}
+            {/*        </View>*/}
+            {/*      ))}*/}
+            {/*  </View>*/}
+            {/*)}*/}
+          </View>
+        </TouchableRipple>
+      </View>
+    )
+  }
+)

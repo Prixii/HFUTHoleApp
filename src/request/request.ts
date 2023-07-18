@@ -8,7 +8,6 @@ import { logout } from '@/store/reducer/user'
 
 const instance = axios.create({
   baseURL: Config.request.baseURL,
-  timeout: Config.request.timeout,
 })
 
 instance.interceptors.response.use(

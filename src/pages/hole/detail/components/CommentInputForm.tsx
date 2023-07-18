@@ -88,7 +88,7 @@ export function CommentInputForm(props: Props) {
               name={'body'}
               placeholder={
                 isReply
-                  ? `回复 ${data.user.username}：`
+                  ? `回复 ${data.user!.username}：`
                   : '你若安不好，屁股给你拍八瓣'
               }
               multiline={true}
@@ -112,7 +112,7 @@ export function CommentInputForm(props: Props) {
               imgs={imgs}
               onCloseable={(index) =>
                 setImgs((draft) => {
-                  draft.splice(index, 1)
+                  draft!.splice(index, 1)
                 })
               }
             />

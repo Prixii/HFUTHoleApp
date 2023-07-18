@@ -15,7 +15,7 @@ import { TouchableRipple } from 'react-native-paper'
 
 type Data =
   | (Omit<IHoleCommentListItem, 'replies' | 'repliesCount'> &
-      Partial<Pick<IHoleCommentListItem, 'replies'>>)
+      Partial<Pick<IHoleCommentListItem, 'replies' | 'isNotification'>>)
   | IHoleReplyListItem
 
 interface Props {
@@ -49,9 +49,7 @@ export function CommentItem({
   return (
     <TouchableRipple onPress={() => onBodyPress?.(data)} className={'px-3'}>
       <View
-        className={
-          'flex flex-row space-x-2 rounded-lg border-b-[1px] py-2 border-black/5'
-        }
+        className={`flex flex-row space-x-2 rounded-lg border-b-[1px] py-2 border-black/5`}
         key={data.id}
       >
         <View>

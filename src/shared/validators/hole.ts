@@ -2,6 +2,7 @@ import {
   ArrayMaxSize,
   IsArray,
   IsBoolean,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -14,6 +15,7 @@ import {
 import { Limit } from '@/shared/config'
 import { Type } from 'class-transformer'
 import { HolePostVoteClassValidator } from '@/shared/validators/hole/post'
+import { ArticleCategoryEnum } from '@/shared/enums'
 
 export class PostHoleValidator {
   @MaxLength(Limit.holeBodyMaxLength, {
@@ -53,4 +55,8 @@ export class PostHoleValidator {
   @IsString()
   @IsOptional()
   bilibili?: string
+
+  @IsEnum(ArticleCategoryEnum, { message: '树洞分类不正确' })
+  @IsOptional()
+  category?: ArticleCategoryEnum
 }

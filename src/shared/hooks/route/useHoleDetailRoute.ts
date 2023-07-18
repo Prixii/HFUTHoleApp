@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 export function useHoleDetailRoute() {
   const navigation = useNavigation()
 
-  const go = (id: number) => {
+  const go = (id: number, params?: { commentId?: string }) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     navigation.navigate('hole', {
@@ -12,6 +12,7 @@ export function useHoleDetailRoute() {
         screen: 'index',
         params: {
           id,
+          ...params,
         },
       },
     })

@@ -1,8 +1,8 @@
 import { FlatList, TouchableNativeFeedback, View } from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
 import { useHoleComment } from '@/swr/hole'
 import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
-import React, { useState } from 'react'
+import React from 'react'
 import { PrimaryText } from '@/components/Text/PrimaryText'
 import { RightIcon } from '@/components/icon'
 import { useNavigation } from '@react-navigation/native'
@@ -57,8 +57,8 @@ const RenderItemReplyList: React.FC<{ data: IHoleCommentListItem }> = ({
   )
 }
 
-const RenderItem: React.FC<{
-  data: IHoleCommentListResponse
+export const HoleDetailCommentItem: React.FC<{
+  data: IHoleCommentListItem
   page: number
 }> = ({ data, page }) => {
   const { setIsLiked } = useHoleComment()
@@ -72,54 +72,15 @@ const RenderItem: React.FC<{
   }
 
   return (
-    <>
-      <FlatList
-        data={data.items}
-        renderItem={({ item }) => {
-          return (
-            <CommentItem
-              data={item}
-              key={item.id}
-              onBodyPress={handleReply}
-              bottom={
-                item.replies.length > 0 && <RenderItemReplyList data={item} />
-              }
-              reqFunc={
-                item.isLiked ? DeleteCommentLikeRequest : LikeCommentRequest
-              }
-              onLikePress={() => setIsLiked(item, page)}
-            />
-          )
-        }}
-      />
-    </>
-  )
-}
-
-const EmptyItem = () => {
-  const { isAllMode } = useHoleDetailCommentContext()
-
-  return (
-    <View className={'py-2'}>
-      <Empty
-        text={isAllMode ? 'lz正在期待第一个评论' : 'lz还没填楼噢'}
-        size={200}
-      />
-    </View>
-  )
-}
-
-export const HoleDetailCommentItem: React.FC<{
-  data: IHoleCommentListResponse
-  page: number
-}> = (props) => {
-  const { data } = useHoleComment()
-
-  const isCommentEmpty = data?.pages?.[0]?.items.length > 0
-
-  return (
     <View className={'grid space-y-2'}>
-      {isCommentEmpty ? <RenderItem {...props} /> : <EmptyItem />}
+      <CommentItem
+        data={data}
+        key={data.id}
+        onBodyPress={handleReply}
+        bottom={data.replies.length > 0 && <RenderItemReplyList data={data} />}
+        reqFunc={data.isLiked ? DeleteCommentLikeRequest : LikeCommentRequest}
+        onLikePress={() => setIsLiked(data, page)}
+      />
     </View>
   )
 }

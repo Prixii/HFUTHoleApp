@@ -13,7 +13,7 @@ import { StatusBar } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { HoleDetailCommentContextProvider } from '@/shared/context/hole_detail'
 import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
-import { HoleCategoryHeader } from '@/pages/hole/category/Header'
+import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 
 const Tab = createMaterialTopTabNavigator()
 const HoleStack = createNativeStackNavigator()
@@ -36,7 +36,7 @@ const HoleDetailStacks = () => {
   return (
     <HoleStack.Navigator
       initialRouteName={'index'}
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ header: () => <HoleDetailHeader /> }}
     >
       <HoleStack.Screen name={'index'} component={HoleDetail} />
       <HoleStack.Screen name={'reply'} component={HoleReply} />
@@ -57,7 +57,7 @@ const HoleCategoryTabs = () => {
       />
       <HoleCategoryTab.Screen
         name={'hot'}
-        component={HoleCategoryScreen}
+        component={() => <HoleCategoryScreen />}
         options={{ title: '热门' }}
       />
     </HoleCategoryTab.Navigator>

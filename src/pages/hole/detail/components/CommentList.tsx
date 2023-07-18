@@ -9,11 +9,55 @@ import { HoleDetailCommentItem } from '@/pages/hole/detail/components/CommentIte
 import { BilibiliPlayer } from '@/components/player/BilibiliPlayer'
 import React from 'react'
 import { View } from 'react-native'
+import { useHoleDetailCommentContext } from '@/shared/context/hole_detail'
+import { Empty } from '@/components/image/Empty'
+
+const DetailBody = React.memo(() => {
+  const { data } = useHoleDetail()
+
+  return (
+    <View className={'space-y-2'}>
+      <View>
+        <HoleInfoBody data={data!} />
+      </View>
+    </View>
+  )
+})
+
+const HoleDetailCommentEmpty = () => {
+  const { isAllMode } = useHoleDetailCommentContext()
+
+  return (
+    <View className={'py-2'}>
+      <Empty
+        text={isAllMode ? 'lz正在期待第一个评论' : 'lz还没填楼噢'}
+        size={200}
+      />
+    </View>
+  )
+}
+
+const HoleTopDetail = React.memo(() => {
+  const { data } = useHoleDetail()
+
+  return (
+    <View>
+      <HoleInfo
+        data={data!}
+        header={<></>}
+        body={<DetailBody />}
+        bottom={<LikeHole />}
+        showComment={false}
+      />
+      <Separator />
+      <HoleDetailCommentHeader />
+    </View>
+  )
+})
 
 export function HoleDetailCommentList() {
   const {
-    isSuccess: isCommentSuccess,
-    data: commentData,
+    flattenData,
     fetchNextPage,
     hasNextPage,
     invalidateQuery,
@@ -21,55 +65,42 @@ export function HoleDetailCommentList() {
     isFetching,
   } = useHoleComment()
 
-  const { data, isSuccess, refetch } = useHoleDetail()
-
-  const isAllSuccess = isCommentSuccess && isSuccess
+  const { data } = useHoleDetail()
 
   const onRefresh = async () => {
     await fetchNextPage()
   }
 
   const onTopRefresh = async () => {
-    await Promise.all([await refetch(), await invalidateQuery()])
+    await Promise.all([await invalidateQuery()])
   }
 
-  const HoleDetailBody = () => (
-    <View>
-      {data.bilibili && <BilibiliPlayer bvid={data.bilibili} />}
-      <HoleInfoBody data={data} />
-    </View>
-  )
+  return (
+    <>
+      <View className={'px-2'}>
+        <BilibiliPlayer bvid={data!.bilibili!} />
+      </View>
 
-  return isAllSuccess ? (
-    <RefreshingFlatList
-      onRefreshing={onRefresh}
-      hasNextPage={hasNextPage}
-      onTopRefresh={onTopRefresh}
-      refreshing={isFetching}
-      ListHeaderComponent={() => (
-        <>
-          <HoleInfo
-            data={data}
-            body={<HoleDetailBody />}
-            bottom={<LikeHole />}
-            showComment={false}
+      <RefreshingFlatList
+        onRefreshing={onRefresh}
+        hasNextPage={hasNextPage}
+        onTopRefresh={onTopRefresh}
+        refreshing={isFetching}
+        ListHeaderComponent={HoleTopDetail}
+        ListFooterComponent={() => (
+          <LoadMore
+            text={isDataEmpty ? '没有更多评论了哦' : ''}
+            hasNextPage={hasNextPage!}
           />
-          <Separator />
-          <HoleDetailCommentHeader />
-        </>
-      )}
-      ListFooterComponent={() => (
-        <LoadMore
-          text={isDataEmpty ? '没有更多评论了哦' : ''}
-          hasNextPage={hasNextPage}
-        />
-      )}
-      data={commentData.pages}
-      renderItem={(itemProps) => (
-        <HoleDetailCommentItem data={itemProps.item} page={itemProps.index} />
-      )}
-    />
-  ) : (
-    <></>
+        )}
+        data={flattenData}
+        ListEmptyComponent={HoleDetailCommentEmpty}
+        renderItem={({ item, index }) => (
+          <HoleDetailCommentItem data={item} page={index} />
+        )}
+        showsVerticalScrollIndicator={false}
+        overScrollMode={'never'}
+      />
+    </>
   )
 }

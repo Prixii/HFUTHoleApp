@@ -4,7 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from 'react-query'
-import { SWRKeys } from '@/swr/utils'
+import { flatInfiniteQueryData, SWRKeys } from '@/swr/utils'
 import {
   GetHoleDetailCommentsRequest,
   GetHoleDetailRequest,
@@ -20,6 +20,7 @@ import { useUserProfile } from '@/swr/user/profile'
 import { useId, useMemo } from 'react'
 import { HoleListMode } from '@/shared/enums'
 import { useRoute } from '@react-navigation/native'
+import { useBaseInfiniteQuery } from '@/swr/useBaseInfiniteQuery'
 
 // TODO 重构逻辑
 export function useHoleList() {
@@ -35,64 +36,23 @@ export function useHoleList() {
 
   const key = [SWRKeys.hole.list, mode]
 
-  const query = useInfiniteQuery(
-    key,
-    ({ pageParam = 1 }) =>
+  const query = useBaseInfiniteQuery<IHoleListResponse>({
+    queryKey: key,
+    queryFn: ({ pageParam = 1 }) =>
       GetHoleListRequest({
         limit: 10,
         page: pageParam,
-        mode,
+        mode: mode!,
       }),
-    {
-      getNextPageParam: (lastPages) => {
-        const nextPage = lastPages.meta.currentPage + 1
-
-        if (
-          nextPage > lastPages.meta.totalPages ||
-          lastPages.items.length === 0
-        ) {
-          return
-        }
-
-        return nextPage
-      },
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  )
-
-  const client = useQueryClient()
-
-  const invalidateQuery = async () => {
-    client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
-      // 确保刷新时只更换第一组数据，其他组的数据全都销毁
-      oldData.pages = oldData.pages.slice(0, 1)
-      return oldData
-    })
-    await client.invalidateQueries(key, {
-      refetchPage: (lastPage, index) => index === 0,
-    })
-  }
-
-  const setData = async <T = InfiniteData<IHoleListResponse>>(
-    updater: Updater<T | undefined, T>
-  ) => {
-    await client.setQueryData<InfiniteData<IHoleListResponse>>(
-      key,
-      updater as any
-    )
-  }
+  })
 
   return {
     ...query,
-    client,
-    invalidateQuery,
-    setData,
   }
 }
 
 export function useHoleDetail() {
-  const params = useParams<{ id?: number }>()
+  const params = useParams<{ id: number }>()
 
   const client = useQueryClient()
 
@@ -107,14 +67,14 @@ export function useHoleDetail() {
 
   const toggleIsLike = async () => {
     client.setQueryData<IHoleDetailResponse>(key, (oldData) => {
-      oldData.isLiked = !oldData.isLiked
-      if (oldData.isLiked) {
-        oldData.favoriteCounts++
+      oldData!.isLiked = !oldData!.isLiked
+      if (oldData!.isLiked) {
+        oldData!.favoriteCounts++
       } else {
-        oldData.favoriteCounts--
+        oldData!.favoriteCounts--
       }
 
-      return oldData
+      return oldData!
     })
   }
 
@@ -133,7 +93,7 @@ export function useHoleDetail() {
 }
 
 export function useHoleComment() {
-  const params = useParams<{ id: number }>()
+  const params = useParams<{ id: number; commentId?: string }>()
   const { mode, order } = useHoleDetailCommentContext()
   const user = useUserProfile()
   const id = useId()
@@ -148,6 +108,7 @@ export function useHoleComment() {
         id: params.id,
         mode,
         order,
+        commentId: params.commentId,
       })
     },
     getNextPageParam: (lastPages) => {
@@ -162,9 +123,15 @@ export function useHoleComment() {
 
       return nextPage
     },
+    refetchOnMount: true,
+    staleTime: 0,
   })
 
-  const isDataEmpty = query.data?.pages?.[0]?.items.length > 0
+  const { data: flattenData } = useMemo(() => {
+    return flatInfiniteQueryData<IHoleCommentListItem>(query.data)
+  }, [query.data])
+
+  const isDataEmpty = flattenData?.length > 0
 
   const client = useQueryClient()
 
@@ -172,9 +139,9 @@ export function useHoleComment() {
     client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
       if (onlyFirstGroup) {
         // 确保刷新时只更换第一组数据，其他组的数据全都销毁
-        oldData.pages = oldData.pages.slice(0, 1)
+        oldData!.pages = oldData!.pages.slice(0, 1)
       }
-      return oldData
+      return oldData!
     })
     await client.invalidateQueries(key, {
       refetchPage: (lastPage, index) => index === 0,
@@ -214,7 +181,7 @@ export function useHoleComment() {
         }
       }
 
-      return oldData
+      return oldData!
     })
   }
 
@@ -242,7 +209,7 @@ export function useHoleComment() {
         replyUser: null,
         id,
         body,
-        user: user.data,
+        user: user.data!,
       })
 
       target.repliesCount++
@@ -258,6 +225,7 @@ export function useHoleComment() {
     setIsLiked,
     setTargetData,
     setReply,
+    flattenData,
   }
 }
 
@@ -295,9 +263,9 @@ export function useHoleSearchResult() {
     client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
       if (onlyFirstGroup) {
         // 确保刷新时只更换第一组数据，其他组的数据全都销毁
-        oldData.pages = oldData.pages.slice(0, 1)
+        oldData!.pages = oldData!.pages.slice(0, 1)
       }
-      return oldData
+      return oldData!
     })
     await client.invalidateQueries(key, {
       refetchPage: (lastPage, index) => index === 0,

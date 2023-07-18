@@ -5,12 +5,16 @@ interface Props {
   url: string
 
   size?: number
+
+  mode?: 'sm' | 'md' | 'lg'
 }
 
-export function UserAvatar(props: Props) {
+export function UserAvatar({ mode = 'sm', ...props }: Props) {
+  const modeSize = mode === 'sm' ? 30 : mode === 'md' ? 40 : 55
+
   return (
     <Avatar.Image
-      size={props.size || 30}
+      size={props.size || modeSize}
       source={{
         uri: props.url,
       }}

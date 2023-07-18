@@ -36,7 +36,7 @@ export function LoadingScreen(props: Props) {
       {loading ? (
         <View
           className={
-            'bg-white w-full h-full flex-row items-center justify-center'
+            'bg-white w-full h-screen flex-row items-center justify-center'
           }
         >
           <View className={'flex space-y-1 items-center'}>

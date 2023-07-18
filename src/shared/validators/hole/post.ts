@@ -46,5 +46,5 @@ export class HoleAddBilibliClassValidator {
   })
   @Length(12, 12, { message: '请输入正确的B站的BV视频号哦' })
   @IsString()
-  body: string
+  body: string | null
 }

@@ -10,7 +10,7 @@ export function Badge(props: Props) {
   return (
     <>
       <View
-        className={'bg-error w-6 h-6 items-center rounded-full justify-center'}
+        className={'bg-error w-5 h-5 items-center rounded-full justify-center'}
       >
         <Text variant={'bodySmall'} className={'text-white'}>
           {props.children}

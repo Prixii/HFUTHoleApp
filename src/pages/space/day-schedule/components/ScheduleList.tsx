@@ -110,7 +110,7 @@ const ScheduleCard = ({
           className="text-xs"
         >{`${schedule.startTime} - ${schedule.endTime}`}</Text>
         <Text style={textStyle} className="text-xs">
-          {getTeachers(schedule.detailInfo.teachers)}
+          {getTeachers(schedule.detailInfo.teachers || [])}
         </Text>
       </View>
       <Text style={textStyle} className="text-base font-bold">

@@ -81,5 +81,5 @@ export function isLaunchPeriod(timeStr: string) {
 }
 
 export function getTeachers(teachers: string[]) {
-  return teachers.join('/')
+  return teachers?.join('/')
 }

@@ -44,6 +44,6 @@ export function request<T = any>(config: AxiosRequestConfig) {
 }
 
 export const loginInstance = axios.create({
-  baseURL: 'https://login.hfut-space.top',
+  baseURL: 'https://hfut-space.top/',
   headers,
 })

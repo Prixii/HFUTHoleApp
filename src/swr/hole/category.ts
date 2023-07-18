@@ -4,12 +4,20 @@ import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
 import { GetHoleListRequest } from '@/request/apis/hole'
 import { Updater } from 'react-query/types/core/utils'
 import { useParams } from '@/shared/hooks/useParams'
-import { useMemo } from 'react'
-import { useRoute } from '@react-navigation/native'
+import { useEffect, useMemo, useRef } from 'react'
+import { useNavigation, useRoute } from '@react-navigation/native'
+
+interface RouteParams {
+  category: ArticleCategoryEnum
+}
 
 export function useHoleCategoryList() {
-  const params = useParams<{ category: ArticleCategoryEnum }>()
+  const params = useParams<RouteParams>()
   const route = useRoute()
+  const navigation = useNavigation()
+
+  const category = (navigation.getState().routes[0].params as RouteParams)
+    .category
 
   const mode = useMemo(() => {
     if (route.name === 'latest') {
@@ -19,7 +27,9 @@ export function useHoleCategoryList() {
     }
   }, [route])
 
-  const key = [SWRKeys.hole.list, params?.category, mode]
+  const key = [SWRKeys.hole.list, category, mode]
+
+  console.log(key)
 
   const query = useInfiniteQuery(
     key,
@@ -27,8 +37,8 @@ export function useHoleCategoryList() {
       GetHoleListRequest({
         limit: 20,
         page: pageParam,
-        mode,
-        category: params.category,
+        mode: mode!,
+        category: category,
       }),
     {
       getNextPageParam: (lastPages) => {
@@ -53,8 +63,8 @@ export function useHoleCategoryList() {
   const invalidateQuery = async () => {
     client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
       // 确保刷新时只更换第一组数据，其他组的数据全都销毁
-      oldData.pages = oldData.pages.slice(0, 1)
-      return oldData
+      oldData!.pages = oldData!.pages.slice(0, 1)
+      return oldData!
     })
     await client.invalidateQueries(key, {
       refetchPage: (lastPage, index) => index === 0,

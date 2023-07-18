@@ -5,7 +5,6 @@ import { getQAQFont } from '@/shared/utils/utils'
 
 interface Props {
   text: string
-
   hasNextPage: boolean
 }
 
@@ -22,7 +21,9 @@ export function LoadMore(props: Props) {
         <LoadingIndicator />
       ) : (
         <Text style={{ color: theme.colors.surfaceVariant }}>
-          {`${props.text}${props.text && getQAQFont('happy')}`}
+          {`${props.text || '没有更多了哦'}${
+            props.text && getQAQFont('happy')
+          }`}
         </Text>
       )}
     </View>

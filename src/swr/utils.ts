@@ -1,3 +1,5 @@
+import { InfiniteData } from 'react-query'
+
 export const SWRKeys = {
   hole: {
     list: 'hole.list',
@@ -9,6 +11,8 @@ export const SWRKeys = {
   },
   notify: {
     base: 'notify.base',
+    interaction: 'notify.interaction',
+    system: 'notify.system',
   },
   user: {
     profile: 'user.profile',
@@ -23,4 +27,17 @@ export const SWRKeys = {
       info: 'space.user.info',
     },
   },
+}
+
+export const flatInfiniteQueryData = <T>(
+  data: InfiniteData<any> | undefined
+) => {
+  const isListEmpty = data?.pages[0].items.length === 0
+
+  return {
+    isEmpty: isListEmpty,
+    data: isListEmpty
+      ? []
+      : (data?.pages.map((page) => page.items).flat(1) as T[]),
+  }
 }
