@@ -9,11 +9,13 @@ import { HoleReply } from '@/pages/hole/detail/reply/HoleReply'
 import { HoleHot } from '@/pages/hole/hot/HoleHot'
 import { TopTabBar } from '@/components/router/TopTabBar'
 import { HoleLatest } from '@/pages/hole/latest/HoleLatest'
-import { StatusBar } from 'react-native'
-import { useTheme } from 'react-native-paper'
+import { StatusBar, View } from 'react-native'
+import { IconButton, useTheme } from 'react-native-paper'
 import { HoleDetailCommentContextProvider } from '@/shared/context/hole_detail'
 import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
 import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
+import { SearchIcon } from '@/components/icon'
+import { TopTabHeader } from '@/router/components/TopTabHeader'
 
 const Tab = createMaterialTopTabNavigator()
 const HoleStack = createNativeStackNavigator()
@@ -48,7 +50,7 @@ const HoleCategoryTabs = () => {
   return (
     <HoleCategoryTab.Navigator
       initialRouteName={'index'}
-      tabBar={(props) => <TopTabBar {...props} />}
+      tabBar={(props) => <TopTabHeader {...props} />}
     >
       <HoleCategoryTab.Screen
         name={'latest'}
@@ -92,10 +94,7 @@ export function TopTabs() {
   return (
     <>
       <StatusBar backgroundColor={theme.colors.background} />
-      <Tab.Navigator
-        initialRouteName={'latest'}
-        tabBar={(props) => <TopTabBar {...props} />}
-      >
+      <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabHeader}>
         {TabScreens.map((item) => (
           <Tab.Screen
             key={item.name}

@@ -14,18 +14,13 @@ export function TopTabBar({
   descriptors,
   jumpTo,
 }: MaterialTopTabBarProps) {
-  const theme = useTheme()
-
   const handlePress = useCallback((route: string) => {
     jumpTo(route)
   }, [])
 
   return (
     <View
-      className={'flex-row space-x-3 px-6 py-4 items-center'}
-      style={{
-        backgroundColor: theme.colors.background,
-      }}
+      className={'flex-row space-x-3 px-6 py-4 items-center bg-transparent'}
     >
       {state.routes.map((route, index) => {
         const options = descriptors[route.key].options
@@ -34,7 +29,7 @@ export function TopTabBar({
           <Pressable key={route.key} onPress={() => handlePress(route.key)}>
             <TabBarItem
               isFocused={state.index === index}
-              name={options.title}
+              name={options.title!}
             />
           </Pressable>
         )

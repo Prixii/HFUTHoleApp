@@ -7,7 +7,7 @@ export function useUserProfileRoute() {
   const goTo = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    navigation.navigate('User', {
+    navigation.navigate('user-nested', {
       screen: 'profile',
     })
   }, [navigation])

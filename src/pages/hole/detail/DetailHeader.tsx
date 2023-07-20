@@ -3,8 +3,6 @@ import React from 'react'
 import { useHoleDetail } from '@/swr/hole'
 import { HoleInfoHeader } from '@/pages/hole/components/HoleInfo'
 import { View } from 'react-native'
-import { BilibiliPlayer } from '@/components/player/BilibiliPlayer'
-
 export function HoleDetailHeader() {
   const { data, isSuccess } = useHoleDetail()
 

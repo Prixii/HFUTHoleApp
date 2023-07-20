@@ -98,7 +98,7 @@ export function useHoleComment() {
   const user = useUserProfile()
   const id = useId()
 
-  const key = [SWRKeys.hole.comments, params.id, mode, order]
+  const key = [SWRKeys.hole.comments, params.id, params?.commentId, mode, order]
 
   const query = useInfiniteQuery<IHoleCommentListResponse>(key, {
     queryFn: ({ pageParam = 1 }) => {

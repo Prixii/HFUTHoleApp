@@ -12,7 +12,6 @@ import {
 import { CommentIcon, LikeIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
 import { TimeText } from '@/components/Text/Time'
-import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 import { ImageList } from '@/components/image/ImageList'
 import { useMutation } from 'react-query'
 import { PostHoleVoteRequest } from '@/request/apis/hole'
@@ -23,6 +22,7 @@ import { HoleBottomAction } from '@/pages/hole/components/sheet/HoleBottomAction
 import { EmojiableText } from '@/components/Text/EmojiableText'
 import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
 import { Svg } from '@/components/svg/Svg'
+import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 
 type Data = IHole
 
@@ -100,7 +100,7 @@ export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
 }
 
 export const HoleInfoBody: React.FC<{ data: Data }> = React.memo(({ data }) => {
-  const { searchWithKeywords } = useSearchNavigation()
+  const { goResult } = useHoleSearchRoute()
 
   return (
     <View className={'flex space-y-2'}>
@@ -114,10 +114,7 @@ export const HoleInfoBody: React.FC<{ data: Data }> = React.memo(({ data }) => {
       )}
       {data.tags.length && (
         <View>
-          <Badges
-            data={data.tags}
-            onPress={(tag) => searchWithKeywords(`#${tag}`)}
-          />
+          <Badges data={data.tags} onPress={(tag) => goResult(`#${tag}`)} />
         </View>
       )}
     </View>
@@ -155,7 +152,7 @@ const HoleInfoBottom: React.FC<{ data: Data }> = React.memo(({ data }) => {
       </View>
       <View className={'flex flex-row space-x-2 items-center'}>
         {data.bilibili && <Svg SvgComponent={BilibiliSvg} size={20} />}
-        <Button mode={'text'}>{data.category.category}</Button>
+        <Button mode={'text'}>{data?.category?.category}</Button>
       </View>
     </View>
   )

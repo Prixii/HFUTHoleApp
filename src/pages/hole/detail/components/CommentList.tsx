@@ -77,9 +77,11 @@ export function HoleDetailCommentList() {
 
   return (
     <>
-      <View className={'px-2'}>
-        <BilibiliPlayer bvid={data!.bilibili!} />
-      </View>
+      {data?.bilibili && (
+        <View className={'px-2'}>
+          <BilibiliPlayer bvid={data!.bilibili!} />
+        </View>
+      )}
 
       <RefreshingFlatList
         onRefreshing={onRefresh}
@@ -96,7 +98,7 @@ export function HoleDetailCommentList() {
         data={flattenData}
         ListEmptyComponent={HoleDetailCommentEmpty}
         renderItem={({ item, index }) => (
-          <HoleDetailCommentItem data={item} page={index} />
+          <HoleDetailCommentItem data={item} page={index} key={item.id} />
         )}
         showsVerticalScrollIndicator={false}
         overScrollMode={'never'}

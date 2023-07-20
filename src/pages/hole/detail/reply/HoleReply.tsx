@@ -14,7 +14,6 @@ import { LoadMore } from '@/components/LoadMore'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { useBottomCommentContext } from '@/shared/context/hole/comment'
 import { CommentBottomInput } from '@/pages/hole/detail/components/CommentBottomInput'
-import { BilibiliPlayer } from '@/components/player/BilibiliPlayer'
 
 // TODO 重写回复区，尤其是展示特定的评论
 export function HoleReply() {

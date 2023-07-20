@@ -1,5 +1,5 @@
 import { LoadMore } from '@/components/LoadMore'
-import { FlatListProps, Text, View } from 'react-native'
+import { FlatListProps, StatusBar, Text, View } from 'react-native'
 import { HoleInfo } from '@/pages/hole/components/HoleInfo'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
 import { UseInfiniteQueryResult } from 'react-query'
@@ -9,6 +9,7 @@ import { useHoleDetailRoute } from '@/shared/hooks/route/useHoleDetailRoute'
 import { useMemo } from 'react'
 import { Empty } from '@/components/image/Empty'
 import { flatInfiniteQueryData } from '@/swr/utils'
+import { useTheme } from 'react-native-paper'
 
 // TODO 完善类型
 type Props = UseInfiniteQueryResult<IHoleListResponse, unknown> & {
@@ -29,28 +30,35 @@ export function RefreshableHoleList({
   const { data: flatListData, isEmpty: isHoleListEmpty } =
     flatInfiniteQueryData(data)
 
-  return isSuccess ? (
-    <RefreshingFlatList
-      data={flatListData}
-      hasNextPage={hasNextPage}
-      onRefreshing={fetchNextPage}
-      onTopRefresh={invalidateQuery}
-      ListEmptyComponent={() => <Empty />}
-      ListHeaderComponent={ListHeaderComponent}
-      ListFooterComponent={() =>
-        isHoleListEmpty ? (
-          <></>
-        ) : (
-          <View>
-            <LoadMore text={'没有更多树洞了哦'} hasNextPage={hasNextPage} />
-          </View>
-        )
-      }
-      renderItem={({ item }) => (
-        <HoleInfo key={item.id} data={item} onPress={() => go(item.id)} />
+  return (
+    <>
+      {isSuccess ? (
+        <RefreshingFlatList
+          data={flatListData}
+          hasNextPage={hasNextPage}
+          onRefreshing={fetchNextPage}
+          onTopRefresh={invalidateQuery}
+          ListEmptyComponent={() => <Empty />}
+          ListHeaderComponent={ListHeaderComponent}
+          ListFooterComponent={() =>
+            isHoleListEmpty ? (
+              <></>
+            ) : (
+              <View>
+                <LoadMore
+                  text={'没有更多树洞了哦'}
+                  hasNextPage={hasNextPage!}
+                />
+              </View>
+            )
+          }
+          renderItem={({ item }) => (
+            <HoleInfo key={item.id} data={item} onPress={() => go(item.id)} />
+          )}
+        />
+      ) : (
+        <SkeletonLoading nums={3} />
       )}
-    />
-  ) : (
-    <SkeletonLoading nums={3} />
+    </>
   )
 }

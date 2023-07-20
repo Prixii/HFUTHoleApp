@@ -41,7 +41,7 @@ const RenderItemReplyList: React.FC<{ data: IHoleCommentListItem }> = ({
     >
       {data.replies.map((reply) => (
         <View className={'flex flex-row flex-wrap'} key={reply.id}>
-          <PrimaryText children={`${reply.user.username}：`} />
+          <PrimaryText children={`${reply?.user?.username}：`} />
           <ReplyBody data={reply as IHoleReplyListItem} />
         </View>
       ))}
@@ -75,7 +75,6 @@ export const HoleDetailCommentItem: React.FC<{
     <View className={'grid space-y-2'}>
       <CommentItem
         data={data}
-        key={data.id}
         onBodyPress={handleReply}
         bottom={data.replies.length > 0 && <RenderItemReplyList data={data} />}
         reqFunc={data.isLiked ? DeleteCommentLikeRequest : LikeCommentRequest}

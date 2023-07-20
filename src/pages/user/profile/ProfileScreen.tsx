@@ -1,14 +1,13 @@
 import { Image, useWindowDimensions, View, StatusBar } from 'react-native'
-import { Text } from 'react-native-paper'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { useUserFavoriteHoleList, useUserPostedHoleList } from '@/swr/user/hole'
 import { useUserProfile } from '@/swr/user/profile'
-import { SecondaryText } from '@/components/Text/SecondaryText'
-import { ProgressBar } from '@/components/ProgressBar'
-import { MyAvatar } from '@/components/UserAvatar'
 import { Tabs, type Tab } from '@/pages/user/profile/Tabs'
-import { useMemo } from 'react'
 import { RefreshableHoleList } from '@/pages/hole/components/HoleList'
+import { MyAvatar } from '@/components/UserAvatar'
+import { Text, TouchableRipple } from 'react-native-paper'
+import { PrimaryText } from '@/components/Text/PrimaryText'
+import { UserLevelBar } from '@/pages/user/components/UserLevelBar'
 
 const UserHoleList = () => {
   const query = useUserPostedHoleList()
@@ -31,12 +30,12 @@ const UserFavoriteHoleList = () => {
 const tabs: Tab[] = [
   {
     key: 'user-hole',
-    title: '我的树洞',
+    title: '发表',
     component: UserHoleList,
   },
   {
     key: 'user-favorite-hole',
-    title: '我的树洞',
+    title: '喜欢',
     component: UserFavoriteHoleList,
   },
 ]
@@ -44,56 +43,42 @@ const tabs: Tab[] = [
 export function ProfileScreen() {
   const { isLoading } = useUserPostedHoleList()
   const { data: userData } = useUserProfile()
-  const { width } = useWindowDimensions()
-
-  const { imageWidth, imageHeight } = useMemo(
-    () => ({
-      imageWidth: width,
-      imageHeight: (width / 16) * 8,
-    }),
-    [width]
-  )
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <StatusBar backgroundColor="transparent" translucent />
-
+      <StatusBar backgroundColor={'transparent'} translucent />
       <View className="flex-1 w-full">
-        <View className="relative">
-          <View
-            className="absolue z-10 bg-black/20"
-            style={{ width: imageWidth, height: imageHeight }}
-          />
-          <Image
-            className="absolute"
-            resizeMode="cover"
-            style={{
-              width: imageWidth,
-              height: imageHeight,
-            }}
-            source={require('@/assets/img/deno-read-news.png')}
-          />
-        </View>
-
-        <View className="relative w-full py-12 px-6 bg-white">
-          <View className="absolute -top-8 left-8">
-            <MyAvatar size={64} />
-          </View>
-          <View className="flex flex-row justify-between">
-            <View className="flex-1">
-              <Text className="text-lg">{userData.username}</Text>
-              <View className="flex flex-row">
-                <SecondaryText style={{ marginRight: 8 }} variant={'bodySmall'}>
-                  LV.3
-                </SecondaryText>
-                <SecondaryText variant={'bodySmall'}>318/500</SecondaryText>
-              </View>
-              <ProgressBar />
+        <Image
+          className={'w-full h-40'}
+          source={{
+            uri: 'https://img.3dmgame.com/uploads/images/news/20211101/1635781777_229109.jpg',
+          }}
+          style={{
+            resizeMode: 'cover',
+          }}
+        />
+        <View className={'w-full bg-white px-4 pb-2'}>
+          <View className={'flex flex-row justify-between items-center '}>
+            <View className={'top-[-20px]'}>
+              <MyAvatar size={80} />
             </View>
-            <View className="w-24" />
+            <TouchableRipple
+              className={
+                'border-primary border-[1px] items-center justify-center rounded-lg h-10 px-14'
+              }
+            >
+              <PrimaryText>编辑资料</PrimaryText>
+            </TouchableRipple>
+          </View>
+          <View className={'flex space-y-2'}>
+            <View>
+              <Text variant={'titleLarge'}>{userData?.username}</Text>
+            </View>
+            <View className={'w-1/3'}>
+              <UserLevelBar />
+            </View>
           </View>
         </View>
-
         <Tabs tabs={tabs} />
       </View>
     </LoadingScreen>

@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { TabView, SceneMap, TabBar, Route } from 'react-native-tab-view'
+import { TopTabBar } from '@/components/router/TopTabBar'
 
 // 这里 component 写成 ReactNode 会报错，好奇怪
 export type Tab = Route & { component: any }

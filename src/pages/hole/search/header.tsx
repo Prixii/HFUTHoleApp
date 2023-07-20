@@ -9,14 +9,14 @@ import { ISearchResultParams } from '@/pages/hole/search/result/result'
 import { CloseIcon, SearchIcon } from '@/components/icon'
 import { SearchInput } from '@/components/form/Search'
 import { Toast } from '@/shared/utils/toast'
-import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 import { useAppDispatch, useAppSelector } from '@/store/store'
 import { operateSearchData } from '@/store/reducer/search'
+import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 
 export function HoleSearchHeader() {
   const theme = useTheme()
   const params = useParams<ISearchResultParams>()
-  const { searchWithKeywords } = useSearchNavigation()
+  const route = useHoleSearchRoute()
 
   const data = useAppSelector((state) => state.search.data) as string[]
 
@@ -39,14 +39,12 @@ export function HoleSearchHeader() {
         draft.unshift(data.keywords)
       })
     )
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    searchWithKeywords(data.keywords)
+    route.goResult(data.keywords)
   })
 
   const onError = (error: FieldErrors<HoleSearchValidator>) => {
     Toast.error({
-      text1: error.keywords.message,
+      text1: error.keywords!.message,
     })
   }
 
@@ -86,6 +84,7 @@ export function HoleSearchHeader() {
               placeholder={'搜索正文内容、#标签、#树洞号'}
               maxLength={100}
               onSubmitEditing={onHandleSubmit}
+              autoFocus={true}
             />
           </View>
           {dirtyFields.keywords && (

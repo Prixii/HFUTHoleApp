@@ -5,7 +5,7 @@ import { SWRKeys } from '@/swr/utils'
 import { Updater } from 'react-query/types/core/utils'
 
 export const useHoleReplyList = () => {
-  const params = useParams<{ commentId: string; bilibliId: string }>()
+  const params = useParams<{ commentId: string }>()
 
   const id = params.commentId
   const key = [SWRKeys.hole.getCommentReply, id]

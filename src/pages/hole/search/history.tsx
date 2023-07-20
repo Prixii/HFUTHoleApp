@@ -3,14 +3,14 @@ import { Text, useTheme } from 'react-native-paper'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import { DeleteIcon } from '@/components/icon'
 import { useImmer } from 'use-immer'
-import { useSearchNavigation } from '@/shared/hooks/useSearchNavigation'
 import { Closeable } from '@/components/Closeable'
 import { useAppDispatch, useAppSelector } from '@/store/store'
 import { operateSearchData } from '@/store/reducer/search'
+import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 
 export const HoleSearchHistory = () => {
   const theme = useTheme()
-  const { searchWithKeywords } = useSearchNavigation()
+  const searchRoute = useHoleSearchRoute()
 
   const [deleteAble, setDeleteAble] = useImmer<number[]>([])
 
@@ -50,7 +50,7 @@ export const HoleSearchHistory = () => {
           <Pressable
             key={index}
             onLongPress={() => addDeleteAble(index)}
-            onPress={() => searchWithKeywords(tag)}
+            onPress={() => searchRoute.goResult(tag)}
           >
             <View
               key={index}

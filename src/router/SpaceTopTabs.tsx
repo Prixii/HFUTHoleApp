@@ -8,6 +8,8 @@ import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 import { IconButton } from '@/components/IconButton'
 import { LogoutIcon } from '@/components/icon'
+import { TopTabHeader } from '@/router/components/TopTabHeader'
+import { SpaceLoginScreen } from '@/pages/space/login/SpaceLoginScreen'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -18,7 +20,7 @@ const TabScreens = [
 
 export const SpaceTopTabs = () => {
   const theme = useTheme()
-  const { isLogin } = useAuth()
+  const { logout, isLogin } = useAuth()
 
   return (
     <>
@@ -26,10 +28,15 @@ export const SpaceTopTabs = () => {
       <Tab.Navigator
         initialRouteName={'day'}
         // TODO 防止未登录时跳转路由
-        tabBar={(props) => <TopBar {...props} />}
-        screenOptions={{
-          swipeEnabled: false,
-        }}
+        tabBar={(props) => (
+          <TopTabHeader {...props}>
+            <IconButton
+              icon={() => <LogoutIcon size={20} />}
+              transparent
+              onPress={logout}
+            />
+          </TopTabHeader>
+        )}
       >
         {TabScreens.map((item) => (
           <Tab.Screen
@@ -52,11 +59,6 @@ const TopBar = (props: MaterialTopTabBarProps) => {
       {isLogin ? (
         <View className="flex flex-row justify-between items-center">
           <TopTabBar {...props} />
-          <IconButton
-            icon={() => <LogoutIcon size={20} />}
-            transparent
-            onPress={logout}
-          />
         </View>
       ) : (
         <View />

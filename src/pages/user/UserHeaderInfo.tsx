@@ -1,11 +1,11 @@
-import { Pressable, TouchableOpacity, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { MyAvatar } from '@/components/UserAvatar'
 import { Text } from 'react-native-paper'
 import { SecondaryText } from '@/components/Text/SecondaryText'
-import { ProgressBar } from '@/components/ProgressBar'
 import { RightIcon } from '@/components/icon'
 import { useUserProfile } from '@/swr/user/profile'
 import { useUserProfileRoute } from '@/shared/hooks/route/useUserProfileRoute'
+import { UserLevelBar } from '@/pages/user/components/UserLevelBar'
 
 export function UserHeaderInfo() {
   const { data } = useUserProfile()
@@ -23,17 +23,7 @@ export function UserHeaderInfo() {
           <View className={'flex-row justify-between items-center'}>
             <Text className={'text-xl'}>{data?.username}</Text>
           </View>
-          <View className={'flex-row space-x-2 justify-between items-center'}>
-            <View>
-              <SecondaryText variant={'bodySmall'}>LV.3</SecondaryText>
-            </View>
-            <View>
-              <ProgressBar />
-            </View>
-            <View>
-              <SecondaryText variant={'bodySmall'}>318/500</SecondaryText>
-            </View>
-          </View>
+          <UserLevelBar />
         </View>
       </View>
       <View className={'flex-row items-center'}>

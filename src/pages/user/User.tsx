@@ -6,7 +6,7 @@ import { UserHeaderInfo } from '@/pages/user/UserHeaderInfo'
 
 export function User() {
   return (
-    <ScrollView className={'flex space-y-4 px-2 py-4 bg-white'}>
+    <ScrollView className={'flex space-y-4 p-4 bg-white'}>
       <StatusBar backgroundColor={'white'} />
       <UserHeaderInfo />
       <View className={'bg-white flex-row justify-between items-center'}>

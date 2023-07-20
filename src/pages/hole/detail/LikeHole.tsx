@@ -14,7 +14,9 @@ export const LikeHole = () => {
   const mutation = useMutation(
     ['like', data],
     (id: number) => {
-      const reqFunc = data.isLiked ? DeleteLikeHoleRequest : PostLikeHoleRequest
+      const reqFunc = data!.isLiked
+        ? DeleteLikeHoleRequest
+        : PostLikeHoleRequest
 
       return reqFunc({ id })
     },
@@ -27,7 +29,7 @@ export const LikeHole = () => {
 
   const likeHole = useDebounce(
     async () => {
-      mutation.mutate(data.id)
+      mutation.mutate(data!.id)
     },
     { wait: 50 }
   )
@@ -35,11 +37,11 @@ export const LikeHole = () => {
   return (
     <View className={'flex justify-center items-center'}>
       <IconButton
-        icon={() => <LikeIcon active={data.isLiked} size={20} />}
+        icon={() => <LikeIcon active={data!.isLiked} size={20} />}
         transparent={true}
         onPress={likeHole}
       />
-      <Text className={'text-xs text-black/50'}>{data.favoriteCounts}</Text>
+      <Text className={'text-xs text-black/50'}>{data!.favoriteCounts}</Text>
     </View>
   )
 }

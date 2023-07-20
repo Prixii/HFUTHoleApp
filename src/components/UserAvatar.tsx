@@ -2,7 +2,7 @@ import { Avatar } from 'react-native-paper'
 import { useUserProfile } from '@/swr/user/profile'
 
 interface Props {
-  url: string
+  url?: string
 
   size?: number
 
