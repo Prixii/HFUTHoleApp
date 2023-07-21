@@ -10,11 +10,6 @@
       "image": "./assets/bg.png",
       "backgroundColor": "#ffffff"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/dba5ed50-696a-4891-ab2e-cd94660925e7",
-      "checkAutomatically": "ON_ERROR_RECOVERY"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
