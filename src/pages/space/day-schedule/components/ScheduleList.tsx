@@ -1,26 +1,29 @@
-import {
-  useDaySchedule,
-  type Schedule,
-} from '@/pages/space/day-schedule/useDaySchedule'
-import { View, StyleSheet, Pressable } from 'react-native'
+import type { Schedule } from '@/pages/space/@utils/types'
+import type { ArrayElementType } from '@/shared/types/utils'
+import type { Colors } from '@/pages/space/@utils/types'
+import { useDaySchedule } from '@/pages/space/day-schedule/useDaySchedule'
+import { View, Pressable } from 'react-native'
 import { Text } from 'react-native-paper'
 import { ListEmpty } from '@/components/image/ListEmpty'
 import {
-  CARD_COLORS,
-  CARD_COLORS_KEYS,
   formatRoom,
+  generateCardStyle,
   getTeachers,
   isLaunchPeriod,
+  formatCourseName,
+  getLongestSchedule,
 } from '@/pages/space/@utils/utils'
-import { type ArrayElementType } from '@/shared/types/utils'
-import { ellipsisString } from '@/shared/utils/string'
 import { useHorizontalGesture } from '@/pages/space/@utils/useHorizontalGesture'
 import { useChangeDay } from '@/pages/space/@utils/useDayChange'
+import { useMemo } from 'react'
 
 type ScheduleListItem = ArrayElementType<
   ReturnType<typeof useDaySchedule>['scheduleList']
 >
-type Colors = typeof CARD_COLORS_KEYS
+
+interface CardProps {
+  scheduleListItem: ScheduleListItem
+}
 
 export const ScheduleList = () => {
   const { scheduleList, todaySchedule } = useDaySchedule()
@@ -60,7 +63,7 @@ export const ScheduleList = () => {
   )
 }
 
-const Card = ({ scheduleListItem }: { scheduleListItem: ScheduleListItem }) => {
+const Card = ({ scheduleListItem }: CardProps) => {
   const { schedules, timeLine } = scheduleListItem
 
   // 22:00 后不渲染
@@ -82,10 +85,34 @@ const Card = ({ scheduleListItem }: { scheduleListItem: ScheduleListItem }) => {
 
   // TODO 日程冲突情况
   if (schedules.length > 1) {
-    return <Pressable className="h-22 mt-2"></Pressable>
+    return <ConflictCard scheduleListItem={scheduleListItem} />
   }
 
   return <ScheduleCard schedule={schedules[0]} timeLine={timeLine} />
+}
+
+const ConflictCard = ({ scheduleListItem: { schedules } }: CardProps) => {
+  const scheduleLongest = useMemo(
+    () => getLongestSchedule(schedules),
+    [schedules]
+  )
+
+  const { cardStyle, textStyle } = useMemo(
+    () => generateCardStyle(scheduleLongest.color as Colors, true),
+    [scheduleLongest.color]
+  )
+
+  return (
+    <Pressable
+      style={cardStyle}
+      className={`flex border border-l-2 justify-center h-24 p-3 rounded-lg mt-2`}
+    >
+      <Text style={textStyle} className="text-base font-bold">
+        {`这里有${schedules.length}门课冲突`}
+      </Text>
+      <Text style={textStyle}>点击插件详情</Text>
+    </Pressable>
+  )
 }
 
 const ScheduleCard = ({
@@ -95,7 +122,10 @@ const ScheduleCard = ({
   schedule: Schedule
   timeLine: ScheduleListItem['timeLine']
 }) => {
-  const { cardStyle, textStyle } = generateCardStyle(schedule.color as Colors)
+  const { cardStyle, textStyle } = useMemo(
+    () => generateCardStyle(schedule.color as Colors, true),
+    [schedule.color]
+  )
 
   return (
     <Pressable
@@ -114,28 +144,9 @@ const ScheduleCard = ({
         </Text>
       </View>
       <Text style={textStyle} className="text-base font-bold">
-        {ellipsisString(schedule.courseName, 10)}
+        {formatCourseName(schedule.courseName)}
       </Text>
       <Text style={textStyle}>{formatRoom(schedule.room)}</Text>
     </Pressable>
   )
-}
-
-function generateCardStyle(color: Colors) {
-  const colorValue = CARD_COLORS[color]
-
-  return StyleSheet.create({
-    cardStyle: {
-      backgroundColor: `rgba(${colorValue}, 0.15)`,
-      // 设置后 borderLeftColor 似乎不生效
-      // borderColor: `rgba(${colorValue}, 0.2)`,
-      borderTopColor: `rgba(${colorValue}, 0.2)`,
-      borderBottomColor: `rgba(${colorValue}, 0.2)`,
-      borderRightColor: `rgba(${colorValue}, 0.2)`,
-      borderLeftColor: `rgb(${colorValue})`,
-    },
-    textStyle: {
-      color: `rgb(${colorValue})`,
-    },
-  })
 }

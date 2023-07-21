@@ -68,7 +68,6 @@ export const saveToAlbum = async (url: string) => {
       Toast.success({ text1: '保存图片成功' })
     }
   } catch (error) {
-    console.log(error)
     Toast.error({ text1: '保存图片失败', text2: error.stack.toString() })
   }
 }
@@ -76,19 +75,21 @@ export const saveToAlbum = async (url: string) => {
 export const isNullOrUndefined = (val: unknown): val is null | undefined =>
   val === null || val === undefined
 
-export function deepClone<T>(obj: T): T {
-  if (typeof obj !== 'object' || obj === null) {
-    return obj
-  }
+export function JSONDeepClone<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj))
+}
 
-  if (Array.isArray(obj)) {
-    return obj.map((item) => deepClone(item)) as any
-  }
+export function floatFixed(num: number, fractionDigits = 2) {
+  return parseFloat(num.toFixed(fractionDigits))
+}
 
-  const copiedObj: any = {}
-  Object.keys(obj).forEach((key) => {
-    copiedObj[key] = deepClone(obj[key])
-  })
-
-  return copiedObj as T
+export function objectMap<T extends object, K = keyof T>(
+  obj: T,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  callback: (value: T[K], key: string, obj: T) => any
+) {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [key, callback(value, key, obj)])
+  )
 }

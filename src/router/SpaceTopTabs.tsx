@@ -2,41 +2,34 @@ import { useTheme } from 'react-native-paper'
 import { StatusBar, View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { TopTabBar } from '@/components/router/TopTabBar'
-import { DaySchedule } from '@/pages/space/day-schedule/DaySchedule'
-import { WeekSchedule } from '@/pages/space/week-schedule/WeekSchedule'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 import { IconButton } from '@/components/IconButton'
 import { LogoutIcon } from '@/components/icon'
-import { TopTabHeader } from '@/router/components/TopTabHeader'
-import { SpaceLoginScreen } from '@/pages/space/login/SpaceLoginScreen'
+import { DaySchedule } from '@/pages/space/day-schedule/DaySchedule'
+import { WeekSchedule } from '@/pages/space/week-schedule/WeekSchedule'
+import { Score } from '@/pages/space/score/Score'
 
 const Tab = createMaterialTopTabNavigator()
 
 const TabScreens = [
   { name: 'day', component: DaySchedule, title: '日程' },
   { name: 'week', component: WeekSchedule, title: '课表' },
+  { name: 'score', component: Score, title: '成绩' },
 ]
 
 export const SpaceTopTabs = () => {
   const theme = useTheme()
-  const { logout, isLogin } = useAuth()
 
   return (
     <>
       <StatusBar backgroundColor={theme.colors.background} />
       <Tab.Navigator
         initialRouteName={'day'}
-        // TODO 防止未登录时跳转路由
-        tabBar={(props) => (
-          <TopTabHeader {...props}>
-            <IconButton
-              icon={() => <LogoutIcon size={20} />}
-              transparent
-              onPress={logout}
-            />
-          </TopTabHeader>
-        )}
+        tabBar={(props) => <TopBar {...props} />}
+        screenOptions={{
+          swipeEnabled: false,
+        }}
       >
         {TabScreens.map((item) => (
           <Tab.Screen
@@ -59,10 +52,13 @@ const TopBar = (props: MaterialTopTabBarProps) => {
       {isLogin ? (
         <View className="flex flex-row justify-between items-center">
           <TopTabBar {...props} />
+          <IconButton
+            icon={() => <LogoutIcon size={20} />}
+            transparent
+            onPress={logout}
+          />
         </View>
-      ) : (
-        <View />
-      )}
+      ) : null}
     </>
   )
 }

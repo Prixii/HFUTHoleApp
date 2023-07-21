@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { calculateWeekAndDay } from '@/pages/space/@utils/utils'
 import { resetStoreState } from '@/shared/utils/store'
+import { JSONDeepClone } from '@/shared/utils/utils'
 
 export type VisibleSchedule = {
   weekIdx: number
@@ -9,12 +10,11 @@ export type VisibleSchedule = {
 
 export type SpaceCourseState = {
   courseInfo: ICourseResponse
-  currentWeekIdx: number
   daySchedule: VisibleSchedule
   weekSchedule: VisibleSchedule
 }
 
-const initialState: SpaceCourseState = Object.freeze({
+const initialState: SpaceCourseState = {
   courseInfo: {
     lessons: [],
     mainInfo: {
@@ -24,10 +24,11 @@ const initialState: SpaceCourseState = Object.freeze({
       semesterStartDate: '',
     },
     mooc: [],
-    schedule: [],
+    schedule: Array.from({ length: 20 }, () =>
+      Array.from({ length: 7 }, () => [])
+    ),
     exams: [],
   },
-  currentWeekIdx: 0,
   daySchedule: {
     weekIdx: 0,
     dayIdx: 0,
@@ -36,7 +37,7 @@ const initialState: SpaceCourseState = Object.freeze({
     weekIdx: 0,
     dayIdx: 0,
   },
-})
+}
 
 export const spaceCourseSlice = createSlice({
   name: 'spaceCourse',
@@ -61,7 +62,7 @@ export const spaceCourseSlice = createSlice({
       state.weekSchedule = scheduleIdx
     },
     resetStore(state) {
-      resetStoreState(state, initialState)
+      resetStoreState(state, JSONDeepClone(initialState))
     },
     setDaySchedule(state, action: PayloadAction<VisibleSchedule>) {
       state.daySchedule = action.payload

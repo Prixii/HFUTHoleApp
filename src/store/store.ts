@@ -4,10 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { UserReducer } from '@/store/reducer/user'
 import { SearchReducer } from '@/store/reducer/search'
 import { SpaceUserReducer } from '@/store/reducer/spaceUser'
-import {
-  SpaceCourseReducer,
-  SpaceCourseState,
-} from '@/store/reducer/spaceCourse'
+import { SpaceScoreReducer } from '@/store/reducer/spaceScore'
+import { SpaceCourseReducer } from '@/store/reducer/spaceCourse'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { combineReducers } from '@reduxjs/toolkit'
 import createSecureStore from 'redux-persist-expo-securestore'
@@ -38,7 +36,7 @@ const spaceUserPersistReducer = persistReducer(
   SpaceUserReducer
 )
 
-const spaceCoursePersistReducer = persistReducer<SpaceCourseState>(
+const spaceCoursePersistReducer = persistReducer(
   {
     key: 'spaceCourse',
     storage: AsyncStorage,
@@ -46,11 +44,20 @@ const spaceCoursePersistReducer = persistReducer<SpaceCourseState>(
   SpaceCourseReducer
 )
 
+const spaceScorePersistReducer = persistReducer(
+  {
+    key: 'spaceScore',
+    storage: AsyncStorage,
+  },
+  SpaceScoreReducer
+)
+
 const rootReducer = combineReducers({
   user: userPersistReducer,
   search: searchPersistReducer,
   spaceUser: spaceUserPersistReducer,
   spaceCourse: spaceCoursePersistReducer,
+  spaceScore: spaceScorePersistReducer,
 })
 
 export const store = createStore(rootReducer)

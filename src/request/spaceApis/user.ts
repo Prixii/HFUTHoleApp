@@ -1,6 +1,6 @@
 import { request } from '@/request/spaceRequest'
 
-export function getUserInfo() {
+export function getUserInfoRequest() {
   return request<IUserInfoResponse>({
     url: 'user/info',
   })

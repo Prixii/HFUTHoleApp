@@ -8,11 +8,10 @@ import {
 import { changeSchedule } from '@/store/reducer/spaceCourse'
 import { useMount } from 'ahooks'
 import { format } from 'date-fns'
-import { deepClone } from '@/shared/utils/utils'
+import { JSONDeepClone } from '@/shared/utils/utils'
+import type { Schedule } from '@/pages/space/@utils/types'
 
 const defaultVisibleDate = '01月01号'
-
-export type Schedule = ISchedule & ILesson & { color: string }
 
 export const useDaySchedule = () => {
   const dispatch = useAppDispatch()
@@ -22,7 +21,7 @@ export const useDaySchedule = () => {
   const campus = useAppSelector((state) => state.spaceUser.info.campus)
 
   const timeLines = useMemo(() => {
-    const hoursClone = deepClone(DAY_HOURS)
+    const hoursClone = JSONDeepClone(DAY_HOURS)
     if (campus === '翡翠湖校区') {
       hoursClone[0].start = '08:10'
       hoursClone[2].start = '12:10'
@@ -30,12 +29,10 @@ export const useDaySchedule = () => {
     return hoursClone
   }, [campus])
 
-  const todaySchedule = useMemo(() => {
-    if (!courseInfo.schedule.length) {
-      return []
-    }
-    return courseInfo.schedule[daySchedule.weekIdx][daySchedule.dayIdx]
-  }, [daySchedule, courseInfo])
+  const todaySchedule = useMemo(
+    () => courseInfo.schedule[daySchedule.weekIdx][daySchedule.dayIdx],
+    [daySchedule, courseInfo]
+  )
 
   const scheduleList = useMemo(
     () =>

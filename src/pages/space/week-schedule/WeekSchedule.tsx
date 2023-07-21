@@ -1,10 +1,20 @@
-import { View, Text } from 'react-native'
-import { Page } from '@/components/Page'
+import { PlainPage } from '@/components/Page'
+import { ScheduleScrollWrapper } from '@/pages/space/components/ScheduleScrollWrapper'
+import { Header } from '@/pages/space/week-schedule/components/Header'
+import { View } from 'react-native'
+import { CourseList } from '@/pages/space/week-schedule/components/CourseList'
 
 export const WeekSchedule = () => {
   return (
-    <Page>
-      <Text>bbbbbbbbbbb</Text>
-    </Page>
+    <PlainPage>
+      <View className="w-full h-24 absolute z-[1] top-0 left-0">
+        <Header />
+      </View>
+      <ScheduleScrollWrapper>
+        <View className="my-24 w-full">
+          <CourseList />
+        </View>
+      </ScheduleScrollWrapper>
+    </PlainPage>
   )
 }

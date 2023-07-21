@@ -26,6 +26,9 @@ export const SWRKeys = {
     user: {
       info: 'space.user.info',
     },
+    score: {
+      all: 'space.score.all',
+    },
   },
 }
 

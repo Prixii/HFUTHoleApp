@@ -42,8 +42,8 @@ export const LoginForm = ({ onLogin }: Props) => {
         })
       }
     },
-    onSuccess({ data }) {
-      login(data.data.token)
+    onSuccess(data) {
+      login(data.token)
       onLogin?.()
     },
   })

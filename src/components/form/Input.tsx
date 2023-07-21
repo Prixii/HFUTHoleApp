@@ -32,8 +32,6 @@ export function Input<T extends object = PlainObject>({
 
   const error = get(control._formState.errors, name)
 
-  console.log(error)
-
   return (
     <Controller
       name={name}

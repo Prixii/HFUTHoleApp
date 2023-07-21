@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { resetStoreState } from '@/shared/utils/store'
+import { JSONDeepClone } from '@/shared/utils/utils'
 
 interface SpaceUserState {
   isLogin: boolean
@@ -9,8 +10,7 @@ interface SpaceUserState {
   info: IUserInfoResponse
 }
 
-// TODO 冻结对象好像也不对😅
-const initialState: SpaceUserState = Object.freeze({
+const initialState: SpaceUserState = {
   isLogin: false,
   meta: {
     token: '',
@@ -25,7 +25,7 @@ const initialState: SpaceUserState = Object.freeze({
     studentId: 0,
     studyYears: '',
   },
-})
+}
 
 export const spaceUserSlice = createSlice({
   name: 'spaceUser',
@@ -38,7 +38,7 @@ export const spaceUserSlice = createSlice({
       }
     },
     logout(state) {
-      resetStoreState(state, initialState)
+      resetStoreState(state, JSONDeepClone(initialState))
     },
     setUserInfo(state, action: PayloadAction<IUserInfoResponse>) {
       state.info = action.payload

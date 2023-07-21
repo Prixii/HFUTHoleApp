@@ -1,31 +1,30 @@
-import { useDaySchedule } from '@/pages/space/day-schedule/useDaySchedule'
-import { Text } from 'react-native-paper'
-import { View, Pressable } from 'react-native'
-import { format } from 'date-fns'
-import { IconButton } from '@/components/IconButton'
-import { AngleLeftIcon, AngleRightIcon } from '@/components/icon'
-import { useScheduleVisibleWeek } from '@/pages/space/@utils/useScheduleVisibleWeek'
-import { useChangeWeek } from '@/pages/space/@utils/useWeekChange'
-import { useAppDispatch } from '@/store/store'
-import { setDaySchedule } from '@/store/reducer/spaceCourse'
-import { useCallback } from 'react'
+import {
+  useScheduleVisibleWeek,
+  type ScheduleVisibleWeek,
+} from '@/pages/space/@utils/useScheduleVisibleWeek'
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated'
+import { useDaySchedule } from '@/pages/space/day-schedule/useDaySchedule'
+import { Text } from 'react-native-paper'
+import { View, Pressable } from 'react-native'
+import { useAppDispatch } from '@/store/store'
+import { setDaySchedule } from '@/store/reducer/spaceCourse'
+import { useCallback } from 'react'
+import { WeekChange } from '@/pages/space/components/WeekChange'
 
 export const Header = () => {
   const { visibleDate, daySchedule, todaySchedule } = useDaySchedule()
   const dayScheduleVisibleWeek = useScheduleVisibleWeek('daySchedule')
-  const { onPrev, onNext } = useChangeWeek()
   const dispatch = useAppDispatch()
 
   const handleActiveChange = useCallback(
     (index: number) => {
       dispatch(setDaySchedule({ ...daySchedule, dayIdx: index }))
     },
-    [dispatch, daySchedule, setDaySchedule]
+    [dispatch, daySchedule]
   )
 
   return (
@@ -40,28 +39,19 @@ export const Header = () => {
         项安排
       </Text>
 
-      <View className="flex flex-row justify-between items-center">
-        <IconButton
-          icon={() => <AngleLeftIcon size={20} />}
-          transparent
-          onPress={onPrev}
-        />
-        <Text variant="bodyLarge">{`第${daySchedule.weekIdx + 1}周`}</Text>
-        <IconButton
-          icon={() => <AngleRightIcon size={20} />}
-          transparent
-          onPress={onNext}
-        />
-      </View>
+      <WeekChange
+        scheduleKey="daySchedule"
+        text={`第${daySchedule.weekIdx + 1}周`}
+      />
 
       <View className="flex flex-row mt-2 gap-2">
-        {dayScheduleVisibleWeek.map(({ active, date }, index) => (
+        {dayScheduleVisibleWeek.map((visibleDate, index) => (
           <Pressable
             key={index}
             className="flex-1"
             onPress={() => handleActiveChange(index)}
           >
-            <VisibleWeekItem active={active} date={date} />
+            <VisibleWeekItem {...visibleDate} />
           </Pressable>
         ))}
       </View>
@@ -69,7 +59,7 @@ export const Header = () => {
   )
 }
 
-const VisibleWeekItem = ({ active, date }: { date: Date; active: boolean }) => {
+const VisibleWeekItem = ({ active, day, month }: ScheduleVisibleWeek) => {
   const color = useDerivedValue(() => (active ? '#fff' : '#94a3b8'), [active])
   const backgroundColor = useDerivedValue(
     () => (active ? '#4981F9' : '#EDEFF3'),
@@ -96,13 +86,13 @@ const VisibleWeekItem = ({ active, date }: { date: Date; active: boolean }) => {
         className={`mx-auto text-slate-400 ${active ? 'text-white' : ''}`}
         style={textStyle}
       >
-        {format(date, 'EEE.')}
+        {month}
       </Animated.Text>
       <Animated.Text
         className={`mx-auto text-slate-400 ${active ? 'text-white' : ''}`}
         style={textStyle}
       >
-        {format(date, 'dd')}
+        {day}
       </Animated.Text>
     </Animated.View>
   )

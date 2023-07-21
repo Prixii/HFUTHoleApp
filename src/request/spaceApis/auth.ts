@@ -1,9 +1,9 @@
 import { LoginFormValidator } from '@/shared/validators/space/auth'
-import { loginInstance } from '@/request/spaceRequest'
+import { request } from '@/request/spaceRequest'
 
 export function LoginRequest(data: LoginFormValidator) {
-  return loginInstance<ISpaceResponse<ISpaceAuthResponse>>({
-    url: '/v2/login',
+  return request<ISpaceAuthResponse>({
+    url: 'v2/login',
     method: 'post',
     data,
   })

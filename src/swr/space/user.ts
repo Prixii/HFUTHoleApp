@@ -1,7 +1,7 @@
 import { SWRKeys } from '@/swr/utils'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { useQuery } from 'react-query'
-import { getUserInfo } from '@/request/spaceApis/user'
+import { getUserInfoRequest } from '@/request/spaceApis/user'
 import { useAppDispatch } from '@/store/store'
 import { setUserInfo } from '@/store/reducer/spaceUser'
 
@@ -14,7 +14,7 @@ export const useSpaceUserInfo = () => {
   const query = useQuery(userInfoKey, {
     enabled: isLogin,
     retry: false,
-    queryFn: getUserInfo,
+    queryFn: getUserInfoRequest,
     onSuccess(data) {
       dispatch(setUserInfo(data))
     },

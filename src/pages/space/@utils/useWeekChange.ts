@@ -1,4 +1,4 @@
-import type { SpaceCourseState } from '@/store/reducer/spaceCourse'
+import type { ScheduleKey } from '@/pages/space/@utils/types'
 import { useAppSelector, useAppDispatch } from '@/store/store'
 import { setDaySchedule, setWeekSchedule } from '@/store/reducer/spaceCourse'
 import { useCallback } from 'react'
@@ -6,12 +6,7 @@ import { useCallback } from 'react'
 const prevBoundary = 0
 const nextBoundary = 19
 
-export const useChangeWeek = (
-  scheduleKey: Extract<
-    keyof SpaceCourseState,
-    'daySchedule' | 'weekSchedule'
-  > = 'daySchedule'
-) => {
+export const useChangeWeek = (scheduleKey: ScheduleKey) => {
   const schedule = useAppSelector((state) => state.spaceCourse[scheduleKey])
   const dispatch = useAppDispatch()
   const setAction =
@@ -23,7 +18,7 @@ export const useChangeWeek = (
     } else {
       dispatch(setAction({ ...schedule, weekIdx: schedule.weekIdx - 1 }))
     }
-  }, [schedule, setAction])
+  }, [dispatch, schedule, setAction])
 
   const onNext = useCallback(() => {
     if (schedule.weekIdx === nextBoundary) {
@@ -31,7 +26,7 @@ export const useChangeWeek = (
     } else {
       dispatch(setAction({ ...schedule, weekIdx: schedule.weekIdx + 1 }))
     }
-  }, [schedule, setAction])
+  }, [dispatch, schedule, setAction])
 
   return {
     onPrev,

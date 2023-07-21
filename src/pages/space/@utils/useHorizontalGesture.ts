@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { GestureResponderEvent } from 'react-native'
 
-const interactiveBoundary = 100
+const interactiveBoundary = 120
 
 interface Params {
   onPrev?: () => void
@@ -12,12 +12,9 @@ export const useHorizontalGesture = ({ onPrev, onNext }: Params) => {
   const [enable, setEnable] = useState(true)
   const startX = useRef(0)
 
-  const onTouchStart = useCallback(
-    (e: GestureResponderEvent) => {
-      startX.current = e.nativeEvent.pageX
-    },
-    [enable, onPrev, onNext]
-  )
+  const onTouchStart = useCallback((e: GestureResponderEvent) => {
+    startX.current = e.nativeEvent.pageX
+  }, [])
 
   const onTouchEnd = useCallback(
     (e: GestureResponderEvent) => {

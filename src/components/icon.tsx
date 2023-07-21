@@ -47,7 +47,9 @@ export const AddIcon = withMaterialIcon('add')
 
 export const VotedIcon = withMaterialIcon('where-to-vote')
 
-export const MoreIcon = withMaterialIcon('more-vert')
+export const MoreVerticalIcon = withMaterialIcon('more-vert')
+
+export const MoreHorizontalIcon = withMaterialIcon('more-horiz')
 
 export const NotifyIcon = withMaterialIcon('notifications')
 
@@ -72,3 +74,11 @@ export const AngleRightIcon = withFontAV5Icon('angle-right')
 export const LogoutIcon = withMaterialIcon('login')
 
 export const ArrowLeftIcon = withMaterialIcon('arrow-back')
+
+export const UserIcon = withFontAV5Icon('user')
+
+export const UserFriendsIcon = withFontAV5Icon('user-friends')
+
+export const FireIcon = withFontAV5Icon('fire-alt')
+
+export const AwardIcon = withFontAV5Icon('award')
