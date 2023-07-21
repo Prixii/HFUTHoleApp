@@ -1,11 +1,11 @@
 {
   "build": {
-    "production": {
+    "prod": {
       "android": {
         "buildType": "apk",
         "image": "latest"
       },
-      "channel": "production"
+      "channel": "prod"
     },
     "preview2": {
       "android": {
