@@ -1,6 +1,8 @@
+import { useRef } from 'react'
 import { FAB, FABProps, useTheme } from 'react-native-paper'
+import Animated from 'react-native-reanimated'
 
-export function PostFAB(props: Partial<FABProps>) {
+export function ToTopFAB(props: Partial<FABProps>) {
   const theme = useTheme()
 
   return (
@@ -8,7 +10,7 @@ export function PostFAB(props: Partial<FABProps>) {
       style={{
         backgroundColor: theme.colors.primary,
       }}
-      icon={'plus'}
+      icon={'arrow-up'}
       color={'white'}
       mode={'flat'}
       {...props}
