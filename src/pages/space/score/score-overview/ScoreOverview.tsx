@@ -64,9 +64,9 @@ const ScoreOverviewPage = ({
   )
 
   return (
-    <Page>
+    <View className={'px-2 min-h-screen'}>
       <ScoreScrollWrapper>
-        <View className="py-6 px-3 my-6 rounded-xl bg-white">
+        <View className="rounded-lg bg-white p-4 mt-2">
           <Text className="mx-auto font-bold" variant="titleLarge">
             {semester}
           </Text>
@@ -125,7 +125,7 @@ const ScoreOverviewPage = ({
           </View>
         </View>
       </ScoreScrollWrapper>
-    </Page>
+    </View>
   )
 }
 
@@ -174,7 +174,7 @@ export const ScoreOverview = () => {
           renderTabBar={() => <View />}
         />
       ) : (
-        <Empty text="数据似乎飞走了" />
+        <Empty text="成绩似乎没了，呜呜呜" />
       )}
     </View>
   )

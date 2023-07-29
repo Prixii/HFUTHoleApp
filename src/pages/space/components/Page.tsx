@@ -7,7 +7,7 @@ export function Page(props: ViewProps) {
   return (
     <View
       {...props}
-      className={`min-h-full w-full px-5 ${props.className}`}
+      className={`min-h-full w-full ${props.className}`}
       style={{
         backgroundColor: theme.colors.background,
       }}

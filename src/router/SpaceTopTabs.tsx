@@ -11,21 +11,56 @@ import { ScoreOverview } from '@/pages/space/score/score-overview/ScoreOverview'
 import { ScoreInfo } from '@/pages/space/score/score-info/ScoreInfo'
 import { FailureRate } from '@/pages/space/score/failure-rate/FailureRate'
 import { CustomRanking } from '@/pages/space/score/custom-ranking/CustomRanking'
-import { Help } from '@/pages/space/service/help/Help'
+import { ScoreHelpScreen } from '@/pages/space/service/help/Help'
 import { TopTabHeader } from '@/router/components/TopTabHeader'
+import { Header } from '@/components/Header'
 
 const Tab = createMaterialTopTabNavigator()
 const SpaceStack = createNativeStackNavigator()
 
+const ScoreScreens = [
+  {
+    name: 'score-overview',
+    component: ScoreOverview,
+    title: '成绩预览',
+  },
+  {
+    name: 'score-info',
+    component: ScoreInfo,
+    title: '成绩信息',
+  },
+  {
+    name: 'failure-rate',
+    component: FailureRate,
+    title: '挂科率查询',
+  },
+  {
+    name: 'custom-ranking',
+    component: CustomRanking,
+    title: '自定义排名',
+  },
+  {
+    name: 'help',
+    component: ScoreHelpScreen,
+    title: '成绩帮助',
+  },
+]
+
 export const SpaceStacks = () => {
   return (
-    <SpaceStack.Navigator screenOptions={{ headerShown: false }}>
-      <SpaceStack.Screen name="score-overview" component={ScoreOverview} />
-      <SpaceStack.Screen name="failure-rate" component={FailureRate} />
-      <SpaceStack.Screen name="custom-ranking" component={CustomRanking} />
-      <SpaceStack.Screen name="score-info" component={ScoreInfo} />
-      <SpaceStack.Screen name="help" component={Help} />
-    </SpaceStack.Navigator>
+    <>
+      <StatusBar backgroundColor={'white'} />
+      <SpaceStack.Navigator screenOptions={{ header: Header }}>
+        {ScoreScreens.map((screen) => (
+          <SpaceStack.Screen
+            key={screen.name}
+            name={screen.name}
+            component={screen.component}
+            options={{ title: screen.title }}
+          />
+        ))}
+      </SpaceStack.Navigator>
+    </>
   )
 }
 

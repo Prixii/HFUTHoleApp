@@ -41,7 +41,7 @@ const HoleInfoVote: React.FC<{ data: Data }> = ({ data }) => {
     },
   })
 
-  const onVotePress = (item: VoteItem, func) => {
+  const onVotePress = (item: VoteItem, func: Func) => {
     if (data.vote.isVoted) {
       return
     }
@@ -186,18 +186,14 @@ export const HoleInfo = React.memo(
                   data.comments.map((comment) => (
                     <View
                       className={
-                        'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'
+                        'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 justify-between'
                       }
                       key={comment.id}
                     >
-                      <Text
-                        className={'font-bold self-start'}
-                        ellipsizeMode={'tail'}
-                        numberOfLines={1}
-                      >
+                      <Text className={'font-bold self-start max-w-[20%]'}>
                         {comment.user.username}
                       </Text>
-                      <View>
+                      <View className={'flex-1'}>
                         <EmojiableText
                           body={sliceHoleInfoCommentBody(comment.body)}
                           variant={'bodyMedium'}

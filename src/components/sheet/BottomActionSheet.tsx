@@ -78,6 +78,7 @@ export const BottomActionSheet = forwardRef<BottomSheetModal, Props>(
         footerComponent={renderFooter}
         {...props}
       >
+        <StatusBar backgroundColor={'transparent'} translucent />
         {props.children}
       </BottomSheetModal>
     )

@@ -6,7 +6,7 @@ interface RouteParams {
   type: HelpType
 }
 
-export const Help = () => {
+export const ScoreHelpScreen = () => {
   const params = useParams<RouteParams>()
   console.log(params)
 
