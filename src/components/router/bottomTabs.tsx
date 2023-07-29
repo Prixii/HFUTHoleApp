@@ -5,21 +5,11 @@ import { BottomTabBarIcon } from '@/components/router/bottomTabBarIcon'
 import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
 import { useTheme } from 'react-native-paper'
 import { Badge } from '@/components/Badge'
-import { useRef } from 'react'
-import { useMount } from 'ahooks'
 
 // TODO: Theming
 export const BottomTabBar = ({ state, navigation }: BottomTabBarProps) => {
-  const { totalCount, refetch } = useBaseNotificationsQuery()
-  const timer = useRef<ReturnType<typeof setInterval>>()
+  const { totalCount } = useBaseNotificationsQuery()
   const theme = useTheme()
-
-  useMount(() => {
-    if (timer.current) {
-      clearInterval(timer.current)
-    }
-    timer.current = setInterval(refetch, 5000)
-  })
 
   return (
     <View

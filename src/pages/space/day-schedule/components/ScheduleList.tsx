@@ -2,7 +2,7 @@ import type { Schedule } from '@/pages/space/@utils/types'
 import type { ArrayElementType } from '@/shared/types/utils'
 import type { Colors } from '@/pages/space/@utils/types'
 import { useDaySchedule } from '@/pages/space/day-schedule/useDaySchedule'
-import { View, Pressable } from 'react-native'
+import { View, Pressable, StatusBar, ScrollView } from 'react-native'
 import { Text } from 'react-native-paper'
 import { ListEmpty } from '@/components/image/ListEmpty'
 import {
@@ -15,7 +15,11 @@ import {
 } from '@/pages/space/@utils/utils'
 import { useHorizontalGesture } from '@/pages/space/@utils/useHorizontalGesture'
 import { useChangeDay } from '@/pages/space/@utils/useDayChange'
-import { useMemo } from 'react'
+import React, { MutableRefObject, useMemo, useRef } from 'react'
+import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { SecondaryText } from '@/components/Text/SecondaryText'
+import { ScheduleSheetContent } from '@/pages/space/day-schedule/components/ScheduleSheetContent'
 
 type ScheduleListItem = ArrayElementType<
   ReturnType<typeof useDaySchedule>['scheduleList']
@@ -37,7 +41,7 @@ export const ScheduleList = () => {
       onTouchEnd={onTouchEnd}
     >
       {todaySchedule.length ? (
-        <View className="w-[90%] mx-auto mt-5">
+        <View className="p-4">
           {scheduleList.map((scheduleListItem) => (
             <View
               className="flex flex-row"
@@ -51,7 +55,7 @@ export const ScheduleList = () => {
 
               <View className="relative pb-2" style={{ flex: 5 }}>
                 <View className="absolute -left-4 h-[1px] w-[200%] bg-slate-300/80" />
-                <Card scheduleListItem={scheduleListItem} />
+                <CourseCard scheduleListItem={scheduleListItem} />
               </View>
             </View>
           ))}
@@ -63,7 +67,7 @@ export const ScheduleList = () => {
   )
 }
 
-const Card = ({ scheduleListItem }: CardProps) => {
+const CourseCard = ({ scheduleListItem }: CardProps) => {
   const { schedules, timeLine } = scheduleListItem
 
   // 22:00 后不渲染
@@ -115,38 +119,55 @@ const ConflictCard = ({ scheduleListItem: { schedules } }: CardProps) => {
   )
 }
 
-const ScheduleCard = ({
-  schedule,
-  timeLine,
-}: {
+export interface ScheduleItemCardProps {
   schedule: Schedule
   timeLine: ScheduleListItem['timeLine']
-}) => {
+}
+
+const ScheduleCard = ({ schedule, timeLine }: ScheduleItemCardProps) => {
   const { cardStyle, textStyle } = useMemo(
     () => generateCardStyle(schedule.color as Colors, true),
     [schedule.color]
   )
 
+  const sheetRef = useRef() as MutableRefObject<BottomSheetModal>
+
+  const openSheet = () => {
+    sheetRef.current?.present()
+  }
+
   return (
-    <Pressable
-      style={cardStyle}
-      className={`flex border border-l-2 justify-center h-22 p-3 rounded-lg ${
-        timeLine.start === schedule.startTime ? '' : 'mt-2'
-      }`}
-    >
-      <View className="flex flex-row justify-between">
-        <Text
-          style={textStyle}
-          className="text-xs"
-        >{`${schedule.startTime} - ${schedule.endTime}`}</Text>
-        <Text style={textStyle} className="text-xs">
-          {getTeachers(schedule.detailInfo.teachers || [])}
+    <>
+      <Pressable
+        style={cardStyle}
+        className={`flex space-y-1 border border-l-2 justify-center py-4 px-2 rounded-lg ${
+          timeLine.start === schedule.startTime ? '' : 'mt-2'
+        }`}
+        onPress={openSheet}
+      >
+        <View className="flex flex-row justify-between">
+          <Text
+            style={textStyle}
+            className="text-xs"
+          >{`${schedule.startTime} - ${schedule.endTime}`}</Text>
+          <Text style={textStyle} className="text-xs">
+            {getTeachers(schedule.detailInfo.teachers)}
+          </Text>
+        </View>
+        <Text style={textStyle} className="text-base font-bold">
+          {formatCourseName(schedule.courseName)}
         </Text>
-      </View>
-      <Text style={textStyle} className="text-base font-bold">
-        {formatCourseName(schedule.courseName)}
-      </Text>
-      <Text style={textStyle}>{formatRoom(schedule.room)}</Text>
-    </Pressable>
+        <Text style={textStyle}>{formatRoom(schedule.room)}</Text>
+      </Pressable>
+      <BottomActionSheet
+        ref={sheetRef}
+        snapPoints={['60%', '80%']}
+        backgroundStyle={{ backgroundColor: 'white' }}
+        footerText={'查看挂科率'}
+        onFooterPress={() => {}}
+      >
+        <ScheduleSheetContent schedule={schedule} />
+      </BottomActionSheet>
+    </>
   )
 }

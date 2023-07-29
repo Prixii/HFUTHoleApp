@@ -2,30 +2,42 @@ import React, {
   forwardRef,
   MutableRefObject,
   useCallback,
-  useEffect,
   useMemo,
-  useRef,
 } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, StatusBar } from 'react-native'
 import {
   BottomSheetBackdrop,
   BottomSheetFooter,
   BottomSheetModal,
+  BottomSheetModalProps,
+} from '@gorhom/bottom-sheet'
+import type {
+  BottomSheetBackdropProps,
+  BottomSheetFooterProps,
 } from '@gorhom/bottom-sheet'
 import { TouchableRipple, useTheme } from 'react-native-paper'
+import { Func } from '@/shared/types'
 
-interface Props {
+interface Props extends BottomSheetModalProps {
   children: React.ReactNode
+  footerText?: string
+  onFooterPress?: Func
 }
 
 export const BottomActionSheet = forwardRef<BottomSheetModal, Props>(
-  (props, ref) => {
+  (
+    { snapPoints, backgroundStyle, footerText, onFooterPress, ...props },
+    ref
+  ) => {
     const theme = useTheme()
 
-    const snapPoints = useMemo(() => ['25%', '50%'], [])
+    const memoSnapPoints = useMemo(
+      () => snapPoints || ['25%', '50%'],
+      [snapPoints]
+    )
 
     const renderBackdrop = useCallback(
-      (props) => (
+      (props: BottomSheetBackdropProps) => (
         <BottomSheetBackdrop
           {...props}
           disappearsOnIndex={-1}
@@ -39,12 +51,12 @@ export const BottomActionSheet = forwardRef<BottomSheetModal, Props>(
       (ref as MutableRefObject<BottomSheetModal>).current?.close()
 
     const renderFooter = useCallback(
-      (props) => (
+      (props: BottomSheetFooterProps) => (
         <BottomSheetFooter {...props} bottomInset={24}>
           <View className={'mx-4 rounded-lg overflow-hidden bg-[#80f]'}>
-            <TouchableRipple onPress={close}>
+            <TouchableRipple onPress={onFooterPress || close}>
               <View className={'p-4'}>
-                <Text style={styles.footerText}>取消</Text>
+                <Text style={styles.footerText}>{footerText || '取消'}</Text>
               </View>
             </TouchableRipple>
           </View>
@@ -57,10 +69,14 @@ export const BottomActionSheet = forwardRef<BottomSheetModal, Props>(
       <BottomSheetModal
         ref={ref}
         index={1}
-        snapPoints={snapPoints}
+        snapPoints={memoSnapPoints}
         backdropComponent={renderBackdrop}
-        backgroundStyle={{ backgroundColor: theme.colors.background }}
+        backgroundStyle={{
+          backgroundColor: theme.colors.background,
+          ...(backgroundStyle as object),
+        }}
         footerComponent={renderFooter}
+        {...props}
       >
         {props.children}
       </BottomSheetModal>

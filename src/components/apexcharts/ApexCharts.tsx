@@ -37,7 +37,6 @@ export const ApexCharts = forwardRef(
                 width: 100%;
                 margin: 0;
                 padding: 0;
-                background-color: ${backgroundColor};
               }
               ${injectedCSS}
             </style>

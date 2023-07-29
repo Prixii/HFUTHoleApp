@@ -16,7 +16,7 @@ export type Colors = typeof CARD_COLORS_KEYS
 export interface ScoreInfo {
   key: keyof RankInfo
   title: string
-  Icon: ReactNode
+  Icon: () => ReactNode
 }
 
 export type HelpType = 'common' | 'login' | 'score' | 'course' | 'grammar'

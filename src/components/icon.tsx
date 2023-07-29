@@ -1,5 +1,6 @@
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
+import AntDesignIcon from 'react-native-vector-icons/AntDesign'
 import { IconProps } from 'react-native-vector-icons/Icon'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
@@ -18,7 +19,9 @@ const withIconProps = (
     return (
       <WrappedIconComponent
         name={name}
-        color={props.active ? theme.colors.primary : 'grey'}
+        color={
+          props.active ? theme.colors.primary : theme.colors.surfaceVariant
+        }
         size={20}
         {...props}
       />
@@ -26,8 +29,11 @@ const withIconProps = (
   }
 }
 
+export type IconComponentType = ReturnType<ReturnType<typeof withIconProps>>
+
 const withFontAV5Icon = (name: string) => withIconProps(FontAwesome5Icon, name)
 const withMaterialIcon = (name: string) => withIconProps(MaterialIcon, name)
+const withAntDesignIcon = (name: string) => withIconProps(AntDesignIcon, name)
 
 export const LikeIcon = withMaterialIcon('thumb-up')
 
@@ -84,3 +90,9 @@ export const FireIcon = withFontAV5Icon('fire-alt')
 export const AwardIcon = withFontAV5Icon('award')
 
 export const ChartBar = withFontAV5Icon('chart-bar')
+
+export const LocationIcon = withFontAV5Icon('map-marker-alt')
+
+export const GradeIcon = withFontAV5Icon('tag')
+
+export const ClassIcon = withFontAV5Icon('users-class')

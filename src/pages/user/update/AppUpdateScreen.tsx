@@ -5,7 +5,12 @@ import { UpdateCheckResult } from 'expo-updates'
 import { getQAQFont } from '@/shared/utils/utils'
 import { useEffect } from 'react'
 
-const AppUpdateScreen = ({ visible, setVisible }) => {
+interface Props {
+  visible: boolean
+  setVisible: React.Dispatch<boolean>
+}
+
+const AppUpdateScreen = ({ visible, setVisible }: Props) => {
   const { updateStatus, error, update, checkUpdate, handleUpdate, hideModal } =
     useAppUpdate({ visible, setVisible })
 
@@ -76,9 +81,11 @@ const ConfirmUpdateDialog = (props: {
       <Dialog.Title>有更新啦 {getQAQFont('happy')}</Dialog.Title>
       <Dialog.Content>
         <SecondaryText>
-          更新内容:
-          {'\n'}
-          {props.update?.manifest?.extra['update-message']}
+          更新内容:{' '}
+          <SecondaryText>
+            {(props.update?.manifest?.extra as any)?.['update-message'] ||
+              '可能是偷懒忘记写更新内容了'}
+          </SecondaryText>
         </SecondaryText>
       </Dialog.Content>
       <Dialog.Actions>

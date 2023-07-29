@@ -16,6 +16,7 @@ import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
 import { HoleDetailHeader } from '@/pages/hole/detail/DetailHeader'
 import { SearchIcon } from '@/components/icon'
 import { TopTabHeader } from '@/router/components/TopTabHeader'
+import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 
 const Tab = createMaterialTopTabNavigator()
 const HoleStack = createNativeStackNavigator()
@@ -91,10 +92,19 @@ const TabScreens = [
 export function TopTabs() {
   const theme = useTheme()
 
+  const route = useHoleSearchRoute()
+
   return (
     <>
       <StatusBar backgroundColor={theme.colors.background} />
-      <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabHeader}>
+      <Tab.Navigator
+        initialRouteName={'latest'}
+        tabBar={(props) => (
+          <TopTabHeader {...props} onRightPress={route.goIndex}>
+            <SearchIcon />
+          </TopTabHeader>
+        )}
+      >
         {TabScreens.map((item) => (
           <Tab.Screen
             key={item.name}

@@ -5,12 +5,6 @@ import { Func } from '@/shared/types'
 import { useDebounceFn } from 'ahooks'
 import { RefreshIndicatorControl } from '@/components/RefreshIndicatorControl'
 
-declare module 'react' {
-  function forwardRef<T, P = unknown>(
-    render: (props: P, ref: React.Ref<T>) => React.ReactNode | null
-  ): (props: P & React.RefAttributes<T>) => React.ReactNode | null
-}
-
 type Props<T> = {
   onRefreshing?: Func
   onTopRefresh?: Func

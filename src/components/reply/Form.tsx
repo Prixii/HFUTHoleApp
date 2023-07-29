@@ -1,18 +1,16 @@
 import { FieldErrors, useForm } from 'react-hook-form'
 import { CommentReplyValidator } from '@/shared/validators/hole/reply'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator/dist/class-validator'
-import { useHoleComment } from '@/swr/hole'
 import { useMutation } from 'react-query'
 import { SWRKeys } from '@/swr/utils'
-import { PostHoleCommentReplyRequest } from '@/request/apis/hole'
 import { Toast } from '@/shared/utils/toast'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { View } from 'react-native'
 import { Input } from '@/components/form/Input'
 import { ScreenHeight } from '@/shared/utils/utils'
 import { Button } from 'react-native-paper'
-import React, { useState } from 'react'
-import { AwaitAble, AwaitFunc, Func } from '@/shared/types'
+import React from 'react'
+import { AwaitAble, Func } from '@/shared/types'
 
 interface Props {
   data: IHoleCommentListItem
@@ -45,7 +43,7 @@ export function ReplyForm({ data, closeModal, reqFunc, onReply }: Props) {
 
   const onError = (error: FieldErrors<CommentReplyValidator>) => {
     Toast.error({
-      text1: error.body.message,
+      text1: error.body?.message,
     })
   }
 

@@ -26,22 +26,22 @@ const scoreInfos: ScoreInfo[] = [
   {
     key: 'mine',
     title: '我的成绩',
-    Icon: <UserIcon size={16} color="#c1c1c1" />,
+    Icon: UserIcon,
   },
   {
     key: 'avg',
     title: '专业平均',
-    Icon: <UserFriendsIcon size={16} color="#c1c1c1" />,
+    Icon: UserFriendsIcon,
   },
   {
     key: 'head',
     title: '专业前10%',
-    Icon: <FireIcon size={16} color="#c1c1c1" />,
+    Icon: FireIcon,
   },
   {
     key: 'max',
     title: '专业最高',
-    Icon: <AwardIcon size={16} color="#c1c1c1" />,
+    Icon: AwardIcon,
   },
 ]
 
@@ -76,10 +76,12 @@ export const ScoreCard = () => {
         <View className="flex flex-row justify-between rounded-md mt-2 p-2 bg-[#4e73f6]">
           {scoreInfos.map((info) => (
             <View key={info.key}>
-              <Text className="text-gray-200 text-base">{info.title}</Text>
+              <Text className="text-gray-200 text-xs">{info.title}</Text>
               <View className="flex flex-row mx-auto space-x-1">
-                {info.Icon}
-                <Text className="text-white">{scoreData[info.key]}</Text>
+                <info.Icon />
+                <Text className="text-white text-sm">
+                  {scoreData[info.key]}
+                </Text>
               </View>
             </View>
           ))}
