@@ -17,6 +17,7 @@ import { EmojiableText } from '@/components/Text/EmojiableText'
 import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
 import { Svg } from '@/components/svg/Svg'
 import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
+import { sliceHoleInfoCommentBody } from '@/pages/hole/components/utils'
 
 type Data = IHole
 
@@ -99,7 +100,7 @@ export const HoleInfoBody: React.FC<{ data: Data }> = React.memo(({ data }) => {
   return (
     <View className={'flex space-y-2'}>
       <View>
-        <EmojiableText body={data.body} />
+        <EmojiableText body={data.body} variant={'bodyMedium'} />
       </View>
       {data.imgs.length && (
         <View>
@@ -179,32 +180,33 @@ export const HoleInfo = React.memo(
             <View>{body || <HoleInfoBody data={data} />}</View>
             <View>{data.vote && <HoleInfoVote data={data} />}</View>
             <View>{bottom || <HoleInfoBottom data={data} />}</View>
-            {/*{showComment && (*/}
-            {/*  <View className={'grid gap-2'}>*/}
-            {/*    {data.comments?.length > 0 &&*/}
-            {/*      data.comments.map((comment) => (*/}
-            {/*        <View*/}
-            {/*          className={*/}
-            {/*            'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'*/}
-            {/*          }*/}
-            {/*        >*/}
-            {/*          <Text*/}
-            {/*            className={'font-bold'}*/}
-            {/*            ellipsizeMode={'tail'}*/}
-            {/*            numberOfLines={1}*/}
-            {/*            style={{ maxWidth: '20%' }}*/}
-            {/*          >*/}
-            {/*            {comment.user.username}*/}
-            {/*          </Text>*/}
-            {/*          <View>*/}
-            {/*            <EmojiableText*/}
-            {/*              body={sliceHoleInfoCommentBody(comment.body)}*/}
-            {/*            />*/}
-            {/*          </View>*/}
-            {/*        </View>*/}
-            {/*      ))}*/}
-            {/*  </View>*/}
-            {/*)}*/}
+            {showComment && (
+              <View className={'grid gap-2'}>
+                {data.comments?.length > 0 &&
+                  data.comments.map((comment) => (
+                    <View
+                      className={
+                        'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 text-xs'
+                      }
+                      key={comment.id}
+                    >
+                      <Text
+                        className={'font-bold self-start'}
+                        ellipsizeMode={'tail'}
+                        numberOfLines={1}
+                      >
+                        {comment.user.username}
+                      </Text>
+                      <View>
+                        <EmojiableText
+                          body={sliceHoleInfoCommentBody(comment.body)}
+                          variant={'bodyMedium'}
+                        />
+                      </View>
+                    </View>
+                  ))}
+              </View>
+            )}
           </View>
         </TouchableRipple>
       </View>
