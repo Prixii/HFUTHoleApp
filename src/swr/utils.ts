@@ -28,6 +28,7 @@ export const SWRKeys = {
     },
     score: {
       all: 'space.score.all',
+      single: 'space.score.single',
     },
   },
 }

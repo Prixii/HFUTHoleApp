@@ -1,160 +1,181 @@
-import { useCallback, useMemo } from 'react'
-import { View, ScrollView } from 'react-native'
-import { Text } from 'react-native-paper'
-import { Page } from '@/pages/space/components/Page'
+import { View } from 'react-native'
+import { useParams } from '@/shared/hooks/useParams'
+import { useSpaceSingleScore } from '@/swr/space/score'
 import { useAppSelector } from '@/store/store'
+import { ScreenWrapper } from '@/components/ScrollWrapper'
+import { Text } from 'react-native-paper'
+import { RefreshIndicatorControl } from '@/components/RefreshIndicatorControl'
+import { Page } from '@/pages/space/components/Page'
+import { LoadingScreen } from '@/components/LoadingScreen'
+import { useCallback, useMemo, useState } from 'react'
 import { formatScore } from '@/pages/space/@utils/utils'
-import { TabView, type Tab } from '@/components/TabView'
-import { ScoreScrollWrapper } from '@/pages/space/components/ScoreScrollWrapper'
-import { Empty } from '@/components/image/Empty'
+import { objectMap, floatFixed } from '@/shared/utils/utils'
+import { Card } from '@/pages/space/components/Card'
+import { ScoreDetail } from '@/pages/space/score/score-info/ScoreDetail'
+import { UserIcon, UserFriendsIcon, FireIcon } from '@/components/icon'
 import {
-  UserIcon,
-  UserFriendsIcon,
-  FireIcon,
-  ChartBar,
-} from '@/components/icon'
-import type { Route } from 'react-native-tab-view'
+  ToggleButton,
+  type ButtonOptions,
+} from '@/pages/space/score/components/ToggleButton'
 import type { ScoreInfo as ScoreInfoItem } from '@/pages/space/@utils/types'
 
-type SemesterInfo = Omit<
-  Semester,
-  'compulsoryRank' | 'totalRank' | 'semesterId'
-> & { scoreData: ReturnType<typeof formatScore> }
+type ScoreType = 'score' | 'gpa'
+type RankType = 'majorRank' | 'classRank' | 'schoolRank'
 
-const scoreInfos: ScoreInfoItem[] = [
+const scoreButtonOptions: ButtonOptions<ScoreType>[] = [
+  { key: 'score', title: '均分' },
+  { key: 'gpa', title: 'GPA' },
+]
+
+const rankButtonOptions: ButtonOptions<RankType>[] = [
   {
-    key: 'rank',
-    title: '我的排名',
-    Icon: <ChartBar size={16} color="#4B5563" />,
+    key: 'majorRank',
+    title: '专业排名',
   },
   {
-    key: 'mine',
-    title: '我的成绩',
-    Icon: <UserIcon size={16} color="#4B5563" />,
+    key: 'classRank',
+    title: '教学班排名',
   },
   {
-    key: 'avg',
-    title: '专业平均',
-    Icon: <UserFriendsIcon size={16} color="#4B5563" />,
-  },
-  {
-    key: 'head',
-    title: '专业前10%',
-    Icon: <FireIcon size={16} color="#4B5563" />,
+    key: 'schoolRank',
+    title: '全校排名',
   },
 ]
 
-const ScoreInfoPage = ({ scoreData, scores, semester }: SemesterInfo) => {
-  return (
-    <Page>
-      <ScoreScrollWrapper>
-        <View className="py-6 px-3 my-6 rounded-xl bg-white">
-          <Text className="mx-auto font-bold" variant="titleLarge">
-            {semester}
-          </Text>
-
-          <View className="flex flex-row justify-between rounded-md mt-4 p-2 bg-[#F5F6F9]">
-            {scoreInfos.map((info) => (
-              <View key={info.key}>
-                <Text className="text-gray-400 text-base">{info.title}</Text>
-                <View className="flex flex-row mx-auto space-x-1">
-                  {info.Icon}
-                  <Text className="text-gray-600">
-                    {info.key === 'rank'
-                      ? `${scoreData.rank}/${scoreData.total}`
-                      : scoreData[info.key]}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-
-          <View className="mt-4 flex space-y-4">
-            {scores.map((score) => (
-              <View
-                key={score.name}
-                className="flex flex-row justify-between space-x-4"
-              >
-                <View className="flex flex-1 flex-row space-x-1">
-                  <View
-                    className={`h-4 w-1 mt-1 rounded-sm ${
-                      parseInt(score.score) < 60
-                        ? 'bg-red-500'
-                        : parseInt(score.score) > 60 &&
-                          parseInt(score.score) < 70
-                        ? 'bg-yellow-500'
-                        : 'bg-green-500'
-                    }`}
-                  />
-                  <View className="space-y-2">
-                    <Text variant="titleMedium">{score.name}</Text>
-                    <View className="flex flex-row space-x-2">
-                      <Text className="text-gray-500 text-xs">
-                        {`学分：${score.credit}`}
-                      </Text>
-                      <Text className="text-gray-500 text-xs">{`GPA：${score.gpa}`}</Text>
-                    </View>
-                  </View>
-                </View>
-                <Text variant="titleMedium" className="mr-4">
-                  {score.gpa === null ? '待评教' : score.score}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </View>
-      </ScoreScrollWrapper>
-    </Page>
-  )
+const rankTitleMap: Record<RankType, string> = {
+  majorRank: '专业',
+  classRank: '教学班',
+  schoolRank: '全校',
 }
 
 export const ScoreInfo = () => {
-  const { semesters, rankType } = useAppSelector((state) => state.spaceScore)
+  const [rankType, setRankType] = useState<RankType>('majorRank')
+  const [scoreType, setScoreType] = useState<ScoreType>('score')
+  const params = useParams<SingleScoreDto>()
+  const { data, isFetching, isLoading, refetch } = useSpaceSingleScore(params)
+  const { semesters } = useAppSelector((state) => state.spaceScore)
 
-  const semestersInfo = useMemo(
+  const courseName = useMemo(
     () =>
-      semesters.map<SemesterInfo>((item) => ({
-        semester: item.semester,
-        scores: item.scores,
-        scoreData: formatScore({
-          compulsoryRank: item.compulsoryRank,
-          totalRank: item.totalRank,
-          rankType,
-          scoreType: 'score',
-        }),
-      })),
-    [rankType, semesters]
+      semesters
+        .find((semester) => semester.semesterId === params.semesterId)!
+        .scores.find((item) => item.lessonId === params.lessonId)!.name,
+    [params, semesters]
   )
 
-  const tabs = useMemo(
-    () =>
-      semestersInfo.map<Tab>((semester) => ({
-        key: semester.semester,
-      })),
-    [semestersInfo]
+  const scoreData = useMemo(() => {
+    if (!data) {
+      return
+    }
+    return formatScore(data, rankType, scoreType)
+  }, [data, rankType, scoreType])!
+
+  const details = useMemo(() => {
+    return data?.[rankType].details.map(
+      (item) =>
+        objectMap(item, (value) => {
+          if (typeof value === 'string' || !value.toString().includes('.')) {
+            return value
+          } else {
+            return floatFixed(value)
+          }
+        }) as SingleScoreDetail
+    )
+  }, [data, rankType])!
+
+  const rankInfos = useMemo<ScoreInfoItem[]>(
+    () => [
+      {
+        key: 'mine',
+        title: '我的成绩',
+        Icon: <UserIcon size={16} color="#c1c1c1" />,
+      },
+      {
+        key: 'avg',
+        title: `${rankTitleMap[rankType]}平均`,
+        Icon: <UserFriendsIcon size={16} color="#c1c1c1" />,
+      },
+      {
+        key: 'head',
+        title: `${rankTitleMap[rankType]}前10%`,
+        Icon: <FireIcon size={16} color="#c1c1c1" />,
+      },
+    ],
+    [rankType]
   )
 
-  const renderScene = useCallback(
-    ({ route }: { route: Route }) => {
-      const semester = semestersInfo.find(
-        (item) => item.semester === route.key
-      )!
-      return <ScoreInfoPage {...semester} />
-    },
-    [semestersInfo]
+  const handleScoreTypeChange = useCallback(
+    (key: ScoreType) => setScoreType(key),
+    []
+  )
+  const handleRankTypeChange = useCallback(
+    (key: RankType) => setRankType(key),
+    []
   )
 
   return (
-    <View className="flex-1">
-      {tabs.length ? (
-        <TabView
-          tabs={tabs}
-          renderScene={renderScene}
-          renderTabBar={() => <View />}
-        />
-      ) : (
-        <Empty text="数据似乎飞走了" />
-      )}
-    </View>
+    <LoadingScreen isLoading={isLoading}>
+      <Page>
+        <ScreenWrapper
+          contentContainerStyle={{
+            minHeight: '100%',
+          }}
+          refreshControl={
+            <RefreshIndicatorControl
+              refreshing={isFetching}
+              onRefresh={refetch}
+            />
+          }
+        >
+          {data ? (
+            <View className="mt-5">
+              <Card>
+                <View className="px-1 py-1">
+                  <View className="flex flex-row justify-between mb-2">
+                    <Text className="font-bold text-lg text-gray-300">
+                      {courseName}
+                    </Text>
+                    <ToggleButton
+                      buttonOptions={scoreButtonOptions}
+                      currentKey={scoreType}
+                      onChange={handleScoreTypeChange}
+                    />
+                  </View>
+
+                  <Text
+                    variant="headlineMedium"
+                    className="text-white font-bold"
+                  >{`${scoreData.rank}/${scoreData.total}`}</Text>
+
+                  <ToggleButton
+                    style={{ marginTop: 16, justifyContent: 'space-between' }}
+                    buttonOptions={rankButtonOptions}
+                    currentKey={rankType}
+                    onChange={handleRankTypeChange}
+                  />
+
+                  <View className="flex flex-row justify-between rounded-md mt-4 p-2 bg-[#4e73f6]">
+                    {rankInfos.map((info) => (
+                      <View key={info.key}>
+                        <Text className="text-gray-200 text-base">
+                          {info.title}
+                        </Text>
+                        <View className="flex flex-row mx-auto space-x-1">
+                          {info.Icon}
+                          <Text className="text-white">
+                            {scoreData[info.key]}
+                          </Text>
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </Card>
+              <ScoreDetail details={details} />
+            </View>
+          ) : null}
+        </ScreenWrapper>
+      </Page>
+    </LoadingScreen>
   )
 }

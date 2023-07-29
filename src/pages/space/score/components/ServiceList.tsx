@@ -10,7 +10,7 @@ const serviceList = [
     svg: BilibiliSvg,
     route: 'space-nested',
     routeOption: {
-      screen: 'score-info',
+      screen: 'score-overview',
     },
   },
   {
@@ -35,7 +35,7 @@ const serviceList = [
     route: 'space-nested',
     routeOption: {
       screen: 'help',
-      param: {
+      params: {
         type: 'score',
       },
     },

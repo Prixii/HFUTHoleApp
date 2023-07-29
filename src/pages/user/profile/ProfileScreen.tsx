@@ -48,7 +48,7 @@ export function ProfileScreen() {
   const theme = useTheme()
 
   const renderTabBar = useCallback(
-    (props) => {
+    (props: any) => {
       return (
         <TabBar
           {...props}

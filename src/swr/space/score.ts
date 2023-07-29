@@ -1,6 +1,10 @@
 import { SWRKeys } from '@/swr/utils'
 import { useQuery } from 'react-query'
-import { getScoreRequest } from '@/request/spaceApis/score'
+import {
+  getScoreRequest,
+  getSingleScoreRequest,
+  getSingleScoreSchoolRequest,
+} from '@/request/spaceApis/score'
 import { useAppDispatch } from '@/store/store'
 import { changeScore } from '@/store/reducer/spaceScore'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
@@ -27,4 +31,20 @@ export const useSpaceScore = () => {
   }, [isLogin])
 
   return query
+}
+
+export const useSpaceSingleScore = (params: SingleScoreDto) => {
+  const key = [SWRKeys.space.score.single, params]
+
+  return useQuery(key, async () => {
+    const res = await Promise.all([
+      getSingleScoreRequest(params),
+      getSingleScoreSchoolRequest(params),
+    ])
+
+    return {
+      ...res[0],
+      schoolRank: res[1],
+    }
+  })
 }

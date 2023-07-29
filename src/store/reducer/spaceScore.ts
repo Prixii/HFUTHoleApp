@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { resetStoreState } from '@/shared/utils/store'
+import { changeStoreState } from '@/shared/utils/store'
 import { JSONDeepClone } from '@/shared/utils/utils'
 
 export type ScoreType = 'score' | 'gpa'
-export type RankType = 'compulsory' | 'total'
+export type RankType = 'compulsoryRank' | 'totalRank'
 
 const rank = {
   rank: 0,
@@ -21,7 +21,7 @@ const initialState: IScoreResponse & {
   calculateLogs: [],
   semesters: [],
   scoreType: 'score',
-  rankType: 'compulsory',
+  rankType: 'compulsoryRank',
   compulsoryRank: {
     score: rank,
     gpa: rank,
@@ -39,10 +39,10 @@ const spaceScoreSlice = createSlice({
   initialState: initialState,
   reducers: {
     changeScore(state, action: PayloadAction<IScoreResponse>) {
-      resetStoreState(state, action.payload)
+      changeStoreState(state, action.payload)
     },
     resetStore(state) {
-      resetStoreState(state, JSONDeepClone(initialState))
+      changeStoreState(state, JSONDeepClone(initialState))
     },
     setScoreType(state, action: PayloadAction<ScoreType>) {
       state.scoreType = action.payload

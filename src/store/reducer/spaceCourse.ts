@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { calculateWeekAndDay } from '@/pages/space/@utils/utils'
-import { resetStoreState } from '@/shared/utils/store'
+import { changeStoreState } from '@/shared/utils/store'
 import { JSONDeepClone } from '@/shared/utils/utils'
 
 export type VisibleSchedule = {
@@ -62,7 +62,7 @@ export const spaceCourseSlice = createSlice({
       state.weekSchedule = scheduleIdx
     },
     resetStore(state) {
-      resetStoreState(state, JSONDeepClone(initialState))
+      changeStoreState(state, JSONDeepClone(initialState))
     },
     setDaySchedule(state, action: PayloadAction<VisibleSchedule>) {
       state.daySchedule = action.payload

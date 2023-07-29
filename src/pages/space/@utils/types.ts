@@ -18,3 +18,5 @@ export interface ScoreInfo {
   title: string
   Icon: ReactNode
 }
+
+export type HelpType = 'common' | 'login' | 'score' | 'course' | 'grammar'

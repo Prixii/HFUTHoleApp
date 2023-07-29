@@ -40,10 +40,10 @@ interface SemesterScore {
   credit: string
   gpa: string
   score: string
-  details: Detail[]
+  details: SemesterScoreDetail[]
 }
 
-interface Detail {
+interface SemesterScoreDetail {
   type: string
   score: string
 }

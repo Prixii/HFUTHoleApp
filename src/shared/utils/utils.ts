@@ -67,7 +67,7 @@ export const saveToAlbum = async (url: string) => {
       await MediaLibrary.saveToLibraryAsync(localUri.uri)
       Toast.success({ text1: '保存图片成功' })
     }
-  } catch (error) {
+  } catch (error: any) {
     Toast.error({ text1: '保存图片失败', text2: error.stack.toString() })
   }
 }

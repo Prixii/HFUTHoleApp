@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { resetStoreState } from '@/shared/utils/store'
+import { changeStoreState } from '@/shared/utils/store'
 import { JSONDeepClone } from '@/shared/utils/utils'
 
 interface SpaceUserState {
@@ -38,7 +38,7 @@ export const spaceUserSlice = createSlice({
       }
     },
     logout(state) {
-      resetStoreState(state, JSONDeepClone(initialState))
+      changeStoreState(state, JSONDeepClone(initialState))
     },
     setUserInfo(state, action: PayloadAction<IUserInfoResponse>) {
       state.info = action.payload

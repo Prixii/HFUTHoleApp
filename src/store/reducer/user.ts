@@ -1,11 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+const initialState: {
+  isLogin: boolean
+  meta: {
+    token: string
+  } | null
+} = {
+  isLogin: false,
+  meta: null,
+}
+
 export const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    isLogin: false,
-    meta: null,
-  },
+  initialState,
   reducers: {
     login: (state, action: PayloadAction<string>) => {
       state.isLogin = true
