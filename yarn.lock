@@ -2468,6 +2468,19 @@
   dependencies:
     nanoid "^3.1.23"
 
+"@react-rxjs/core@^0.10.6":
+  version "0.10.6"
+  resolved "http://bnpm.byted.org/@react-rxjs/core/-/core-0.10.6.tgz#6de46991bb03a9dcc0e59cd4a3410bee37e76c08"
+  integrity sha512-mpcxUEIkMxUni0jnjCfp8Hu2CVCQEcUps8I9Hzzh1B/3kKIrnQ/ckbiMu6y4TSLjhhGqNoaLsKIf1sUCsy0NTw==
+  dependencies:
+    "@rx-state/core" "0.1.4"
+    use-sync-external-store "^1.0.0"
+
+"@react-rxjs/utils@^0.9.7":
+  version "0.9.7"
+  resolved "http://bnpm.byted.org/@react-rxjs/utils/-/utils-0.9.7.tgz#0b6c94bcb43d0f1d508f2b275282fd0a64fb32e1"
+  integrity sha512-m9CUTdRsglObvUAlYfB24QvN+QH4XqCGEKnCdSILIeOx7mMqSi9TTFp2zrj5XqtMiLnj4ReAdDxrXegLPB73bQ==
+
 "@react-stately/checkbox@3.0.3":
   version "3.0.3"
   resolved "https://registry.npmjs.org/@react-stately/checkbox/-/checkbox-3.0.3.tgz#18ee6bd3b544334b6f853bb5c5f7017ac3bb9c37"
@@ -2862,6 +2875,11 @@
     redux "^4.2.1"
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
+
+"@rx-state/core@0.1.4":
+  version "0.1.4"
+  resolved "http://bnpm.byted.org/@rx-state/core/-/core-0.1.4.tgz#586dde80be9dbdac31844006a0dcaa2bc7f35a5c"
+  integrity sha512-Z+3hjU2xh1HisLxt+W5hlYX/eGSDaXXP+ns82gq/PLZpkXLu0uwcNUh9RLY3Clq4zT+hSsA3vcpIGt6+UAb8rQ==
 
 "@segment/loosely-validate-event@^2.0.0":
   version "2.0.0"
@@ -9079,6 +9097,13 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
+
+rxjs@^7.8.1:
+  version "7.8.1"
+  resolved "http://bnpm.byted.org/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
+  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
+  dependencies:
+    tslib "^2.1.0"
 
 safe-array-concat@^1.0.0:
   version "1.0.0"

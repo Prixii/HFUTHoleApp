@@ -25,22 +25,22 @@ const scoreInfos: ScoreInfoItem[] = [
   {
     key: 'rank',
     title: '我的排名',
-    Icon: <ChartBar size={16} color="#4B5563" />,
+    Icon: ChartBar,
   },
   {
     key: 'mine',
     title: '我的成绩',
-    Icon: <UserIcon size={16} color="#4B5563" />,
+    Icon: UserIcon,
   },
   {
     key: 'avg',
     title: '专业平均',
-    Icon: <UserFriendsIcon size={16} color="#4B5563" />,
+    Icon: UserFriendsIcon,
   },
   {
     key: 'head',
     title: '专业前10%',
-    Icon: <FireIcon size={16} color="#4B5563" />,
+    Icon: FireIcon,
   },
 ]
 
@@ -64,9 +64,9 @@ const ScoreOverviewPage = ({
   )
 
   return (
-    <View className={'px-2 min-h-screen'}>
-      <ScoreScrollWrapper>
-        <View className="rounded-lg bg-white p-4 mt-2">
+    <ScoreScrollWrapper>
+      <View className={'px-2 py-4 min-h-screen'}>
+        <View className="rounded-lg bg-white p-4">
           <Text className="mx-auto font-bold" variant="titleLarge">
             {semester}
           </Text>
@@ -74,10 +74,10 @@ const ScoreOverviewPage = ({
           <View className="flex flex-row justify-between rounded-md mt-4 p-2 bg-[#F5F6F9]">
             {scoreInfos.map((info) => (
               <View key={info.key}>
-                <Text className="text-gray-400 text-base">{info.title}</Text>
+                <Text className="text-black/50">{info.title}</Text>
                 <View className="flex flex-row mx-auto space-x-1">
-                  {info.Icon}
-                  <Text className="text-gray-600">
+                  <info.Icon size={16} />
+                  <Text>
                     {info.key === 'rank'
                       ? `${scoreData.rank}/${scoreData.total}`
                       : scoreData[info.key]}
@@ -124,8 +124,8 @@ const ScoreOverviewPage = ({
             ))}
           </View>
         </View>
-      </ScoreScrollWrapper>
-    </View>
+      </View>
+    </ScoreScrollWrapper>
   )
 }
 

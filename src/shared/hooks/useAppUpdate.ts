@@ -1,7 +1,12 @@
-import { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import * as Updates from 'expo-updates'
 
-export const useAppUpdate = ({ visible, setVisible }) => {
+interface Props {
+  visible: boolean
+  setVisible: React.Dispatch<boolean>
+}
+
+export const useAppUpdate = ({ visible, setVisible }: Props) => {
   const [updateStatus, setUpdateStatus] = useState('')
   const [error, setError] = useState('')
   const [update, setUpdate] = useState<Updates.UpdateCheckResult | undefined>()

@@ -22,6 +22,8 @@ export const SWRKeys = {
   space: {
     course: {
       all: 'space.course.all',
+      classmate: 'space.course.classmate',
+      failureRateQuery: 'space.course.failure-rate-query',
     },
     user: {
       info: 'space.user.info',

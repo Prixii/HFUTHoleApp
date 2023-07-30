@@ -1,10 +1,5 @@
-import { ReactNode} from 'react'
+import { ReactNode } from 'react'
 
 export function Updater({ children }: { children: ReactNode }) {
-
-  return (
-    <>
-      {children}
-    </>
-  )
+  return <>{children}</>
 }

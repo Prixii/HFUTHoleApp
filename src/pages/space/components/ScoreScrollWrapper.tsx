@@ -10,9 +10,6 @@ export const ScoreScrollWrapper: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <ScreenWrapper
-      contentContainerStyle={{
-        minHeight: '100%',
-      }}
       refreshControl={
         <RefreshIndicatorControl
           enabled={isLogin}

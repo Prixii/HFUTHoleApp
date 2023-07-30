@@ -3,7 +3,7 @@ import { useAppUpdate } from '@/shared/hooks/useAppUpdate'
 import { Button, Dialog } from 'react-native-paper'
 import { UpdateCheckResult } from 'expo-updates'
 import { getQAQFont } from '@/shared/utils/utils'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 interface Props {
   visible: boolean

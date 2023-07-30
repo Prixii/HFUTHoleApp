@@ -1,10 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { BottomTabs, UserStacks } from '@/router/BottomTabs'
+import { BottomTabs } from '@/router/BottomTabs'
 import { HoleNestedStacks } from '@/router/TopTabs'
 import { NotifyStacks } from '@/router/stacks/Notify.stacks'
 import { SpaceStacks } from '@/router/SpaceTopTabs'
 import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
 import { useEffect, useRef } from 'react'
+import { UserStacks } from '@/router/stacks/user.stacks'
 
 const IndexStack = createNativeStackNavigator()
 

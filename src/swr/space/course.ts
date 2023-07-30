@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import {
   getCourseListRequest,
   type CourseListRequestDto,
-} from '@/request/spaceApis/course'
+} from '@/request/space/course'
 import { useAppDispatch } from '@/store/store'
 import { changeCourseInfo, changeSchedule } from '@/store/reducer/spaceCourse'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'

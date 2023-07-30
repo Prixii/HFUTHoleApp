@@ -4,11 +4,13 @@ import {
   getScoreRequest,
   getSingleScoreRequest,
   getSingleScoreSchoolRequest,
-} from '@/request/spaceApis/score'
+} from '@/request/space/score'
 import { useAppDispatch } from '@/store/store'
 import { changeScore } from '@/store/reducer/spaceScore'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { useEffect } from 'react'
+import { useParams } from '@/shared/hooks/useParams'
+import { useBaseQuery } from '@/swr/useBaseQuery'
 
 const scoreAllKey = [SWRKeys.space.score.all]
 
@@ -33,18 +35,26 @@ export const useSpaceScore = () => {
   return query
 }
 
-export const useSpaceSingleScore = (params: SingleScoreDto) => {
-  const key = [SWRKeys.space.score.single, params]
+export const useSpaceSingleScore = () => {
+  const params = useParams<SingleScoreDto>()
+  const key = [SWRKeys.space.score.single, params.lessonId, params.semesterId]
 
-  return useQuery(key, async () => {
-    const res = await Promise.all([
-      getSingleScoreRequest(params),
-      getSingleScoreSchoolRequest(params),
-    ])
+  const query = useBaseQuery({
+    queryKey: key,
+    queryFn: async () => {
+      const res = await Promise.all([
+        getSingleScoreRequest(params),
+        getSingleScoreSchoolRequest(params),
+      ])
 
-    return {
-      ...res[0],
-      schoolRank: res[1],
-    }
+      return {
+        ...res[0],
+        schoolRank: res[1],
+      }
+    },
   })
+
+  return {
+    ...query,
+  }
 }

@@ -63,6 +63,7 @@ const ForgetForm = () => {
           mode={'contained'}
           className={'shadow-none w-full'}
           onPress={handleSubmit(onSubmit)}
+          loading={mutation.isLoading}
         >
           重置密码
         </Button>

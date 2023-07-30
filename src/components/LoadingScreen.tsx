@@ -6,6 +6,8 @@ import { SecondaryText } from '@/components/Text/SecondaryText'
 interface Props {
   isLoading: boolean
   children: React.ReactNode
+  isError?: boolean
+  displayOriginalPageOnError?: boolean
   id?: number
 }
 
@@ -33,7 +35,9 @@ export function LoadingScreen(props: Props) {
 
   return (
     <>
-      {loading ? (
+      {props.isError && props.displayOriginalPageOnError ? (
+        props.children
+      ) : loading ? (
         <View
           className={
             'bg-white w-full h-screen flex-row items-center justify-center'

@@ -7,14 +7,20 @@ import { SemesterScoreChart } from '@/pages/space/score/components/SemesterScore
 
 export const Score = () => {
   return (
-    <View className={'min-h-screen w-screen p-4 bg-white'}>
-      <ScoreCard />
-      <View className="mt-6">
-        <ServiceList />
+    <ScoreScrollWrapper>
+      <View className={'w-screen px-2'}>
+        <View className={'rounded-lg space-y-4'}>
+          <ScoreCard />
+          <View className={'bg-white px-4 py-2 rounded-lg'}>
+            <View className="mt-6">
+              <ServiceList />
+            </View>
+            <View className="w-full h-[300px] mt-10">
+              <SemesterScoreChart />
+            </View>
+          </View>
+        </View>
       </View>
-      <View className="w-full h-[300px] mt-10">
-        <SemesterScoreChart />
-      </View>
-    </View>
+    </ScoreScrollWrapper>
   )
 }

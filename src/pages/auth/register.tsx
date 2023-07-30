@@ -77,6 +77,7 @@ const RegisterForm = () => {
           mode={'contained'}
           className={'shadow-none w-full'}
           onPress={handleSubmit(onSubmit)}
+          loading={mutation.isLoading}
         >
           注册
         </Button>

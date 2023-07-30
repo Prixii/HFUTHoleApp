@@ -6,25 +6,15 @@ import { Notify } from '@/pages/notify/Notify'
 import { TopTabs } from '@/router/TopTabs'
 import { SpaceTopTabs } from '@/router/SpaceTopTabs'
 import { User } from '@/pages/user/User'
-import { ProfileScreen } from '@/pages/user/profile/ProfileScreen'
 
 const Tab = createBottomTabNavigator()
 const NotifyStack = createNativeStackNavigator()
-const UserStack = createNativeStackNavigator()
 
 const NotifyStacks = () => {
   return (
     <NotifyStack.Navigator screenOptions={{ headerShown: false }}>
       <NotifyStack.Screen name={'index'} component={Notify} />
     </NotifyStack.Navigator>
-  )
-}
-
-export const UserStacks = () => {
-  return (
-    <UserStack.Navigator screenOptions={{ headerShown: false }}>
-      <UserStack.Screen name={'profile'} component={ProfileScreen} />
-    </UserStack.Navigator>
   )
 }
 

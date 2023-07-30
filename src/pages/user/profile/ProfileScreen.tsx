@@ -10,6 +10,7 @@ import { PrimaryText } from '@/components/Text/PrimaryText'
 import { UserLevelBar } from '@/pages/user/components/UserLevelBar'
 import { useCallback } from 'react'
 import { TabBar } from 'react-native-tab-view'
+import { useUserProfileRoute } from '@/shared/hooks/route/useUserProfileRoute'
 
 const UserHoleList = () => {
   const query = useUserPostedHoleList()
@@ -46,6 +47,8 @@ export function ProfileScreen() {
   const { isLoading } = useUserPostedHoleList()
   const { data: userData } = useUserProfile()
   const theme = useTheme()
+
+  const route = useUserProfileRoute()
 
   const renderTabBar = useCallback(
     (props: any) => {
@@ -91,6 +94,7 @@ export function ProfileScreen() {
               className={
                 'border-primary border-[1px] items-center justify-center rounded-lg h-10 px-14'
               }
+              onPress={route.goEditScreen}
             >
               <PrimaryText>编辑资料</PrimaryText>
             </TouchableRipple>

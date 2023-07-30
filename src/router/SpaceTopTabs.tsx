@@ -14,6 +14,8 @@ import { CustomRanking } from '@/pages/space/score/custom-ranking/CustomRanking'
 import { ScoreHelpScreen } from '@/pages/space/service/help/Help'
 import { TopTabHeader } from '@/router/components/TopTabHeader'
 import { Header } from '@/components/Header'
+import { SpaceClassmateScreen } from '@/pages/space/classmate/SpaceClassmateScreen'
+import { CourseFailureQuery } from '@/pages/space/course-failure-query/CourseFailureQuery'
 
 const Tab = createMaterialTopTabNavigator()
 const SpaceStack = createNativeStackNavigator()
@@ -43,6 +45,16 @@ const ScoreScreens = [
     name: 'help',
     component: ScoreHelpScreen,
     title: '成绩帮助',
+  },
+  {
+    name: 'classmate',
+    component: SpaceClassmateScreen,
+    title: '同班同学',
+  },
+  {
+    name: 'course-failure-query',
+    component: CourseFailureQuery,
+    title: '课程挂科率查询',
   },
 ]
 

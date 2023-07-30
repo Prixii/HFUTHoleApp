@@ -3,7 +3,6 @@ import { EmojiItem, EmojiList } from '@/assets/emoji'
 import { Emoji } from '@/components/emoji/Emoji'
 import { AwaitAble } from '@/shared/types'
 import { useTheme } from 'react-native-paper'
-import { Hidden } from '@/components/Hidden'
 
 interface Props {
   onEmojiSelect: (emoji: EmojiItem) => AwaitAble<void>

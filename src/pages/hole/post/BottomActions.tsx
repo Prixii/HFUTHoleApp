@@ -12,6 +12,7 @@ import { Badges } from '@/components/Badges'
 import { EmojiArea } from '@/components/emoji/EmojiArea'
 import { HolePostBilibili } from '@/pages/hole/post/HolePostBilibili'
 import { PostCategorySelector } from '@/pages/hole/post/PostCategorySelector'
+import { useImagePicker } from '@/shared/hooks/useImagePicker'
 
 // TODO @实现
 export function BottomActions() {
@@ -21,36 +22,28 @@ export function BottomActions() {
     form: { setValue, getValues },
   } = useHolePostContext()
 
+  const { onImageSelect } = useImagePicker({
+    onSuccess(result) {
+      setImgs((draft) => {
+        for (const assets of result.assets!) {
+          if (draft!.length >= 4) {
+            Toast.error({ text1: '最多只能选4张图片哦' })
+            return
+          }
+          draft!.push(assets)
+        }
+      })
+    },
+    onError() {
+      Toast.error({ text1: '图片选择失败' })
+    },
+  })
+
   const [expand, setExpand] = useState(false)
 
   const onEmojiSelect = useCallback((emoji: EmojiItem) => {
     setValue('body', `${getValues('body') || ''}${emoji.name}`)
   }, [])
-
-  const onSelectImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        selectionLimit: 4,
-        quality: 0.6,
-      })
-
-      if (!result.canceled) {
-        setImgs((draft) => {
-          for (const assets of result.assets!) {
-            if (draft!.length >= 4) {
-              Toast.error({ text1: '最多只能选4张图片哦' })
-              return
-            }
-            draft!.push(assets)
-          }
-        })
-      }
-    } catch (err) {
-      Toast.error({ text1: '图片选择失败' })
-    }
-  }
 
   return (
     <View className={'pt-2 border-t-[1px] border-t-black/5'}>
@@ -63,7 +56,7 @@ export function BottomActions() {
               icon={() => <EmojiIcon />}
               onPress={() => setExpand((prev) => !prev)}
             />
-            <IconButton icon={'image'} onPress={onSelectImage} />
+            <IconButton icon={'image'} onPress={onImageSelect} />
           </View>
           <View className={'flex flex-row'}>
             <HolePostBilibili />

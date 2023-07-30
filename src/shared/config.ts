@@ -1,6 +1,6 @@
 export const Config = {
   request: {
-    baseURL: 'http://192.168.0.111:8000/',
+    baseURL: 'http://192.168.0.102:8000/',
     imgBaseURL: 'http://121.5.130.107:8080/',
     spaceBaseURL: 'https://hfut-space.top/',
     spaceLoginBaseURL: 'https://hfut-space.top/',
@@ -20,6 +20,10 @@ export const Limit = {
   reportReasonMinLength: 10,
   hole: {
     maxInfoCommentBodyLength: 30,
+  },
+  user: {
+    minUsernameLength: 1,
+    maxUsernameLength: 10,
   },
 }
 

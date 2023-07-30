@@ -4,14 +4,13 @@ import {
   Control,
   Controller,
   FieldPath,
-  get,
+  FieldValues,
   UseControllerProps,
 } from 'react-hook-form'
-import { isNotEmptyObject } from 'class-validator'
 import { TextInput, TextInputProps } from 'react-native'
-import { forwardRef, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
-type Props<T> = {
+type Props<T extends FieldValues> = {
   name: FieldPath<T>
   control: Control<T>
   rules?: UseControllerProps<T>['rules']
@@ -29,7 +28,7 @@ export const NativeInput = <T extends object = PlainObject>({
   const inputRef = useRef<TextInput>()
 
   useEffect(() => {
-    inputRef.current.focus()
+    inputRef.current!.focus()
   }, [])
 
   return (

@@ -10,10 +10,25 @@ export function getCourseListRequest({
   semesterId,
 }: CourseListRequestDto) {
   return request<ICourseResponse>({
-    url: 'course/all',
+    url: '/course/all',
     params: {
       refresh,
       semesterId,
+    },
+  })
+}
+
+export function getCourseClassmatesRequest(courseId: string) {
+  return request({
+    url: '/classmate/all',
+  })
+}
+
+export function getCourseFailureRateRequest(courseName: string) {
+  return request<ICourseFailureRateResponse>({
+    url: '/score/failRate',
+    params: {
+      courseName,
     },
   })
 }

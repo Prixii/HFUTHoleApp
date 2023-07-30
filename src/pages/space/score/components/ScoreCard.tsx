@@ -58,9 +58,9 @@ export const ScoreCard = () => {
 
   return (
     <Card>
-      <View className="px-1 py-1">
+      <View className="px-1 py-1 space-y-2">
         <View className="flex flex-row justify-between mb-2">
-          <Text className="font-bold text-lg text-gray-300">专业排名</Text>
+          <Text className="text-white/70">专业排名</Text>
           <ToggleButton
             buttonOptions={buttonOptions}
             currentKey={scoreType}
@@ -68,18 +68,15 @@ export const ScoreCard = () => {
           />
         </View>
 
-        <Text
-          variant="headlineMedium"
-          className="text-white font-bold"
-        >{`${scoreData.rank}/${scoreData.total}`}</Text>
+        <Text className="text-white text-2xl">{`${scoreData.rank}/${scoreData.total}`}</Text>
 
-        <View className="flex flex-row justify-between rounded-md mt-2 p-2 bg-[#4e73f6]">
+        <View className="flex flex-row justify-between rounded-md mt-2 p-2 bg-[#ffffff]/10">
           {scoreInfos.map((info) => (
             <View key={info.key}>
-              <Text className="text-gray-200 text-xs">{info.title}</Text>
-              <View className="flex flex-row mx-auto space-x-1">
-                <info.Icon />
-                <Text className="text-white text-sm">
+              <Text className="text-white/80 text-xs">{info.title}</Text>
+              <View className="flex flex-row mx-auto space-x-1 items-center">
+                <info.Icon size={12} color={'#fff'} style={{ opacity: 0.8 }} />
+                <Text className="text-white/80 text-sm">
                   {scoreData[info.key]}
                 </Text>
               </View>

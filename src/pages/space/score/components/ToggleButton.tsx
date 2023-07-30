@@ -25,11 +25,11 @@ export function ToggleButton<T extends string>({
         <Pressable
           key={button.key}
           onPress={() => onChange?.(button.key)}
-          className={`py-1 px-4 rounded-md ${
-            button.key === currentKey ? 'bg-[#4e73f6]' : ''
+          className={`py-1 px-4 rounded-md justify-center ${
+            button.key === currentKey ? 'bg-white/20' : ''
           }`}
         >
-          <Text className="text-white">{button.title}</Text>
+          <Text className="text-white text-xs">{button.title}</Text>
         </Pressable>
       ))}
     </View>

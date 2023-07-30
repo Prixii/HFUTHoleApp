@@ -52,7 +52,8 @@ export const ScoreInfo = () => {
   const [rankType, setRankType] = useState<RankType>('majorRank')
   const [scoreType, setScoreType] = useState<ScoreType>('score')
   const params = useParams<SingleScoreDto>()
-  const { data, isFetching, isLoading, refetch } = useSpaceSingleScore(params)
+  const { data, isFetching, isLoading, isError, refetch } =
+    useSpaceSingleScore()
   const { semesters } = useAppSelector((state) => state.spaceScore)
 
   const courseName = useMemo(
@@ -88,17 +89,22 @@ export const ScoreInfo = () => {
       {
         key: 'mine',
         title: '我的成绩',
-        Icon: <UserIcon size={16} color="#c1c1c1" />,
+        Icon: UserIcon,
       },
       {
         key: 'avg',
         title: `${rankTitleMap[rankType]}平均`,
-        Icon: <UserFriendsIcon size={16} color="#c1c1c1" />,
+        Icon: UserFriendsIcon,
       },
       {
         key: 'head',
         title: `${rankTitleMap[rankType]}前10%`,
-        Icon: <FireIcon size={16} color="#c1c1c1" />,
+        Icon: FireIcon,
+      },
+      {
+        key: 'max',
+        title: `${rankTitleMap[rankType]}最高`,
+        Icon: FireIcon,
       },
     ],
     [rankType]
@@ -114,8 +120,12 @@ export const ScoreInfo = () => {
   )
 
   return (
-    <LoadingScreen isLoading={isLoading}>
-      <Page>
+    <LoadingScreen
+      isLoading={isLoading}
+      isError={isError}
+      displayOriginalPageOnError={true}
+    >
+      <View className={'px-3 min-h-screen bg-background'}>
         <ScreenWrapper
           contentContainerStyle={{
             minHeight: '100%',
@@ -130,9 +140,9 @@ export const ScoreInfo = () => {
           {data ? (
             <View className="mt-5">
               <Card>
-                <View className="px-1 py-1">
-                  <View className="flex flex-row justify-between mb-2">
-                    <Text className="font-bold text-lg text-gray-300">
+                <View className="px-1 py-1 space-y-2">
+                  <View className="flex flex-row justify-between">
+                    <Text className="font-bold text-gray-300">
                       {courseName}
                     </Text>
                     <ToggleButton
@@ -142,27 +152,31 @@ export const ScoreInfo = () => {
                     />
                   </View>
 
-                  <Text
-                    variant="headlineMedium"
-                    className="text-white font-bold"
-                  >{`${scoreData.rank}/${scoreData.total}`}</Text>
+                  <Text className="text-white text-2xl">{`${scoreData.rank}/${scoreData.total}`}</Text>
 
-                  <ToggleButton
-                    style={{ marginTop: 16, justifyContent: 'space-between' }}
-                    buttonOptions={rankButtonOptions}
-                    currentKey={rankType}
-                    onChange={handleRankTypeChange}
-                  />
+                  <View>
+                    <ToggleButton
+                      style={{ justifyContent: 'space-between' }}
+                      buttonOptions={rankButtonOptions}
+                      currentKey={rankType}
+                      onChange={handleRankTypeChange}
+                    />
+                  </View>
 
-                  <View className="flex flex-row justify-between rounded-md mt-4 p-2 bg-[#4e73f6]">
+                  <View className="flex flex-row justify-between rounded-md p-2 bg-white/10">
                     {rankInfos.map((info) => (
-                      <View key={info.key}>
-                        <Text className="text-gray-200 text-base">
+                      <View
+                        key={info.key}
+                        className={'justify-center items-center'}
+                      >
+                        <Text className="text-white/80 text-xs">
                           {info.title}
                         </Text>
-                        <View className="flex flex-row mx-auto space-x-1">
-                          {info.Icon}
-                          <Text className="text-white">
+                        <View className="flex flex-row mx-auto space-x-1 self-start">
+                          <View>
+                            <info.Icon size={12} color={'#ffffff'} />
+                          </View>
+                          <Text className="text-white text-xs">
                             {scoreData[info.key]}
                           </Text>
                         </View>
@@ -175,7 +189,7 @@ export const ScoreInfo = () => {
             </View>
           ) : null}
         </ScreenWrapper>
-      </Page>
+      </View>
     </LoadingScreen>
   )
 }

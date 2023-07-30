@@ -1,5 +1,3 @@
-import { Input } from '@/components/form/Input'
-import { ScreenHeight, WindowHeight } from '@/shared/utils/utils'
 import { View } from 'react-native'
 import { BottomActions } from '@/pages/hole/post/BottomActions'
 import { useState } from 'react'

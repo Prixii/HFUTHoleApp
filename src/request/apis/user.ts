@@ -23,3 +23,14 @@ export function GetUserPostedHoleListRequest(params: PaginateAble) {
     params,
   })
 }
+
+export function PostUserProfileRequest(data: {
+  avatar?: string
+  username?: string
+}) {
+  return request<IMutationResponse>({
+    method: 'POST',
+    url: '/user/profile',
+    data,
+  })
+}

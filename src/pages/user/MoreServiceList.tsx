@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import SettingSvg from '@/assets/svg/settings.svg'
-import AboutSvg from '@/assets/svg/user/about.svg'
+import AboutSvg from '@/assets/svg/deno.svg'
 import UpdateSvg from '@/assets/svg/update.svg'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import { Button, useTheme } from 'react-native-paper'
@@ -19,7 +19,7 @@ export function MoreServiceList() {
     },
     {
       icon: AboutSvg,
-      title: '关于应用',
+      title: '关于树洞',
       onPress: () => {},
     },
     {
