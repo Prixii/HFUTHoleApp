@@ -83,7 +83,7 @@ export function formatRoom(room: string) {
 }
 
 export function formatCourseName(courseName: string) {
-  return ellipsisString(courseName, 10)
+  return ellipsisString(courseName, 13)
 }
 
 export function isLaunchPeriod(timeStr: string) {

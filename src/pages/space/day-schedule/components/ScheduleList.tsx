@@ -2,8 +2,8 @@ import type { Schedule } from '@/pages/space/@utils/types'
 import type { ArrayElementType } from '@/shared/types/utils'
 import type { Colors } from '@/pages/space/@utils/types'
 import { useDaySchedule } from '@/pages/space/day-schedule/useDaySchedule'
-import { View, Pressable, StatusBar, ScrollView } from 'react-native'
-import { Text, TouchableRipple } from 'react-native-paper'
+import { View, Pressable } from 'react-native'
+import { Text } from 'react-native-paper'
 import { ListEmpty } from '@/components/image/ListEmpty'
 import {
   formatRoom,
@@ -16,11 +16,8 @@ import {
 import { useHorizontalGesture } from '@/pages/space/@utils/useHorizontalGesture'
 import { useChangeDay } from '@/pages/space/@utils/useDayChange'
 import React, { MutableRefObject, useMemo, useRef } from 'react'
-import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
-import { SecondaryText } from '@/components/Text/SecondaryText'
-import { ScheduleSheetContent } from '@/pages/space/day-schedule/components/ScheduleSheetContent'
-import { useSpaceCourseRoute } from '@/shared/hooks/route/useSpaceCourseRoute'
+import { ScheduleSheet } from '@/pages/space/components/ScheduleSheet'
 
 type ScheduleListItem = ArrayElementType<
   ReturnType<typeof useDaySchedule>['scheduleList']
@@ -126,27 +123,12 @@ export interface ScheduleItemCardProps {
 }
 
 const ScheduleCard = ({ schedule, timeLine }: ScheduleItemCardProps) => {
-  const route = useSpaceCourseRoute()
-
   const sheetRef = useRef() as MutableRefObject<BottomSheetModal>
 
   const { cardStyle, textStyle } = useMemo(
     () => generateCardStyle(schedule.color as Colors, true),
     [schedule.color]
   )
-
-  const openSheet = () => {
-    sheetRef.current?.present()
-  }
-
-  const closeSheet = () => {
-    sheetRef.current?.close()
-  }
-
-  const goCourseFailureRatePage = () => {
-    route.goCourseFailureRatePage(schedule.courseName)
-    closeSheet()
-  }
 
   return (
     <>
@@ -155,7 +137,7 @@ const ScheduleCard = ({ schedule, timeLine }: ScheduleItemCardProps) => {
         className={`flex space-y-1 border border-l-2 justify-center py-4 px-2 rounded-lg ${
           timeLine.start === schedule.startTime ? '' : 'mt-2'
         }`}
-        onPress={openSheet}
+        onPress={sheetRef.current?.present}
       >
         <View className="flex flex-row justify-between">
           <Text
@@ -171,23 +153,7 @@ const ScheduleCard = ({ schedule, timeLine }: ScheduleItemCardProps) => {
         </Text>
         <Text style={textStyle}>{formatRoom(schedule.room)}</Text>
       </Pressable>
-      <BottomActionSheet
-        ref={sheetRef}
-        snapPoints={['60%', '80%']}
-        backgroundStyle={{ backgroundColor: 'white' }}
-        footerText={'查看挂科率'}
-      >
-        <ScheduleSheetContent schedule={schedule} />
-        <View className={'mx-4 rounded-lg overflow-hidden bg-[#80f]'}>
-          <TouchableRipple onPress={goCourseFailureRatePage}>
-            <View className={'p-4'}>
-              <Text className={'text-center text-white font-[800]'}>
-                查看挂科率
-              </Text>
-            </View>
-          </TouchableRipple>
-        </View>
-      </BottomActionSheet>
+      <ScheduleSheet ref={sheetRef} schedule={schedule} />
     </>
   )
 }

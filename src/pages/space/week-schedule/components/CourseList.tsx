@@ -8,7 +8,9 @@ import {
   formatCourseName,
   getLongestSchedule,
 } from '@/pages/space/@utils/utils'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
+import { ScheduleSheet } from '@/pages/space/components/ScheduleSheet'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
 
 interface CardProps {
   schedules: CourseSchedule[]
@@ -37,6 +39,8 @@ export const CourseList = () => {
 }
 
 const Card = ({ schedules }: CardProps) => {
+  const sheetRef = useRef<BottomSheetModal>(null)
+
   const { length } = schedules
 
   if (length === 0) {
@@ -47,7 +51,12 @@ const Card = ({ schedules }: CardProps) => {
     return <ConflictCard schedules={schedules} />
   }
 
-  return <ScheduleCard schedule={schedules[0]} />
+  return (
+    <Pressable onPress={sheetRef.current?.present}>
+      <ScheduleCard schedule={schedules[0]} />
+      <ScheduleSheet ref={sheetRef} schedule={schedules[0]} />
+    </Pressable>
+  )
 }
 
 const ConflictCard = ({ schedules }: CardProps) => {
@@ -84,16 +93,18 @@ const ScheduleCard = ({ schedule }: { schedule: CourseSchedule }) => {
   )
 
   return (
-    <Pressable
-      className="w-full rounded-md px-1 pt-1"
+    <View
+      className={
+        'w-full h-full rounded-md px-1 py-1 justify-between items-center'
+      }
       style={[cardStyle, { height: schedule.height }]}
     >
-      <Text style={textStyle} className="font-bold mb-2">
+      <Text style={textStyle} className="font-bold text-xs">
         {formatCourseName(schedule.courseName)}
       </Text>
-      <Text style={textStyle} className="text-[11px]">
+      <Text style={textStyle} className="text-xs opacity-80 font-bold">
         {formatRoom(schedule.room)}
       </Text>
-    </Pressable>
+    </View>
   )
 }

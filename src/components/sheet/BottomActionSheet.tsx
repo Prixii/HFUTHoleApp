@@ -4,19 +4,15 @@ import React, {
   useCallback,
   useMemo,
 } from 'react'
-import { View, Text, StyleSheet, StatusBar } from 'react-native'
 import {
   BottomSheetBackdrop,
-  BottomSheetFooter,
   BottomSheetModal,
   BottomSheetModalProps,
 } from '@gorhom/bottom-sheet'
-import type {
-  BottomSheetBackdropProps,
-  BottomSheetFooterProps,
-} from '@gorhom/bottom-sheet'
-import { TouchableRipple, useTheme } from 'react-native-paper'
+import type { BottomSheetBackdropProps } from '@gorhom/bottom-sheet'
+import { useTheme } from 'react-native-paper'
 import { Func } from '@/shared/types'
+import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
 
 interface Props extends BottomSheetModalProps {
   children: React.ReactNode
@@ -24,7 +20,7 @@ interface Props extends BottomSheetModalProps {
   onFooterPress?: Func
 }
 
-export const BottomActionSheet = forwardRef<BottomSheetModal, Props>(
+export const BottomActionSheet = forwardRef<BottomSheetModalMethods, Props>(
   (
     { snapPoints, backgroundStyle, footerText, onFooterPress, ...props },
     ref
