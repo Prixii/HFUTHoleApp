@@ -1,5 +1,9 @@
 import { View } from 'react-native'
 import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
+import ScoreInterview from '@/assets/svg/space/score_interview.svg'
+import FailureFate from '@/assets/svg/space/failure_rate.svg'
+import CustomRanking from '@/assets/svg/space/custom_ranking.svg'
+import Help from '@/assets/svg/space/help.svg'
 import { Svg } from '@/components/svg/Svg'
 import { Text, TouchableRipple } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
@@ -7,7 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 const serviceList = [
   {
     title: '成绩概览',
-    svg: BilibiliSvg,
+    svg: ScoreInterview,
     route: 'space-nested',
     routeOption: {
       screen: 'score-overview',
@@ -15,7 +19,7 @@ const serviceList = [
   },
   {
     title: '挂科率查询',
-    svg: BilibiliSvg,
+    svg: FailureFate,
     route: 'space-nested',
     routeOption: {
       screen: 'failure-rate',
@@ -23,7 +27,7 @@ const serviceList = [
   },
   {
     title: '自定义排名',
-    svg: BilibiliSvg,
+    svg: CustomRanking,
     route: 'space-nested',
     routeOption: {
       screen: 'custom-ranking',
@@ -31,7 +35,7 @@ const serviceList = [
   },
   {
     title: '成绩帮助',
-    svg: BilibiliSvg,
+    svg: Help,
     route: 'space-nested',
     routeOption: {
       screen: 'help',

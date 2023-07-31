@@ -1,4 +1,3 @@
-import { Page } from '@/pages/space/components/Page'
 import { ScoreScrollWrapper } from '@/pages/space/components/ScoreScrollWrapper'
 import { ScoreCard } from '@/pages/space/score/components/ScoreCard'
 import { ServiceList } from '@/pages/space/score/components/ServiceList'
