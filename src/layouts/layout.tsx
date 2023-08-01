@@ -5,6 +5,7 @@ import { useStatusBarContext } from '@/shared/context/statusbar'
 import React from 'react'
 import { useWindowDimensions } from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'
+import { CommentMaskModal } from '@/layouts/components/CommentMaskModal'
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
