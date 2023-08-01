@@ -32,12 +32,14 @@ function RefreshableHoleListInner(
   ref
 ) {
   const { go } = useHoleDetailRoute()
+  const theme = useTheme()
 
   const { data: flatListData, isEmpty: isHoleListEmpty } =
     flatInfiniteQueryData(data)
 
   return (
     <>
+      <StatusBar backgroundColor={theme.colors.background} />
       {isSuccess ? (
         <RefreshingFlatList
           ref={ref}

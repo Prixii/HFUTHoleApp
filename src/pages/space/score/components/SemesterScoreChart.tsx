@@ -109,7 +109,7 @@ export const SemesterScoreChart = () => {
 </body>
 </html>
   `,
-    []
+    [semesters]
   )
 
   return (
