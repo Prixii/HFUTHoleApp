@@ -23,6 +23,7 @@ export function HoleDetail() {
         <View className={'bg-white'}>
           <HoleDetailComment />
         </View>
+        <CommentMaskModal />
       </LoadingScreen>
     </>
   )
