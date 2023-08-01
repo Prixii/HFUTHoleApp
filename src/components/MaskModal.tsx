@@ -18,6 +18,7 @@ export function MaskModal({ children, visible, onClose, ...props }: Props) {
         visible={visible}
         animationType={'slide'}
         transparent={true}
+        statusBarTranslucent
         {...props}
       >
         <View className={'flex-1 justify-end'}>
