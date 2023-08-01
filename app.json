@@ -4,7 +4,7 @@
     "slug": "hfuthole",
     "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/splash.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/bg.png",
@@ -21,7 +21,7 @@
     "android": {
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/splash.png"
+        "foregroundImage": "./assets/icon.png"
       },
       "permissions": [
         "WRITE_EXTERNAL_STORAGE",
@@ -40,7 +40,7 @@
     },
     "owner": "snowingfox",
     "updates": {
-      "url": "",
+      "url": "http://42.192.127.54:8082/api/manifest",
       "enabled": true,
       "fallbackToCacheTimeout": 0
     },
