@@ -176,7 +176,7 @@ export const ScoreInfo = () => {
                             <info.Icon size={12} color={'#ffffff'} />
                           </View>
                           <Text className="text-white text-xs">
-                            {scoreData[info.key]}
+                            {scoreData[info.key].toFixed(2)}
                           </Text>
                         </View>
                       </View>
