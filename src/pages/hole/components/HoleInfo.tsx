@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react'
 import { Func, IClassName, InferArrayItem } from '@/shared/types'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
-import { Button, Text, TouchableRipple, useTheme } from 'react-native-paper'
+import { Text, TouchableRipple, useTheme } from 'react-native-paper'
 import { CommentIcon, LikeIcon } from '@/components/icon'
 import { Badges } from '@/components/Badges'
 import { TimeText } from '@/components/Text/Time'
@@ -12,13 +12,12 @@ import { PostHoleVoteRequest } from '@/request/apis/hole'
 import { Toast } from '@/shared/utils/toast'
 import { HoleVoteItem } from '@/pages/hole/components/VoteItem'
 import { SecondaryText } from '@/components/Text/SecondaryText'
-import { HoleBottomAction } from '@/pages/hole/components/sheet/HoleBottomAction'
 import { EmojiableText } from '@/components/Text/EmojiableText'
 import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
 import { Svg } from '@/components/svg/Svg'
 import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 import { sliceHoleInfoCommentBody } from '@/pages/hole/components/utils'
-import { PrimaryText } from '@/components/Text/PrimaryText'
+import { Categories } from '../Category'
 
 type Data = IHole
 
@@ -79,20 +78,66 @@ const HoleInfoVote: React.FC<{ data: Data }> = ({ data }) => {
 }
 
 export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
+  const theme = useTheme()
+
+  const renderList = [
+    {
+      value: data.favoriteCounts,
+      element: <LikeIcon size={14} color={theme.colors.surfaceVariant} />,
+    },
+    {
+      value: data.commentCounts,
+      element: <CommentIcon size={14} color={theme.colors.surfaceVariant} />,
+    },
+  ]
+
   return (
     <>
-      <View className={'space-y-2'}>
+      <View className={'my-2 space-y-2'}>
         <View className={'flex flex-row justify-between'}>
           <View className={'flex flex-row items-center space-x-3'}>
-            <UserAvatar url={data.user.avatar} size={40} />
-
-            <View className={'grid space-y-1'}>
-              <Text>{data.user.username}</Text>
+            <UserAvatar url={data.user.avatar} size={35} />
+            <View>
+              <Text
+                className={'mb-0.5 text-sm'}
+                style={{ color: theme.colors.onSurfaceVariant }}
+              >
+                {data.user.username}
+              </Text>
               <TimeText time={data.createAt} />
             </View>
           </View>
-          <View>
-            <HoleBottomAction data={data as IHoleDetailResponse} />
+
+          <View className={'flex flex-row justify-end space-x-5'}>
+            <View className={'flex flex-row space-x-2 items-center'}>
+              {data.bilibili && (
+                <View>
+                  <Svg SvgComponent={BilibiliSvg} size={20} />
+                </View>
+              )}
+              <View>
+                <SecondaryText style={{ color: theme.colors.surfaceVariant }}>
+                  #{data.id}
+                </SecondaryText>
+              </View>
+            </View>
+
+            <View className={'flex flex-row space-x-3'}>
+              {renderList.map((icon, index) => (
+                <View
+                  className={'flex flex-row items-center space-x-2'}
+                  key={index}
+                >
+                  {icon.element}
+                  <Text
+                    className={'text-xs'}
+                    style={{ color: theme.colors.surfaceVariant }}
+                  >
+                    {icon.value}
+                  </Text>
+                </View>
+              ))}
+            </View>
           </View>
         </View>
       </View>
@@ -100,79 +145,93 @@ export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-export const HoleInfoBody: React.FC<{ data: Data }> = React.memo(({ data }) => {
-  const { goResult } = useHoleSearchRoute()
-
-  return (
-    <View className={'flex space-y-2'}>
-      <View>
-        <EmojiableText body={data.body} variant={'bodyMedium'} />
-      </View>
-      {data.imgs.length && (
-        <View>
-          <ImageList imgs={data?.imgs} />
-        </View>
-      )}
-      {data.tags.length && (
-        <View>
-          <Badges data={data.tags} onPress={(tag) => goResult(`#${tag}`)} />
-        </View>
-      )}
-    </View>
-  )
-})
-
-const HoleInfoBottom: React.FC<{ data: Data }> = React.memo(({ data }) => {
+//TODO: 样式有点蛋疼
+export const HoleInfoTitle: React.FC<{ data: Data; categoryMode: string }> = ({
+  data,
+  categoryMode,
+}) => {
   const theme = useTheme()
-
-  const renderList = [
-    {
-      value: data.favoriteCounts,
-      element: <LikeIcon size={16} color={theme.colors.surfaceVariant} />,
-    },
-    {
-      value: data.commentCounts,
-      element: <CommentIcon size={16} color={theme.colors.surfaceVariant} />,
-    },
-  ]
+  const colors = Categories.find((category) => {
+    return category.name == data.category.category
+  })?.color
 
   return (
-    <View className={'flex flex-row justify-between'}>
-      <View className={'flex flex-row space-x-3'}>
-        {renderList.map((icon, index) => (
-          <View className={'flex flex-row items-center space-x-2'} key={index}>
-            {icon.element}
-            <Text
-              className={'text-xs'}
-              style={{ color: theme.colors.surfaceVariant }}
-            >
-              {icon.value}
-            </Text>
-          </View>
-        ))}
-      </View>
-      <View className={'flex flex-row space-x-2 items-center'}>
-        {data.bilibili && (
-          <View>
-            <Svg SvgComponent={BilibiliSvg} size={20} />
+    <View>
+      <Text
+        variant={'titleMedium'}
+        style={[
+          styles.titleText,
+          {
+            color: theme.colors.onSurfaceVariant,
+          },
+        ]}
+        numberOfLines={2}
+      >
+        {(categoryMode == 'category' || categoryMode == 'subcategory') && (
+          <View className={'flex-row space-x-2 items-center'}>
+            {categoryMode == 'category' && (
+              <View
+                className={'rounded-md px-2 py-0.5 self-center'}
+                style={{ backgroundColor: colors?.secondary }}
+              >
+                <EmojiableText
+                  body={data.category.category}
+                  variant={'titleMedium'}
+                  style={[styles.categoryText, { color: colors?.primary }]}
+                />
+              </View>
+            )}
+            <EmojiableText
+              body={data.category.subcategory + ' · '}
+              variant={'titleMedium'}
+              style={[styles.categoryText, { color: colors?.primary }]}
+            />
           </View>
         )}
-        <Button mode={'text'}>{data?.category?.category}</Button>
-        <View>
-          <PrimaryText style={{ fontWeight: 'bold' }}>#{data.id}</PrimaryText>
-        </View>
-      </View>
+        {data.title}
+      </Text>
     </View>
   )
-})
+}
+
+export const HoleInfoBody: React.FC<{ data: Data; categoryMode: string }> =
+  React.memo(({ data, categoryMode }) => {
+    const theme = useTheme()
+
+    const { goResult } = useHoleSearchRoute()
+
+    return (
+      <View className={'flex space-y-2'}>
+        <HoleInfoTitle data={data} categoryMode={categoryMode} />
+        <View>
+          <EmojiableText
+            body={data.body}
+            variant={'bodyLarge'}
+            numberOfLines={3}
+            style={{ color: theme.colors.surfaceVariant, lineHeight: 25 }}
+          />
+        </View>
+        {data.imgs.length && (
+          <View>
+            <ImageList imgs={data?.imgs.slice(0, 3)} />
+          </View>
+        )}
+        {data.tags.length && (
+          <View>
+            <Badges data={data.tags} onPress={(tag) => goResult(`#${tag}`)} />
+          </View>
+        )}
+      </View>
+    )
+  })
 
 interface Props extends IClassName {
   data: Data
   onPress?: Func
   header?: ReactNode
   body?: ReactNode
-  bottom?: ReactNode
   showComment?: boolean
+  categoryMode?: 'category' | 'subcategory' | undefined
 }
 
 export const HoleInfo = React.memo(
@@ -181,44 +240,53 @@ export const HoleInfo = React.memo(
     onPress,
     header,
     body,
-    bottom,
     className,
     showComment = true,
+    categoryMode = 'category',
   }: Props) => {
+    const theme = useTheme()
+
     return (
-      <View className={'bg-white rounded-lg mt-2 overflow-hidden'}>
+      <View className={'bg-white rounded-2xl mt-4 overflow-hidden'}>
         <TouchableRipple onPress={onPress}>
-          <View className={`flex flex-col space-y-3 p-4 ${className}`}>
+          <View className={`flex-col space-y-4 p-4 ${className}`}>
             <View>{header || <HoleInfoHeader data={data} />}</View>
-            <View>{body || <HoleInfoBody data={data} />}</View>
+            <View>
+              {body || <HoleInfoBody data={data} categoryMode={categoryMode} />}
+            </View>
             <View>{data.vote && <HoleInfoVote data={data} />}</View>
-            <View>{bottom || <HoleInfoBottom data={data} />}</View>
-            {showComment && (
-              <View className={'grid gap-2'}>
-                {data.comments?.length > 0 &&
-                  data.comments.map((comment) => (
-                    <View
-                      className={
-                        'flex flex-row space-x-2 items-center py-3 border-b-[1px] border-black/10 justify-between'
-                      }
-                      key={comment.id}
-                    >
-                      <Text
-                        className={'font-bold self-start max-w-[30%]'}
-                        ellipsizeMode={'tail'}
-                        numberOfLines={1}
+            {showComment && data.comments?.length > 0 && (
+              <>
+                <View className={'border-b-[1px] border-black/10'}></View>
+                <View className={'grid'}>
+                  {data.comments?.length > 0 &&
+                    data.comments.map((comment) => (
+                      <View
+                        className={
+                          'flex flex-row space-x-2 items-center py-3 justify-between'
+                        }
+                        key={comment.id}
                       >
-                        {comment.user.username}
-                      </Text>
-                      <View className={'flex-1'}>
-                        <EmojiableText
-                          body={sliceHoleInfoCommentBody(comment.body)}
+                        <Text
+                          className={'font-bold self-start max-w-[30%]'}
                           variant={'bodyMedium'}
-                        />
+                          ellipsizeMode={'tail'}
+                          numberOfLines={1}
+                          style={{ color: theme.colors.onSurfaceVariant }}
+                        >
+                          {comment.user.username}
+                        </Text>
+                        <View className={'flex-1'}>
+                          <EmojiableText
+                            body={sliceHoleInfoCommentBody(comment.body)}
+                            variant={'bodyMedium'}
+                            style={{ color: theme.colors.surfaceVariant }}
+                          />
+                        </View>
                       </View>
-                    </View>
-                  ))}
-              </View>
+                    ))}
+                </View>
+              </>
             )}
           </View>
         </TouchableRipple>
@@ -226,3 +294,14 @@ export const HoleInfo = React.memo(
     )
   }
 )
+
+const styles = StyleSheet.create({
+  titleText: {
+    fontSize: 18,
+    lineHeight: 28,
+    transform: [{ translateY: -7 }],
+  },
+  categoryText: {
+    fontSize: 18,
+  },
+})
