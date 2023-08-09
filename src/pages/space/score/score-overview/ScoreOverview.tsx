@@ -24,22 +24,22 @@ const scoreInfos: ScoreInfoItem[] = [
   {
     key: 'rank',
     title: '我的排名',
-    Icon: ChartBar,
+    Icon: <ChartBar size={16} />,
   },
   {
     key: 'mine',
     title: '我的成绩',
-    Icon: UserIcon,
+    Icon: <UserIcon size={16} />,
   },
   {
     key: 'avg',
     title: '专业平均',
-    Icon: UserFriendsIcon,
+    Icon: <UserFriendsIcon size={16} />,
   },
   {
     key: 'head',
     title: '专业前10%',
-    Icon: FireIcon,
+    Icon: <FireIcon size={16} />,
   },
 ]
 
@@ -75,7 +75,7 @@ const ScoreOverviewPage = ({
               <View key={info.key}>
                 <Text className="text-black/50">{info.title}</Text>
                 <View className="flex flex-row mx-auto space-x-1">
-                  <info.Icon size={16} />
+                  {info.Icon}
                   <Text>
                     {info.key === 'rank'
                       ? `${scoreData.rank}/${scoreData.total}`
@@ -166,6 +166,7 @@ export const ScoreOverview = () => {
 
   return (
     <View className="flex-1">
+      {/* TODO 用这个替代 https://github.com/callstack/react-native-pager-view */}
       {tabs.length ? (
         <TabView
           tabs={tabs}

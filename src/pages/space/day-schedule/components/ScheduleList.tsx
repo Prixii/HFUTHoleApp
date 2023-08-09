@@ -1,6 +1,7 @@
 import type { Schedule } from '@/pages/space/@utils/types'
 import type { ArrayElementType } from '@/shared/types/utils'
 import type { Colors } from '@/pages/space/@utils/types'
+import type { UnitSchedule } from '@/pages/space/@utils/types'
 import { useDaySchedule } from '@/pages/space/day-schedule/useDaySchedule'
 import { View, Pressable } from 'react-native'
 import { Text } from 'react-native-paper'
@@ -13,18 +14,11 @@ import {
   formatCourseName,
   getLongestSchedule,
 } from '@/pages/space/@utils/utils'
-import React, {
-  MutableRefObject,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { ScheduleSheet } from '@/pages/space/components/ScheduleSheet'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
-import type { UnitSchedule } from '@/pages/space/@utils/types'
 
 type ScheduleListItem = ArrayElementType<
   ReturnType<typeof useDaySchedule>['scheduleList']
@@ -38,7 +32,7 @@ interface CardProps {
 export const ScheduleList = () => {
   const [schedule, setSchedule] = useState<UnitSchedule>()
   const { scheduleList, todaySchedule } = useDaySchedule()
-  const sheetRef = useRef() as MutableRefObject<BottomSheetModal>
+  const sheetRef = useRef<BottomSheetModal>(null)
 
   const openSheet = (schedule: UnitSchedule) => {
     setSchedule(schedule)
@@ -121,7 +115,7 @@ const ConflictCard = ({
   scheduleListItem: { schedules, timeLine },
   openSheet,
 }: CardProps) => {
-  const sheetRef = useRef() as MutableRefObject<BottomSheetModal>
+  const sheetRef = useRef<BottomSheetModal>(null)
 
   const scheduleLongest = useMemo(
     () => getLongestSchedule(schedules),
@@ -169,13 +163,13 @@ const ConflictCard = ({
 
 export interface ScheduleItemCardProps {
   schedule: Schedule
-  timeLine: ScheduleListItem['timeLine']
+  timeLine?: ScheduleListItem['timeLine']
   openSheet: (schedule: UnitSchedule) => void
 }
 
-const ScheduleCard = ({
+export const ScheduleCard = ({
   schedule,
-  timeLine,
+  timeLine = { start: '', index: 0 },
   openSheet,
 }: ScheduleItemCardProps) => {
   const { cardStyle, textStyle } = useMemo(

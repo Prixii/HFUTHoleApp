@@ -1,7 +1,5 @@
 import { Pressable, View } from 'react-native'
-import { IconButton } from '@/components/IconButton'
 import { AngleLeftIcon, AngleRightIcon } from '@/components/icon'
-import { Text } from 'react-native-paper'
 import { useChangeWeek } from '@/pages/space/@utils/useWeekChange'
 
 export const WeekScheduleControl = () => {

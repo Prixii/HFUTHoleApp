@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, FunctionComponent } from 'react'
 import { useWindowDimensions } from 'react-native'
 import {
   TabView as NativeTabView,
