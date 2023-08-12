@@ -1,6 +1,9 @@
 import { SWRKeys } from '@/swr/utils'
 import { useBaseQuery } from '@/swr/useBaseQuery'
-import { getCourseFailureRateRequest } from '@/request/space/course'
+import {
+  getCourseFailureRateRequest,
+  getCourseFailureRateSearchRequest,
+} from '@/request/space/course'
 import { useParams } from '@/shared/hooks/useParams'
 
 export function useSpaceCourseFailureQuery() {
@@ -16,4 +19,16 @@ export function useSpaceCourseFailureQuery() {
     ...query,
     courseName,
   }
+}
+
+export function useSpaceCourseFailureSearchQuery(keyword: string) {
+  const queryKey = [SWRKeys.space.course.failureRateSearchQuery, keyword]
+  const query = useBaseQuery({
+    queryKey,
+    queryFn: () => getCourseFailureRateSearchRequest(keyword),
+    enabled: !!keyword,
+    retry: false,
+  })
+
+  return query
 }

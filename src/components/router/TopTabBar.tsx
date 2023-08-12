@@ -57,14 +57,14 @@ const TabBarItem = ({
   isFocused,
   name,
   Icon,
-  tabBarShowLabel,
+  tabBarShowLabel = true,
 }: {
   scrollToXHandler: (x: number) => void
   onPress: any
   isFocused: boolean
   name: string
-  Icon: (props: { focused: boolean; color: string }) => React.ReactNode
-  tabBarShowLabel: boolean
+  Icon?: (props: { focused: boolean; color: string }) => React.ReactNode
+  tabBarShowLabel?: boolean
 }) => {
   const theme = useTheme()
   const showLabel = tabBarShowLabel
@@ -135,7 +135,7 @@ const TabBarItem = ({
       }}
     >
       <View className={'flex-row items-center space-x-1'}>
-        <Icon focused={isFocused} color="#000000" />
+        {Icon && <Icon focused={isFocused} color="#000000" />}
         <Animated.View style={textViewStyle} className={'items-center'}>
           <Animated.Text
             style={textStyle}

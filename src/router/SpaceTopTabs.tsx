@@ -15,7 +15,8 @@ import { ScoreHelpScreen } from '@/pages/space/service/help/Help'
 import { TopTabHeader } from '@/router/components/TabHeader'
 import { Header } from '@/components/Header'
 import { SpaceClassmateScreen } from '@/pages/space/service/classmate/SpaceClassmateScreen'
-import { CourseFailureQuery } from '@/pages/space/service/course-failure-query/CourseFailureQuery'
+import { CourseFailureQuery } from '@/pages/space/service/course-failure/CourseFailureQuery'
+import { CourseFailureSearch } from '@/pages/space/service/course-failure-search/CourseFailureSearch'
 import { SpaceLoginScreen } from '@/pages/space/login/SpaceLoginScreen'
 
 const Tab = createMaterialTopTabNavigator()
@@ -56,6 +57,11 @@ const ScoreScreens = [
   {
     name: 'course-failure-query',
     component: CourseFailureQuery,
+    title: '课程挂科率查询',
+  },
+  {
+    name: 'course-failure-search-query',
+    component: CourseFailureSearch,
     title: '课程挂科率查询',
   },
 ]

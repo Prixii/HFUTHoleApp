@@ -16,14 +16,14 @@ const serviceList = [
       screen: 'score-overview',
     },
   },
-  // {
-  //   title: '挂科率查询',
-  //   svg: FailureFate,
-  //   route: 'space-nested',
-  //   routeOption: {
-  //     screen: 'failure-rate',
-  //   },
-  // },
+  {
+    title: '挂科率查询',
+    svg: FailureFate,
+    route: 'space-nested',
+    routeOption: {
+      screen: 'course-failure-search-query',
+    },
+  },
   // {
   //   title: '自定义排名',
   //   svg: CustomRanking,
@@ -44,32 +44,6 @@ const serviceList = [
   //   },
   // },
   // {
-  //   title: '挂科率查询',
-  //   svg: ChartSvg,
-  //   route: 'space-nested',
-  //   routeOption: {
-  //     screen: 'failure-rate',
-  //   },
-  // },
-  // {
-  //   title: '自定义排名',
-  //   svg: BilibiliSvg,
-  //   route: 'space-nested',
-  //   routeOption: {
-  //     screen: 'custom-ranking',
-  //   },
-  // },
-  // {
-  //   title: '成绩帮助',
-  //   svg: BilibiliSvg,
-  //   route: 'space-nested',
-  //   routeOption: {
-  //     screen: 'help',
-  //     params: {
-  //       type: 'score',
-  //     },
-  //   },
-  // },
 ]
 
 export const ServiceList = () => {

@@ -32,3 +32,12 @@ export function getCourseFailureRateRequest(courseName: string) {
     },
   })
 }
+
+export function getCourseFailureRateSearchRequest(courseName: string) {
+  return request<ICourseFailureRateSearchResponse>({
+    url: '/score/v2/failRate',
+    params: {
+      courseName,
+    },
+  })
+}

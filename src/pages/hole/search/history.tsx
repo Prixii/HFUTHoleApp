@@ -1,77 +1,27 @@
-import { Pressable, View } from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
-import { SecondaryText } from '@/components/Text/SecondaryText'
-import { DeleteIcon } from '@/components/icon'
-import { useImmer } from 'use-immer'
-import { Closeable } from '@/components/Closeable'
 import { useAppDispatch, useAppSelector } from '@/store/store'
-import { operateSearchData } from '@/store/reducer/search'
+import { operateHoleSearchData } from '@/store/reducer/search'
 import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
+import { SearchHistory } from '@/components/search/history'
 
 export const HoleSearchHistory = () => {
-  const theme = useTheme()
+  const data = useAppSelector((state) => state.search.hole)
+  const dispatch = useAppDispatch()
   const searchRoute = useHoleSearchRoute()
 
-  const [deleteAble, setDeleteAble] = useImmer<number[]>([])
-
-  const data = useAppSelector((state) => state.search.data) as string[]
-  const dispatch = useAppDispatch()
-
-  const addDeleteAble = (index: number) => {
-    setDeleteAble((draft) => {
-      draft.push(index)
-    })
+  const deleteAllHistory = () => {
+    dispatch(operateHoleSearchData(() => []))
   }
 
   const deleteHistory = (index: number) => {
-    dispatch(
-      operateSearchData((draft) => {
-        draft.splice(index, 1)
-      })
-    )
-    setDeleteAble((draft) => {
-      draft.splice(index, 1)
-    })
-  }
-
-  const deleteAllHistory = () => {
-    dispatch(
-      operateSearchData(() => {
-        return []
-      })
-    )
+    dispatch(operateHoleSearchData((draft) => draft.splice(index, 1)))
   }
 
   return (
-    <View className={'grid gap-4'}>
-      <Text variant={'titleMedium'}>搜索历史</Text>
-      <View className={'flex flex-row gap-2 flex-wrap'}>
-        {data.map((tag, index) => (
-          <Pressable
-            key={index}
-            onLongPress={() => addDeleteAble(index)}
-            onPress={() => searchRoute.goResult(tag)}
-          >
-            <View
-              key={index}
-              className={'relative bg-gray-400/20 py-2 px-4 rounded-[5px]'}
-            >
-              <Text className={'text-xs'}>{tag}</Text>
-              {deleteAble.includes(index) && (
-                <Closeable onPress={() => deleteHistory(index)} />
-              )}
-            </View>
-          </Pressable>
-        ))}
-      </View>
-      <View
-        className={'w-screen justify-center flex-row items-center text-center'}
-      >
-        <View>
-          <DeleteIcon color={theme.colors.surfaceVariant} size={16} />
-        </View>
-        <SecondaryText onPress={deleteAllHistory}>清空搜索历史</SecondaryText>
-      </View>
-    </View>
+    <SearchHistory
+      searchHistroyList={data}
+      onDeleteAllHistory={deleteAllHistory}
+      onDeleteHistory={deleteHistory}
+      onHistoryItemClick={(keyword) => searchRoute.goResult(keyword)}
+    />
   )
 }

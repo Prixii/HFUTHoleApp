@@ -18,7 +18,7 @@ export function TopTabHeader({ children, onRightPress, ...props }: Props) {
   const scrollRef = useRef<ScrollView>(null)
 
   const scrollToXHandler = (x: number) => {
-    scrollRef.current.scrollTo({ x: x, animated: true })
+    scrollRef.current?.scrollTo({ x: x, animated: true })
   }
   return (
     <View className={'flex-row'}>

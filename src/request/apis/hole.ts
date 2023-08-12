@@ -8,7 +8,7 @@ import {
   HoleListMode,
 } from '@/shared/enums'
 import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
-import { HoleSearchValidator } from '@/shared/validators/hole/search'
+import { SearchValidator } from '@/shared/validators/hole/search'
 import { ImagePickerResult } from 'expo-image-picker'
 import { Config } from '@/shared/config'
 
@@ -87,7 +87,7 @@ export function DeleteLikeHoleRequest(data: Id) {
   })
 }
 
-export function SearchHoleRequest(params: PaginateAble<HoleSearchValidator>) {
+export function SearchHoleRequest(params: PaginateAble<SearchValidator>) {
   return request<ISearchHoleResponse>({
     method: 'GET',
     url: '/hole/search',

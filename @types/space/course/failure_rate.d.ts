@@ -5,3 +5,8 @@ declare type ICourseFailureRateResponse = {
   totalCount: number
   failRate: number
 }[]
+
+declare interface ICourseFailureRateSearchResponse {
+  options: string[]
+  failRateVOS: any[]
+}

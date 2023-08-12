@@ -1,6 +1,6 @@
 import { IsString, Length } from 'class-validator'
 
-export class HoleSearchValidator {
+export class SearchValidator {
   @Length(1, 100, { message: '搜索的正文内容字数限制为1-100哦s' })
   @IsString()
   keywords: string
