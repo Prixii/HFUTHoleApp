@@ -24,6 +24,17 @@ const serviceList = [
       screen: 'course-failure-search-query',
     },
   },
+  {
+    title: '成绩帮助',
+    svg: Help,
+    route: 'space-nested',
+    routeOption: {
+      screen: 'help',
+      params: {
+        type: ['score'],
+      },
+    },
+  },
   // {
   //   title: '自定义排名',
   //   svg: CustomRanking,
@@ -32,18 +43,6 @@ const serviceList = [
   //     screen: 'custom-ranking',
   //   },
   // },
-  // {
-  //   title: '成绩帮助',
-  //   svg: Help,
-  //   route: 'space-nested',
-  //   routeOption: {
-  //     screen: 'help',
-  //     params: {
-  //       type: 'score',
-  //     },
-  //   },
-  // },
-  // {
 ]
 
 export const ServiceList = () => {

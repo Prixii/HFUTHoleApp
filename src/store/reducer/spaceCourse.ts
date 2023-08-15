@@ -48,7 +48,7 @@ export const spaceCourseSlice = createSlice({
     },
     changeSchedule(
       state,
-      action: PayloadAction<Partial<{ week: number; day: number }>>
+      action: PayloadAction<Partial<{ week: number; day: number }> | undefined>
     ) {
       const payload = action.payload
       const { day, week } = calculateWeekAndDay(

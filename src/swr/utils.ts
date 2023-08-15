@@ -34,6 +34,9 @@ export const SWRKeys = {
       all: 'space.score.all',
       single: 'space.score.single',
     },
+    chore: {
+      help: 'space.chore.help',
+    },
   },
 }
 
