@@ -1,14 +1,29 @@
 import { ToTopFAB } from '@/components/ToTopFAB'
-import React, { useState, useEffect } from 'react'
-import Animated, { SlideInRight, SlideOutRight } from 'react-native-reanimated'
+import Animated, {
+  SlideInRight,
+  SlideOutRight,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated'
+import { Func } from '@/shared/types'
 
-export function AnimatedToTopFAB({ goToTop, visible, bgColor }) {
-  return visible ? (
-    <Animated.View
-      entering={SlideInRight.springify().damping(17)}
-      exiting={SlideOutRight.springify().damping(17)}
-    >
-      <ToTopFAB onPress={goToTop} bgColor={bgColor} />
-    </Animated.View>
-  ) : null
+interface Props {
+  goToTop: Func
+  visible: boolean
+}
+
+export function AnimatedToTopFAB({ goToTop, visible }: Props) {
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: withSpring(visible ? 0 : 100) }],
+    }
+  }, [visible])
+
+  return (
+    <>
+      <Animated.View style={animatedStyle}>
+        <ToTopFAB onPress={goToTop} />
+      </Animated.View>
+    </>
+  )
 }

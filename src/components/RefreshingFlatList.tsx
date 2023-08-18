@@ -1,4 +1,10 @@
-import React, { ForwardedRef, forwardRef, useEffect, useState } from 'react'
+import React, {
+  ForwardedRef,
+  forwardRef,
+  MutableRefObject,
+  useEffect,
+  useState,
+} from 'react'
 import { FlatList, RefreshControl } from 'react-native'
 import type { FlatListProps } from 'react-native'
 import { Func } from '@/shared/types'
@@ -37,12 +43,10 @@ function RefreshingFlatListInner<T = any>(
     { wait: 200 }
   )
 
-  const onScroll = props.onScroll
-
   return (
     <FlatList
       ref={ref}
-      onScroll={onScroll}
+      onScroll={props.onScroll}
       refreshing={refreshing}
       onEndReachedThreshold={0.1}
       onEndReached={onRefresh}
@@ -63,6 +67,5 @@ function RefreshingFlatListInner<T = any>(
 export const RefreshingFlatList = forwardRef(RefreshingFlatListInner) as <
   T = any
 >(
-  props: Props<T>,
-  ref: ForwardedRef<FlatList>
+  props: Props<T> & { ref: MutableRefObject<FlatList> }
 ) => React.JSX.Element

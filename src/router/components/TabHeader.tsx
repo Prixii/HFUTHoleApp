@@ -1,12 +1,13 @@
 import { TopTabBar } from '@/components/router/TopTabBar'
 import { IconButton, useTheme } from 'react-native-paper'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, StatusBar, View } from 'react-native'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 import React, { createRef, useRef } from 'react'
 import { Func } from '@/shared/types'
 import { SearchIcon } from '@/components/icon'
 import { SubCategoryTabBar } from '@/components/router/SubCategoryTabBar'
 import { ScrollView as GestureHandlerScrollView } from 'react-native-gesture-handler'
+import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
 
 interface Props extends MaterialTopTabBarProps {
   children?: React.ReactNode
@@ -15,31 +16,23 @@ interface Props extends MaterialTopTabBarProps {
 
 export function TopTabHeader({ children, onRightPress, ...props }: Props) {
   const theme = useTheme()
-  const scrollRef = useRef<ScrollView>(null)
 
-  const scrollToXHandler = (x: number) => {
-    scrollRef.current?.scrollTo({ x: x, animated: true })
-  }
+  useStatusBarStyle({
+    themeKey: 'background',
+  })
+
   return (
-    <View className={'flex-row'}>
+    <View className={'flex-row w-full'}>
       <ScrollView
+        className={'flex-1 bg-background'}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={[{ backgroundColor: theme.colors.background }]}
-        ref={scrollRef}
       >
-        <TopTabBar {...props} scrollToXHandler={scrollToXHandler} />
+        <TopTabBar {...props} />
       </ScrollView>
-      <View
-        style={{
-          alignSelf: 'center',
-          backgroundColor: theme.colors.background,
-          padding: 5,
-          shadowColor: theme.colors.background,
-          shadowRadius: 50,
-        }}
-      >
-        <IconButton icon={SearchIcon} onPress={onRightPress} />
+      <View className={'bg-background'}>
+        <IconButton icon={() => children} onPress={onRightPress} />
       </View>
     </View>
   )

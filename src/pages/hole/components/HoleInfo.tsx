@@ -147,85 +147,68 @@ export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
-//TODO: 样式有点蛋疼
-export const HoleInfoTitle: React.FC<{ data: Data; categoryMode: string }> = ({
-  data,
-  categoryMode,
-}) => {
-  const theme = useTheme()
-  const colors = Categories.find((category) => {
-    return category.name == data.category.category
-  })?.color
+export const HoleInfoTitle: React.FC<{ data: Data }> = ({ data }) => {
+  const classification = Categories.find(
+    (item) => item.name === data.classification?.name
+  )
 
   return (
-    <View>
-      <Text
-        variant={'titleMedium'}
-        style={[
-          styles.titleText,
-          {
-            color: theme.colors.onSurfaceVariant,
-          },
-        ]}
-        numberOfLines={2}
-      >
-        {(categoryMode == 'category' || categoryMode == 'subcategory') && (
-          <View className={'flex-row space-x-2 items-center'}>
-            {categoryMode == 'category' && (
-              <View
-                className={'rounded-md px-2 py-0.5 self-center'}
-                style={{ backgroundColor: colors?.secondary }}
-              >
-                <EmojiableText
-                  body={data.category.category}
-                  variant={'titleMedium'}
-                  style={[styles.categoryText, { color: colors?.primary }]}
-                />
-              </View>
-            )}
-            <EmojiableText
-              body={data.category.subcategory + ' · '}
-              variant={'titleMedium'}
-              style={[styles.categoryText, { color: colors?.primary }]}
-            />
-          </View>
-        )}
-        {data.title}
-      </Text>
+    <View className={'flex space-y-2'}>
+      <View className={'flex-row space-x-2 items-center'}>
+        <View
+          className={'py-1 px-2 rounded-lg'}
+          style={{ backgroundColor: classification?.color.secondary }}
+        >
+          <Text
+            className={'font-bold'}
+            style={{ color: classification?.color.primary }}
+          >
+            {data.classification?.name}
+          </Text>
+        </View>
+        <Text
+          className={'font-bold'}
+          style={{ color: classification?.color.primary }}
+        >
+          {data.subClassification?.name}
+        </Text>
+      </View>
+      {data.title && <Text className={'font-bold'}>{data?.title}</Text>}
     </View>
   )
 }
 
-export const HoleInfoBody: React.FC<{ data: Data; categoryMode: string }> =
-  React.memo(({ data, categoryMode }) => {
-    const theme = useTheme()
+export const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
+  const theme = useTheme()
 
-    const { goResult } = useHoleSearchRoute()
+  const { goResult } = useHoleSearchRoute()
 
-    return (
-      <View className={'flex space-y-2'}>
-        <HoleInfoTitle data={data} categoryMode={categoryMode} />
-        <View>
-          <EmojiableText
-            body={data.body}
-            variant={'bodyLarge'}
-            numberOfLines={3}
-            style={{ color: theme.colors.surfaceVariant, lineHeight: 25 }}
-          />
-        </View>
-        {data.imgs.length && (
-          <View>
-            <ImageList imgs={data?.imgs.slice(0, 3)} />
-          </View>
-        )}
-        {data.tags.length && (
-          <View>
-            <Badges data={data.tags} onPress={(tag) => goResult(`#${tag}`)} />
-          </View>
-        )}
+  return (
+    <View className={'flex space-y-2'}>
+      <View>
+        <HoleInfoTitle data={data} />
       </View>
-    )
-  })
+      <View>
+        <EmojiableText
+          body={data.body}
+          variant={'bodyMedium'}
+          numberOfLines={3}
+          style={{ color: theme.colors.surfaceVariant, lineHeight: 25 }}
+        />
+      </View>
+      {data.imgs.length && (
+        <View>
+          <ImageList imgs={data?.imgs.slice(0, 3)} />
+        </View>
+      )}
+      {data.tags.length && (
+        <View>
+          <Badges data={data.tags} onPress={(tag) => goResult(`#${tag}`)} />
+        </View>
+      )}
+    </View>
+  )
+}
 
 interface Props extends IClassName {
   data: Data
@@ -236,66 +219,61 @@ interface Props extends IClassName {
   categoryMode?: 'category' | 'subcategory' | undefined
 }
 
-export const HoleInfo = React.memo(
-  ({
-    data,
-    onPress,
-    header,
-    body,
-    className,
-    showComment = true,
-    categoryMode = 'category',
-  }: Props) => {
-    const theme = useTheme()
+export const HoleInfo = ({
+  data,
+  onPress,
+  header,
+  body,
+  className,
+  showComment = true,
+}: Props) => {
+  const theme = useTheme()
 
-    return (
-      <View className={'bg-white rounded-2xl mt-4 overflow-hidden'}>
-        <TouchableRipple onPress={onPress}>
-          <View className={`flex-col space-y-3 px-4 py-2 ${className}`}>
-            <View>{header || <HoleInfoHeader data={data} />}</View>
-            <View>
-              {body || <HoleInfoBody data={data} categoryMode={categoryMode} />}
-            </View>
-            <View>{data.vote && <HoleInfoVote data={data} />}</View>
-            {showComment && data.comments?.length > 0 && (
-              <>
-                <View className={'border-b-[1px] border-black/10'}></View>
-                <View className={'grid'}>
-                  {data.comments?.length > 0 &&
-                    data.comments.map((comment) => (
-                      <View
-                        className={
-                          'flex flex-row space-x-2 items-center py-2 justify-between'
-                        }
-                        key={comment.id}
+  return (
+    <View className={'bg-white rounded-2xl mt-4 overflow-hidden'}>
+      <TouchableRipple onPress={onPress}>
+        <View className={`flex-col space-y-3 px-4 py-2 ${className}`}>
+          <View>{header || <HoleInfoHeader data={data} />}</View>
+          <View>{body || <HoleInfoBody data={data} />}</View>
+          <View>{data.vote && <HoleInfoVote data={data} />}</View>
+          {showComment && data.comments?.length > 0 && (
+            <>
+              <View className={'border-b-[1px] border-black/10'}></View>
+              <View className={'grid'}>
+                {data.comments?.length > 0 &&
+                  data.comments.map((comment) => (
+                    <View
+                      className={
+                        'flex flex-row space-x-2 items-center py-2 justify-between'
+                      }
+                      key={comment.id}
+                    >
+                      <Text
+                        className={'font-bold self-start max-w-[30%]'}
+                        variant={'bodyMedium'}
+                        ellipsizeMode={'tail'}
+                        numberOfLines={1}
+                        style={{ color: theme.colors.onSurfaceVariant }}
                       >
-                        <Text
-                          className={'font-bold self-start max-w-[30%]'}
+                        {comment.user.username}
+                      </Text>
+                      <View className={'flex-1'}>
+                        <EmojiableText
+                          body={sliceHoleInfoCommentBody(comment.body)}
                           variant={'bodyMedium'}
-                          ellipsizeMode={'tail'}
-                          numberOfLines={1}
-                          style={{ color: theme.colors.onSurfaceVariant }}
-                        >
-                          {comment.user.username}
-                        </Text>
-                        <View className={'flex-1'}>
-                          <EmojiableText
-                            body={sliceHoleInfoCommentBody(comment.body)}
-                            variant={'bodyMedium'}
-                            style={{ color: theme.colors.surfaceVariant }}
-                          />
-                        </View>
+                          style={{ color: theme.colors.surfaceVariant }}
+                        />
                       </View>
-                    ))}
-                </View>
-              </>
-            )}
-          </View>
-        </TouchableRipple>
-      </View>
-    )
-  }
-)
+                    </View>
+                  ))}
+              </View>
+            </>
+          )}
+        </View>
+      </TouchableRipple>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   titleText: {

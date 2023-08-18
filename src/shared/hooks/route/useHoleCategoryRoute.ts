@@ -1,10 +1,16 @@
 import { useNavigation } from '@react-navigation/native'
-import { ArticleCategoryEnum } from '@/shared/enums'
+import { HoleClassification } from '@/shared/enums/category.enum'
+
+export type HoleCategoryNavigationCtx = {
+  main: HoleClassification
+  sub?: string
+}
 
 export function useHoleCategoryRoute() {
   const navigation = useNavigation()
 
-  const go = (category: ArticleCategoryEnum) => {
+  // TODO 中文 or 英文路由名？
+  const go = (ctx: HoleCategoryNavigationCtx) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     navigation.navigate('hole', {
@@ -12,7 +18,8 @@ export function useHoleCategoryRoute() {
       params: {
         screen: 'latest',
         params: {
-          category: category,
+          category: ctx.main,
+          subCategory: ctx.sub,
         },
       },
     })

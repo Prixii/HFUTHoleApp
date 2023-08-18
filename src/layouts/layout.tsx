@@ -39,11 +39,8 @@ export function TabViewExample() {
 }
 
 export function Layout() {
-  const { color, barStyle } = useStatusBarContext()
-
   return (
     <>
-      <StatusBar backgroundColor={color} barStyle={barStyle} />
       <View className={'w-screen min-h-[100vh]'}>
         <Routes />
         <Toast />

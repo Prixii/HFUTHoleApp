@@ -8,6 +8,8 @@ type Props = {
   active?: boolean
 } & SvgProps
 
+export type SvgComponentType = React.ComponentType<SvgProps>
+
 export function Svg({ active, SvgComponent, size, style, ...props }: Props) {
   const theme = useTheme()
 

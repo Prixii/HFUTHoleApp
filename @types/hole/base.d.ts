@@ -18,6 +18,14 @@ declare interface IHole {
     category: string
     subcategory: string
   }
+  classification: {
+    name: string
+    description: string
+  } | null
+  subClassification: {
+    name: string
+    description: string
+  } | null
 }
 
 interface Comment {

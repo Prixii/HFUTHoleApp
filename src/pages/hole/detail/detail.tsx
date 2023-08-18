@@ -18,7 +18,6 @@ export function HoleDetail() {
 
   return (
     <>
-      <StatusBar backgroundColor={'#fff'} />
       <LoadingScreen isLoading={!isAllSuccess}>
         <View className={'bg-white'}>
           <HoleDetailComment />

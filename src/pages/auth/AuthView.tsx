@@ -9,6 +9,7 @@ import {
 import { Avatar } from 'react-native-paper'
 import { Snackbar } from '@/components/snackbar/snackbar'
 import { ReactNode, useMemo } from 'react'
+import useKeyboardHeight from '@/shared/hooks/useKeyboardHeight'
 
 interface Props {
   title: string
@@ -30,13 +31,16 @@ export function AuthView(props: Props) {
     [props.snackbar]
   )
 
+  const keyboardHeight = useKeyboardHeight()
+
   return (
     <>
       <StatusBar backgroundColor={'#fff'} />
-      <KeyboardAvoidingView
-        behavior={'padding'}
-        className={'flex-1'}
-        keyboardVerticalOffset={0}
+      <View
+        className={'flex-1 relative'}
+        style={{
+          bottom: Math.max(keyboardHeight - 100, 0),
+        }}
       >
         <View className={'flex-1 justify-around'}>
           <SafeAreaView className={'bg-white flex-1 w-screen py-[10px] px-5'}>
@@ -62,7 +66,7 @@ export function AuthView(props: Props) {
             </View>
           </SafeAreaView>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </>
   )
 }

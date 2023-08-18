@@ -5,7 +5,15 @@ import { SubCategoryTabHeader } from './components/TabHeader'
 
 const HoleSubCategoryTab = createMaterialTopTabNavigator()
 
-export const HoleSubCategoryTabs = (props: { category: any }) => {
+interface Props {
+  category: {
+    color: string
+    name: string
+    children: string[]
+  }
+}
+
+export const HoleSubCategoryTabs = (props: Props) => {
   const category = props.category
 
   return (
