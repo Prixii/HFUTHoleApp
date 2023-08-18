@@ -81,17 +81,6 @@ const HoleInfoVote: React.FC<{ data: Data }> = ({ data }) => {
 export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
   const theme = useTheme()
 
-  const renderList = [
-    {
-      value: data.favoriteCounts,
-      element: <LikeIcon size={14} color={theme.colors.surfaceVariant} />,
-    },
-    {
-      value: data.commentCounts,
-      element: <CommentIcon size={14} color={theme.colors.surfaceVariant} />,
-    },
-  ]
-
   return (
     <>
       <View className={'my-1 space-y-1'}>
@@ -121,23 +110,6 @@ export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
                   #{data.id}
                 </SecondaryText>
               </View>
-            </View>
-
-            <View className={'flex flex-row space-x-3'}>
-              {renderList.map((icon, index) => (
-                <View
-                  className={'flex flex-row items-center space-x-2'}
-                  key={index}
-                >
-                  {icon.element}
-                  <Text
-                    className={'text-xs'}
-                    style={{ color: theme.colors.surfaceVariant }}
-                  >
-                    {icon.value}
-                  </Text>
-                </View>
-              ))}
             </View>
             <HoleBottomAction data={data as IHoleDetailResponse} />
           </View>
@@ -210,13 +182,43 @@ export const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
   )
 }
 
+export const HoleInfoBottom: React.FC<{ data: Data }> = ({ data }) => {
+  const theme = useTheme()
+
+  const renderList = [
+    {
+      value: data.favoriteCounts,
+      element: LikeIcon,
+    },
+    {
+      value: data.commentCounts,
+      element: CommentIcon,
+    },
+  ]
+  return (
+    <View className={'flex flex-row space-x-3'}>
+      {renderList.map((item, index) => (
+        <View className={'flex flex-row items-center space-x-2'} key={index}>
+          <item.element size={16} color={theme.colors.surfaceVariant} />
+          <Text
+            className={'text-xs'}
+            style={{ color: theme.colors.surfaceVariant }}
+          >
+            {item.value}
+          </Text>
+        </View>
+      ))}
+    </View>
+  )
+}
+
 interface Props extends IClassName {
   data: Data
   onPress?: Func
   header?: ReactNode
   body?: ReactNode
   showComment?: boolean
-  categoryMode?: 'category' | 'subcategory' | undefined
+  bottom?: ReactNode
 }
 
 export const HoleInfo = ({
@@ -224,6 +226,7 @@ export const HoleInfo = ({
   onPress,
   header,
   body,
+  bottom,
   className,
   showComment = true,
 }: Props) => {
@@ -235,7 +238,8 @@ export const HoleInfo = ({
         <View className={`flex-col space-y-3 px-4 py-2 ${className}`}>
           <View>{header || <HoleInfoHeader data={data} />}</View>
           <View>{body || <HoleInfoBody data={data} />}</View>
-          <View>{data.vote && <HoleInfoVote data={data} />}</View>
+          {data.vote && <HoleInfoVote data={data} />}
+          <View>{bottom || <HoleInfoBottom data={data} />}</View>
           {showComment && data.comments?.length > 0 && (
             <>
               <View className={'border-b-[1px] border-black/10'}></View>

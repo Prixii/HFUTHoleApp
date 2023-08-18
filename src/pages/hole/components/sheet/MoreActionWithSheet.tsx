@@ -42,7 +42,7 @@ export function MoreActionWithSheet(props: Props) {
         keepAliveAfterClick: true,
       },
     ],
-    []
+    [props.list, theme.colors.error]
   )
 
   const openSheet = () => {
@@ -53,13 +53,7 @@ export function MoreActionWithSheet(props: Props) {
 
   return (
     <>
-      <Appbar.Action
-        icon={'dots-vertical'}
-        onPress={openSheet}
-        size={15}
-        className={'mr-0 items-end'}
-        iconColor={theme.colors.surfaceVariant}
-      />
+      <Appbar.Action icon={'dots-vertical'} onPress={openSheet} size={20} />
       <BottomActionSheet ref={sheetRef}>
         <View className={'flex p-4 space-y-4'}>
           {list.map((Item) => {

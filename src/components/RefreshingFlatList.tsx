@@ -67,5 +67,5 @@ function RefreshingFlatListInner<T = any>(
 export const RefreshingFlatList = forwardRef(RefreshingFlatListInner) as <
   T = any
 >(
-  props: Props<T> & { ref: MutableRefObject<FlatList> }
+  props: Props<T> & { ref?: MutableRefObject<FlatList> }
 ) => React.JSX.Element
