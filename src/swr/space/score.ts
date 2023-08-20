@@ -19,7 +19,6 @@ export const useSpaceScore = () => {
   const { isLogin } = useAuth()
 
   const query = useQuery<IScoreResponse>(scoreAllKey, {
-    retry: false,
     enabled: isLogin,
     queryFn: () => getScoreRequest(),
     onSuccess(data) {

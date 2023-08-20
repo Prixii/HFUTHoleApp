@@ -6,3 +6,9 @@ export function getHelp(type: HelpType) {
     url: `/api/help/${type}`,
   })
 }
+
+export function getSemesters() {
+  return request<ISemestersResponse>({
+    url: '/api/semesters',
+  })
+}

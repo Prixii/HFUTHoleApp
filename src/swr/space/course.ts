@@ -1,33 +1,40 @@
 import { SWRKeys } from '@/swr/utils'
 import { useQuery } from 'react-query'
-import {
-  getCourseListRequest,
-  type CourseListRequestDto,
-} from '@/request/space/course'
+import { getCourseListRequest } from '@/request/space/course'
+import { getSemesters } from '@/request/space/chore'
 import { useAppDispatch } from '@/store/store'
 import { changeCourseInfo, changeSchedule } from '@/store/reducer/spaceCourse'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
-import { useImmer } from 'use-immer'
 import { useEffect } from 'react'
+import { useCurrentSemester } from '@/shared/context/space/semester'
+import { initializeCourseSchedule } from '@/pages/space/@utils/spaceCourseStore'
 
+// 依赖 currentSemesterId 与 isLogin
 export const useSpaceCourse = () => {
   const dispatch = useAppDispatch()
+  const { selectedSemesterId, currentSemesterId } = useCurrentSemester()
   const { isLogin } = useAuth()
-  const [key, setKey] = useImmer<[string, CourseListRequestDto]>([
-    SWRKeys.space.course.all,
-    {},
-  ])
+
+  const params = { semesterId: selectedSemesterId }
+  const key = [SWRKeys.space.course.all, params]
 
   const query = useQuery<ICourseResponse>(key, {
-    enabled: isLogin,
-    retry: false,
-    queryFn: () => getCourseListRequest(key[1]),
-    onSuccess(data) {
-      dispatch(changeCourseInfo(data))
-      dispatch(changeSchedule(undefined))
-    },
+    enabled: isLogin && !!selectedSemesterId,
+    queryFn: () => getCourseListRequest(params),
   })
 
+  // 为了解决切换学期的时候，不更新课表state
+  useEffect(() => {
+    const { data } = query
+    if (!data) {
+      return
+    }
+    dispatch(changeCourseInfo(data))
+    initializeCourseSchedule(selectedSemesterId, currentSemesterId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSemesterId, dispatch, query.data, selectedSemesterId])
+
+  // 退出重新登陆的情况
   useEffect(() => {
     isLogin && query.refetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -4,7 +4,6 @@ import { ellipsisString } from '@/shared/utils/string'
 import { StyleSheet } from 'react-native'
 import { objectMap, floatFixed } from '@/shared/utils/utils'
 import type { Colors } from '@/pages/space/@utils/types'
-import type { RankType, ScoreType } from '@/store/reducer/spaceScore'
 
 export const DAY_HOURS = [
   { start: '08:00', index: 1 },

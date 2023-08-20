@@ -18,6 +18,7 @@ import { SpaceClassmateScreen } from '@/pages/space/service/classmate/SpaceClass
 import { CourseFailureQuery } from '@/pages/space/service/course-failure/CourseFailureQuery'
 import { CourseFailureSearch } from '@/pages/space/service/course-failure-search/CourseFailureSearch'
 import { SpaceLoginScreen } from '@/pages/space/login/SpaceLoginScreen'
+import { CurrentSemesterContextProvider } from '@/shared/context/space/semester'
 
 const Tab = createMaterialTopTabNavigator()
 const SpaceStack = createNativeStackNavigator()
@@ -100,26 +101,28 @@ export const SpaceTopTabs = () => {
       {isLogin ? (
         <>
           <StatusBar backgroundColor={theme.colors.background} />
-          <Tab.Navigator
-            initialRouteName={'day'}
-            tabBar={(props) => (
-              <TopTabHeader {...props} onRightPress={logout}>
-                <LogoutIcon />
-              </TopTabHeader>
-            )}
-            screenOptions={{
-              swipeEnabled: false,
-            }}
-          >
-            {TabScreens.map((item) => (
-              <Tab.Screen
-                name={item.name}
-                component={item.component}
-                options={{ title: item.title }}
-                key={item.name}
-              />
-            ))}
-          </Tab.Navigator>
+          <CurrentSemesterContextProvider>
+            <Tab.Navigator
+              initialRouteName={'day'}
+              tabBar={(props) => (
+                <TopTabHeader {...props} onRightPress={logout}>
+                  <LogoutIcon />
+                </TopTabHeader>
+              )}
+              screenOptions={{
+                swipeEnabled: false,
+              }}
+            >
+              {TabScreens.map((item) => (
+                <Tab.Screen
+                  name={item.name}
+                  component={item.component}
+                  options={{ title: item.title }}
+                  key={item.name}
+                />
+              ))}
+            </Tab.Navigator>
+          </CurrentSemesterContextProvider>
         </>
       ) : (
         <SpaceAuthStack.Navigator screenOptions={{ headerShown: false }}>

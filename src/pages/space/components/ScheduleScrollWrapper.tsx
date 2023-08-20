@@ -11,7 +11,7 @@ export const ScheduleScrollWrapper: FC<ScreenWrapperProps> = ({
   children,
   ...props
 }) => {
-  const { isRefetching, refetch } = useSpaceCourse()
+  const { isFetching, refetch } = useSpaceCourse()
   const { isLogin } = useAuth()
 
   return (
@@ -22,7 +22,7 @@ export const ScheduleScrollWrapper: FC<ScreenWrapperProps> = ({
       }}
       refreshControl={
         <RefreshIndicatorControl
-          refreshing={isRefetching}
+          refreshing={isFetching}
           enabled={isLogin}
           onRefresh={refetch}
         />

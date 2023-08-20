@@ -1,8 +1,10 @@
-import { getHelp } from '@/request/space/chore'
+import { getHelp, getSemesters } from '@/request/space/chore'
 import { HelpType } from '@/pages/space/@utils/types'
 import { useParams } from '@/shared/hooks/useParams'
 import { useQuery } from 'react-query'
 import { SWRKeys } from '@/swr/utils'
+import { useCurrentSemester } from '@/shared/context/space/semester'
+import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 
 interface RouteParams {
   type: HelpType[]
@@ -28,6 +30,27 @@ export const useHelp = () => {
         title: helpTitle[params.type[i]],
         message: item,
       }))
+    },
+  })
+
+  return query
+}
+
+export const useSemesters = () => {
+  const { setSelectedSemesterId, setCurrentSemesterid } = useCurrentSemester()
+  const { isLogin } = useAuth()
+
+  const key = [SWRKeys.space.chore.semesters]
+
+  const query = useQuery(key, {
+    // 不能过期，防止初始化当前的学期
+    cacheTime: Infinity,
+    enabled: isLogin,
+    queryFn: getSemesters,
+    onSuccess(data) {
+      const semesterId = data[0].id
+      setCurrentSemesterid(semesterId)
+      setSelectedSemesterId(semesterId)
     },
   })
 

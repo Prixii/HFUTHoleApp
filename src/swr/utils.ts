@@ -36,6 +36,7 @@ export const SWRKeys = {
     },
     chore: {
       help: 'space.chore.help',
+      semesters: 'space.chore.semesters',
     },
   },
 }

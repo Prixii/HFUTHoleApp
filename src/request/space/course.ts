@@ -2,7 +2,7 @@ import { request } from '@/request/spaceRequest'
 
 export interface CourseListRequestDto {
   refresh?: boolean
-  semesterId?: number
+  semesterId?: number | string
 }
 
 export function getCourseListRequest({

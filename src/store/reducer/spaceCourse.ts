@@ -55,8 +55,8 @@ export const spaceCourseSlice = createSlice({
         state.courseInfo.mainInfo.semesterStartDate
       )
       const scheduleIdx = {
-        weekIdx: payload?.week || week,
-        dayIdx: payload?.day || day,
+        weekIdx: payload?.week ?? week,
+        dayIdx: payload?.day ?? day,
       }
       state.daySchedule = scheduleIdx
       state.weekSchedule = scheduleIdx

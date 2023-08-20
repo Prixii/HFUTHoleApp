@@ -1,3 +1,4 @@
+import type { Schedule } from '@/pages/space/@utils/types'
 import { useMemo } from 'react'
 import { useAppSelector, useAppDispatch } from '@/store/store'
 import {
@@ -9,11 +10,13 @@ import { changeSchedule } from '@/store/reducer/spaceCourse'
 import { useMount } from 'ahooks'
 import { format } from 'date-fns'
 import { JSONDeepClone } from '@/shared/utils/utils'
-import type { Schedule } from '@/pages/space/@utils/types'
+import { initializeCourseSchedule } from '@/pages/space/@utils/spaceCourseStore'
+import { useCurrentSemester } from '@/shared/context/space/semester'
 
 const defaultVisibleDate = '01月01号'
 
 export const useDaySchedule = () => {
+  const { selectedSemesterId, currentSemesterId } = useCurrentSemester()
   const dispatch = useAppDispatch()
   const { daySchedule, courseInfo } = useAppSelector(
     (state) => state.spaceCourse
@@ -76,8 +79,10 @@ export const useDaySchedule = () => {
     )
   }, [daySchedule, courseInfo])
 
+  // 根据当前日期做初始化
   useMount(() => {
-    dispatch(changeSchedule(undefined))
+    initializeCourseSchedule(selectedSemesterId, currentSemesterId)
+    // dispatch(changeSchedule())
   })
 
   return {
