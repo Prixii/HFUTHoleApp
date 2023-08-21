@@ -1,72 +1,57 @@
-import { StatusBar, View } from 'react-native'
-import { LoadingScreen } from '@/components/LoadingScreen'
-import { useHoleCategoryList } from '@/swr/hole/category'
-import { RefreshableHoleList } from '@/pages/hole/components/HoleList'
-import { HoleCategoryHeader } from '@/pages/hole/category/Header'
-import { createRef, useState } from 'react'
-import { useSharedValue } from 'react-native-reanimated'
-import { AnimatedToTopFAB } from '../ToTopFab'
-import { AnimatedHolePostFAB } from '../PostFab'
-import { ArticleCategoryEnum } from '@/shared/enums'
+import { Image, ScrollView, StatusBar, View } from 'react-native'
 import { Page } from '@/components/Page'
-import { useHoleList } from '@/swr/hole'
-import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
+import { Button, TouchableRipple } from 'react-native-paper'
+import { Svg } from '@/components/svg/Svg'
+import { Text } from 'react-native-paper'
+import { Categories, getCategoryByName } from '@/shared/constants/category'
+import { useHoleCategoryRoute } from '@/shared/hooks/route/useHoleCategoryRoute'
 
-export function HoleCategoryScreen(props: {
-  category: any
-  subcategory: string
-}) {
-  const query = useHoleCategoryList(props.category.name)
-  // const query = useHoleCategoryList(props.category, props.subcategory)
-
-  const listRef = createRef()
-
-  const CONTENT_OFFSET_THRESHOLD = 500
-  const [PostFABOffset, setPostFABOffset] = useState(0)
-  const [isToTopFABVisible, setToTopFABVisible] = useState(false)
-
-  useStatusBarStyle({
-    themeKey: 'background',
-  })
-
-  const scrollHandler = (event: {
-    nativeEvent: { contentOffset: { y: number } }
-  }) => {
-    if (event.nativeEvent.contentOffset.y > CONTENT_OFFSET_THRESHOLD) {
-      {
-        setPostFABOffset(-70)
-        setToTopFABVisible(true)
-      }
-    } else {
-      {
-        setToTopFABVisible(false)
-        setPostFABOffset(0)
-      }
-    }
-  }
-
-  const scrollToTopHandler = () => {
-    listRef.current.scrollToOffset({ offset: 0, animated: true })
-  }
+export function HoleCategoryScreen() {
+  const { go } = useHoleCategoryRoute()
 
   return (
     <Page>
-      <RefreshableHoleList
-        ref={listRef}
-        {...query}
-        onScroll={scrollHandler}
-        ListHeaderComponent={<HoleCategoryHeader category={props.category} />}
-        categoryMode={'subcategory'}
-      />
-      <AnimatedHolePostFAB
-        offset={PostFABOffset}
-        bgColor={props.category.color.primary}
-      />
-      <AnimatedToTopFAB
-        visible={isToTopFABVisible}
-        goToTop={scrollToTopHandler}
-        bgColor={props.category.color.primary}
-      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className={'flex space-y-2 pb-4'}>
+          {Categories.map((category) => {
+            const classification = getCategoryByName(category.name)!
+
+            return (
+              <TouchableRipple
+                key={category.name}
+                className={'rounded-lg bg-white overflow-hidden'}
+                onPress={() =>
+                  go({
+                    name: classification.name,
+                  })
+                }
+              >
+                <>
+                  <View className={'flex-row p-3 space-x-2 items-center'}>
+                    <Svg SvgComponent={category.icon} size={32} />
+                    <View className={'space-y-2'}>
+                      <Text variant={'titleMedium'}>{category.name}</Text>
+                    </View>
+                  </View>
+                  <View className={'flex-row flex-wrap'}>
+                    {category.children.map((item) => (
+                      <Button
+                        key={item}
+                        mode={'text'}
+                        className={'w-1/4 p-1'}
+                        textColor={'rgba(0,0,0,.7)'}
+                        onPress={() => {}}
+                      >
+                        {item}
+                      </Button>
+                    ))}
+                  </View>
+                </>
+              </TouchableRipple>
+            )
+          })}
+        </View>
+      </ScrollView>
     </Page>
   )
 }

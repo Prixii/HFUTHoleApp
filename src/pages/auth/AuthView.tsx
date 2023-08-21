@@ -35,7 +35,6 @@ export function AuthView(props: Props) {
 
   return (
     <>
-      <StatusBar backgroundColor={'#fff'} />
       <View
         className={'flex-1 relative'}
         style={{

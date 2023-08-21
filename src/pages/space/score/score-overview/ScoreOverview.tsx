@@ -3,7 +3,7 @@ import { View, Pressable } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useAppSelector } from '@/store/store'
 import { formatScore } from '@/pages/space/@utils/utils'
-import { TabView, type Tab } from '@/components/TabView'
+import { ITabViewTabs, TabView } from '@/components/TabView'
 import { ScoreScrollWrapper } from '@/pages/space/components/ScoreScrollWrapper'
 import { Empty } from '@/components/image/Empty'
 import { useNavigation } from '@react-navigation/native'
@@ -148,7 +148,7 @@ export const ScoreOverview = () => {
 
   const tabs = useMemo(
     () =>
-      semestersInfo.map<Tab>((semester) => ({
+      semestersInfo.map<ITabViewTabs>((semester) => ({
         key: semester.semester,
       })),
     [semestersInfo]

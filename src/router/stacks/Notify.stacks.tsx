@@ -10,6 +10,9 @@ export function NotifyStacks() {
     <Stack.Navigator
       screenOptions={{
         header: Header,
+        statusBarColor: '#fff',
+        statusBarStyle: 'dark',
+        animation: 'fade',
       }}
     >
       <Stack.Screen

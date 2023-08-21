@@ -8,6 +8,7 @@ export const SWRKeys = {
     comments: 'hole.comments',
     mutateCommentReply: 'hole.mutateCommentReply',
     getCommentReply: 'hole.getCommentReply',
+    getCategoryHoleList: 'hole.getCategoryHoleList',
   },
   notify: {
     base: 'notify.base',

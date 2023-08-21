@@ -10,7 +10,6 @@ export function InteractiveNotificationScreen() {
 
   return (
     <>
-      <StatusBar backgroundColor={'#fff'} />
       <LoadingScreen isLoading={isLoading}>
         <View className={'h-full w-full bg-white'}>
           <RefreshingInteractiveNotifications />

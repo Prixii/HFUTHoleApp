@@ -2,13 +2,10 @@ import { BaseAppBar } from '@/components/BaseAppBar'
 import React from 'react'
 import { useHoleDetail } from '@/swr/hole'
 import { HoleInfoHeader } from '@/pages/hole/components/HoleInfo'
-import { Text, View } from 'react-native'
-import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
+import { View } from 'react-native'
 
 export function HoleDetailHeader() {
   const { data, isSuccess } = useHoleDetail()
-
-  useStatusBarStyle()
 
   return (
     <>

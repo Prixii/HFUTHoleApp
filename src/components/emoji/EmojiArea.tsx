@@ -18,6 +18,7 @@ export function EmojiArea(props: Props) {
         <ScrollView
           className={'h-56 py-2'}
           style={{ backgroundColor: theme.colors.background }}
+          keyboardShouldPersistTaps={'handled'}
         >
           <View className={'flex-row space-y-4 items-center flex-wrap'}>
             {EmojiList.map((emoji) => {
@@ -48,6 +49,7 @@ export function EmojiArea(props: Props) {
             contentContainerStyle={{ flexDirection: 'row', flexWrap: 'nowrap' }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
+            keyboardShouldPersistTaps={'handled'}
           />
         </View>
       )}

@@ -1,7 +1,6 @@
 import { Routes } from '@/router/routes'
-import { StatusBar, View } from 'react-native'
+import { View } from 'react-native'
 import Toast from 'react-native-toast-message'
-import { useStatusBarContext } from '@/shared/context/statusbar'
 import React from 'react'
 import { useWindowDimensions } from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'

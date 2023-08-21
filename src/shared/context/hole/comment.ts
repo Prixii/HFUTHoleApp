@@ -19,7 +19,7 @@ export type IBottomCommentData = {
 export const [useBottomCommentContext, BottomCommentContext] = createStore(
   () => {
     const [showInput, setShowInput] = useState(false)
-    const [data, setData] = useState<IBottomCommentData>(null)
+    const [data, setData] = useState<IBottomCommentData | null>(null)
 
     const isReply = !isNullOrUndefined(data)
 
@@ -29,7 +29,7 @@ export const [useBottomCommentContext, BottomCommentContext] = createStore(
 
     const { getValues, resetField } = form
 
-    const openInput = (data: IBottomCommentData = null) => {
+    const openInput = (data: IBottomCommentData | null = null) => {
       setData(data)
       setShowInput(true)
     }

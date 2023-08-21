@@ -17,8 +17,8 @@ import BilibiliSvg from '@/assets/svg/home/bilibili.svg'
 import { Svg } from '@/components/svg/Svg'
 import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 import { sliceHoleInfoCommentBody } from '@/pages/hole/components/utils'
-import { Categories } from '../Category'
 import { HoleBottomAction } from './sheet/HoleBottomAction'
+import { Categories } from '@/shared/constants/category'
 
 type Data = IHole
 
@@ -145,12 +145,17 @@ export const HoleInfoTitle: React.FC<{ data: Data }> = ({ data }) => {
           {data.subClassification?.name}
         </Text>
       </View>
-      {data.title && <Text className={'font-bold'}>{data?.title}</Text>}
+      {data.title && (
+        <Text className={'font-bold text-base'}>{data?.title}</Text>
+      )}
     </View>
   )
 }
 
-export const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
+export const HoleInfoBody: React.FC<{ data: Data; isDetail?: boolean }> = ({
+  data,
+  isDetail = false,
+}) => {
   const theme = useTheme()
 
   const { goResult } = useHoleSearchRoute()
@@ -164,8 +169,8 @@ export const HoleInfoBody: React.FC<{ data: Data }> = ({ data }) => {
         <EmojiableText
           body={data.body}
           variant={'bodyMedium'}
-          numberOfLines={3}
-          style={{ color: theme.colors.surfaceVariant, lineHeight: 25 }}
+          style={{ color: 'rgba(0, 0, 0, .75)', lineHeight: 25 }}
+          {...(isDetail && { numberOfLines: 3 })}
         />
       </View>
       {data.imgs.length && (
@@ -233,46 +238,48 @@ export const HoleInfo = ({
   const theme = useTheme()
 
   return (
-    <View className={'bg-white rounded-2xl mt-4 overflow-hidden'}>
+    <View className={'bg-white mt-2 rounded-2xl overflow-hidden'}>
       <TouchableRipple onPress={onPress}>
         <View className={`flex-col space-y-3 px-4 py-2 ${className}`}>
           <View>{header || <HoleInfoHeader data={data} />}</View>
           <View>{body || <HoleInfoBody data={data} />}</View>
           {data.vote && <HoleInfoVote data={data} />}
           <View>{bottom || <HoleInfoBottom data={data} />}</View>
-          {showComment && data.comments?.length > 0 && (
-            <>
-              <View className={'border-b-[1px] border-black/10'}></View>
-              <View className={'grid'}>
-                {data.comments?.length > 0 &&
-                  data.comments.map((comment) => (
-                    <View
-                      className={
-                        'flex flex-row space-x-2 items-center py-2 justify-between'
-                      }
-                      key={comment.id}
-                    >
-                      <Text
-                        className={'font-bold self-start max-w-[30%]'}
-                        variant={'bodyMedium'}
-                        ellipsizeMode={'tail'}
-                        numberOfLines={1}
-                        style={{ color: theme.colors.onSurfaceVariant }}
+          <View>
+            {showComment && data.comments?.length > 0 && (
+              <>
+                <View className={'border-b-[1px] border-black/10'}></View>
+                <View className={'grid'}>
+                  {data.comments?.length > 0 &&
+                    data.comments.map((comment) => (
+                      <View
+                        className={
+                          'flex flex-row space-x-2 items-center py-2 justify-between'
+                        }
+                        key={comment.id}
                       >
-                        {comment.user.username}
-                      </Text>
-                      <View className={'flex-1'}>
-                        <EmojiableText
-                          body={sliceHoleInfoCommentBody(comment.body)}
+                        <Text
+                          className={'font-bold self-start max-w-[30%]'}
                           variant={'bodyMedium'}
-                          style={{ color: theme.colors.surfaceVariant }}
-                        />
+                          ellipsizeMode={'tail'}
+                          numberOfLines={1}
+                          style={{ color: theme.colors.onSurfaceVariant }}
+                        >
+                          {comment.user.username}
+                        </Text>
+                        <View className={'flex-1'}>
+                          <EmojiableText
+                            body={sliceHoleInfoCommentBody(comment.body)}
+                            variant={'bodyMedium'}
+                            style={{ color: theme.colors.surfaceVariant }}
+                          />
+                        </View>
                       </View>
-                    </View>
-                  ))}
-              </View>
-            </>
-          )}
+                    ))}
+                </View>
+              </>
+            )}
+          </View>
         </View>
       </TouchableRipple>
     </View>

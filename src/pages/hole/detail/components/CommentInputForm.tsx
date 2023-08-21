@@ -1,8 +1,8 @@
-import { View } from 'react-native'
+import { Pressable, ScrollView, TextInput, View } from 'react-native'
 import { IconButton } from 'react-native-paper'
 import { CameraIcon, EmojiIcon } from '@/components/icon'
 import { NativeInput } from '@/components/form/NativeInput'
-import { EmojiItem } from '@/assets/emoji'
+import { EmojiItem, EmojiList } from '@/assets/emoji'
 import { EmojiArea } from '@/components/emoji/EmojiArea'
 import React, { useState } from 'react'
 import { Button } from '@/components/button'
@@ -14,6 +14,7 @@ import { useSelectImage } from '@/shared/hooks/useSelectImage'
 import { FormImage } from '@/components/form/FormImage'
 import { useHoleDetailId } from '@/shared/hooks/useHoleDetailId'
 import { useBottomCommentContext } from '@/shared/context/hole/comment'
+import { AvoidingKeyboardVisible } from '@/components/keyboard/AvoidingKeyboardVisible'
 
 interface Props {
   onCommentSuccess: () => void
@@ -77,65 +78,69 @@ export function CommentInputForm(props: Props) {
   }
 
   return (
-    <View className={'border-t-[1px] border-t-black/5 bg-white'}>
+    <AvoidingKeyboardVisible>
       <View
-        className={'p-2 flex flex-row items-center justify-between space-x-2'}
+        className={'absolute bottom-0 border-t-[1px] border-t-black/5 bg-white'}
       >
-        <View className={'px-2 flex-1 bg-[#F3F3F3] rounded-2xl'}>
-          <View className={'px-2 pt-2'}>
-            <NativeInput
-              control={control}
-              name={'body'}
-              placeholder={
-                isReply
-                  ? `回复 ${data.user!.username}：`
-                  : '你若安不好，屁股给你拍八瓣'
-              }
-              multiline={true}
-              style={{
-                maxHeight: 16 * 4,
-              }}
-              onFocus={() => setShowEmojiArea(false)}
-              autoFocus={true}
-            />
-          </View>
-          <View
-            className={
-              'flex flex-row space-x-2 justify-between items-center py-2'
-            }
-          >
-            <IconButton
-              icon={() => <CameraIcon size={24} />}
-              onPress={onSelectImage}
-            />
-            <FormImage
-              imgs={imgs}
-              onCloseable={(index) =>
-                setImgs((draft) => {
-                  draft!.splice(index, 1)
-                })
-              }
-            />
-            <View className={'flex flex-row space-x-4'}>
-              {/*<AtIcon size={24} />*/}
-              <IconButton
-                icon={() => <EmojiIcon size={24} />}
-                onPress={toggleEmojiArea}
+        <View
+          className={'p-2 flex flex-row items-center justify-between space-x-2'}
+        >
+          <View className={'px-2 flex-1 bg-[#F3F3F3] rounded-2xl'}>
+            <View className={'px-2 pt-2'}>
+              <NativeInput
+                control={control}
+                name={'body'}
+                multiline={true}
+                autoFocus={true}
+                style={{
+                  maxHeight: 16 * 4,
+                }}
+                onFocus={() => setShowEmojiArea(false)}
+                placeholder={
+                  isReply
+                    ? `回复 ${data!.user!.username}：`
+                    : '你若安不好，屁股给你拍八瓣'
+                }
               />
             </View>
+            <View
+              className={
+                'flex flex-row space-x-2 justify-between items-center py-2'
+              }
+            >
+              <IconButton
+                icon={() => <CameraIcon size={24} />}
+                onPress={onSelectImage}
+              />
+              <FormImage
+                imgs={imgs}
+                onCloseable={(index) =>
+                  setImgs((draft) => {
+                    draft!.splice(index, 1)
+                  })
+                }
+              />
+              <View className={'flex flex-row space-x-4'}>
+                {/*<AtIcon size={24} />*/}
+                <IconButton
+                  icon={() => <EmojiIcon size={24} />}
+                  onPress={toggleEmojiArea}
+                />
+              </View>
+            </View>
           </View>
+          <Button
+            mode={'contained'}
+            onPress={handleSubmit(onSubmit)}
+            loading={mutation.isLoading}
+          >
+            发送
+          </Button>
         </View>
-        <Button
-          mode={'contained'}
-          onPress={handleSubmit(onSubmit)}
-          loading={mutation.isLoading}
-        >
-          发送
-        </Button>
+        <View className={'py-2'}>
+          <EmojiArea onEmojiSelect={onEmojiSelect} expandArea={showEmojiArea} />
+        </View>
       </View>
-      <View className={'py-2'}>
-        <EmojiArea onEmojiSelect={onEmojiSelect} expandArea={showEmojiArea} />
-      </View>
-    </View>
+    </AvoidingKeyboardVisible>
   )
 }

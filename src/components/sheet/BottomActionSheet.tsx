@@ -15,7 +15,7 @@ import { Func } from '@/shared/types'
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
 import { Modal, StatusBar, View } from 'react-native'
 
-interface Props extends BottomSheetModalProps {
+interface Props extends Partial<BottomSheetModalProps> {
   children: React.ReactNode
   footerText?: string
   onFooterPress?: Func

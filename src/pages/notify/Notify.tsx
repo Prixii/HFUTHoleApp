@@ -3,14 +3,12 @@ import { Avatar, Text, TouchableRipple } from 'react-native-paper'
 import { AtIcon, NotifyIcon } from '@/components/icon'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Badge } from '@/components/Badge'
 import { useNotifyRoute } from '@/shared/hooks/route/useNotifyRoute'
 import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
 
 export function Notify() {
-  useStatusBarStyle()
-
   const { data } = useBaseNotificationsQuery()
 
   const { goToInteraction, goToSystem } = useNotifyRoute()

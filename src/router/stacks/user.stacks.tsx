@@ -23,13 +23,19 @@ const UserScreens: Screen[] = [
   {
     name: 'profile',
     component: ProfileScreen,
-    options: { headerShown: false },
+    options: {
+      headerShown: false,
+      statusBarTranslucent: true,
+      statusBarColor: 'transparent',
+    },
   },
   {
     name: 'edit-profile',
     component: EditProfileScreen,
     options: {
       title: '编辑个人信息',
+      statusBarColor: '#fff',
+      statusBarStyle: 'dark',
     },
   },
   {
@@ -37,6 +43,8 @@ const UserScreens: Screen[] = [
     component: EditUsernameScreen,
     options: {
       title: '更改用户名',
+      statusBarColor: '#fff',
+      statusBarStyle: 'dark',
     },
   },
   {
@@ -67,6 +75,7 @@ export const UserStacks = () => {
     <UserStack.Navigator screenOptions={{ header: Header }}>
       {UserScreens.map((screen) => (
         <UserStack.Screen
+          key={screen.name}
           name={screen.name}
           component={screen.component}
           options={screen.options}

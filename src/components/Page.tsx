@@ -6,15 +6,13 @@ export function Page(props: ViewProps) {
   const theme = useTheme()
 
   return (
-    <SafeAreaView>
-      <View
-        {...props}
-        className={`min-h-full w-full px-3 ${props.className}`}
-        style={{
-          backgroundColor: theme.colors.background,
-        }}
-      />
-    </SafeAreaView>
+    <View
+      {...props}
+      className={`min-h-full w-full px-3 ${props.className}`}
+      style={{
+        backgroundColor: theme.colors.background,
+      }}
+    />
   )
 }
 
@@ -23,14 +21,12 @@ export function PlainPage(props: ViewProps) {
   const theme = useTheme()
 
   return (
-    <SafeAreaView>
-      <View
-        {...props}
-        className={`min-h-full w-full px-0 ${props.className}`}
-        style={{
-          backgroundColor: theme.colors.background,
-        }}
-      />
-    </SafeAreaView>
+    <View
+      {...props}
+      className={`min-h-full w-full px-0 ${props.className}`}
+      style={{
+        backgroundColor: theme.colors.background,
+      }}
+    />
   )
 }

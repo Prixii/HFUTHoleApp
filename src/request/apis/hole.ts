@@ -11,13 +11,19 @@ import { HoleDetailPostComment } from '@/shared/validators/hole.detail'
 import { SearchValidator } from '@/shared/validators/hole/search'
 import { ImagePickerResult } from 'expo-image-picker'
 import { Config } from '@/shared/config'
+import { HoleClassification } from '@/shared/enums/category.enum'
 
 interface Id {
   id: number
 }
 
 export function GetHoleListRequest(
-  params: PaginateAble<{ mode: HoleListMode; category?: ArticleCategoryEnum }>
+  params: PaginateAble<{
+    mode: HoleListMode
+    classification?: HoleClassification
+    category?: ArticleCategoryEnum
+    subClassification?: string
+  }>
 ) {
   console.log(params)
   return request<IHoleListResponse>({
@@ -180,5 +186,16 @@ export function PostHoleVoteRequest(data: { ids: string[] } & IdAble) {
     method: 'POST',
     url: '/hole/vote',
     data,
+  })
+}
+
+export function GetHoleCategoryRequest(params: {
+  category: HoleClassification
+  subCategory: string
+}) {
+  return request({
+    method: 'GET',
+    url: '/hole/category',
+    params,
   })
 }

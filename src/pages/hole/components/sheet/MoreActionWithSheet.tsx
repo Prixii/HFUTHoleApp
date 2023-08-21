@@ -1,5 +1,5 @@
 import { Appbar, Text, TouchableRipple, useTheme } from 'react-native-paper'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { MutableRefObject, useMemo, useRef, useState } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
 import { GestureResponderEvent, Vibration, View } from 'react-native'
@@ -54,7 +54,7 @@ export function MoreActionWithSheet(props: Props) {
   return (
     <>
       <Appbar.Action icon={'dots-vertical'} onPress={openSheet} size={20} />
-      <BottomActionSheet ref={sheetRef}>
+      <BottomActionSheet ref={sheetRef as MutableRefObject<BottomSheetModal>}>
         <View className={'flex p-4 space-y-4'}>
           {list.map((Item) => {
             const onPress = async (e: GestureResponderEvent) => {

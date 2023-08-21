@@ -1,5 +1,4 @@
 import { useTheme } from 'react-native-paper'
-import { StatusBar, View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
@@ -70,7 +69,6 @@ const ScoreScreens = [
 export const SpaceStacks = () => {
   return (
     <>
-      <StatusBar backgroundColor={'white'} />
       <SpaceStack.Navigator screenOptions={{ header: Header }}>
         {ScoreScreens.map((screen) => (
           <SpaceStack.Screen
@@ -100,7 +98,6 @@ export const SpaceTopTabs = () => {
     <>
       {isLogin ? (
         <>
-          <StatusBar backgroundColor={theme.colors.background} />
           <CurrentSemesterContextProvider>
             <Tab.Navigator
               initialRouteName={'day'}
@@ -125,7 +122,14 @@ export const SpaceTopTabs = () => {
           </CurrentSemesterContextProvider>
         </>
       ) : (
-        <SpaceAuthStack.Navigator screenOptions={{ headerShown: false }}>
+        <SpaceAuthStack.Navigator
+          screenOptions={{
+            headerShown: false,
+            statusBarStyle: 'dark',
+            statusBarColor: '#fff',
+            statusBarAnimation: 'fade',
+          }}
+        >
           <SpaceAuthStack.Screen name={'login'} component={SpaceLoginScreen} />
         </SpaceAuthStack.Navigator>
       )}

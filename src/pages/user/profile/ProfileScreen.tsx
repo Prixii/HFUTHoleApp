@@ -1,17 +1,14 @@
-import { Image, View, StatusBar } from 'react-native'
+import { Image, View } from 'react-native'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { useUserFavoriteHoleList, useUserPostedHoleList } from '@/swr/user/hole'
 import { useUserProfile } from '@/swr/user/profile'
-import { TabView, type Tab } from '@/components/TabView'
+import { type ITabViewTabs, TabView, TabViewBar } from '@/components/TabView'
 import { RefreshableHoleList } from '@/pages/hole/components/HoleList'
 import { MyAvatar } from '@/components/UserAvatar'
 import { Text, TouchableRipple, useTheme } from 'react-native-paper'
 import { PrimaryText } from '@/components/Text/PrimaryText'
 import { UserLevelBar } from '@/pages/user/components/UserLevelBar'
-import { useCallback } from 'react'
-import { TabBar } from 'react-native-tab-view'
 import { useUserProfileRoute } from '@/shared/hooks/route/useUserProfileRoute'
-import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
 
 const UserHoleList = () => {
   const query = useUserPostedHoleList()
@@ -31,7 +28,7 @@ const UserFavoriteHoleList = () => {
   )
 }
 
-const tabs: Tab[] = [
+const tabs: ITabViewTabs[] = [
   {
     key: 'user-hole',
     title: '发表',
@@ -47,36 +44,8 @@ const tabs: Tab[] = [
 export function ProfileScreen() {
   const { isLoading } = useUserPostedHoleList()
   const { data: userData } = useUserProfile()
-  const theme = useTheme()
 
   const route = useUserProfileRoute()
-
-  const renderTabBar = useCallback(
-    (props: any) => {
-      return (
-        <TabBar
-          {...props}
-          indicatorStyle={{ backgroundColor: theme.colors.primary }}
-          inactiveColor={theme.colors.surfaceVariant}
-          activeColor={theme.colors.primary}
-          style={{
-            backgroundColor: 'white',
-            borderTopWidth: 1,
-            borderTopColor: '#f0f0f0',
-            borderBottomWidth: 1,
-            borderBottomColor: '#f0f0f0',
-            shadowColor: 'white',
-          }}
-        />
-      )
-    },
-    [theme.colors]
-  )
-
-  useStatusBarStyle({
-    translucent: true,
-    transparent: true,
-  })
 
   return (
     <LoadingScreen isLoading={isLoading}>
@@ -113,7 +82,7 @@ export function ProfileScreen() {
             </View>
           </View>
         </View>
-        <TabView renderTabBar={renderTabBar} tabs={tabs} />
+        <TabView renderTabBar={TabViewBar} tabs={tabs} />
       </View>
     </LoadingScreen>
   )

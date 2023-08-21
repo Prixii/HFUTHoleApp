@@ -1,9 +1,11 @@
 import { useNavigation } from '@react-navigation/native'
 import { HoleClassification } from '@/shared/enums/category.enum'
 
-export type HoleCategoryNavigationCtx = {
-  main: HoleClassification
-  sub?: string
+export type HoleCategoryNavigationCtx<
+  T extends HoleClassification = HoleClassification
+> = {
+  name: T
+  subName?: string
 }
 
 export function useHoleCategoryRoute() {
@@ -16,11 +18,8 @@ export function useHoleCategoryRoute() {
     navigation.navigate('hole', {
       screen: 'category',
       params: {
-        screen: 'latest',
-        params: {
-          category: ctx.main,
-          subCategory: ctx.sub,
-        },
+        screen: 'detail',
+        params: ctx,
       },
     })
   }

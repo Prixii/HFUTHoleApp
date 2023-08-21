@@ -11,6 +11,8 @@ import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated'
 import { HoleLatest } from '@/pages/hole/latest/HoleLatest'
 import React from 'react'
 import { HoleHot } from '@/pages/hole/hot/HoleHot'
+import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -58,6 +60,11 @@ const HoleTopTabs: HoleTopTabItem[] = [
     component: HoleHot,
     title: '热门',
   },
+  {
+    name: 'category',
+    component: HoleCategoryScreen,
+    title: '板块',
+  },
 ]
 
 const TopTabBar: React.FC<MaterialTopTabBarProps> = (props) => {
@@ -73,7 +80,7 @@ const TopTabBar: React.FC<MaterialTopTabBarProps> = (props) => {
 export function TopTabs() {
   return (
     <>
-      <Tab.Navigator initialRouteName={'main'} tabBar={TopTabBar}>
+      <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabBar}>
         {HoleTopTabs.map((item) => (
           <Tab.Screen
             key={item.name}

@@ -8,8 +8,7 @@ import {
   UseControllerProps,
 } from 'react-hook-form'
 import { TextInput, TextInputProps } from 'react-native'
-import { useEffect, useRef } from 'react'
-import { TextInputMask } from 'react-native-masked-text'
+import { MutableRefObject, useEffect, useRef } from 'react'
 
 type Props<T extends FieldValues> = {
   name: FieldPath<T>
@@ -28,6 +27,14 @@ export const NativeInput = <T extends object = PlainObject>({
   const theme = useTheme()
   const inputRef = useRef<TextInput>()
 
+  useEffect(() => {
+    if (props.autoFocus) {
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 50)
+    }
+  }, [props.autoFocus])
+
   return (
     <Controller
       name={name}
@@ -36,19 +43,19 @@ export const NativeInput = <T extends object = PlainObject>({
       render={({ field }) => (
         <>
           <TextInput
-            type={'custom'}
-            onBlur={() => false}
             onChangeText={field.onChange}
             value={field.value}
             placeholderTextColor={theme.colors.surfaceVariant}
             cursorColor={theme.colors.primary}
             textAlignVertical={'top'}
-            ref={inputRef}
+            ref={inputRef as MutableRefObject<TextInput>}
             {...props}
             style={{
               fontSize: 16,
               ...(props.style as object),
             }}
+            autoFocus={false}
+            focusable={false}
           />
         </>
       )}

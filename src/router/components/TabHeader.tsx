@@ -1,10 +1,9 @@
 import { TopTabBar } from '@/components/router/TopTabBar'
 import { IconButton, useTheme } from 'react-native-paper'
-import { ScrollView, StatusBar, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
-import React, { createRef, useRef } from 'react'
+import React from 'react'
 import { Func } from '@/shared/types'
-import { SearchIcon } from '@/components/icon'
 import { SubCategoryTabBar } from '@/components/router/SubCategoryTabBar'
 import { ScrollView as GestureHandlerScrollView } from 'react-native-gesture-handler'
 import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
@@ -16,10 +15,6 @@ interface Props extends MaterialTopTabBarProps {
 
 export function TopTabHeader({ children, onRightPress, ...props }: Props) {
   const theme = useTheme()
-
-  useStatusBarStyle({
-    themeKey: 'background',
-  })
 
   return (
     <View className={'flex-row w-full'}>

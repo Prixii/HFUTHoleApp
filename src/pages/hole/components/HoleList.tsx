@@ -1,5 +1,5 @@
 import { LoadMore } from '@/components/LoadMore'
-import { FlatList, FlatListProps, StatusBar, View } from 'react-native'
+import { FlatList, FlatListProps, View } from 'react-native'
 import { HoleInfo } from '@/pages/hole/components/HoleInfo'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
 import { UseInfiniteQueryResult } from 'react-query'
@@ -8,9 +8,7 @@ import { Func } from '@/shared/types'
 import { useHoleDetailRoute } from '@/shared/hooks/route/useHoleDetailRoute'
 import { Empty } from '@/components/image/Empty'
 import { flatInfiniteQueryData } from '@/swr/utils'
-import { useTheme } from 'react-native-paper'
 import React, { type MutableRefObject, useRef, useState } from 'react'
-import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
 import { AnimatedHolePostFAB } from '@/pages/hole/PostFab'
 import { AnimatedToTopFAB } from '@/pages/hole/ToTopFab'
 
@@ -29,7 +27,6 @@ export function RefreshableHoleList({
   ListHeaderComponent,
 }: Props) {
   const { go } = useHoleDetailRoute()
-  const theme = useTheme()
 
   const { data: flatListData, isEmpty: isHoleListEmpty } =
     flatInfiniteQueryData(data)
@@ -39,10 +36,6 @@ export function RefreshableHoleList({
   const CONTENT_OFFSET_THRESHOLD = 500
   const [PostFABOffset, setPostFABOffset] = useState(0)
   const [isToTopFABVisible, setToTopFABVisible] = useState(false)
-
-  useStatusBarStyle({
-    themeKey: 'background',
-  })
 
   const scrollHandler = (event: {
     nativeEvent: { contentOffset: { y: number } }
@@ -62,7 +55,6 @@ export function RefreshableHoleList({
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.background} />
       <View className={'absolute z-[1] bottom-20 right-2'}>
         <AnimatedHolePostFAB offset={PostFABOffset} />
         <AnimatedToTopFAB
