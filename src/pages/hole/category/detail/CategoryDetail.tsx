@@ -3,31 +3,51 @@ import { LoadingScreen } from '@/components/LoadingScreen'
 import { RefreshableHoleList } from '@/pages/hole/components/HoleList'
 import { CategoryDetailHeader } from '@/pages/hole/category/detail/CategoryDetailHeader'
 import { ITabViewTabs, TabView, TabViewBar } from '@/components/TabView'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated'
+import { StatusBar, View } from 'react-native'
+import { Tabs } from 'react-native-collapsible-tab-view'
 
 export function CategoryDetailScreen() {
   const { category, ...query } = useHoleCategoryList()
+  const offsetY = useSharedValue(0)
 
-  const tabs = useMemo<ITabViewTabs[]>(
-    () => [
-      {
-        key: 'latest',
-        title: '最新',
-        component: () => <RefreshableHoleList {...query} />,
-      },
-      ...category.children.map((item) => ({
-        key: item,
-        title: item,
-        component: () => <RefreshableHoleList {...query} />,
-      })),
-    ],
-    [category.children, query]
-  )
+  const headerTransformStyle = useAnimatedStyle(() => {
+    console.log(offsetY)
+    return {
+      transform: [{ translateY: -offsetY.value }],
+    }
+  })
 
+  console.log(StatusBar.currentHeight)
   return (
     <LoadingScreen isLoading={query.isLoading}>
-      <CategoryDetailHeader />
-      <TabView tabs={tabs} renderTabBar={TabViewBar} />
+      {/*<Animated.View style={[headerTransformStyle]}>*/}
+      {/*  <CategoryDetailHeader />*/}
+      {/*</Animated.View>*/}
+      {/*<TabView*/}
+      {/*  tabs={tabs}*/}
+      {/*  renderTabBar={(props) => {*/}
+      {/*    return (*/}
+      {/*      <Animated.View style={[headerTransformStyle]}>*/}
+      {/*        <TabViewBar {...props} />*/}
+      {/*      </Animated.View>*/}
+      {/*    )*/}
+      {/*  }}*/}
+      {/*/>*/}
+      <Tabs.Container
+        renderHeader={CategoryDetailHeader}
+        minHeaderHeight={StatusBar.currentHeight} // optional
+      >
+        {category!.children.map((item) => (
+          <Tabs.Tab name={item} key={item}>
+            <RefreshableHoleList {...query} FlatListComponent={Tabs.FlatList} />
+          </Tabs.Tab>
+        ))}
+      </Tabs.Container>
     </LoadingScreen>
   )
 }

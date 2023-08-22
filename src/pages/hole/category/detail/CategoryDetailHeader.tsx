@@ -7,9 +7,9 @@ export function CategoryDetailHeader() {
   const { category } = useHoleCategoryList()
 
   return (
-    <>
-      <View className={'h-48'}>
-        <Image className={'h-48 w-full'} source={{ uri: category?.url }} />
+    <View pointerEvents={'none'}>
+      <View className={'h-36'}>
+        <Image className={'h-36 w-full'} source={{ uri: category?.url }} />
       </View>
       <View className={'bg-white rounded-lg mt-[-10] px-2 py-4 space-y-2'}>
         <View className={'flex-row mt-[-5] space-x-2'}>
@@ -22,6 +22,6 @@ export function CategoryDetailHeader() {
         </View>
         <Text variant={'bodySmall'}>{category.description}</Text>
       </View>
-    </>
+    </View>
   )
 }

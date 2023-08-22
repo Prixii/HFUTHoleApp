@@ -1,5 +1,5 @@
 import { LoadMore } from '@/components/LoadMore'
-import { FlatList, FlatListProps, View } from 'react-native'
+import { FlatList, type FlatListProps, View } from 'react-native'
 import { HoleInfo } from '@/pages/hole/components/HoleInfo'
 import { RefreshingFlatList } from '@/components/RefreshingFlatList'
 import { UseInfiniteQueryResult } from 'react-query'
@@ -8,24 +8,39 @@ import { Func } from '@/shared/types'
 import { useHoleDetailRoute } from '@/shared/hooks/route/useHoleDetailRoute'
 import { Empty } from '@/components/image/Empty'
 import { flatInfiniteQueryData } from '@/swr/utils'
-import React, { type MutableRefObject, useRef, useState } from 'react'
+import React, {
+  forwardRef,
+  type MutableRefObject,
+  useRef,
+  useState,
+} from 'react'
 import { AnimatedHolePostFAB } from '@/pages/hole/PostFab'
 import { AnimatedToTopFAB } from '@/pages/hole/ToTopFab'
 
 // TODO 完善类型
-type Props = UseInfiniteQueryResult<IHoleListResponse, unknown> & {
+type Props<T> = UseInfiniteQueryResult<T, any> & {
   invalidateQuery: Func
-  ListHeaderComponent?: FlatListProps<any>['ListHeaderComponent']
+  FlatListComponent?: any
 }
 
-export function RefreshableHoleList({
+type PickedFlatListProps<T> = Partial<
+  Pick<
+    FlatListProps<T>,
+    'scrollEventThrottle' | 'onScroll' | 'ListHeaderComponent'
+  >
+>
+
+function InnerRefreshableHoleList<
+  T extends IHoleListResponse = IHoleListResponse
+>({
   isSuccess,
   data,
   hasNextPage,
   fetchNextPage,
   invalidateQuery,
   ListHeaderComponent,
-}: Props) {
+  ...props
+}: Props<T> & PickedFlatListProps<T>) {
   const { go } = useHoleDetailRoute()
 
   const { data: flatListData, isEmpty: isHoleListEmpty } =
@@ -65,7 +80,10 @@ export function RefreshableHoleList({
       {isSuccess ? (
         <RefreshingFlatList
           ref={listRef as MutableRefObject<FlatList>}
-          onScroll={scrollHandler}
+          onScroll={(event) => {
+            scrollHandler(event)
+            props.onScroll?.(event)
+          }}
           data={flatListData}
           hasNextPage={hasNextPage}
           onRefreshing={fetchNextPage}
@@ -91,6 +109,7 @@ export function RefreshableHoleList({
               onPress={() => go(item!.id)}
             />
           )}
+          {...props}
         />
       ) : (
         <SkeletonLoading nums={3} />
@@ -98,3 +117,5 @@ export function RefreshableHoleList({
     </>
   )
 }
+
+export const RefreshableHoleList = forwardRef(InnerRefreshableHoleList)
