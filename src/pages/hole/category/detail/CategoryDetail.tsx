@@ -1,53 +1,103 @@
 import { useHoleCategoryList } from '@/swr/hole/category'
 import { LoadingScreen } from '@/components/LoadingScreen'
-import { RefreshableHoleList } from '@/pages/hole/components/HoleList'
 import { CategoryDetailHeader } from '@/pages/hole/category/detail/CategoryDetailHeader'
-import { ITabViewTabs, TabView, TabViewBar } from '@/components/TabView'
-import { useMemo, useRef } from 'react'
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated'
-import { StatusBar, View } from 'react-native'
+import React, { useMemo, useRef, useState } from 'react'
+import { Dimensions, StatusBar, View } from 'react-native'
+import { CategoryDetailList } from '@/pages/hole/category/detail/CategoryDetailList'
 import { Tabs } from 'react-native-collapsible-tab-view'
 
 export function CategoryDetailScreen() {
-  const { category, ...query } = useHoleCategoryList()
-  const offsetY = useSharedValue(0)
+  const { category, isLoading, name, subName } = useHoleCategoryList()
+  const [activeClassification, setActiveClassification] = useState<string>(
+    subName || category.children[0]
+  )
+  // const tabs = useMemo<
+  //   (ITabViewTabs & { realComponent: React.FunctionComponent })[]
+  // >(
+  //   () =>
+  //     category.children.map((item) => ({
+  //       title: item,
+  //       key: item,
+  //       component: React.Fragment,
+  //       realComponent: () => (
+  //         <CategoryDetailList
+  //           subClassification={item}
+  //           enabled={item === activeClassification}
+  //           onScroll={({ nativeEvent: { contentOffset } }) => {
+  //             offsetY.value = contentOffset.y
+  //           }}
+  //           ListHeaderComponent={<></>}
+  //         />
+  //       ),
+  //     })),
+  //   [activeClassification, category.children]
+  // )
 
-  const headerTransformStyle = useAnimatedStyle(() => {
-    console.log(offsetY)
-    return {
-      transform: [{ translateY: -offsetY.value }],
-    }
-  })
-
-  console.log(StatusBar.currentHeight)
   return (
-    <LoadingScreen isLoading={query.isLoading}>
-      {/*<Animated.View style={[headerTransformStyle]}>*/}
-      {/*  <CategoryDetailHeader />*/}
-      {/*</Animated.View>*/}
-      {/*<TabView*/}
-      {/*  tabs={tabs}*/}
-      {/*  renderTabBar={(props) => {*/}
-      {/*    return (*/}
-      {/*      <Animated.View style={[headerTransformStyle]}>*/}
-      {/*        <TabViewBar {...props} />*/}
-      {/*      </Animated.View>*/}
-      {/*    )*/}
-      {/*  }}*/}
-      {/*/>*/}
+    <LoadingScreen isLoading={isLoading}>
       <Tabs.Container
         renderHeader={CategoryDetailHeader}
-        minHeaderHeight={StatusBar.currentHeight} // optional
+        minHeaderHeight={StatusBar.currentHeight}
+        onTabChange={(tab) => setActiveClassification(tab.tabName)}
+        initialTabName={subName}
       >
         {category!.children.map((item) => (
           <Tabs.Tab name={item} key={item}>
-            <RefreshableHoleList {...query} FlatListComponent={Tabs.FlatList} />
+            <CategoryDetailList
+              subClassification={item}
+              enabled={item === activeClassification}
+              FlatListComponent={Tabs.FlatList}
+            />
           </Tabs.Tab>
         ))}
       </Tabs.Container>
     </LoadingScreen>
   )
 }
+
+// import { useHoleCategoryList } from '@/swr/hole/category'
+// import { LoadingScreen } from '@/components/LoadingScreen'
+// import { CategoryDetailHeader } from '@/pages/hole/category/detail/CategoryDetailHeader'
+// import { ITabViewTabs } from '@/components/TabView'
+// import React, { useMemo, useState } from 'react'
+// import { CategoryDetailList } from '@/pages/hole/category/detail/CategoryDetailList'
+// import { Tabs } from 'react-native-collapsible-tab-view'
+//
+// export function CategoryDetailScreen() {
+//   const { category, isLoading, name, subName } = useHoleCategoryList()
+//   const [activeClassification, setActiveClassification] = useState<string>(
+//     subName || category.children[0]
+//   )
+//
+//   const tabs = useMemo<ITabViewTabs[]>(
+//     () =>
+//       category.children.map((item) => ({
+//         title: item,
+//         key: item,
+//         component: () => (
+//           <CategoryDetailList
+//             subClassification={item}
+//             enabled={item === activeClassification}
+//             FlatListComponent={Tabs.FlatList}
+//           />
+//         ),
+//       })),
+//     [activeClassification, category.children]
+//   )
+//
+//   return (
+//     <LoadingScreen isLoading={isLoading}>
+//       <Tabs.Container
+//         renderHeader={CategoryDetailHeader}
+//         minHeaderHeight={50}
+//         initialTabName={subName}
+//       >
+//         {tabs.map((item) => (
+//           <Tabs.Tab name={item.title!} key={item.key}>
+//             <item.component />
+//           </Tabs.Tab>
+//         ))}
+//       </Tabs.Container>
+//     </LoadingScreen>
+//   )
+// }

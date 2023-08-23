@@ -1,6 +1,6 @@
 import useKeyboardHeight from '@/shared/hooks/useKeyboardHeight'
 
-import { WindowHeight } from '@/shared/utils/utils'
+import { getQAQFont, WindowHeight } from '@/shared/utils/utils'
 import { NativeInput } from '@/components/form/NativeInput'
 import { View } from 'react-native'
 import { FormImage } from '@/components/form/FormImage'
@@ -36,13 +36,25 @@ export function HolePostForm({ bottomHeight, headerHeight }: Props) {
       }}
       className={'flex space-y-2 py-2'}
     >
-      <NativeInput
-        name={'body'}
-        control={control}
-        multiline={true}
-        style={{ backgroundColor: theme.colors.background, flex: 1 }}
-        placeholder={'说点什么吧...'}
-      />
+      <View className={'border-b-[1px] border-b-black/5'}>
+        <NativeInput
+          name={'title'}
+          control={control}
+          style={{ backgroundColor: theme.colors.background }}
+          placeholder={`写个响亮的标题吧(没有标题也可以发布哦)~${getQAQFont(
+            'happy'
+          )}`}
+        />
+      </View>
+      <View className={'flex-1'}>
+        <NativeInput
+          name={'body'}
+          control={control}
+          multiline={true}
+          style={{ backgroundColor: theme.colors.background, flex: 1 }}
+          placeholder={'说点什么吧...'}
+        />
+      </View>
       <View>
         <FormImage
           imgs={imgs}

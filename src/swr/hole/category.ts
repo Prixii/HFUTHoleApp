@@ -7,26 +7,39 @@ import { SWRKeys } from '@/swr/utils'
 import { GetHoleListRequest } from '@/request/apis/hole'
 import { HoleListMode } from '@/shared/enums'
 
-export function useHoleCategoryList() {
+interface Options {
+  subClassification?: string
+  enabled: boolean
+}
+
+export function useHoleCategoryList(options?: Options) {
   const { name, subName } = useParams<HoleCategoryNavigationCtx>()
   const category = useMemo(() => getCategoryByName(name), [name])!
 
-  const queryKey = [SWRKeys.hole.getCategoryHoleList, name, category]
+  const queryKey = [
+    SWRKeys.hole.getCategoryHoleList,
+    name,
+    category,
+    options?.subClassification,
+  ]
 
   const query = useBaseInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam = 1 }) =>
       GetHoleListRequest({
         classification: category.name,
-        subClassification: subName,
+        subClassification: options?.subClassification || subName,
         limit: 10,
         page: pageParam,
         mode: HoleListMode.latest,
       }),
+    enabled: !!options?.enabled,
   })
 
   return {
     ...query,
     category,
+    name,
+    subName,
   }
 }

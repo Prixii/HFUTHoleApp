@@ -57,9 +57,6 @@ export function CommentInputForm(props: Props) {
 
   const toggleEmojiArea = () => {
     setShowEmojiArea((prev) => {
-      if (!prev) {
-        hideKeyboard()
-      }
       return !prev
     })
   }

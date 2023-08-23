@@ -115,8 +115,8 @@ export const Categories = [
     url: 'https://d-ssl.dtstatic.com/uploads/blog/202308/21/5zS3lYbehO5LyGm.thumb.1000_0.jpeg_webp',
     icon: SecondHandSvg,
   },
-] as const
+]
 
 export const getCategoryByName = (name: HoleClassification) => {
-  return Categories.find((item) => item.name === name)
+  return Categories.find((item) => item.name === name)!
 }

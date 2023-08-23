@@ -16,6 +16,7 @@ import { Limit } from '@/shared/config'
 import { Type } from 'class-transformer'
 import { HolePostVoteClassValidator } from '@/shared/validators/hole/post'
 import { ArticleCategoryEnum } from '@/shared/enums'
+import { HoleClassification } from '@/shared/enums/category.enum'
 
 export class PostHoleValidator {
   @MaxLength(Limit.holeBodyMaxLength, {
@@ -24,6 +25,13 @@ export class PostHoleValidator {
   @MinLength(1, { message: '帖子至少要有一个字哦' })
   @IsNotEmpty({ message: '不能为空哦' })
   body: string
+
+  @MaxLength(Limit.hole.titleMaxLength, {
+    message: `标题最长只能有${Limit.hole.titleMaxLength}个字哦`,
+  })
+  @IsString()
+  @IsOptional()
+  title?: string
 
   @ArrayMaxSize(4, { message: '最多只能上传4张图片哦' })
   @IsArray()
@@ -59,4 +67,12 @@ export class PostHoleValidator {
   @IsEnum(ArticleCategoryEnum, { message: '帖子分类不正确' })
   @IsOptional()
   category?: ArticleCategoryEnum
+
+  @IsEnum(HoleClassification)
+  @IsOptional()
+  classification?: HoleClassification
+
+  @IsString()
+  @IsOptional()
+  subClassification?: string
 }

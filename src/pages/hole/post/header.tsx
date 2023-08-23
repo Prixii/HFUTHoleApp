@@ -15,17 +15,21 @@ export function HolePostHeader() {
     votes,
     bilibili,
     category,
+    subCategory,
   } = useHolePostContext()
 
   const mutation = useMutation({
     mutationFn: async (data: PostHoleValidator) => {
       const resultImage = await UploadHoleImgRequest(imgs)
 
+      if (!data.title?.length) {
+        delete data.title
+      }
+
       return PostHoleRequest({
         ...data,
         bilibili,
         imgs: resultImage,
-        category,
         ...(votes.items.length > 0
           ? {
               vote: {
@@ -33,6 +37,8 @@ export function HolePostHeader() {
               },
             }
           : ({} as any)),
+        classification: category,
+        subClassification: subCategory,
       })
     },
     onSuccess(data) {

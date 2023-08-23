@@ -3,7 +3,6 @@ import { SecondaryText } from '@/components/Text/SecondaryText'
 import { Text } from 'react-native-paper'
 import { UserIcons } from '@/pages/user/Icons'
 import { UserHeaderInfo } from '@/pages/user/UserHeaderInfo'
-import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
 
 export function User() {
   return (

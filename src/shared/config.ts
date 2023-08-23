@@ -19,6 +19,7 @@ export const Limit = {
   reportReasonMinLength: 10,
   hole: {
     maxInfoCommentBodyLength: 30,
+    titleMaxLength: 15,
   },
   user: {
     minUsernameLength: 1,

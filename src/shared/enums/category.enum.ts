@@ -2,7 +2,6 @@ export enum HoleClassification {
   hfutLife = '日常',
   littleCreature = '小动物',
   loveStory = '情感分享',
-  hobby = '兴趣娱乐',
   partner = '找搭子',
   music = '网抑云',
   taoSecondHand = '淘二手',

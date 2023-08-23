@@ -40,7 +40,12 @@ export function HoleCategoryScreen() {
                         mode={'text'}
                         className={'w-1/4 p-1'}
                         textColor={'rgba(0,0,0,.7)'}
-                        onPress={() => {}}
+                        onPress={() => {
+                          go({
+                            name: classification.name,
+                            subName: item,
+                          })
+                        }}
                       >
                         {item}
                       </Button>

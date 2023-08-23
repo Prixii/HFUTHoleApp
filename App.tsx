@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { Layout } from '@/layouts/layout'
+import React from 'react'
 import { PaperProvider } from '@/shared/providers/paper'
 import { NavigationContainer } from '@react-navigation/native'
 import { ReactQueryProvider } from '@/shared/providers/react-query'
@@ -13,6 +12,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { PortalProvider } from '@gorhom/portal'
 import { KeyboardContextProvider } from '@/shared/context/keyboard'
 import { BottomCommentContext } from '@/shared/context/hole/comment'
+import { Layout } from '@/layouts/layout'
 
 const App = () => {
   return (

@@ -18,10 +18,12 @@ import { AnimatedHolePostFAB } from '@/pages/hole/PostFab'
 import { AnimatedToTopFAB } from '@/pages/hole/ToTopFab'
 
 // TODO 完善类型
-type Props<T> = UseInfiniteQueryResult<T, any> & {
+export type RefreshableHoleListProps<
+  T extends IHoleListResponse = IHoleListResponse
+> = UseInfiniteQueryResult<T, any> & {
   invalidateQuery: Func
   FlatListComponent?: any
-}
+} & PickedFlatListProps<T>
 
 type PickedFlatListProps<T> = Partial<
   Pick<
@@ -40,7 +42,7 @@ function InnerRefreshableHoleList<
   invalidateQuery,
   ListHeaderComponent,
   ...props
-}: Props<T> & PickedFlatListProps<T>) {
+}: RefreshableHoleListProps<T>) {
   const { go } = useHoleDetailRoute()
 
   const { data: flatListData, isEmpty: isHoleListEmpty } =

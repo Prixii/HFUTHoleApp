@@ -1,7 +1,6 @@
 import { View } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { HolePostAddTags } from '@/pages/hole/post/tags'
-import * as ImagePicker from 'expo-image-picker'
 import { useHolePostContext } from '@/shared/context/hole'
 import { Toast } from '@/shared/utils/toast'
 import { HolePostVote } from '@/pages/hole/post/votes'
