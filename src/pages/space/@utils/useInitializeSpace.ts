@@ -7,7 +7,7 @@ import { useMount } from 'ahooks'
  * @description 进入space做的一些初始化操作，比如发一些请求
  */
 export const useInitializeSpace = () => {
-  const { setCurrentSemesterid, setSelectedSemesterId } = useCurrentSemester()
+  const { initializeSemesterId } = useCurrentSemester()
 
   const { data } = useSemesters()
   useSpaceUserInfo()
@@ -17,8 +17,6 @@ export const useInitializeSpace = () => {
     if (!data) {
       return
     }
-    const semesterId = data[0].id
-    setCurrentSemesterid(semesterId)
-    setSelectedSemesterId(semesterId)
+    initializeSemesterId(data[0].id)
   })
 }

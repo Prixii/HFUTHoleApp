@@ -37,7 +37,7 @@ export const useHelp = () => {
 }
 
 export const useSemesters = () => {
-  const { setSelectedSemesterId, setCurrentSemesterid } = useCurrentSemester()
+  const { initializeSemesterId } = useCurrentSemester()
   const { isLogin } = useAuth()
 
   const key = [SWRKeys.space.chore.semesters]
@@ -48,9 +48,7 @@ export const useSemesters = () => {
     enabled: isLogin,
     queryFn: getSemesters,
     onSuccess(data) {
-      const semesterId = data[0].id
-      setCurrentSemesterid(semesterId)
-      setSelectedSemesterId(semesterId)
+      initializeSemesterId(data[0].id)
     },
   })
 
