@@ -3,13 +3,29 @@ import { ScoreCard } from '@/pages/space/score/components/ScoreCard'
 import { ServiceList } from '@/pages/space/score/components/ServiceList'
 import { View } from 'react-native'
 import { SemesterScoreChart } from '@/pages/space/score/components/SemesterScoreChart'
+import { useScoreCard } from './useScoreCard'
 
 export const Score = () => {
+  const {
+    buttonOptions,
+    handleScoreTypeChange,
+    scoreData,
+    scoreInfos,
+    scoreType,
+  } = useScoreCard()
+
   return (
     <ScoreScrollWrapper>
       <View className={'w-screen px-4'}>
         <View className={'rounded-lg space-y-4'}>
-          <ScoreCard />
+          <ScoreCard
+            title="专业排名"
+            scoreInfos={scoreInfos}
+            scoreData={scoreData}
+            scoreType={scoreType}
+            scoreButtonOptions={buttonOptions}
+            onScoreTypeChange={handleScoreTypeChange}
+          />
           <View className={'bg-white px-4 py-2 rounded-lg'}>
             <View className="mt-6">
               <ServiceList />

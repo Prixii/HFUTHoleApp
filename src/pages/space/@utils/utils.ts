@@ -3,7 +3,7 @@ import { VisibleSchedule } from '@/store/reducer/spaceCourse'
 import { ellipsisString } from '@/shared/utils/string'
 import { StyleSheet } from 'react-native'
 import { objectMap, floatFixed } from '@/shared/utils/utils'
-import type { Colors } from '@/pages/space/@utils/types'
+import type { Colors, CardScoreData } from '@/pages/space/@utils/types'
 
 export const DAY_HOURS = [
   { start: '08:00', index: 1 },
@@ -139,7 +139,7 @@ export function formatScore<T extends Record<string, Rank>, K extends keyof T>(
   scoreData: T,
   rankType: K,
   scoreType: Exclude<keyof T[K], 'total'>
-) {
+): CardScoreData {
   const rankData = scoreData[rankType]
   return {
     // 参与计算的总人数使用total字段

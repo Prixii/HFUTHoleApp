@@ -24,3 +24,5 @@ export interface ScoreInfo {
 }
 
 export type HelpType = 'common' | 'login' | 'score' | 'course' | 'grammar'
+
+export type CardScoreData = RankInfo & { total: number }

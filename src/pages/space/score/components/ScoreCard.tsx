@@ -1,74 +1,57 @@
 import { Card } from '@/pages/space/components/Card'
-import { View, Pressable } from 'react-native'
+import { View } from 'react-native'
 import { Text } from 'react-native-paper'
-import {
-  AwardIcon,
-  UserIcon,
-  UserFriendsIcon,
-  FireIcon,
-} from '@/components/icon'
-import { useAppSelector, useAppDispatch } from '@/store/store'
-import { setScoreType, type ScoreType } from '@/store/reducer/spaceScore'
-import { useMemo } from 'react'
-import { formatScore } from '@/pages/space/@utils/utils'
-import {
-  ToggleButton,
-  ButtonOptions,
-} from '@/pages/space/score/components/ToggleButton'
-import type { ScoreInfo } from '@/pages/space/@utils/types'
+import { type ScoreType } from '@/store/reducer/spaceScore'
+import { ToggleButton, ButtonOptions } from '@/components/button/ToggleButton'
+import type { ScoreInfo, CardScoreData } from '@/pages/space/@utils/types'
 
-const buttonOptions: ButtonOptions<'score' | 'gpa'>[] = [
-  { key: 'score', title: '均分' },
-  { key: 'gpa', title: 'GPA' },
-]
+interface ScoreCardProps<T = any> {
+  scoreData: CardScoreData
+  scoreType: ScoreType
+  scoreButtonOptions: ButtonOptions<ScoreType>[]
+  scoreInfos: ScoreInfo[]
+  title?: string
+  rankType?: T
+  rankButtonOptions?: ButtonOptions<T>[]
+  onScoreTypeChange?: (key: ScoreType) => void
+  onRankTypeChange?: (key: T) => void
+}
 
-const scoreInfos: ScoreInfo[] = [
-  {
-    key: 'mine',
-    title: '我的成绩',
-    Icon: UserIcon,
-  },
-  {
-    key: 'avg',
-    title: '专业平均',
-    Icon: UserFriendsIcon,
-  },
-  {
-    key: 'head',
-    title: '专业前10%',
-    Icon: FireIcon,
-  },
-  {
-    key: 'max',
-    title: '专业最高',
-    Icon: AwardIcon,
-  },
-]
-
-export const ScoreCard = () => {
-  const dispatch = useAppDispatch()
-  const { compulsoryRank, totalRank, rankType, scoreType } = useAppSelector(
-    (state) => state.spaceScore
-  )
-
-  const scoreData = useMemo(
-    () => formatScore({ compulsoryRank, totalRank }, rankType, scoreType),
-    [compulsoryRank, rankType, scoreType, totalRank]
-  )
-
+export const ScoreCard = ({
+  scoreData,
+  scoreType,
+  scoreButtonOptions,
+  scoreInfos,
+  title,
+  rankButtonOptions,
+  rankType,
+  onScoreTypeChange,
+  onRankTypeChange,
+}: ScoreCardProps) => {
   return (
     <Card>
       <View className="px-1 py-1 space-y-2">
         <View className="flex flex-row justify-between mb-2">
-          <Text className="text-white/70">专业排名</Text>
+          <Text className="text-white/70">{title}</Text>
           <ToggleButton
-            buttonOptions={buttonOptions}
+            buttonOptions={scoreButtonOptions}
             currentKey={scoreType}
-            onChange={(key) => dispatch(setScoreType(key))}
+            onChange={onScoreTypeChange}
           />
         </View>
 
         <Text className="text-white text-2xl">{`${scoreData.rank}/${scoreData.total}`}</Text>
+
+        <View>
+          {rankButtonOptions && (
+            <ToggleButton
+              style={{ justifyContent: 'space-between' }}
+              buttonOptions={rankButtonOptions}
+              currentKey={rankType}
+              onChange={onRankTypeChange}
+            />
+          )}
+        </View>
 
         <View
           className="flex flex-row justify-between rounded-md mt-2 px-4 py-2"
@@ -77,8 +60,8 @@ export const ScoreCard = () => {
           {scoreInfos.map((info) => (
             <View key={info.key}>
               <Text className="text-white/80 text-xs">{info.title}</Text>
-              <View className="flex flex-row mx-auto space-x-1 items-center">
-                <info.Icon size={12} color={'#fff'} style={{ opacity: 0.8 }} />
+              <View className="flex flex-row mx-auto space-x-1 self-start">
+                {info.Icon}
                 <Text className="text-white/80 text-sm">
                   {scoreData[info.key].toFixed(2)}
                 </Text>

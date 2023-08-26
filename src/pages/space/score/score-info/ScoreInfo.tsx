@@ -15,7 +15,8 @@ import { UserIcon, UserFriendsIcon, FireIcon } from '@/components/icon'
 import {
   ToggleButton,
   type ButtonOptions,
-} from '@/pages/space/score/components/ToggleButton'
+} from '@/components/button/ToggleButton'
+import { ScoreCard } from '@/pages/space/score/components/ScoreCard'
 import type { ScoreInfo as ScoreInfoItem } from '@/pages/space/@utils/types'
 
 type ScoreType = 'score' | 'gpa'
@@ -138,50 +139,17 @@ export const ScoreInfo = () => {
         >
           {data ? (
             <View className="mt-5">
-              <Card>
-                <View className="px-1 py-1 space-y-2">
-                  <View className="flex flex-row justify-between">
-                    <Text className="font-bold text-gray-300">
-                      {courseName}
-                    </Text>
-                    <ToggleButton
-                      buttonOptions={scoreButtonOptions}
-                      currentKey={scoreType}
-                      onChange={handleScoreTypeChange}
-                    />
-                  </View>
-
-                  <Text className="text-white text-2xl">{`${scoreData.rank}/${scoreData.total}`}</Text>
-
-                  <View>
-                    <ToggleButton
-                      style={{ justifyContent: 'space-between' }}
-                      buttonOptions={rankButtonOptions}
-                      currentKey={rankType}
-                      onChange={handleRankTypeChange}
-                    />
-                  </View>
-
-                  <View className="flex flex-row justify-between rounded-md p-2 bg-white/20">
-                    {rankInfos.map((info) => (
-                      <View
-                        key={info.key}
-                        className={'justify-center items-center'}
-                      >
-                        <Text className="text-white/80 text-xs">
-                          {info.title}
-                        </Text>
-                        <View className="flex flex-row mx-auto space-x-1 self-start">
-                          <View>{info.Icon}</View>
-                          <Text className="text-white text-xs">
-                            {scoreData[info.key].toFixed(2)}
-                          </Text>
-                        </View>
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              </Card>
+              <ScoreCard
+                title={courseName}
+                scoreData={scoreData}
+                scoreButtonOptions={scoreButtonOptions}
+                scoreInfos={rankInfos}
+                scoreType={scoreType}
+                rankType={rankType}
+                onRankTypeChange={handleRankTypeChange}
+                onScoreTypeChange={handleScoreTypeChange}
+                rankButtonOptions={rankButtonOptions}
+              />
               <ScoreDetail details={details} />
             </View>
           ) : null}

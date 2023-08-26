@@ -35,6 +35,8 @@ const withFontAV5Icon = (name: string) => withIconProps(FontAwesome5Icon, name)
 const withMaterialIcon = (name: string) => withIconProps(MaterialIcon, name)
 const withAntDesignIcon = (name: string) => withIconProps(AntDesignIcon, name)
 
+// export type
+
 export const LikeIcon = withMaterialIcon('thumb-up')
 
 export const MenuIcon = withMaterialIcon('menu')
