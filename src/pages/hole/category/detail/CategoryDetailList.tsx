@@ -4,6 +4,8 @@ import {
   RefreshableHoleList,
   RefreshableHoleListProps,
 } from '@/pages/hole/components/HoleList'
+import { View } from 'react-native'
+import Animated from 'react-native-reanimated'
 
 type Props = {
   subClassification: string
@@ -20,5 +22,11 @@ export function CategoryDetailList({
     enabled,
   })
 
-  return <RefreshableHoleList {...query} {...(props as any)} />
+  return (
+    <RefreshableHoleList
+      {...query}
+      {...(props as any)}
+      FlatListComponent={Animated.FlatList}
+    />
+  )
 }

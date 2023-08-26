@@ -28,7 +28,11 @@ export type RefreshableHoleListProps<
 type PickedFlatListProps<T> = Partial<
   Pick<
     FlatListProps<T>,
-    'scrollEventThrottle' | 'onScroll' | 'ListHeaderComponent'
+    | 'scrollEventThrottle'
+    | 'onScroll'
+    | 'ListHeaderComponent'
+    | 'showsHorizontalScrollIndicator'
+    | 'showsVerticalScrollIndicator'
   >
 >
 
