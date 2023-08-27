@@ -3,13 +3,42 @@ import { View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { type ScoreType } from '@/store/reducer/spaceScore'
 import { ToggleButton, ButtonOptions } from '@/components/button/ToggleButton'
+import {
+  AwardIcon,
+  UserIcon,
+  UserFriendsIcon,
+  FireIcon,
+} from '@/components/icon'
 import type { ScoreInfo, CardScoreData } from '@/pages/space/@utils/types'
+
+const defaultScoreInfos: ScoreInfo[] = [
+  {
+    key: 'mine',
+    title: '我的成绩',
+    Icon: <UserIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
+  },
+  {
+    key: 'avg',
+    title: '专业平均',
+    Icon: <UserFriendsIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
+  },
+  {
+    key: 'head',
+    title: '专业前10%',
+    Icon: <FireIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
+  },
+  {
+    key: 'max',
+    title: '专业最高',
+    Icon: <AwardIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
+  },
+]
 
 interface ScoreCardProps<T = any> {
   scoreData: CardScoreData
   scoreType: ScoreType
   scoreButtonOptions: ButtonOptions<ScoreType>[]
-  scoreInfos: ScoreInfo[]
+  scoreInfos?: ScoreInfo[]
   title?: string
   rankType?: T
   rankButtonOptions?: ButtonOptions<T>[]
@@ -21,7 +50,7 @@ export const ScoreCard = ({
   scoreData,
   scoreType,
   scoreButtonOptions,
-  scoreInfos,
+  scoreInfos = defaultScoreInfos,
   title,
   rankButtonOptions,
   rankType,

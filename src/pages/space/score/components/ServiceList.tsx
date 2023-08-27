@@ -35,14 +35,14 @@ const serviceList = [
       },
     },
   },
-  // {
-  //   title: '自定义排名',
-  //   svg: CustomRanking,
-  //   route: 'space-nested',
-  //   routeOption: {
-  //     screen: 'custom-ranking',
-  //   },
-  // },
+  {
+    title: '自定义排名',
+    svg: CustomRanking,
+    route: 'space-nested',
+    routeOption: {
+      screen: 'custom-ranking',
+    },
+  },
 ]
 
 export const ServiceList = () => {

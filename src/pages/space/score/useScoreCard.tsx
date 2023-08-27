@@ -16,29 +16,6 @@ const buttonOptions: ButtonOptions<ScoreType>[] = [
   { key: 'gpa', title: 'GPA' },
 ]
 
-const scoreInfos: ScoreInfo[] = [
-  {
-    key: 'mine',
-    title: '我的成绩',
-    Icon: <UserIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
-  },
-  {
-    key: 'avg',
-    title: '专业平均',
-    Icon: <UserFriendsIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
-  },
-  {
-    key: 'head',
-    title: '专业前10%',
-    Icon: <FireIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
-  },
-  {
-    key: 'max',
-    title: '专业最高',
-    Icon: <AwardIcon size={12} color={'#fff'} style={{ opacity: 0.8 }} />,
-  },
-]
-
 export const useScoreCard = () => {
   const dispatch = useAppDispatch()
   const { compulsoryRank, totalRank, rankType, scoreType } = useAppSelector(
@@ -56,7 +33,6 @@ export const useScoreCard = () => {
     scoreType,
     scoreData,
     buttonOptions,
-    scoreInfos,
     handleScoreTypeChange,
   }
 }

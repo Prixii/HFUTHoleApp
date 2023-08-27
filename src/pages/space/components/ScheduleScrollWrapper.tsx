@@ -3,7 +3,7 @@ import {
   type ScreenWrapperProps,
 } from '@/components/ScrollWrapper'
 import { RefreshIndicatorControl } from '@/components/RefreshIndicatorControl'
-import { PropsWithChildren, FC } from 'react'
+import { FC } from 'react'
 import { useSpaceCourse } from '@/swr/space/course'
 import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
 

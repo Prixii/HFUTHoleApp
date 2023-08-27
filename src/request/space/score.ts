@@ -24,3 +24,13 @@ export function getSingleScoreSchoolRequest(singleScoreDto: SingleScoreDto) {
     params: singleScoreDto,
   })
 }
+
+export function getCustomScoreRankRequest(courseNames: string[]) {
+  return request<ICustomScoreRankResponse>({
+    url: '/score/rank/diy',
+    method: 'POST',
+    data: {
+      courseNames,
+    },
+  })
+}

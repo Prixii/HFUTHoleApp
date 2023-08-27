@@ -6,13 +6,8 @@ import { SemesterScoreChart } from '@/pages/space/score/components/SemesterScore
 import { useScoreCard } from './useScoreCard'
 
 export const Score = () => {
-  const {
-    buttonOptions,
-    handleScoreTypeChange,
-    scoreData,
-    scoreInfos,
-    scoreType,
-  } = useScoreCard()
+  const { buttonOptions, handleScoreTypeChange, scoreData, scoreType } =
+    useScoreCard()
 
   return (
     <ScoreScrollWrapper>
@@ -20,7 +15,6 @@ export const Score = () => {
         <View className={'rounded-lg space-y-4'}>
           <ScoreCard
             title="专业排名"
-            scoreInfos={scoreInfos}
             scoreData={scoreData}
             scoreType={scoreType}
             scoreButtonOptions={buttonOptions}
