@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView } from 'react-native'
 import { PlainPage } from '@/components/Page'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { Header } from '@/pages/space/day-schedule/components/Header'
 import { ScheduleList } from '@/pages/space/day-schedule/components/ScheduleList'
 import { ScheduleScrollWrapper } from '@/pages/space/components/ScheduleScrollWrapper'
@@ -9,7 +9,7 @@ import { useIsFocused } from '@react-navigation/native'
 import { useInitializeSpace } from '@/pages/space/@utils/useInitializeSpace'
 
 export const DaySchedule = () => {
-  const { isLogin } = useAuth()
+  const { isLogin } = useSpaceAuth()
   useInitializeSpace()
 
   const isFocused = useIsFocused()

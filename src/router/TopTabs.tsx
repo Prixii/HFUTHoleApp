@@ -1,6 +1,7 @@
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBarProps,
+  MaterialTopTabNavigationOptions,
 } from '@react-navigation/material-top-tabs'
 import { SearchIcon } from '@/components/icon'
 import { TopTabHeader } from '@/router/components/TabHeader'
@@ -86,10 +87,13 @@ export function TopTabs() {
             key={item.name}
             name={item.name}
             component={item.component}
-            options={{
-              title: item.title,
-              ...item.options,
-            }}
+            options={
+              {
+                title: item.title,
+                ...item.options,
+                svg: item.svg,
+              } as MaterialTopTabNavigationOptions & { svg: SvgComponentType }
+            }
           />
         ))}
       </Tab.Navigator>

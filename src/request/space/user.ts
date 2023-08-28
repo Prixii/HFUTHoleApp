@@ -5,3 +5,9 @@ export function getUserInfoRequest() {
     url: 'user/info',
   })
 }
+
+export function getUserCardBaseInfo() {
+  return request<ICardBaseInfoResponse>({
+    url: 'user/card/base',
+  })
+}

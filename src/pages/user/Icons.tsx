@@ -34,11 +34,11 @@ export function UserIcons() {
             onPress: route.goCommentScreen,
             svg: ReplySvg,
           },
-          // {
-          //   title: '草稿箱',
-          //   route: '',
-          //   svg: DraftSvg,
-          // },
+          {
+            title: '草稿箱',
+            onPress: route.goDraftScreen,
+            svg: DraftSvg,
+          },
         ],
       },
       // {

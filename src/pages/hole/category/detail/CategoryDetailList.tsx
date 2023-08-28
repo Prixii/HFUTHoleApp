@@ -22,11 +22,5 @@ export function CategoryDetailList({
     enabled,
   })
 
-  return (
-    <RefreshableHoleList
-      {...query}
-      {...(props as any)}
-      FlatListComponent={Animated.FlatList}
-    />
-  )
+  return <RefreshableHoleList {...query} {...(props as any)} />
 }

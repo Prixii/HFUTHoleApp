@@ -1,10 +1,9 @@
 import { SWRKeys } from '@/swr/utils'
 import { useQuery } from 'react-query'
 import { getCourseListRequest } from '@/request/space/course'
-import { getSemesters } from '@/request/space/chore'
 import { useAppDispatch } from '@/store/store'
 import { changeCourseInfo, changeSchedule } from '@/store/reducer/spaceCourse'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { useEffect } from 'react'
 import { useCurrentSemester } from '@/shared/context/space/semester'
 import { initializeCourseSchedule } from '@/pages/space/@utils/spaceCourseStore'
@@ -13,7 +12,7 @@ import { initializeCourseSchedule } from '@/pages/space/@utils/spaceCourseStore'
 export const useSpaceCourse = () => {
   const dispatch = useAppDispatch()
   const { selectedSemesterId, currentSemesterId } = useCurrentSemester()
-  const { isLogin } = useAuth()
+  const { isLogin } = useSpaceAuth()
 
   const params = { semesterId: selectedSemesterId }
   const key = [SWRKeys.space.course.all, params]

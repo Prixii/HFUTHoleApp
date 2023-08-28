@@ -4,6 +4,7 @@ import React, { createRef, useState } from 'react'
 import { RefreshableHoleList } from '../components/HoleList'
 import { StatusBar } from 'react-native'
 import { useTheme } from 'react-native-paper'
+import { TopCategories } from '@/pages/hole/latest/TopCategories'
 
 export function HoleLatest() {
   const query = useHoleList()
@@ -15,7 +16,7 @@ export function HoleLatest() {
         barStyle={'dark-content'}
         backgroundColor={theme.colors.background}
       />
-      <RefreshableHoleList {...query} />
+      <RefreshableHoleList {...query} ListHeaderComponent={TopCategories} />
     </Page>
   )
 }

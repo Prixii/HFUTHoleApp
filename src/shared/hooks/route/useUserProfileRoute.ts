@@ -33,6 +33,10 @@ export function useUserProfileRoute() {
     linkTo('/user-nested/comments')
   }
 
+  const goDraftScreen = () => {
+    linkTo('/user-nested/draft')
+  }
+
   return {
     goTo,
     goEditScreen,
@@ -40,5 +44,6 @@ export function useUserProfileRoute() {
     goSettingsScreen,
     goAboutScreen,
     goCommentScreen,
+    goDraftScreen,
   }
 }

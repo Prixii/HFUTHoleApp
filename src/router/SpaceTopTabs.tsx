@@ -1,7 +1,7 @@
 import { useTheme } from 'react-native-paper'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { LogoutIcon } from '@/components/icon'
 import { DaySchedule } from '@/pages/space/day-schedule/DaySchedule'
 import { WeekSchedule } from '@/pages/space/week-schedule/WeekSchedule'
@@ -18,51 +18,68 @@ import { CourseFailureQuery } from '@/pages/space/service/course-failure/CourseF
 import { CourseFailureSearch } from '@/pages/space/service/course-failure-search/CourseFailureSearch'
 import { SpaceLoginScreen } from '@/pages/space/login/SpaceLoginScreen'
 import { CurrentSemesterContextProvider } from '@/shared/context/space/semester'
+import type { Screen } from './stacks/user.stacks'
 
 const Tab = createMaterialTopTabNavigator()
 const SpaceStack = createNativeStackNavigator()
 const SpaceAuthStack = createNativeStackNavigator()
 
-const ScoreScreens = [
+const ScoreScreens: Screen[] = [
   {
     name: 'score-overview',
     component: ScoreOverview,
-    title: '成绩预览',
+    options: {
+      title: '成绩预览',
+    },
   },
   {
     name: 'score-info',
     component: ScoreInfo,
-    title: '成绩信息',
+    options: {
+      title: '成绩信息',
+    },
   },
   {
     name: 'failure-rate',
     component: FailureRate,
-    title: '挂科率查询',
+    options: {
+      title: '挂科率查询',
+    },
   },
   {
     name: 'custom-ranking',
     component: CustomRanking,
-    title: '自定义排名',
+    options: {
+      title: '自定义排名',
+    },
   },
   {
     name: 'help',
     component: ScoreHelpScreen,
-    title: '成绩帮助',
+    options: {
+      title: '成绩帮助',
+    },
   },
   {
     name: 'classmate',
     component: SpaceClassmateScreen,
-    title: '同班同学',
+    options: {
+      title: '同班同学',
+    },
   },
   {
     name: 'course-failure-query',
     component: CourseFailureQuery,
-    title: '课程挂科率查询',
+    options: {
+      title: '课程挂科率查询',
+    },
   },
   {
     name: 'course-failure-search-query',
     component: CourseFailureSearch,
-    title: '课程挂科率查询',
+    options: {
+      title: '课程挂科率查询',
+    },
   },
 ]
 
@@ -75,7 +92,11 @@ export const SpaceStacks = () => {
             key={screen.name}
             name={screen.name}
             component={screen.component}
-            options={{ title: screen.title }}
+            options={{
+              statusBarColor: '#fff',
+              statusBarStyle: 'dark',
+              ...screen.options,
+            }}
           />
         ))}
       </SpaceStack.Navigator>
@@ -90,9 +111,7 @@ const TabScreens = [
 ]
 
 export const SpaceTopTabs = () => {
-  const theme = useTheme()
-
-  const { isLogin, logout } = useAuth()
+  const { isLogin, logout } = useSpaceAuth()
 
   return (
     <>

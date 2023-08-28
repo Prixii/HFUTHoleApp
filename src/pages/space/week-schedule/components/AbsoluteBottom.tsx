@@ -16,8 +16,9 @@ export const AbsoluteBottom = () => {
 
   const sheetRef = useRef<BottomSheetModal>()
 
-  const handleValueChange = (itemValue: string) => {
+  const handleValueChange = (itemValue: typeof selectedSemesterId) => {
     setSelectedSemesterId(itemValue)
+    sheetRef.current?.close()
   }
 
   return (
@@ -29,18 +30,24 @@ export const AbsoluteBottom = () => {
         <AngleLeftIcon size={32} />
       </Pressable>
       <Button
-        mode={'text'}
-        textColor={'rgb(209 213 219 / 0.6)'}
         onPress={() => {
           sheetRef.current?.present()
         }}
       >
-        选择学期
+        {selectedSemesterId
+          ? semesters?.find((item) => item.id === selectedSemesterId)?.name
+          : '选择学期'}
       </Button>
-      <BottomActionSheet ref={sheetRef as MutableRefObject<BottomSheetModal>}>
+      <BottomActionSheet
+        ref={sheetRef as MutableRefObject<BottomSheetModal>}
+        backgroundStyle={{ backgroundColor: '#fff' }}
+      >
         {semesters?.map((item) => (
-          <View className={'p-4 rounded-lg overflow-hidden'} key={item.id}>
-            <TouchableRipple onPress={() => handleValueChange(item.name)}>
+          <View className={'rounded-lg overflow-hidden px-2'} key={item.id}>
+            <TouchableRipple
+              className={'p-4'}
+              onPress={() => handleValueChange(item.id)}
+            >
               <Text>{item.name}</Text>
             </TouchableRipple>
           </View>

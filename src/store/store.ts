@@ -9,6 +9,7 @@ import { SpaceCourseReducer } from '@/store/reducer/spaceCourse'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { combineReducers } from '@reduxjs/toolkit'
 import createSecureStore from 'redux-persist-expo-securestore'
+import { HoleReducer } from '@/store/reducer/hole'
 
 const SecureStorage = createSecureStore()
 
@@ -52,12 +53,21 @@ const spaceScorePersistReducer = persistReducer(
   SpaceScoreReducer
 )
 
+const holePersistReducer = persistReducer(
+  {
+    key: 'hole',
+    storage: AsyncStorage,
+  },
+  HoleReducer
+)
+
 const rootReducer = combineReducers({
   user: userPersistReducer,
   search: searchPersistReducer,
   spaceUser: spaceUserPersistReducer,
   spaceCourse: spaceCoursePersistReducer,
   spaceScore: spaceScorePersistReducer,
+  hole: holePersistReducer,
 })
 
 export const store = createStore(rootReducer)

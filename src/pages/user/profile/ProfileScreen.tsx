@@ -53,7 +53,7 @@ export function ProfileScreen() {
         <Image
           className={'w-full h-40'}
           source={{
-            uri: 'https://img.3dmgame.com/uploads/images/news/20211101/1635781777_229109.jpg',
+            uri: 'https://c-ssl.duitang.com/uploads/blog/202204/04/20220404145925_9b996.jpg',
           }}
           style={{
             resizeMode: 'cover',

@@ -5,6 +5,7 @@ import {
   WEEK_SCHEDULE_CARD_HEIGHT,
 } from '@/pages/space/@utils/utils'
 import type { CourseSchedule } from '@/pages/space/@utils/types'
+import { isToday } from 'date-fns'
 
 export const useWeekSchedule = () => {
   const { weekSchedule, courseInfo } = useAppSelector(

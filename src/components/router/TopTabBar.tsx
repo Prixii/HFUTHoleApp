@@ -1,21 +1,33 @@
-import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
+import {
+  MaterialTopTabBarProps,
+  MaterialTopTabNavigationOptions,
+} from '@react-navigation/material-top-tabs'
 import { Pressable, View } from 'react-native'
-import { useTheme } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import Animated, {
+  BounceInDown,
+  FadeIn,
+  FadeOut,
+  RollInLeft,
+  RollOutLeft,
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated'
 import { useCallback } from 'react'
+import { Svg, SvgComponentType } from '@/components/svg/Svg'
 
 export function TopTabBar({
   state,
   descriptors,
   jumpTo,
 }: MaterialTopTabBarProps) {
-  const handlePress = useCallback((route: string) => {
-    jumpTo(route)
-  }, [])
+  const handlePress = useCallback(
+    (route: string) => {
+      jumpTo(route)
+    },
+    [jumpTo]
+  )
 
   return (
     <View
@@ -31,6 +43,7 @@ export function TopTabBar({
             <TabBarItem
               isFocused={state.index === index}
               name={options.title!}
+              options={options}
             />
           </Pressable>
         )
@@ -42,9 +55,11 @@ export function TopTabBar({
 const TabBarItem = ({
   isFocused,
   name,
+  options,
 }: {
   isFocused: boolean
   name: string
+  options: MaterialTopTabNavigationOptions & { svg?: SvgComponentType }
 }) => {
   const theme = useTheme()
 
@@ -77,9 +92,30 @@ const TabBarItem = ({
     }
   })
 
+  const svgStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'rgba(0, 0, 0, .2)',
+    }
+  })
+
   return (
     <View>
-      <Animated.Text style={style}>{name}</Animated.Text>
+      {options.svg ? (
+        <Animated.View>
+          {isFocused && (
+            <Animated.View entering={RollInLeft} exiting={RollOutLeft}>
+              <Svg SvgComponent={options.svg} size={40} />
+            </Animated.View>
+          )}
+          {!isFocused && (
+            <Animated.Text entering={FadeIn} exiting={FadeOut} style={style}>
+              {name}
+            </Animated.Text>
+          )}
+        </Animated.View>
+      ) : (
+        <Animated.Text style={style}>{name}</Animated.Text>
+      )}
     </View>
   )
 }

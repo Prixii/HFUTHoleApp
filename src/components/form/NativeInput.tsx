@@ -1,10 +1,11 @@
 import { PlainObject } from '@/shared/types/utils'
-import { useTheme } from 'react-native-paper'
+import { HelperText, useTheme } from 'react-native-paper'
 import {
   Control,
   Controller,
   FieldPath,
   FieldValues,
+  get,
   UseControllerProps,
 } from 'react-hook-form'
 import { TextInput, TextInputProps } from 'react-native'
@@ -26,6 +27,7 @@ export const NativeInput = <T extends object = PlainObject>({
 }: Props<T>) => {
   const theme = useTheme()
   const inputRef = useRef<TextInput>()
+  const error = get(control._formState.errors, name)
 
   useEffect(() => {
     if (props.autoFocus) {
@@ -57,6 +59,15 @@ export const NativeInput = <T extends object = PlainObject>({
             autoFocus={false}
             focusable={false}
           />
+          {error?.message && (
+            <HelperText
+              type="error"
+              visible={error}
+              style={{ color: theme.colors.error }}
+            >
+              {error.message}
+            </HelperText>
+          )}
         </>
       )}
     />

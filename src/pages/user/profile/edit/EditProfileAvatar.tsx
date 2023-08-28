@@ -1,10 +1,6 @@
 import { MyAvatar } from '@/components/UserAvatar'
 import { useImagePicker } from '@/shared/hooks/useImagePicker'
-import {
-  ProfileItemType,
-  ProfileItemWithEventProps,
-} from '@/pages/user/profile/edit/singal'
-import { EventEmitter } from 'ahooks/lib/useEventEmitter'
+import { ProfileItemWithEventProps } from '@/pages/user/profile/edit/singal'
 import { UploadHoleImgRequest } from '@/request/apis/hole'
 import { useMutation } from 'react-query'
 import { PostUserProfileRequest } from '@/request/apis/user'

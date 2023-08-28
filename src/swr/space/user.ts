@@ -1,5 +1,5 @@
 import { SWRKeys } from '@/swr/utils'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { useQuery } from 'react-query'
 import { getUserInfoRequest } from '@/request/space/user'
 import { useAppDispatch } from '@/store/store'
@@ -9,7 +9,7 @@ const userInfoKey = [SWRKeys.space.user.info]
 
 export const useSpaceUserInfo = () => {
   const dispatch = useAppDispatch()
-  const { isLogin } = useAuth()
+  const { isLogin } = useSpaceAuth()
 
   const query = useQuery(userInfoKey, {
     enabled: isLogin,

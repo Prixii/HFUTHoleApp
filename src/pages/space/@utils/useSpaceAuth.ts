@@ -7,7 +7,7 @@ import { resetStore as resetScoreStore } from '@/store/reducer/spaceScore'
 import { useAppDispatch, useAppSelector } from '@/store/store'
 import { useCallback } from 'react'
 
-export function useAuth() {
+export function useSpaceAuth() {
   const dispatch = useAppDispatch()
   const isLogin = useAppSelector((state) => state.spaceUser.isLogin)
 

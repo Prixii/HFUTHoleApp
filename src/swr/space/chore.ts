@@ -4,7 +4,7 @@ import { useParams } from '@/shared/hooks/useParams'
 import { useQuery } from 'react-query'
 import { SWRKeys } from '@/swr/utils'
 import { useCurrentSemester } from '@/shared/context/space/semester'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 
 interface RouteParams {
   type: HelpType[]
@@ -38,7 +38,7 @@ export const useHelp = () => {
 
 export const useSemesters = () => {
   const { initializeSemesterId } = useCurrentSemester()
-  const { isLogin } = useAuth()
+  const { isLogin } = useSpaceAuth()
 
   const key = [SWRKeys.space.chore.semesters]
 

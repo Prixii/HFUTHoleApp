@@ -7,7 +7,7 @@ import {
 } from '@/request/space/score'
 import { useAppDispatch } from '@/store/store'
 import { changeScore } from '@/store/reducer/spaceScore'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { useEffect } from 'react'
 import { useParams } from '@/shared/hooks/useParams'
 import { useBaseQuery } from '@/swr/useBaseQuery'
@@ -16,7 +16,7 @@ const scoreAllKey = [SWRKeys.space.score.all]
 
 export const useSpaceScore = () => {
   const dispatch = useAppDispatch()
-  const { isLogin } = useAuth()
+  const { isLogin } = useSpaceAuth()
 
   const query = useQuery<IScoreResponse>(scoreAllKey, {
     enabled: isLogin,

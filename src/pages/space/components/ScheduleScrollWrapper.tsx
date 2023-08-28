@@ -5,14 +5,14 @@ import {
 import { RefreshIndicatorControl } from '@/components/RefreshIndicatorControl'
 import { FC } from 'react'
 import { useSpaceCourse } from '@/swr/space/course'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 
 export const ScheduleScrollWrapper: FC<ScreenWrapperProps> = ({
   children,
   ...props
 }) => {
   const { isFetching, refetch } = useSpaceCourse()
-  const { isLogin } = useAuth()
+  const { isLogin } = useSpaceAuth()
 
   return (
     <ScreenWrapper

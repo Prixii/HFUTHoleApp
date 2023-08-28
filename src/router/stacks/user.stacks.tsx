@@ -10,6 +10,7 @@ import { EditUsernameScreen } from '@/pages/user/profile/edit/EditProfileUsernam
 import { AboutScreen } from '@/pages/user/about/AboutScreen'
 import { SettingsScreen } from '@/pages/user/settings/SettingsScreen'
 import { UserCommentScreen } from '@/pages/user/comment/UserCommentScreen'
+import { HoleDraftScreen } from '@/pages/user/draft/HoleDraftScreen'
 
 const UserStack = createNativeStackNavigator()
 
@@ -52,6 +53,8 @@ const UserScreens: Screen[] = [
     component: SettingsScreen,
     options: {
       title: '应用设置',
+      statusBarColor: '#fff',
+      statusBarStyle: 'dark',
     },
   },
   {
@@ -59,6 +62,8 @@ const UserScreens: Screen[] = [
     component: AboutScreen,
     options: {
       title: '关于我们',
+      statusBarColor: '#fff',
+      statusBarStyle: 'dark',
     },
   },
   {
@@ -66,13 +71,28 @@ const UserScreens: Screen[] = [
     component: UserCommentScreen,
     options: {
       title: '发布的评论',
+      statusBarColor: '#fff',
+      statusBarStyle: 'dark',
+    },
+  },
+  {
+    name: 'draft',
+    component: HoleDraftScreen,
+    options: {
+      title: '草稿箱',
+      statusBarColor: '#fff',
+      statusBarStyle: 'dark',
     },
   },
 ]
 
 export const UserStacks = () => {
   return (
-    <UserStack.Navigator screenOptions={{ header: Header }}>
+    <UserStack.Navigator
+      screenOptions={{
+        header: Header,
+      }}
+    >
       {UserScreens.map((screen) => (
         <UserStack.Screen
           key={screen.name}

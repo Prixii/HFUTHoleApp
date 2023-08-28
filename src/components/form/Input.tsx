@@ -2,6 +2,7 @@ import {
   Control,
   Controller,
   FieldPath,
+  FieldValues,
   get,
   UseControllerProps,
 } from 'react-hook-form'
@@ -14,7 +15,7 @@ import {
 } from 'react-native-paper'
 import { isNotEmptyObject } from 'class-validator'
 
-type Props<T> = {
+type Props<T extends FieldValues = FieldValues> = {
   name: FieldPath<T>
   control: Control<T>
   rules?: UseControllerProps<T>['rules']

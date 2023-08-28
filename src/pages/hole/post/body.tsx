@@ -1,8 +1,10 @@
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { BottomActions } from '@/pages/hole/post/BottomActions'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HolePostHeader } from '@/pages/hole/post/header'
 import { HolePostForm } from '@/pages/hole/post/Form'
+import { useNavigation } from '@react-navigation/native'
+import { PostLeaveDialog } from '@/pages/hole/post/PostLeaveDialog'
 
 export function HolePostBody() {
   const [bottomHeight, setBottomHeight] = useState(0)
@@ -10,6 +12,7 @@ export function HolePostBody() {
 
   return (
     <View>
+      <PostLeaveDialog />
       <View className={'px-2'}>
         <View
           onLayout={(e) => {

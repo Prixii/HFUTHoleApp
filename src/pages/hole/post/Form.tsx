@@ -6,7 +6,8 @@ import { View } from 'react-native'
 import { FormImage } from '@/components/form/FormImage'
 import { useHolePostContext } from '@/shared/context/hole'
 import { useTheme } from 'react-native-paper'
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 
 interface Props {
   bottomHeight: number

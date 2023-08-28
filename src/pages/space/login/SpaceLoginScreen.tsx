@@ -7,7 +7,7 @@ import { PasswordInput } from '@/components/form/PasswordInput'
 import { Button } from '@/components/button'
 import { useForm } from 'react-hook-form'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator/dist/class-validator'
-import { useAuth } from '@/pages/space/@utils/useSpaceAuth'
+import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { useMutation } from 'react-query'
 import { LoginRequest } from '@/request/space/auth'
 import { AxiosError } from 'axios'
@@ -26,7 +26,7 @@ export function SpaceLoginScreen() {
     mode: 'onChange',
   })
 
-  const { login } = useAuth()
+  const { login } = useSpaceAuth()
 
   const mutation = useMutation({
     retry: false,

@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { changeStoreState } from '@/shared/utils/store'
 import { JSONDeepClone } from '@/shared/utils/utils'
+import { getUserCardBaseInfo } from '@/request/space/user'
+import { WritableDraft } from 'immer/dist/types/types-external'
 
 interface SpaceUserState {
   isLogin: boolean
@@ -8,6 +10,7 @@ interface SpaceUserState {
     token: string
   }
   info: IUserInfoResponse
+  card: ICardBaseInfoResponse['data'] | null
 }
 
 const initialState: SpaceUserState = {
@@ -25,6 +28,12 @@ const initialState: SpaceUserState = {
     studentId: 0,
     studyYears: '',
   },
+  card: null,
+}
+
+const setCardInfo = async (state: WritableDraft<SpaceUserState>) => {
+  const { data } = await getUserCardBaseInfo()
+  state.card = data
 }
 
 export const spaceUserSlice = createSlice({
@@ -36,6 +45,7 @@ export const spaceUserSlice = createSlice({
       state.meta = {
         token: action.payload,
       }
+      setCardInfo(state)
     },
     logout(state) {
       changeStoreState(state, JSONDeepClone(initialState))

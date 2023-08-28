@@ -10,7 +10,7 @@ export function HolePostHeader() {
   const navigation = useNavigation()
 
   const {
-    form: { handleSubmit },
+    form: { handleSubmit, resetField },
     imgs,
     votes,
     bilibili,
@@ -46,6 +46,9 @@ export function HolePostHeader() {
         type: 'success',
         text1: (data.msg as string) || '成功发布帖子',
       })
+
+      // 防止跳出去的时候激活Prevent Leave
+      resetField('body')
       navigation.goBack()
     },
   })
@@ -54,9 +57,13 @@ export function HolePostHeader() {
     mutation.mutate(data)
   }
 
+  const onError = (error) => {
+    console.log(error)
+  }
+
   return (
     <BackAndButtonHeader
-      onPress={handleSubmit(onSubmit)}
+      onPress={handleSubmit(onSubmit, onError)}
       loading={mutation.isLoading}
       submitText={'发布'}
       buttonMode={'text'}

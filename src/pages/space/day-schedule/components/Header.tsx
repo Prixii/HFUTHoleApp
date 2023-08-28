@@ -29,13 +29,12 @@ export const Header = () => {
 
   return (
     <View className="px-4">
-      <Text variant="headlineMedium" className="font-bold">
+      <Text variant="headlineSmall" className="font-bold">
         {visibleDate}
       </Text>
 
-      <Text className="bodySmall text-[#9499AA]">
-        你今天有
-        <Text className="text-[#4981F9]">{todaySchedule.length}</Text>
+      <Text className="text-[#9499AA]">
+        你今天有 <Text className="text-[#4981F9]">{todaySchedule.length}</Text>{' '}
         项安排
       </Text>
 
