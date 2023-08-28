@@ -145,7 +145,7 @@ export function formatScore<T extends Record<string, Rank>, K extends keyof T>(
     // 参与计算的总人数使用total字段
     total: rankData.total,
     ...(objectMap(rankData[scoreType] as RankInfo, (value) => {
-      if (value.toString().includes('.')) {
+      if (value?.toString().includes('.')) {
         return floatFixed(value)
       } else {
         return value

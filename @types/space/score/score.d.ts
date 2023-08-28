@@ -11,14 +11,14 @@ interface Rank {
   total: number
 }
 
-interface RankInfo {
+type RankInfo = Partial<{
   rank: number
   mine: number
   max: number
   avg: number
   head: number
   actualNum: number
-}
+}>
 
 interface CalculateLog {
   semesterName: string
