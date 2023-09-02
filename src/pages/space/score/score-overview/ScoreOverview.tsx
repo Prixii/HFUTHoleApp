@@ -9,48 +9,20 @@ import PagerView, {
 } from 'react-native-pager-view'
 import { SlidingDot } from 'react-native-animated-pagination-dots'
 
-const INTRO_DATA = [
-  {
-    key: '1',
-    title: 'App showcase ✨',
-    description:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-  },
-  {
-    key: '2',
-    title: 'Introduction screen 🎉',
-    description:
-      "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. ",
-  },
-  {
-    key: '3',
-    title: 'And can be anything 🎈',
-    description:
-      'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. ',
-  },
-  {
-    key: '4',
-    title: 'And can be anything 🎈',
-    description:
-      'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. ',
-  },
-]
-
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView)
 
 export const ScoreOverview = () => {
   const { semesters, rankType } = useAppSelector((state) => state.spaceScore)
   const width = Dimensions.get('window').width
-  const ref = useRef<PagerView>(null)
+  const paperViewRef = useRef<PagerView>(null)
   const scrollOffsetAnimatedValue = useRef(new Animated.Value(0)).current
   const positionAnimatedValue = useRef(new Animated.Value(0)).current
-  const inputRange = [0, INTRO_DATA.length]
   const scrollX = Animated.add(
     scrollOffsetAnimatedValue,
     positionAnimatedValue
   ).interpolate({
-    inputRange,
-    outputRange: [0, INTRO_DATA.length * width],
+    inputRange: [0, semesters.length],
+    outputRange: [0, semesters.length * width],
   })
 
   const onPageScroll = useMemo(
@@ -91,7 +63,7 @@ export const ScoreOverview = () => {
     <View className="relative flex-1">
       {semestersInfo.length ? (
         <AnimatedPagerView
-          ref={ref}
+          ref={paperViewRef}
           style={{ height: '100%', width: '100%' }}
           initialPage={0}
           onPageScroll={onPageScroll}
@@ -116,7 +88,7 @@ export const ScoreOverview = () => {
           testID={'sliding-dot'}
           marginHorizontal={3}
           containerStyle={{ top: 30 }}
-          data={INTRO_DATA}
+          data={semesters}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           //@ts-ignore
           scrollX={scrollX}
