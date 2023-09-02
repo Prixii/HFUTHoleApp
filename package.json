@@ -55,6 +55,7 @@
     "react-dom": "18.1.0",
     "react-hook-form": "^7.43.1",
     "react-native": "0.70.8",
+    "react-native-animated-pagination-dots": "^0.1.73",
     "react-native-collapsible-tab-view": "^6.2.1",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-image-zoom-viewer": "^3.0.1",

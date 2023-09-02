@@ -89,10 +89,10 @@ export const ScoreCard = ({
           {scoreInfos.map((info) => (
             <View key={info.key}>
               <Text className="text-white/80 text-xs">{info.title}</Text>
-              <View className="flex flex-row mx-auto space-x-1 self-start">
+              <View className="flex flex-row mx-auto space-x-1 items-center self-start">
                 {info.Icon}
                 <Text className="text-white/80 text-sm">
-                  {scoreData[info.key].toFixed(2)}
+                  {scoreData[info.key]?.toFixed(2)}
                 </Text>
               </View>
             </View>
