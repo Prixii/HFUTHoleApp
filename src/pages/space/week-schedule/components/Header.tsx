@@ -29,8 +29,10 @@ export const Header = () => {
           } as TextProps<null>['style']
           return (
             <View key={visibleDate.day} className="flex-1">
-              <Text style={style}>{visibleDate.month}</Text>
-              <Text style={style}>{visibleDate.day}</Text>
+              <Text style={style}>{visibleDate.weekday}</Text>
+              <Text style={style} className="text-xs">
+                {visibleDate.monthAndDate}
+              </Text>
             </View>
           )
         })}

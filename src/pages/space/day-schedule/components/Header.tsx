@@ -58,7 +58,7 @@ export const Header = () => {
   )
 }
 
-const VisibleWeekItem = ({ active, day, month }: ScheduleVisibleWeek) => {
+const VisibleWeekItem = ({ active, day, weekday }: ScheduleVisibleWeek) => {
   const color = useDerivedValue(() => (active ? '#fff' : '#94a3b8'), [active])
   const backgroundColor = useDerivedValue(
     () => (active ? '#4981F9' : '#EDEFF3'),
@@ -85,7 +85,7 @@ const VisibleWeekItem = ({ active, day, month }: ScheduleVisibleWeek) => {
         className={`mx-auto text-slate-400 ${active ? 'text-white' : ''}`}
         style={textStyle}
       >
-        {month}
+        {weekday}
       </Animated.Text>
       <Animated.Text
         className={`mx-auto text-slate-400 ${active ? 'text-white' : ''}`}

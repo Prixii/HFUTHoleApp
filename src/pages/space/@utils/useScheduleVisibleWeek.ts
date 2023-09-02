@@ -7,8 +7,12 @@ import { format } from 'date-fns'
 const defaultStartDate = '2023-01-01'
 
 export type ScheduleVisibleWeek = {
-  month: string
+  // 周几
+  weekday: string
+  // 几号
   day: string
+  // 几月几号
+  monthAndDate: string
   active: boolean
 }
 
@@ -33,8 +37,9 @@ export const useScheduleVisibleWeek = (scheduleKey: ScheduleKey) => {
             : weekIdx === curWeek - 1 && dayIdx === i
 
         return {
-          month: format(date, 'EEE.'),
+          weekday: format(date, 'EEE.'),
           day: format(date, 'dd'),
+          monthAndDate: format(date, 'MM/dd'),
           active,
         }
       }),
