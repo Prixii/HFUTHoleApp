@@ -20,8 +20,6 @@ interface TabViewProps extends Partial<NativeTabViewProps<Route>> {
 }
 
 export const TabView = ({ tabs, ...props }: TabViewProps) => {
-  const layout = useWindowDimensions()
-
   const [index, setIndex] = useState(0)
 
   const renderScene = useMemo(

@@ -1,18 +1,36 @@
-import { Pressable, View } from 'react-native'
+import { View } from 'react-native'
 import { AngleLeftIcon, AngleRightIcon } from '@/components/icon'
 import { useChangeWeek } from '@/pages/space/@utils/useWeekChange'
-import { Select } from 'native-base'
 import { useSemesters } from '@/swr/space/chore'
 import { useCurrentSemester } from '@/shared/context/space/semester'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
 import { Button, Text, TouchableRipple } from 'react-native-paper'
-import { MutableRefObject, useRef } from 'react'
+import { MutableRefObject, ReactNode, useRef } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
+
+interface RoundedTouchableRippleProps {
+  children: ReactNode
+  onPress?: () => void
+}
+
+const RoundedTouchableRipple = ({
+  children,
+  onPress,
+}: RoundedTouchableRippleProps) => (
+  <View className="w-16 h-16 rounded-full bg-gray-300/60 overflow-hidden">
+    <TouchableRipple
+      className="w-full h-full flex items-center justify-center"
+      onPress={onPress}
+    >
+      {children}
+    </TouchableRipple>
+  </View>
+)
 
 export const AbsoluteBottom = () => {
   const { onPrev, onNext } = useChangeWeek('weekSchedule')
   const { selectedSemesterId, setSelectedSemesterId } = useCurrentSemester()
-  const { data: semesters, isLoading } = useSemesters()
+  const { data: semesters } = useSemesters()
 
   const sheetRef = useRef<BottomSheetModal>()
 
@@ -23,12 +41,9 @@ export const AbsoluteBottom = () => {
 
   return (
     <View className="w-full absolute left-0 bottom-10 px-5 flex flex-row items-center justify-between">
-      <Pressable
-        className="w-16 h-16 rounded-full bg-gray-300/60 flex items-center justify-center"
-        onPress={onPrev}
-      >
+      <RoundedTouchableRipple onPress={onPrev}>
         <AngleLeftIcon size={32} />
-      </Pressable>
+      </RoundedTouchableRipple>
       <Button
         onPress={() => {
           sheetRef.current?.present()
@@ -53,12 +68,9 @@ export const AbsoluteBottom = () => {
           </View>
         ))}
       </BottomActionSheet>
-      <Pressable
-        className="w-16 h-16 rounded-full bg-gray-300/60 flex items-center justify-center"
-        onPress={onNext}
-      >
+      <RoundedTouchableRipple onPress={onNext}>
         <AngleRightIcon size={32} />
-      </Pressable>
+      </RoundedTouchableRipple>
     </View>
   )
 }
