@@ -18,7 +18,8 @@ export const HoleReplyListItem: ListRenderItem<IHoleReplyListItem> = ({
         data={item}
         key={item.id}
         selectable={true}
-        reqFunc={item.isLiked ? DeleteReplyLikeRequest : LikeReplyRequest}
+        deleteLikeRequest={DeleteReplyLikeRequest}
+        onLikeRequest={LikeReplyRequest}
         onLikePress={() => setIsLiked(item, index)}
         onBodyPress={(data) => {
           openInput({

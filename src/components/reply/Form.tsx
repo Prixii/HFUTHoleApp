@@ -28,9 +28,10 @@ export function ReplyForm({ data, closeModal, reqFunc, onReply }: Props) {
   const mutation = useMutation({
     mutationKey: SWRKeys.hole.mutateCommentReply,
     mutationFn: ({ body }: CommentReplyValidator) => reqFunc(body),
-    onSuccess(_, variables) {
+    onSuccess(data: { incExperience: number }, variables) {
       Toast.success({
         text1: '回复成功',
+        text2: `经验+${data.incExperience}`,
       })
       closeModal()
       onReply?.(variables.body)

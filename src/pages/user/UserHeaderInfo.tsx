@@ -8,7 +8,7 @@ import { useUserProfileRoute } from '@/shared/hooks/route/useUserProfileRoute'
 import { UserLevelBar } from '@/pages/user/components/UserLevelBar'
 
 export function UserHeaderInfo() {
-  const { data } = useUserProfile()
+  const { data, levelPercent } = useUserProfile()
 
   const { goTo } = useUserProfileRoute()
 
@@ -23,7 +23,7 @@ export function UserHeaderInfo() {
           <View className={'flex-row justify-between items-center'}>
             <Text className={'text-xl'}>{data?.username}</Text>
           </View>
-          <UserLevelBar />
+          <UserLevelBar percent={levelPercent} {...data?.level} />
         </View>
       </View>
       <View className={'flex-row items-center'}>

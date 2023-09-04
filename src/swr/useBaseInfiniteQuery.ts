@@ -51,11 +51,11 @@ export function useBaseInfiniteQuery<T extends ListResponseAble>(
     })
   }
 
-  const setData = async <TData extends InfiniteData<T> = InfiniteData<T>>(
+  const setData = <TData extends InfiniteData<T> = InfiniteData<T>>(
     updater: Updater<TData | undefined, TData>,
     setOptions?: SetDataOptions
   ) => {
-    await client.setQueryData<TData>(options.queryKey!, updater, setOptions)
+    client.setQueryData<TData>(options.queryKey!, updater, setOptions)
   }
 
   return {

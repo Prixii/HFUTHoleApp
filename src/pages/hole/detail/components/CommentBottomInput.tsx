@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Pressable, View } from 'react-native'
 import { AtIcon, CameraIcon, EmojiIcon } from '@/components/icon'
-import { MaskModal } from '@/components/MaskModal'
-import { CommentInputForm } from '@/pages/hole/detail/components/CommentInputForm'
 import { SecondaryText } from '@/components/Text/SecondaryText'
 import {
   IBottomCommentData,

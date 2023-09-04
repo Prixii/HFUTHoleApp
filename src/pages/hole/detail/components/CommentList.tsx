@@ -102,6 +102,7 @@ export function HoleDetailCommentList() {
           <HoleDetailCommentItem data={item} page={index} key={item.id} />
         )}
         showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.id}
         overScrollMode={'never'}
       />
     </>

@@ -1,9 +1,4 @@
-import {
-  InfiniteData,
-  useQuery,
-  useQueryClient,
-  UseQueryOptions,
-} from 'react-query'
+import { useQuery, useQueryClient, UseQueryOptions } from 'react-query'
 import { Updater } from 'react-query/types/core/utils'
 import { SetDataOptions } from 'react-query/types/core/types'
 

@@ -100,7 +100,8 @@ export function useHoleComment() {
 
   const key = [SWRKeys.hole.comments, params.id, params?.commentId, mode, order]
 
-  const query = useInfiniteQuery<IHoleCommentListResponse>(key, {
+  const query = useBaseInfiniteQuery<IHoleCommentListResponse>({
+    queryKey: key,
     queryFn: ({ pageParam = 1 }) => {
       return GetHoleDetailCommentsRequest({
         limit: 10,
@@ -111,20 +112,6 @@ export function useHoleComment() {
         commentId: params.commentId,
       })
     },
-    getNextPageParam: (lastPages) => {
-      const nextPage = lastPages.meta.currentPage + 1
-
-      if (
-        nextPage > lastPages.meta.totalPages ||
-        lastPages.items.length === 0
-      ) {
-        return
-      }
-
-      return nextPage
-    },
-    refetchOnMount: true,
-    staleTime: 0,
   })
 
   const { data: flattenData } = useMemo(() => {
@@ -133,40 +120,12 @@ export function useHoleComment() {
 
   const isDataEmpty = flattenData?.length > 0
 
-  const client = useQueryClient()
-
-  const invalidateQuery = async (onlyFirstGroup = true) => {
-    client.setQueryData<InfiniteData<IHoleListResponse>>(key, (oldData) => {
-      if (onlyFirstGroup) {
-        // 确保刷新时只更换第一组数据，其他组的数据全都销毁
-        oldData!.pages = oldData!.pages.slice(0, 1)
-      }
-      return oldData!
-    })
-    await client.invalidateQueries(key, {
-      refetchPage: (lastPage, index) => index === 0,
-    })
-  }
-
-  const invalidAll = async () => {
-    await client.invalidateQueries(key)
-  }
-
-  const setData = async <T = InfiniteData<IHoleCommentListResponse>>(
-    updater: Updater<T | undefined, T>
-  ) => {
-    await client.setQueryData<InfiniteData<IHoleCommentListResponse>>(
-      key,
-      updater as any
-    )
-  }
-
   const setTargetData = async (
     data: IHoleCommentListItem,
     pageIndex = 0,
     func: (target: IHoleCommentListItem) => AwaitAble
   ) => {
-    await setData((oldData) => {
+    await query.setData((oldData) => {
       const pageTarget = oldData?.pages?.[pageIndex]
 
       if (pageTarget) {
@@ -218,14 +177,12 @@ export function useHoleComment() {
 
   return {
     ...query,
-    invalidAll,
-    invalidateQuery,
     isDataEmpty,
-    setData,
     setIsLiked,
     setTargetData,
     setReply,
     flattenData,
+    key,
   }
 }
 

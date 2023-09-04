@@ -60,7 +60,6 @@ export const HoleDetailCommentItem: React.FC<{
   data: IHoleCommentListItem
   page: number
 }> = ({ data, page }) => {
-  const { setIsLiked } = useHoleComment()
   const { openInput } = useBottomCommentContext()
 
   const handleReply = (data: IHoleCommentListItem) => {
@@ -76,10 +75,10 @@ export const HoleDetailCommentItem: React.FC<{
     >
       <CommentItem
         data={data}
-        onBodyPress={handleReply}
-        bottom={data.replies.length > 0 && <RenderItemReplyList data={data} />}
-        reqFunc={data.isLiked ? DeleteCommentLikeRequest : LikeCommentRequest}
-        onLikePress={() => setIsLiked(data, page)}
+        onBodyPress={handleReply as any}
+        bottom={data.replies?.length > 0 && <RenderItemReplyList data={data} />}
+        deleteLikeRequest={DeleteCommentLikeRequest}
+        onLikeRequest={LikeCommentRequest}
       />
     </View>
   )

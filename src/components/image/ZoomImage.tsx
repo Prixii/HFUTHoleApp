@@ -5,6 +5,7 @@ import { List } from 'react-native-paper'
 import { saveToAlbum } from '@/shared/utils/utils'
 import Toast from 'react-native-toast-message'
 import { Func } from '@/shared/types'
+import { StatusBar } from 'react-native'
 
 export function ZoomImage({
   close,
@@ -29,14 +30,16 @@ export function ZoomImage({
       renderHeader={() => <Toast />}
       menus={({ cancel, saveToLocal }) => {
         return (
-          <Actionsheet isOpen={true} onClose={() => cancel()}>
-            <Actionsheet.Content>
-              <List.Section title="操作" className={'w-full'}>
-                <List.Item title={'保存到相册'} onPress={saveToLocal} />
-                <List.Item title={'取消'} onPress={cancel} />
-              </List.Section>
-            </Actionsheet.Content>
-          </Actionsheet>
+          <>
+            <Actionsheet isOpen={true} onClose={() => cancel()}>
+              <Actionsheet.Content>
+                <List.Section title="操作" className={'w-full'}>
+                  <List.Item title={'保存到相册'} onPress={saveToLocal} />
+                  <List.Item title={'取消'} onPress={cancel} />
+                </List.Section>
+              </Actionsheet.Content>
+            </Actionsheet>
+          </>
         )
       }}
       {...props}

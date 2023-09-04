@@ -15,6 +15,8 @@ import { FormImage } from '@/components/form/FormImage'
 import { useHoleDetailId } from '@/shared/hooks/useHoleDetailId'
 import { useBottomCommentContext } from '@/shared/context/hole/comment'
 import { AvoidingKeyboardVisible } from '@/components/keyboard/AvoidingKeyboardVisible'
+import { useHoleComment } from '@/swr/hole'
+import { useUserProfile } from '@/swr/user/profile'
 
 interface Props {
   onCommentSuccess: () => void
@@ -22,6 +24,7 @@ interface Props {
 
 export function CommentInputForm(props: Props) {
   const id = useHoleDetailId()
+  const { data: userData } = useUserProfile()
   const {
     form: {
       setValue,
@@ -39,10 +42,11 @@ export function CommentInputForm(props: Props) {
 
   const mutation = useMutation({
     mutationFn: reqFunc,
-    onSuccess() {
+    onSuccess(response: { incExperience: number }, vars) {
       Toast.show({
         type: 'success',
         text1: '留言成功哦',
+        text2: `经验+${response.incExperience}`,
       })
       hideKeyboard()
       props.onCommentSuccess()

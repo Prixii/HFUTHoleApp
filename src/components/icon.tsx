@@ -4,15 +4,22 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign'
 import { IconProps } from 'react-native-vector-icons/Icon'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
+import Animated from 'react-native-reanimated'
 
 export const Icons = (props: IconProps) => <MaterialIcon {...props} />
+
+const Material = Animated.createAnimatedComponent(MaterialIcon)
 
 const withIconProps = (
   WrappedIconComponent: React.ComponentType<IconProps>,
   name: string
 ) => {
   return (
-    props: Omit<IconProps, 'name'> & { name?: string; active?: boolean }
+    props: Omit<IconProps, 'name'> & {
+      name?: string
+      active?: boolean
+      activeColor?: string
+    }
   ) => {
     const theme = useTheme()
 
@@ -20,7 +27,9 @@ const withIconProps = (
       <WrappedIconComponent
         name={name}
         color={
-          props.active ? theme.colors.primary : theme.colors.surfaceVariant
+          props.active
+            ? props.activeColor || theme.colors.primary
+            : theme.colors.surfaceVariant
         }
         size={20}
         {...props}
@@ -38,6 +47,8 @@ const withAntDesignIcon = (name: string) => withIconProps(AntDesignIcon, name)
 // export type
 
 export const LikeIcon = withMaterialIcon('thumb-up')
+
+export const LoveIcon = withAntDesignIcon('heart')
 
 export const MenuIcon = withMaterialIcon('menu')
 

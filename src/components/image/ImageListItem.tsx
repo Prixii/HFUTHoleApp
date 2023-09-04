@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Image, Pressable, TouchableNativeFeedback, View } from 'react-native'
+import React from 'react'
+import { Image, Pressable } from 'react-native'
 import { Func } from '@/shared/types'
 import { useTheme } from 'react-native-paper'
-import { getImageSize } from '@/shared/utils/imageSize'
 
 export const ImageListItem = React.memo(
   ({
@@ -25,7 +24,7 @@ export const ImageListItem = React.memo(
           setIndex(i)
           open()
         }}
-        className={'w-[32%] py-1'}
+        className={'w-[95%] h-28'}
       >
         <Image
           source={{

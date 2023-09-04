@@ -10,4 +10,10 @@ declare interface IUserProfile {
   username: string
   avatar: string
   role: Role
+  level: {
+    id: string
+    level: number
+    experience: number
+    nextLevelRequiredExperience: number
+  }
 }

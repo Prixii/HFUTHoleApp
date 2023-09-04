@@ -45,6 +45,9 @@ export function HolePostHeader() {
       Toast.show({
         type: 'success',
         text1: (data.msg as string) || '成功发布帖子',
+        text2: `经验+${
+          (data as unknown as { incExperience: number }).incExperience
+        }`,
       })
 
       // 防止跳出去的时候激活Prevent Leave
@@ -57,13 +60,9 @@ export function HolePostHeader() {
     mutation.mutate(data)
   }
 
-  const onError = (error) => {
-    console.log(error)
-  }
-
   return (
     <BackAndButtonHeader
-      onPress={handleSubmit(onSubmit, onError)}
+      onPress={handleSubmit(onSubmit)}
       loading={mutation.isLoading}
       submitText={'发布'}
       buttonMode={'text'}

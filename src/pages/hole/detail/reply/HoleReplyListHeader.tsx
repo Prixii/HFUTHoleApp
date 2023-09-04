@@ -37,9 +37,8 @@ export function HoleReplyListHeader() {
       <View className={'px-3'}>
         <CommentItem
           data={comment!}
-          reqFunc={
-            comment?.isLiked ? DeleteCommentLikeRequest : LikeCommentRequest
-          }
+          deleteLikeRequest={DeleteCommentLikeRequest}
+          onLikeRequest={LikeCommentRequest}
           onLikePress={onLikePress}
           isReply={true}
         />

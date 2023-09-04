@@ -43,7 +43,7 @@ const tabs: ITabViewTabs[] = [
 
 export function ProfileScreen() {
   const { isLoading } = useUserPostedHoleList()
-  const { data: userData } = useUserProfile()
+  const { data: userData, levelPercent } = useUserProfile()
 
   const route = useUserProfileRoute()
 
@@ -78,7 +78,7 @@ export function ProfileScreen() {
               <Text variant={'titleLarge'}>{userData?.username}</Text>
             </View>
             <View className={'w-1/3'}>
-              <UserLevelBar />
+              <UserLevelBar percent={levelPercent} {...userData?.level} />
             </View>
           </View>
         </View>
