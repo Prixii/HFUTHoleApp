@@ -144,7 +144,7 @@ const CommentItemIsLike: React.FC<{
 
   return (
     <Pressable onPress={onLikeIconPress}>
-      <View className={'flex-row items-center px-2 py-1'}>
+      <View className={'flex-row items-center p-2 mb-[-6]'}>
         <View className={'relative p-2 flex-row'}>
           <Animated.View
             className={'flex-row space-x-1 items-center'}
