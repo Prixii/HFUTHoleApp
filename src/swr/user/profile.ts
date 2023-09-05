@@ -8,10 +8,12 @@ export function useUserProfile() {
 
   const levelPercent = useMemo(() => {
     return (
-      query.data?.level.experience ||
-      0 / (query.data?.level.nextLevelRequiredExperience || 1)
+      ((query.data?.level.experience || 0) * 100) /
+      (query.data?.level.nextLevelRequiredExperience || 1)
     )
   }, [query.data?.level])
+
+  console.log(levelPercent)
 
   return {
     ...query,

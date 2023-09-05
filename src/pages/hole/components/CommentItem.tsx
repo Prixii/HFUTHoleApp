@@ -67,9 +67,7 @@ export function CommentItem({
             <View
               className={'flex flex-row justify-between w-11/12 items-center'}
             >
-              <View className={'flex space-y-2'}>
-                <UserText username={data.user.username} />
-              </View>
+              <UserText username={data.user.username} />
               <View>
                 <CommentReplyBottomAction
                   type={isReply ? ReportType.reply : ReportType.comment}
@@ -78,10 +76,10 @@ export function CommentItem({
               </View>
             </View>
           </View>
-          <View className={'flex flex-row space-x-2'}>
+          <View className={'flex flex-row space-x-2 mt-[-10]'}>
             <View className={'w-1/12'} />
-            <View className={'w-10/12 grid space-y-2'}>
-              <View className={'grid space-y-2'}>
+            <View className={'w-10/12 grid space-y-1'}>
+              <View>
                 <ImageList imgs={data.imgs} />
                 <ReplyBody data={data as IHoleReplyListItem} />
               </View>
@@ -146,7 +144,7 @@ const CommentItemIsLike: React.FC<{
 
   return (
     <Pressable onPress={onLikeIconPress}>
-      <View className={'flex-row items-center p-1'}>
+      <View className={'flex-row items-center px-2 py-1'}>
         <View className={'relative p-2 flex-row'}>
           <Animated.View
             className={'flex-row space-x-1 items-center'}

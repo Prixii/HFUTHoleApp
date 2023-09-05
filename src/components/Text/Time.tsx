@@ -11,7 +11,7 @@ export function TimeText({ time, ...props }: Props) {
 
   return (
     <Text
-      className={'text-sm'}
+      className={'text-xs'}
       style={{
         color: theme.colors.surface,
       }}
