@@ -14,6 +14,7 @@ import React from 'react'
 import { HoleHot } from '@/pages/hole/hot/HoleHot'
 import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { PageWithSafeArea } from '@/layouts/layout'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -80,23 +81,25 @@ const TopTabBar: React.FC<MaterialTopTabBarProps> = (props) => {
 
 export function TopTabs() {
   return (
-    <>
-      <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabBar}>
-        {HoleTopTabs.map((item) => (
-          <Tab.Screen
-            key={item.name}
-            name={item.name}
-            component={item.component}
-            options={
-              {
-                title: item.title,
-                ...item.options,
-                svg: item.svg,
-              } as MaterialTopTabNavigationOptions & { svg: SvgComponentType }
-            }
-          />
-        ))}
-      </Tab.Navigator>
-    </>
+    <PageWithSafeArea>
+      <>
+        <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabBar}>
+          {HoleTopTabs.map((item) => (
+            <Tab.Screen
+              key={item.name}
+              name={item.name}
+              component={item.component}
+              options={
+                {
+                  title: item.title,
+                  ...item.options,
+                  svg: item.svg,
+                } as MaterialTopTabNavigationOptions & { svg: SvgComponentType }
+              }
+            />
+          ))}
+        </Tab.Navigator>
+      </>
+    </PageWithSafeArea>
   )
 }

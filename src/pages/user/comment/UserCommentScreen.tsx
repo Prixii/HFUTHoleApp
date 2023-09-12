@@ -1,6 +1,7 @@
 import { useUserCommentsListQuery } from '@/swr/user/comment'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { MessageList } from '@/components/MessageList/MessageList'
+import { PageWithSafeArea } from '@/layouts/layout'
 
 export function UserCommentScreen() {
   const {
