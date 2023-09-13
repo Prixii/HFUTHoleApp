@@ -7,6 +7,7 @@ import { View } from 'react-native'
 export function CommentMaskModal() {
   const { showInput, closeInput } = useBottomCommentContext()
 
+  // TODO ios中, 查看帖子会因为这个组件爆炸
   return (
     <>
       <Modal
@@ -15,7 +16,7 @@ export function CommentMaskModal() {
         animationPreset={'slide'}
       >
         <View className={'absolute left-0 right-0 top-0 bottom-0'}>
-          <CommentInputForm onCommentSuccess={() => closeInput(true)} />
+          {/* <CommentInputForm onCommentSuccess={() => closeInput(true)} /> */}
         </View>
       </Modal>
     </>
