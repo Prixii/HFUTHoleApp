@@ -11,25 +11,23 @@ export const HoleStack = createNativeStackNavigator()
 
 export const HoleNestedStacks = () => {
   return (
-    <PageWithSafeArea>
-      <HoleDetailCommentContextProvider>
-        <HoleStack.Navigator
-          screenOptions={{
-            headerShown: false,
-            statusBarStyle: 'dark',
-            statusBarAnimation: 'fade',
-          }}
-        >
-          <HoleStack.Screen name={'post'} component={HolePost} />
-          <HoleStack.Screen name={'search'} component={HoleSearchStacks} />
-          <HoleStack.Screen
-            name={'detail'}
-            component={HoleDetailStacks}
-            options={{ statusBarStyle: 'dark', statusBarColor: '#fff' }}
-          />
-          <HoleStack.Screen name={'category'} component={HoleCategoryStacks} />
-        </HoleStack.Navigator>
-      </HoleDetailCommentContextProvider>
-    </PageWithSafeArea>
+    <HoleDetailCommentContextProvider>
+      <HoleStack.Navigator
+        screenOptions={{
+          headerShown: false,
+          statusBarStyle: 'dark',
+          statusBarAnimation: 'fade',
+        }}
+      >
+        <HoleStack.Screen name={'post'} component={HolePost} />
+        <HoleStack.Screen name={'search'} component={HoleSearchStacks} />
+        <HoleStack.Screen
+          name={'detail'}
+          component={HoleDetailStacks}
+          options={{ statusBarStyle: 'dark', statusBarColor: '#fff' }}
+        />
+        <HoleStack.Screen name={'category'} component={HoleCategoryStacks} />
+      </HoleStack.Navigator>
+    </HoleDetailCommentContextProvider>
   )
 }

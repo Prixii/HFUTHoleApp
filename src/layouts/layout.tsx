@@ -21,8 +21,6 @@ const renderScene = SceneMap({
 /**
  * 对于IOS设备，可能不会检测StatusBar，所以需要渲染安全区
  * @param param0 子组件
- * @param showTopArea 是否展示顶部安全区
- * @param showBottomArea 是否展示底部安全区
  * @param topColor 顶部安全区背景颜色
  * @param bottomColor 底部安全区背景颜色
  * @returns 返回子组件

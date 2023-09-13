@@ -4,6 +4,7 @@ import { Text } from 'react-native-paper'
 import { UserIcons } from '@/pages/user/Icons'
 import { UserHeaderInfo } from '@/pages/user/UserHeaderInfo'
 import { useSpaceData } from '@/shared/hooks/useSpaceData'
+import { PageWithSafeArea } from '@/layouts/layout'
 
 export function User() {
   const {

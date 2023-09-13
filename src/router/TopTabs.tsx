@@ -81,25 +81,23 @@ const TopTabBar: React.FC<MaterialTopTabBarProps> = (props) => {
 
 export function TopTabs() {
   return (
-    <PageWithSafeArea>
-      <>
-        <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabBar}>
-          {HoleTopTabs.map((item) => (
-            <Tab.Screen
-              key={item.name}
-              name={item.name}
-              component={item.component}
-              options={
-                {
-                  title: item.title,
-                  ...item.options,
-                  svg: item.svg,
-                } as MaterialTopTabNavigationOptions & { svg: SvgComponentType }
-              }
-            />
-          ))}
-        </Tab.Navigator>
-      </>
-    </PageWithSafeArea>
+    <>
+      <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabBar}>
+        {HoleTopTabs.map((item) => (
+          <Tab.Screen
+            key={item.name}
+            name={item.name}
+            component={item.component}
+            options={
+              {
+                title: item.title,
+                ...item.options,
+                svg: item.svg,
+              } as MaterialTopTabNavigationOptions & { svg: SvgComponentType }
+            }
+          />
+        ))}
+      </Tab.Navigator>
+    </>
   )
 }
