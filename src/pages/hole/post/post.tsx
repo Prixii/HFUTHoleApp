@@ -9,15 +9,14 @@ export function HolePost() {
 
   return (
     <PageWithSafeArea>
-
-    <HolePostContextProvider>
-      <View
-        className={'h-screen'}
-        style={{ backgroundColor: theme.colors.background }}
-      >
-        <HolePostBody />
-      </View>
-    </HolePostContextProvider>
+      <HolePostContextProvider>
+        <View
+          className={'h-screen'}
+          style={{ backgroundColor: theme.colors.background }}
+        >
+          <HolePostBody />
+        </View>
+      </HolePostContextProvider>
     </PageWithSafeArea>
   )
 }

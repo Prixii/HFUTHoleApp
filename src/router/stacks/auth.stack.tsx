@@ -2,6 +2,7 @@ import { Login } from '@/pages/auth/login'
 import { Register } from '@/pages/auth/register'
 import { Forget } from '@/pages/auth/forget'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { View } from 'native-base'
 
 const AuthStack = createNativeStackNavigator()
 

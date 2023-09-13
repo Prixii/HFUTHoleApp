@@ -21,7 +21,7 @@ const NotifyStacks = () => {
 
 export function BottomTabs() {
   return (
-    <PageWithSafeArea>
+    <PageWithSafeArea topStyle="bg-white">
       <Tab.Navigator
         screenOptions={({ route, navigation }) => ({
           headerShown: false,

@@ -6,7 +6,6 @@ import React from 'react'
 import { Func } from '@/shared/types'
 import { SubCategoryTabBar } from '@/components/router/SubCategoryTabBar'
 import { ScrollView as GestureHandlerScrollView } from 'react-native-gesture-handler'
-import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
 
 interface Props extends MaterialTopTabBarProps {
   children?: React.ReactNode
