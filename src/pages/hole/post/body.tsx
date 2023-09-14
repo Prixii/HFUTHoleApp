@@ -1,9 +1,8 @@
 import { Alert, View } from 'react-native'
 import { BottomActions } from '@/pages/hole/post/BottomActions'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { HolePostHeader } from '@/pages/hole/post/header'
 import { HolePostForm } from '@/pages/hole/post/Form'
-import { useNavigation } from '@react-navigation/native'
 import { PostLeaveDialog } from '@/pages/hole/post/PostLeaveDialog'
 
 export function HolePostBody() {
