@@ -20,10 +20,10 @@ import { useUserProfile } from '@/swr/user/profile'
 
 interface Props {
   onCommentSuccess: () => void
+  id: number
 }
 
 export function CommentInputForm(props: Props) {
-  const id = useHoleDetailId()
   const { data: userData } = useUserProfile()
   const {
     form: {
@@ -74,7 +74,7 @@ export function CommentInputForm(props: Props) {
     mutation.mutate({
       body: data.body,
       imgs: result,
-      id,
+      id: props.id,
     })
   }
 
