@@ -48,19 +48,20 @@ const serviceList = [
 export const ServiceList = () => {
   const { navigate } = useNavigation()
   return (
-    <View className="flex flex-row justify-between">
+    <View className="flex flex-row">
       {serviceList.map((service) => (
-        <Pressable
-          key={service.title}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
-          onPress={() => navigate(service.route, service.routeOption)}
-        >
-          <View className="flex justify-center items-center space-y-2 py-2">
-            <Svg SvgComponent={service.svg} size={30} />
-            <Text className={'text-xs text-black/80'}>{service.title}</Text>
-          </View>
-        </Pressable>
+        <View className="w-1/4 rounded-lg overflow-hidden" key={service.title}>
+          <TouchableRipple
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            onPress={() => navigate(service.route, service.routeOption)}
+          >
+            <View className="flex justify-center items-center space-y-2 py-2">
+              <Svg SvgComponent={service.svg} size={30} />
+              <Text className={'text-xs text-black/80'}>{service.title}</Text>
+            </View>
+          </TouchableRipple>
+        </View>
       ))}
     </View>
   )

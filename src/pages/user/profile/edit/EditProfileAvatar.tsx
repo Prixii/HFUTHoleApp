@@ -14,7 +14,6 @@ export function EditProfileAvatar({ event }: ProfileItemWithEventProps) {
     async onSuccess(imgs) {
       const result = await UploadHoleImgRequest(imgs.assets)
 
-      console.log(result[0], result)
       mutation.mutate(result[0])
     },
     onError() {},

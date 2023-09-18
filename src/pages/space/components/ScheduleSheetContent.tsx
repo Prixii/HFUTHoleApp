@@ -24,7 +24,7 @@ const ScheduleSheetHeader = ({ schedule }: Props) => {
         value: getTeachers(schedule.detailInfo.teachers),
       },
       {
-        title: '上课时间',
+        title: schedule.type === 'Exam' ? '考试时间' : '上课时间',
         value: `${schedule.startTime} - ${schedule.endTime}`,
       },
     ],
@@ -65,7 +65,7 @@ export function ScheduleSheetContent({
     () => [
       {
         icon: LocationSvg,
-        title: '上课地点',
+        title: schedule.type === 'Exam' ? '考试地点' : '上课地点',
         value: schedule.room,
       },
       {

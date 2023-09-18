@@ -25,7 +25,6 @@ export function GetHoleListRequest(
     subClassification?: string
   }>
 ) {
-  console.log(params)
   return request<IHoleListResponse>({
     method: 'GET',
     url: '/hole/list',

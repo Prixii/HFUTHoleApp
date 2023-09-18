@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { BottomTabs } from '@/router/BottomTabs'
 import { NotifyStacks } from '@/router/stacks/Notify.stacks'
-import { SpaceStacks } from '@/router/SpaceTopTabs'
+import { SpaceStacks } from '@/router/stacks/space.stacks'
 import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
 import { useEffect, useRef } from 'react'
 import { UserStacks } from '@/router/stacks/user.stacks'

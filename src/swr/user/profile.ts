@@ -13,8 +13,6 @@ export function useUserProfile() {
     )
   }, [query.data?.level])
 
-  console.log(levelPercent)
-
   return {
     ...query,
     levelPercent,
