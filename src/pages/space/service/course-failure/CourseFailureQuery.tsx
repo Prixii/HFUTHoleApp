@@ -1,5 +1,5 @@
 import { LoadingScreen } from '@/components/LoadingScreen'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { useSpaceCourseFailureQuery } from '@/swr/space/course/failure'
 import { DataTable, Text } from 'react-native-paper'
 import { formatSemester } from '@/pages/space/@utils/utils'
@@ -10,7 +10,10 @@ export function CourseFailureQuery() {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <View className={'p-2'}>
+      <ScrollView
+        className={'p-2 min-h-full'}
+        showsVerticalScrollIndicator={false}
+      >
         <View className={'px-2 py-4 bg-white rounded-lg space-y-5'}>
           <DataTable>
             <Text className={'text-center'} variant={'titleMedium'}>
@@ -41,7 +44,7 @@ export function CourseFailureQuery() {
             <CourseFailureRateQueryChart />
           </View>
         </View>
-      </View>
+      </ScrollView>
     </LoadingScreen>
   )
 }

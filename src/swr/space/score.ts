@@ -20,7 +20,9 @@ export const useSpaceScore = () => {
 
   const query = useQuery<IScoreResponse>(scoreAllKey, {
     enabled: isLogin,
-    queryFn: () => getScoreRequest(),
+    queryFn: () => {
+      return getScoreRequest()
+    },
     onSuccess(data) {
       dispatch(changeScore(data))
     },
