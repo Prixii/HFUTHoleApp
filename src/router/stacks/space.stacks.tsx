@@ -8,7 +8,7 @@ import { Header } from '@/components/Header'
 import { SpaceClassmateScreen } from '@/pages/space/service/classmate/SpaceClassmateScreen'
 import { CourseFailureQuery } from '@/pages/space/service/course-failure/CourseFailureQuery'
 import { CourseFailureSearch } from '@/pages/space/service/course-failure-search/CourseFailureSearch'
-import { Exam } from '@/pages/space/service/exam/Exam'
+import { Exam } from '@/pages/space/service/exam/ExamScreen'
 import type { Screen } from './user.stacks'
 
 const SpaceStack = createNativeStackNavigator()

@@ -109,3 +109,5 @@ export const LocationIcon = withFontAV5Icon('map-marker-alt')
 export const GradeIcon = withFontAV5Icon('tag')
 
 export const ClassIcon = withFontAV5Icon('users-class')
+
+export const FaClockIcon = withFontAV5Icon('clock')

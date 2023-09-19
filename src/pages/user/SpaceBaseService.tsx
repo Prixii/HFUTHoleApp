@@ -13,9 +13,11 @@ export const SpaceBaseService = () => {
     user: { card },
   } = useSpaceData()
 
-  const goToExamScreen = useCallback(() => {
-    linkTo('/space-nested/exam')
-  }, [linkTo])
+  const goToExamScreen = () => {
+    if (isLogin) {
+      linkTo('/space-nested/exam')
+    }
+  }
 
   return (
     <View className={'bg-white flex-row justify-between items-center'}>

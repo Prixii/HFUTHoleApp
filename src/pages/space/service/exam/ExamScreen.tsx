@@ -2,6 +2,9 @@ import { View, ScrollView } from 'react-native'
 import { useSpaceData, type ExamInfo } from '@/shared/hooks/useSpaceData'
 import { Text } from 'react-native-paper'
 import { format, formatDistanceToNow } from 'date-fns'
+import LocationSvg from '@/assets/svg/icons/location.svg'
+import ClockSvg from '@/assets/svg/icons/clock.svg'
+import { Svg } from '@/components/svg/Svg'
 import { type ReactNode } from 'react'
 
 export const Exam = () => {
@@ -44,13 +47,17 @@ const Card = ({ examInfo }: { examInfo: ExamInfo }) => {
             <CardText isExpired={examInfo.isExpired}>已考完</CardText>
           )}
         </View>
-        <View>
-          <CardText isExpired={examInfo.isExpired}>{`${format(
-            examInfo.startDate,
-            'MM-dd HH:mm'
-          )} - ${format(examInfo.endDate, 'HH:mm')}`}</CardText>
+        <View className="flex flex-row">
+          <Svg SvgComponent={ClockSvg} size={20} />
+          <CardText isExpired={examInfo.isExpired}>
+            {`${format(examInfo.startDate, 'MM-dd HH:mm')} - ${format(
+              examInfo.endDate,
+              'HH:mm'
+            )}`}
+          </CardText>
         </View>
-        <View>
+        <View className="flex flex-row">
+          <Svg SvgComponent={LocationSvg} size={20} />
           <CardText isExpired={examInfo.isExpired}>
             {examInfo.detail.position}
           </CardText>
