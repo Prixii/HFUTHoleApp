@@ -4,6 +4,8 @@ import Toast from 'react-native-toast-message'
 import React, { ReactNode } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'
+import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
+import { PopoverCard } from '@/components/PopoverCard/PopoverCard'
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: '#ff4081' }} />

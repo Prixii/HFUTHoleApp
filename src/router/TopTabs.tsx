@@ -13,8 +13,8 @@ import { HoleLatest } from '@/pages/hole/latest/HoleLatest'
 import React from 'react'
 import { HoleHot } from '@/pages/hole/hot/HoleHot'
 import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { PageWithSafeArea } from '@/layouts/layout'
+import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
+import { PopoverCard } from '@/components/PopoverCard/PopoverCard'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -98,6 +98,7 @@ export function TopTabs() {
           />
         ))}
       </Tab.Navigator>
+      <PopoverCard coordinateY={100} child={<EmojiCard />}></PopoverCard>
     </>
   )
 }

@@ -7,6 +7,8 @@ import { TopTabs } from '@/router/TopTabs'
 import { SpaceTopTabs } from '@/router/SpaceTopTabs'
 import { User } from '@/pages/user/User'
 import { PageWithSafeArea } from '@/layouts/layout'
+import { PopoverCard } from '@/components/PopoverCard/PopoverCard'
+import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
 
 const Tab = createBottomTabNavigator()
 const NotifyStack = createNativeStackNavigator()
