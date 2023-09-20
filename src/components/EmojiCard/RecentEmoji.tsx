@@ -9,6 +9,13 @@ import { Emoji } from '../emoji/Emoji'
 
 const EMOJI_PER_LINE = 7
 const ITEM_HEIGHT = 30
+
+// TODO 自行修改逻辑
+const handleEmojiPressed = () => {
+  console.log('[emoji pressed]')
+}
+
+// TODO 这里直接从EmojiList里面取了几个，请自行修改选取emoji的逻辑
 export const RecentEmoji = () => {
   const Line = (group: number) => {
     const list = EmojiList.slice(
@@ -18,10 +25,7 @@ export const RecentEmoji = () => {
     return (
       <>
         {list.map((item) => (
-          <Pressable
-            onPress={() => console.log('[emoji pressed]')}
-            key={item.name}
-          >
+          <Pressable onPress={() => handleEmojiPressed()} key={item.name}>
             <Emoji key={item.name} asset={item.asset} size={ITEM_HEIGHT} />
           </Pressable>
         ))}
