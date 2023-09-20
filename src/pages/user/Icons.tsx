@@ -73,7 +73,7 @@ export function UserIcons() {
       //   ],
       // },
     ],
-    []
+    [route.goCommentScreen, route.goDraftScreen]
   )
 
   return (

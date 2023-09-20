@@ -3,12 +3,20 @@ import { useMemo } from 'react'
 import { isToday } from 'date-fns'
 import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 
+export interface ExamInfo {
+  isExpired: boolean
+  startDate: Date
+  isToday: boolean
+  endDate: Date
+  detail: IExam
+}
+
 export function useSpaceData() {
   const { courseInfo } = useAppSelector((state) => state.spaceCourse)
   const user = useAppSelector((state) => state.spaceUser)
   const spaceAuth = useSpaceAuth()
 
-  const exams = useMemo(() => {
+  const exams = useMemo<ExamInfo[]>(() => {
     return (
       courseInfo.exams
         ?.map((item) => {

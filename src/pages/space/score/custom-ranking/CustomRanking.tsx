@@ -20,7 +20,6 @@ const buttonOptions: ButtonOptions<ScoreType>[] = [
   { key: 'gpa', title: 'GPA' },
 ]
 
-// TODO: 性能优化
 export const CustomRanking = () => {
   const theme = useTheme()
   const [scoreType, setScoreType] = useState<ScoreType>('score')

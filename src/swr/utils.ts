@@ -30,6 +30,7 @@ export const SWRKeys = {
     },
     user: {
       info: 'space.user.info',
+      cardBase: 'space.user.card-base',
     },
     score: {
       all: 'space.score.all',
