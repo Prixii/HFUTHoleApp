@@ -27,15 +27,25 @@ const RoundedTouchableRipple = ({
   </View>
 )
 
-export const AbsoluteBottom = () => {
-  const { onPrev, onNext } = useChangeWeek('weekSchedule')
-  const { selectedSemesterId, setSelectedSemesterId } = useCurrentSemester()
-  const { data: semesters } = useSemesters()
+interface AbsoluteBottomProps {
+  semesters?: ISemestersResponse
+  currentSemesterId?: number
+  onPrev: () => void
+  onNext: () => void
+  onSemesterChange?: (semesterId: number) => void
+}
 
+export const AbsoluteBottom = ({
+  semesters,
+  currentSemesterId,
+  onNext,
+  onPrev,
+  onSemesterChange,
+}: AbsoluteBottomProps) => {
   const sheetRef = useRef<BottomSheetModal>()
 
-  const handleValueChange = (itemValue: typeof selectedSemesterId) => {
-    setSelectedSemesterId(itemValue)
+  const handleValueChange = (itemValue: number) => {
+    onSemesterChange?.(itemValue)
     sheetRef.current?.close()
   }
 
@@ -49,8 +59,8 @@ export const AbsoluteBottom = () => {
           sheetRef.current?.present()
         }}
       >
-        {selectedSemesterId
-          ? semesters?.find((item) => item.id === selectedSemesterId)?.name
+        {currentSemesterId
+          ? semesters?.find((item) => item.id === currentSemesterId)?.name
           : '选择学期'}
       </Button>
       <BottomActionSheet

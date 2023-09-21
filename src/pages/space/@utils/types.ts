@@ -26,3 +26,13 @@ export interface ScoreInfo {
 export type HelpType = 'common' | 'login' | 'score' | 'course' | 'grammar'
 
 export type CardScoreData = RankInfo & { total: number }
+
+export type ScheduleVisibleWeek = {
+  // 周几
+  weekday: string
+  // 几号
+  day: string
+  // 几月几号
+  monthAndDate: string
+  active: boolean
+}

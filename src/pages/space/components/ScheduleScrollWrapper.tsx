@@ -1,22 +1,24 @@
-import {
-  ScreenWrapper,
-  type ScreenWrapperProps,
-} from '@/components/ScrollWrapper'
+import { ScreenWrapper } from '@/components/ScrollWrapper'
 import { RefreshIndicatorControl } from '@/components/RefreshIndicatorControl'
-import { FC } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 import { useSpaceCourse } from '@/swr/space/course'
 import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 
-export const ScheduleScrollWrapper: FC<ScreenWrapperProps> = ({
+interface ScheduleScrollWrapperProps {
+  children: ReactNode
+  isFetching: boolean
+  onRefresh?: () => void
+}
+
+export const ScheduleScrollWrapper = ({
   children,
-  ...props
-}) => {
-  const { isFetching, refetch } = useSpaceCourse()
+  isFetching,
+  onRefresh,
+}: ScheduleScrollWrapperProps) => {
   const { isLogin } = useSpaceAuth()
 
   return (
     <ScreenWrapper
-      {...props}
       contentContainerStyle={{
         minHeight: '100%',
       }}
@@ -24,7 +26,7 @@ export const ScheduleScrollWrapper: FC<ScreenWrapperProps> = ({
         <RefreshIndicatorControl
           refreshing={isFetching}
           enabled={isLogin}
-          onRefresh={refetch}
+          onRefresh={onRefresh}
         />
       }
     >

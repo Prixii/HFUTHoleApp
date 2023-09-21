@@ -1,16 +1,21 @@
-import { useScheduleVisibleWeek } from '@/pages/space/@utils/useScheduleVisibleWeek'
+import type { ScheduleVisibleWeek } from '@/pages/space/@utils/types'
 import { WeekChange } from '@/pages/space/components/WeekChange'
 import { View } from 'react-native'
-import { useWeekSchedule } from '@/pages/space/week-schedule/useWeekSchedule'
 import { Text, useTheme, TextProps } from 'react-native-paper'
 
-export const Header = () => {
+interface HeaderProps {
+  weekScheduleVisibleWeek: ScheduleVisibleWeek[]
+  currentWeek: number
+  // 0 - 19
+  weekIdx: number
+}
+
+export const Header = ({
+  weekScheduleVisibleWeek,
+  currentWeek,
+  weekIdx,
+}: HeaderProps) => {
   const theme = useTheme()
-  const weekScheduleVisibleWeek = useScheduleVisibleWeek('weekSchedule')
-  const {
-    currentWeek,
-    weekSchedule: { weekIdx },
-  } = useWeekSchedule()
 
   return (
     <View className="w-full">

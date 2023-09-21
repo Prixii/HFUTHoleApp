@@ -1,20 +1,13 @@
-import type { ScheduleKey } from '@/pages/space/@utils/types'
+import type {
+  ScheduleKey,
+  ScheduleVisibleWeek,
+} from '@/pages/space/@utils/types'
 import { useAppSelector } from '@/store/store'
 import { getCourseDate } from '@/pages/space/@utils/utils'
 import { useMemo } from 'react'
 import { format } from 'date-fns'
 
 const defaultStartDate = '2023-01-01'
-
-export type ScheduleVisibleWeek = {
-  // 周几
-  weekday: string
-  // 几号
-  day: string
-  // 几月几号
-  monthAndDate: string
-  active: boolean
-}
 
 export const useScheduleVisibleWeek = (scheduleKey: ScheduleKey) => {
   const spaceCourse = useAppSelector((state) => state.spaceCourse)

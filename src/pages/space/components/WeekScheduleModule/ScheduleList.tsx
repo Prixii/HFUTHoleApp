@@ -1,6 +1,5 @@
 import type { Colors, CourseSchedule } from '@/pages/space/@utils/types'
 import type { UnitSchedule } from '@/pages/space/@utils/types'
-import { useWeekSchedule } from '@/pages/space/week-schedule/useWeekSchedule'
 import { Pressable, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import {
@@ -16,15 +15,29 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
 import { ScheduleCard as DayScheduleCard } from '@/pages/space/day-schedule/components/ScheduleList'
 
+interface WeekScheduleItem {
+  schedules: CourseSchedule[]
+  layoutIndex: number
+  style: {
+    borderRightWidth: number
+    borderBottomWidth: number
+    paddingTop: number
+    paddingBottom: number
+  }
+}
+
 interface CardProps {
   schedules: CourseSchedule[]
   openSheet: (schedule: UnitSchedule) => void
 }
 
-export const CourseList = () => {
+interface ScheduleListProps {
+  weekLayout: WeekScheduleItem[][]
+}
+
+export const ScheduleList = ({ weekLayout }: ScheduleListProps) => {
   const [schedule, setSchedule] = useState<UnitSchedule>()
   const sheetRef = useRef<BottomSheetModal>(null)
-  const { weekLayout } = useWeekSchedule()
 
   const openSheet = (schedule: UnitSchedule) => {
     setSchedule(schedule)

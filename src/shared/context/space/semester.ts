@@ -5,10 +5,10 @@ type SemesterId = number | string
 
 export const [useCurrentSemester, CurrentSemesterContextProvider] = createStore(
   () => {
-    const [currentSemesterId, setCurrentSemesterId] = useState<SemesterId>()
-    const [selectedSemesterId, setSelectedSemesterId] = useState<SemesterId>()
+    const [currentSemesterId, setCurrentSemesterId] = useState<number>()
+    const [selectedSemesterId, setSelectedSemesterId] = useState<number>()
 
-    const initializeSemesterId = (semesterId: SemesterId) => {
+    const initializeSemesterId = (semesterId: number) => {
       setSelectedSemesterId(semesterId)
       setCurrentSemesterId(semesterId)
     }

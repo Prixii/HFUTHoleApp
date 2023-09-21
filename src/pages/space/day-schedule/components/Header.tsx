@@ -1,7 +1,4 @@
-import {
-  useScheduleVisibleWeek,
-  type ScheduleVisibleWeek,
-} from '@/pages/space/@utils/useScheduleVisibleWeek'
+import { useScheduleVisibleWeek } from '@/pages/space/@utils/useScheduleVisibleWeek'
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -14,6 +11,7 @@ import { useAppDispatch } from '@/store/store'
 import { setDaySchedule } from '@/store/reducer/spaceCourse'
 import { useCallback } from 'react'
 import { WeekChange } from '@/pages/space/components/WeekChange'
+import { ScheduleVisibleWeek } from '@/pages/space/@utils/types'
 
 export const Header = () => {
   const { visibleDate, daySchedule, todaySchedule } = useDaySchedule()

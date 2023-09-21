@@ -7,8 +7,10 @@ import { ScheduleScrollWrapper } from '@/pages/space/components/ScheduleScrollWr
 import { useEffect, useState } from 'react'
 import { useIsFocused } from '@react-navigation/native'
 import { useInitializeSpace } from '@/pages/space/@utils/useInitializeSpace'
+import { useSpaceCourse } from '@/swr/space/course'
 
 export const DaySchedule = () => {
+  const { isFetching, refetch } = useSpaceCourse()
   const { isLogin } = useSpaceAuth()
   useInitializeSpace()
 
@@ -27,7 +29,7 @@ export const DaySchedule = () => {
   return (
     <KeyboardAvoidingView behavior="padding">
       <PlainPage>
-        <ScheduleScrollWrapper>
+        <ScheduleScrollWrapper isFetching={isFetching} onRefresh={refetch}>
           <Header />
           <ScheduleList />
         </ScheduleScrollWrapper>
