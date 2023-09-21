@@ -19,6 +19,7 @@ import { CourseFailureSearch } from '@/pages/space/service/course-failure-search
 import { SpaceLoginScreen } from '@/pages/space/login/SpaceLoginScreen'
 import { CurrentSemesterContextProvider } from '@/shared/context/space/semester'
 import type { Screen } from './stacks/user.stacks'
+import { Platform } from 'react-native'
 
 const Tab = createMaterialTopTabNavigator()
 const SpaceStack = createNativeStackNavigator()

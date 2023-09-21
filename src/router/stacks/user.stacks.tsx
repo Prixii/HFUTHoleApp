@@ -11,6 +11,7 @@ import { AboutScreen } from '@/pages/user/about/AboutScreen'
 import { SettingsScreen } from '@/pages/user/settings/SettingsScreen'
 import { UserCommentScreen } from '@/pages/user/comment/UserCommentScreen'
 import { HoleDraftScreen } from '@/pages/user/draft/HoleDraftScreen'
+import { PageWithSafeArea } from '@/layouts/layout'
 
 const UserStack = createNativeStackNavigator()
 
@@ -88,19 +89,21 @@ const UserScreens: Screen[] = [
 
 export const UserStacks = () => {
   return (
-    <UserStack.Navigator
-      screenOptions={{
-        header: Header,
-      }}
-    >
-      {UserScreens.map((screen) => (
-        <UserStack.Screen
-          key={screen.name}
-          name={screen.name}
-          component={screen.component}
-          options={screen.options}
-        />
-      ))}
-    </UserStack.Navigator>
+    <PageWithSafeArea topStyle="bg-white">
+      <UserStack.Navigator
+        screenOptions={{
+          header: Header,
+        }}
+      >
+        {UserScreens.map((screen) => (
+          <UserStack.Screen
+            key={screen.name}
+            name={screen.name}
+            component={screen.component}
+            options={screen.options}
+          />
+        ))}
+      </UserStack.Navigator>
+    </PageWithSafeArea>
   )
 }

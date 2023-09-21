@@ -1,6 +1,7 @@
 import { ScrollView, View } from 'react-native'
 import { UserIcons } from '@/pages/user/Icons'
 import { UserHeaderInfo } from '@/pages/user/UserHeaderInfo'
+import { useSpaceData } from '@/shared/hooks/useSpaceData'
 import { SpaceBaseService } from './SpaceBaseService'
 
 export function User() {

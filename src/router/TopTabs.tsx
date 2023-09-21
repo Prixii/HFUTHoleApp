@@ -16,6 +16,7 @@ import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
 import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
 import { PopoverCard } from '@/components/PopoverCard/PopoverCard'
 
+
 const Tab = createMaterialTopTabNavigator()
 
 interface TopTabBarIconProps {

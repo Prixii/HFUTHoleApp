@@ -1,7 +1,7 @@
 import { Routes } from '@/router/routes'
-import { View } from 'react-native'
+import { Platform, SafeAreaView, View } from 'react-native'
 import Toast from 'react-native-toast-message'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'
 
@@ -17,6 +17,36 @@ const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
 })
+
+/**
+ * 对于IOS设备，可能不会检测StatusBar，所以需要渲染安全区
+ * @param param0 子组件
+ * @param topColor 顶部安全区背景颜色
+ * @param bottomColor 底部安全区背景颜色
+ * @returns 返回子组件
+ */
+
+export const PageWithSafeArea = (prop: {
+  children: ReactNode
+  topStyle?: string
+  bottomStyle?: string
+}) => {
+  const isIOS = Platform.OS === 'ios'
+  if (isIOS) {
+    const topAreaClassName = 'flex-0 ' + (prop.topStyle ?? 'bg-background')
+    const bottomAreaClassName = 'flex-1 ' + (prop.bottomStyle ?? 'bg-white')
+    return (
+      <>
+        <SafeAreaView className={topAreaClassName} />
+        <SafeAreaView className={bottomAreaClassName}>
+          {prop.children}
+        </SafeAreaView>
+      </>
+    )
+  } else {
+    return prop.children
+  }
+}
 
 export function TabViewExample() {
   const layout = useWindowDimensions()

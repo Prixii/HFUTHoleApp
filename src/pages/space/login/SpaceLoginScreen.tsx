@@ -1,5 +1,5 @@
 import { AuthView } from '@/pages/auth/AuthView'
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import { Snackbar } from '@/components/snackbar/snackbar'
 import { Input } from '@/components/form/Input'
 import { LoginFormValidator } from '@/shared/validators/space/auth'
