@@ -1,5 +1,6 @@
 import {
   KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -31,6 +32,11 @@ export function AuthView(props: Props) {
     [props.snackbar]
   )
 
+  /**
+   * 对于IOS平台，需要额外渲染一个padding
+   */
+  const renderStyle = 'grid gap-5 ' + (Platform.OS === 'ios' ? 'px-4' : '')
+
   const keyboardHeight = useKeyboardHeight()
 
   return (
@@ -42,8 +48,8 @@ export function AuthView(props: Props) {
         }}
       >
         <View className={'flex-1 justify-around'}>
-          <SafeAreaView className={'bg-white flex-1 w-screen py-[10px] px-5'}>
-            <View className={'grid gap-5'}>
+          <SafeAreaView className={'bg-white flex-1 py-[10px] px-5'}>
+            <View className={renderStyle}>
               {props.logo || (
                 <Avatar.Image
                   source={props.image || require('../../../assets/splash.png')}

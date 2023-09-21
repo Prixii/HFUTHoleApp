@@ -112,7 +112,9 @@ function InnerRefreshableHoleList<
             <HoleInfo
               key={item!.id}
               data={item!}
-              onPress={() => go(item!.id)}
+              onPress={() => {
+                go(item!.id)
+              }}
             />
           )}
           {...props}

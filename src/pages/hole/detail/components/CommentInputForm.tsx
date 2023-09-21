@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, TextInput, View } from 'react-native'
+import { View } from 'react-native'
 import { IconButton } from 'react-native-paper'
 import { CameraIcon, EmojiIcon } from '@/components/icon'
 import { NativeInput } from '@/components/form/NativeInput'
@@ -20,10 +20,11 @@ import { useUserProfile } from '@/swr/user/profile'
 
 interface Props {
   onCommentSuccess: () => void
+  id: number
 }
 
 export function CommentInputForm(props: Props) {
-  const id = useHoleDetailId()
+  const { showInput, closeInput } = useBottomCommentContext()
   const { data: userData } = useUserProfile()
   const {
     form: {
@@ -74,7 +75,7 @@ export function CommentInputForm(props: Props) {
     mutation.mutate({
       body: data.body,
       imgs: result,
-      id,
+      id: props.id,
     })
   }
 
@@ -88,21 +89,23 @@ export function CommentInputForm(props: Props) {
         >
           <View className={'px-2 flex-1 bg-[#F3F3F3] rounded-2xl'}>
             <View className={'px-2 pt-2'}>
-              <NativeInput
-                control={control}
-                name={'body'}
-                multiline={true}
-                autoFocus={true}
-                style={{
-                  maxHeight: 16 * 4,
-                }}
-                onFocus={() => setShowEmojiArea(false)}
-                placeholder={
-                  isReply
-                    ? `回复 ${data!.user!.username}：`
-                    : '你若安不好，屁股给你拍八瓣'
-                }
-              />
+              {showInput && (
+                <NativeInput
+                  control={control}
+                  name={'body'}
+                  multiline={true}
+                  autoFocus={true}
+                  style={{
+                    maxHeight: 16 * 4,
+                  }}
+                  onFocus={() => setShowEmojiArea(false)}
+                  placeholder={
+                    isReply
+                      ? `回复 ${data!.user!.username}：`
+                      : '你若安不好，屁股给你拍八瓣'
+                  }
+                />
+              )}
             </View>
             <View
               className={

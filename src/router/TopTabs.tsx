@@ -14,6 +14,7 @@ import React from 'react'
 import { HoleHot } from '@/pages/hole/hot/HoleHot'
 import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { PageWithSafeArea } from '@/layouts/layout'
 
 const Tab = createMaterialTopTabNavigator()
 
