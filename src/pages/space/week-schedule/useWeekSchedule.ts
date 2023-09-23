@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import {
   CARD_COLORS_KEYS,
   WEEK_SCHEDULE_CARD_HEIGHT,
-} from '@/pages/space/@utils/utils'
+} from '@/pages/space/@utils/constant'
 import type { CourseSchedule } from '@/pages/space/@utils/types'
 
 export const useWeekSchedule = () => {

@@ -93,3 +93,7 @@ export function objectMap<T extends object, K = keyof T>(
     Object.entries(obj).map(([key, value]) => [key, callback(value, key, obj)])
   )
 }
+
+export const isEqualArray = (arr1: any[], arr2: any[]) =>
+  arr1.every((item, index) => item === arr2[index]) &&
+  arr2.every((item, index) => item === arr1[index])

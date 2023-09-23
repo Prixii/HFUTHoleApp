@@ -1,5 +1,5 @@
 import type { SpaceCourseState } from '@/store/reducer/spaceCourse'
-import { CARD_COLORS_KEYS } from '@/pages/space/@utils/utils'
+import { CARD_COLORS_KEYS } from '@/pages/space/@utils/constant'
 import type { ReactNode } from 'react'
 
 // 日程页面下的类型

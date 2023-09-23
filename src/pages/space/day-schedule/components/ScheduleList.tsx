@@ -16,7 +16,7 @@ import {
 } from '@/pages/space/@utils/utils'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
-import { ScheduleSheet } from '@/pages/space/components/ScheduleSheet'
+import { ScheduleSheet } from '@/pages/space/components/ScheduleSheet/ScheduleSheet'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 

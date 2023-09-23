@@ -1,7 +1,7 @@
 import type { Colors, CourseSchedule } from '@/pages/space/@utils/types'
 import type { UnitSchedule } from '@/pages/space/@utils/types'
 import { Pressable, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, TouchableRipple } from 'react-native-paper'
 import {
   generateCardStyle,
   formatRoom,
@@ -9,11 +9,16 @@ import {
   getLongestSchedule,
 } from '@/pages/space/@utils/utils'
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { ScheduleSheet } from '@/pages/space/components/ScheduleSheet'
+import { ScheduleSheet } from '@/pages/space/components/ScheduleSheet/ScheduleSheet'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
 import { ScheduleCard as DayScheduleCard } from '@/pages/space/day-schedule/components/ScheduleList'
+import { PulsIcon } from '@/components/icon'
+import { CustomScheduleSheet } from '@/pages/space/components/WeekScheduleModule/CustomScheduleSheet'
+import { useAppSelector } from '@/store/store'
+import { useSpaceCourse } from '@/swr/space/course'
+import { isEqualArray } from '@/shared/utils/utils'
 
 interface WeekScheduleItem {
   schedules: CourseSchedule[]
@@ -33,15 +38,44 @@ interface CardProps {
 
 interface ScheduleListProps {
   weekLayout: WeekScheduleItem[][]
+  readonly?: boolean
 }
 
-export const ScheduleList = ({ weekLayout }: ScheduleListProps) => {
+export const ScheduleList = ({
+  weekLayout,
+  readonly = false,
+}: ScheduleListProps) => {
+  const weekVisibleSchedule = useAppSelector(
+    (state) => state.spaceCourse.weekSchedule
+  )
   const [schedule, setSchedule] = useState<UnitSchedule>()
-  const sheetRef = useRef<BottomSheetModal>(null)
+  const [activeIndexArr, setActiveIndexArr] = useState([-1, -1])
+  const [customSchedule, setCustomSchedule] = useState<UnitSchedule>()
+  const scheduleSheetRef = useRef<BottomSheetModal>(null)
+  const diyScheduleSheetRef = useRef<BottomSheetModal>(null)
+  const { refetch } = useSpaceCourse()
 
-  const openSheet = (schedule: UnitSchedule) => {
+  const openScheduleSheet = (schedule: UnitSchedule) => {
     setSchedule(schedule)
-    sheetRef.current?.present()
+    scheduleSheetRef.current?.present()
+  }
+
+  const openDiyScheduleSheet = () => {
+    diyScheduleSheetRef.current?.present()
+  }
+
+  const initActiveIndex = () => setActiveIndexArr([-1, -1])
+
+  const onAddScheduleSuccess = () => {
+    initActiveIndex()
+    diyScheduleSheetRef.current?.close()
+    refetch()
+    setCustomSchedule(undefined)
+  }
+
+  const onScheduleUpdate = (schedule: UnitSchedule) => {
+    setCustomSchedule(schedule)
+    diyScheduleSheetRef.current?.present()
   }
 
   return (
@@ -49,17 +83,41 @@ export const ScheduleList = ({ weekLayout }: ScheduleListProps) => {
       {weekLayout.map((dayLayout, dayLayoutIndex) => (
         <View key={dayLayoutIndex} className="flex-1">
           {dayLayout.map(({ layoutIndex, schedules, style }) => (
-            <View
+            <Pressable
               className="w-full px-[2px] h-[62px] border-slate-200 "
               key={layoutIndex}
               style={style}
+              onPress={() => setActiveIndexArr([dayLayoutIndex, layoutIndex])}
             >
-              <Card schedules={schedules} openSheet={openSheet} />
-            </View>
+              {!readonly &&
+                isEqualArray(activeIndexArr, [dayLayoutIndex, layoutIndex]) && (
+                  <View className="w-full h-full rounded-md overflow-hidden">
+                    <TouchableRipple
+                      className="w-full h-full justify-center items-center "
+                      onPress={openDiyScheduleSheet}
+                    >
+                      <PulsIcon />
+                    </TouchableRipple>
+                  </View>
+                )}
+
+              <Card schedules={schedules} openSheet={openScheduleSheet} />
+            </Pressable>
           ))}
         </View>
       ))}
-      <ScheduleSheet ref={sheetRef} schedule={schedule} />
+      <CustomScheduleSheet
+        ref={diyScheduleSheetRef}
+        weekLayoutIndex={activeIndexArr}
+        currentWeekIndex={weekVisibleSchedule.weekIdx}
+        customSchedule={customSchedule}
+        onAddScheduleSuccess={onAddScheduleSuccess}
+      />
+      <ScheduleSheet
+        ref={scheduleSheetRef}
+        schedule={schedule}
+        onUpdate={onScheduleUpdate}
+      />
     </View>
   )
 }
@@ -91,6 +149,14 @@ const ConflictCard = ({ schedules, openSheet }: CardProps) => {
     [scheduleLongest]
   )
 
+  const handleOpenSheet = useCallback(
+    (schedule: UnitSchedule) => {
+      openSheet(schedule)
+      sheetRef.current?.dismiss()
+    },
+    [openSheet]
+  )
+
   return (
     <>
       <Pressable
@@ -106,16 +172,13 @@ const ConflictCard = ({ schedules, openSheet }: CardProps) => {
           点击查看详情
         </Text>
       </Pressable>
-      <BottomActionSheet ref={sheetRef} snapPoints={['25%', '50%']}>
+      <BottomActionSheet ref={sheetRef} snapPoints={['30%', '50%']}>
         <BottomSheetScrollView>
           <View className="flex space-y-4 p-4">
             {schedules.map((schedule) => (
               <View key={schedule.courseName}>
                 <DayScheduleCard
-                  openSheet={() => {
-                    openSheet(schedule)
-                    sheetRef.current?.close()
-                  }}
+                  openSheet={() => handleOpenSheet(schedule)}
                   schedule={schedule}
                 />
               </View>

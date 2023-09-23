@@ -1,8 +1,6 @@
 import { createStore } from 'hox'
 import { useState } from 'react'
 
-type SemesterId = number | string
-
 export const [useCurrentSemester, CurrentSemesterContextProvider] = createStore(
   () => {
     const [currentSemesterId, setCurrentSemesterId] = useState<number>()

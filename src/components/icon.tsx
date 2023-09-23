@@ -46,9 +46,11 @@ const withAntDesignIcon = (name: string) => withIconProps(AntDesignIcon, name)
 
 // export type
 
-export const LikeIcon = withMaterialIcon('thumb-up')
-
 export const LoveIcon = withAntDesignIcon('heart')
+
+export const PulsIcon = withAntDesignIcon('plus')
+
+export const LikeIcon = withMaterialIcon('thumb-up')
 
 export const MenuIcon = withMaterialIcon('menu')
 

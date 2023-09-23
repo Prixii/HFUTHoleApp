@@ -17,19 +17,31 @@ import { getRandomQAQ } from 'qaq-font'
 type Props = Pick<ScheduleItemCardProps, 'schedule'>
 
 const ScheduleSheetHeader = ({ schedule }: Props) => {
-  const headerContent = useMemo(
-    () => [
-      {
-        title: '老师名字',
-        value: getTeachers(schedule.detailInfo.teachers),
-      },
-      {
-        title: schedule.type === 'Exam' ? '考试时间' : '上课时间',
-        value: `${schedule.startTime} - ${schedule.endTime}`,
-      },
-    ],
-    [schedule]
-  )
+  const headerContent = useMemo(() => {
+    if (schedule.type === 'Diy') {
+      return [
+        {
+          title: '地点',
+          value: schedule.room,
+        },
+        {
+          title: '时间',
+          value: `${schedule.startTime} - ${schedule.endTime}`,
+        },
+      ]
+    } else {
+      return [
+        {
+          title: '老师名字',
+          value: getTeachers(schedule.detailInfo.teachers),
+        },
+        {
+          title: schedule.type === 'Exam' ? '考试时间' : '上课时间',
+          value: `${schedule.startTime} - ${schedule.endTime}`,
+        },
+      ]
+    }
+  }, [schedule])
 
   return (
     <View className={'space-y-5'}>
@@ -37,7 +49,9 @@ const ScheduleSheetHeader = ({ schedule }: Props) => {
         <View className={'flex-row space-x-4 items-center'}>
           <View className={'w-1 h-6 bg-[#5c7ef1] rounded-full'} />
           <Text variant={'titleMedium'}>
-            {schedule.courseName}({schedule.detailInfo.code})
+            {`${schedule.courseName}${
+              schedule.type === 'Diy' ? '' : schedule.detailInfo.code
+            }`}
           </Text>
         </View>
         <View className={'flex-row justify-between'}>
@@ -61,43 +75,52 @@ const ScheduleSheetHeader = ({ schedule }: Props) => {
 export function ScheduleSheetContent({
   schedule,
 }: Pick<ScheduleItemCardProps, 'schedule'>) {
-  const detailContentList = useMemo(
-    () => [
-      {
-        icon: LocationSvg,
-        title: schedule.type === 'Exam' ? '考试地点' : '上课地点',
-        value: schedule.room,
-      },
-      {
-        icon: LabelSvg,
-        title: '学分',
-        value: schedule.detailInfo.credits,
-      },
-      {
-        icon: ClassRoomSvg,
-        title: '上课班级',
-        value: schedule.detailInfo.adminClass,
-      },
-      {
-        icon: WeekSvg,
-        title: '上课周数',
-        value:
-          schedule.detailInfo.weeks ||
-          `暂时没有上课周数的数据哦${getRandomQAQ('sadness')}`,
-      },
-      {
-        icon: StudentSvg,
-        title: '学生人数',
-        value: schedule.detailInfo.studentCount,
-      },
-      {
-        icon: CourseCategorySvg,
-        title: '课程类型',
-        value: schedule.detailInfo.courseTypeName,
-      },
-    ],
-    [schedule]
-  )
+  const detailContentList = useMemo(() => {
+    if (schedule.type === 'Diy') {
+      return [
+        {
+          icon: LabelSvg,
+          title: '备注',
+          value: schedule.detailInfo.mark,
+        },
+      ]
+    } else {
+      return [
+        {
+          icon: LocationSvg,
+          title: schedule.type === 'Exam' ? '考试地点' : '上课地点',
+          value: schedule.room,
+        },
+        {
+          icon: LabelSvg,
+          title: '学分',
+          value: schedule.detailInfo.credits,
+        },
+        {
+          icon: ClassRoomSvg,
+          title: '上课班级',
+          value: schedule.detailInfo.adminClass,
+        },
+        {
+          icon: WeekSvg,
+          title: '上课周数',
+          value:
+            schedule.detailInfo.weeks ||
+            `暂时没有上课周数的数据哦${getRandomQAQ('sadness')}`,
+        },
+        {
+          icon: StudentSvg,
+          title: '学生人数',
+          value: schedule.detailInfo.studentCount,
+        },
+        {
+          icon: CourseCategorySvg,
+          title: '课程类型',
+          value: schedule.detailInfo.courseTypeName,
+        },
+      ]
+    }
+  }, [schedule])
 
   return (
     <>

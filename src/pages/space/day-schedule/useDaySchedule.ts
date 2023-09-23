@@ -1,17 +1,14 @@
 import type { Schedule } from '@/pages/space/@utils/types'
 import { useMemo } from 'react'
 import { useAppSelector, useAppDispatch } from '@/store/store'
-import {
-  getCourseDate,
-  DAY_HOURS,
-  CARD_COLORS_KEYS,
-} from '@/pages/space/@utils/utils'
-import { changeSchedule } from '@/store/reducer/spaceCourse'
+import { getCourseDate } from '@/pages/space/@utils/utils'
+import { CARD_COLORS_KEYS } from '@/pages/space/@utils/constant'
 import { useMount } from 'ahooks'
 import { format } from 'date-fns'
 import { JSONDeepClone } from '@/shared/utils/utils'
 import { initializeCourseSchedule } from '@/pages/space/@utils/spaceCourseStore'
 import { useCurrentSemester } from '@/shared/context/space/semester'
+import { DAY_HOURS } from '@/pages/space/@utils/constant'
 
 const defaultVisibleDate = '01月01号'
 
