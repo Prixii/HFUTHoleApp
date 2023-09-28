@@ -137,7 +137,7 @@ const ConflictCard = ({
         <Text style={textStyle} className="text-base font-bold">
           {`这里有${schedules.length}门课冲突`}
         </Text>
-        <Text style={textStyle}>点击插件详情</Text>
+        <Text style={textStyle}>点击查看详情</Text>
       </Pressable>
       <BottomActionSheet ref={sheetRef} snapPoints={['25%', '50%']}>
         <BottomSheetScrollView>
