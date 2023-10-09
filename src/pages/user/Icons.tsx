@@ -6,6 +6,9 @@ import PostSvg from '@/assets/svg/user/post.svg'
 import ReplySvg from '@/assets/svg/user/reply.svg'
 import DraftSvg from '@/assets/svg/user/draft.svg'
 import AppDenoSvg from '@/assets/svg/app_deno.svg'
+import DenoSvg from '@/assets/svg/deno.svg'
+import SchoolCourseSvg from '@/assets/svg/space/course.svg'
+import SchoolCalendarSvg from '@/assets/svg/space/calendar.svg'
 import { MoreServiceList } from '@/pages/user/MoreServiceList'
 import { useMemo } from 'react'
 import { useUserProfileRoute } from '@/shared/hooks/route/useUserProfileRoute'
@@ -41,39 +44,44 @@ export function UserIcons() {
           },
         ],
       },
-      // {
-      //   title: '课表',
-      //   icon: DenoSvg,
-      //   children: [
-      //     {
-      //       title: '全校课表',
-      //       route: '',
-      //       svg: CourseSearchSvg,
-      //     },
-      //     {
-      //       title: '培养方案',
-      //       route: '',
-      //       svg: CultureSvg,
-      //     },
-      //     {
-      //       title: '评教',
-      //       route: '',
-      //       svg: TeachingEvaluationSvg,
-      //     },
-      //     {
-      //       title: '挂科率查询',
-      //       route: '',
-      //       svg: FailedCourseSearchSvg,
-      //     },
-      //     {
-      //       title: '校车查询',
-      //       route: '',
-      //       svg: BusSvg,
-      //     },
-      //   ],
-      // },
+      {
+        title: '课表',
+        icon: DenoSvg,
+        children: [
+          // {
+          //   title: '全校课表',
+          //   onPress: route.goSchoolCourseScreen,
+          //   svg: SchoolCourseSvg,
+          // },
+          {
+            title: '校历',
+            onPress: route.goSchoolCalendarScreen,
+            svg: SchoolCalendarSvg,
+          },
+          // {
+          //   title: '培养方案',
+          //   route: '',
+          //   svg: CultureSvg,
+          // },
+          // {
+          //   title: '评教',
+          //   route: '',
+          //   svg: TeachingEvaluationSvg,
+          // },
+          // {
+          //   title: '挂科率查询',
+          //   route: '',
+          //   svg: FailedCourseSearchSvg,
+          // },
+          // {
+          //   title: '校车查询',
+          //   route: '',
+          //   svg: BusSvg,
+          // },
+        ],
+      },
     ],
-    [route.goCommentScreen, route.goDraftScreen]
+    [route]
   )
 
   return (

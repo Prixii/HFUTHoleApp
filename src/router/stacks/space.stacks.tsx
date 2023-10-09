@@ -8,6 +8,8 @@ import { Header } from '@/components/Header'
 import { SpaceClassmateScreen } from '@/pages/space/service/classmate/SpaceClassmateScreen'
 import { CourseFailureQuery } from '@/pages/space/service/course-failure/CourseFailureQuery'
 import { CourseFailureSearch } from '@/pages/space/service/course-failure-search/CourseFailureSearch'
+import { SchoolCourseScreen } from '@/pages/space/service/school-course/SchoolCourseScreen'
+import { SchoolCalendarScreen } from '@/pages/space/service/school-calendar/SchoolCalendarScreen'
 import { Exam } from '@/pages/space/service/exam/ExamScreen'
 import type { Screen } from './user.stacks'
 
@@ -75,6 +77,20 @@ const ScoreScreens: Screen[] = [
     component: Exam,
     options: {
       title: '最近考试',
+    },
+  },
+  {
+    name: 'school-course',
+    component: SchoolCourseScreen,
+    options: {
+      title: '全校课表',
+    },
+  },
+  {
+    name: 'school-calendar',
+    component: SchoolCalendarScreen,
+    options: {
+      title: '校历',
     },
   },
 ]
