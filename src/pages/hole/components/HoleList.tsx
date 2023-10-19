@@ -16,6 +16,7 @@ import React, {
 } from 'react'
 import { AnimatedHolePostFAB } from '@/pages/hole/PostFab'
 import { AnimatedToTopFAB } from '@/pages/hole/ToTopFab'
+import { useBoolean } from 'ahooks'
 
 // TODO 完善类型
 export type RefreshableHoleListProps<
@@ -57,6 +58,7 @@ function InnerRefreshableHoleList<
   const CONTENT_OFFSET_THRESHOLD = 500
   const [PostFABOffset, setPostFABOffset] = useState(0)
   const [isToTopFABVisible, setToTopFABVisible] = useState(false)
+  const [isScroll, isScrollActions] = useBoolean(false)
 
   const scrollHandler = (event: {
     nativeEvent: { contentOffset: { y: number } }
@@ -89,7 +91,9 @@ function InnerRefreshableHoleList<
           onScroll={(event) => {
             scrollHandler(event)
             props.onScroll?.(event)
+            isScrollActions.setTrue()
           }}
+          onScrollEndDrag={isScrollActions.setFalse}
           data={flatListData}
           hasNextPage={hasNextPage}
           onRefreshing={fetchNextPage}
@@ -115,6 +119,7 @@ function InnerRefreshableHoleList<
               onPress={() => {
                 go(item!.id)
               }}
+              isScroll={isScroll}
             />
           )}
           {...props}

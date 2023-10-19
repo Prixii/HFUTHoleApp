@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { Func, IClassName, InferArrayItem } from '@/shared/types'
 import { View, StyleSheet } from 'react-native'
 import { UserAvatar } from '@/components/UserAvatar'
@@ -19,6 +19,9 @@ import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 import { sliceHoleInfoCommentBody } from '@/pages/hole/components/utils'
 import { HoleBottomAction } from './sheet/HoleBottomAction'
 import { Categories } from '@/shared/constants/category'
+import { EmojiActionCard } from '@/components/emoji/EmojiActionCard'
+import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
+import { useBoolean } from 'ahooks'
 
 type Data = IHole
 
@@ -219,11 +222,12 @@ export const HoleInfoBottom: React.FC<{ data: Data }> = ({ data }) => {
 
 interface Props extends IClassName {
   data: Data
+  showComment?: boolean
   onPress?: Func
   header?: ReactNode
   body?: ReactNode
-  showComment?: boolean
   bottom?: ReactNode
+  isScroll?: boolean
 }
 
 export const HoleInfo = ({
@@ -234,55 +238,71 @@ export const HoleInfo = ({
   bottom,
   className,
   showComment = true,
+  isScroll,
 }: Props) => {
   const theme = useTheme()
+  const [isOpenEmojiAction, openEmojiActions] = useBoolean(false)
+
+  useEffect(() => {
+    if (isScroll) {
+      openEmojiActions.setFalse()
+    }
+  }, [isScroll])
 
   return (
-    <View className={'bg-white mt-2 rounded-2xl overflow-hidden'}>
-      <TouchableRipple onPress={onPress}>
-        <View className={`flex-col space-y-3 px-4 py-2 ${className}`}>
-          <View>{header || <HoleInfoHeader data={data} />}</View>
-          <View>{body || <HoleInfoBody data={data} />}</View>
-          {data.vote && <HoleInfoVote data={data} />}
-          <View>{bottom || <HoleInfoBottom data={data} />}</View>
-          <View>
-            {showComment && data.comments?.length > 0 && (
-              <>
-                <View className={'border-b-[1px] border-black/10'}></View>
-                <View className={'grid'}>
-                  {data.comments?.length > 0 &&
-                    data.comments.map((comment) => (
-                      <View
-                        className={
-                          'flex flex-row space-x-2 items-center py-2 justify-between'
-                        }
-                        key={comment.id}
-                      >
-                        <Text
-                          className={'font-bold self-start max-w-[30%]'}
-                          variant={'bodyMedium'}
-                          ellipsizeMode={'tail'}
-                          numberOfLines={1}
-                          style={{ color: theme.colors.onSurfaceVariant }}
+    <>
+      <View className={'absolute z-[2] left-0 right-0'}>
+        {isOpenEmojiAction && <EmojiCard />}
+      </View>
+      <View className={'bg-white mt-2 rounded-2xl overflow-hidden z-[1]'}>
+        <TouchableRipple
+          onPress={onPress}
+          onLongPress={openEmojiActions.setTrue}
+        >
+          <View className={`flex-col space-y-3 px-4 py-2 ${className}`}>
+            <View>{header || <HoleInfoHeader data={data} />}</View>
+            <View>{body || <HoleInfoBody data={data} />}</View>
+            {data.vote && <HoleInfoVote data={data} />}
+            <View>{bottom || <HoleInfoBottom data={data} />}</View>
+            <View>
+              {showComment && data.comments?.length > 0 && (
+                <>
+                  <View className={'border-b-[1px] border-black/10'}></View>
+                  <View className={'grid'}>
+                    {data.comments?.length > 0 &&
+                      data.comments.map((comment) => (
+                        <View
+                          className={
+                            'flex flex-row space-x-2 items-center py-2 justify-between'
+                          }
+                          key={comment.id}
                         >
-                          {comment.user.username}
-                        </Text>
-                        <View className={'flex-1'}>
-                          <EmojiableText
-                            body={sliceHoleInfoCommentBody(comment.body)}
+                          <Text
+                            className={'font-bold self-start max-w-[30%]'}
                             variant={'bodyMedium'}
-                            style={{ color: theme.colors.surfaceVariant }}
-                          />
+                            ellipsizeMode={'tail'}
+                            numberOfLines={1}
+                            style={{ color: theme.colors.onSurfaceVariant }}
+                          >
+                            {comment.user.username}
+                          </Text>
+                          <View className={'flex-1'}>
+                            <EmojiableText
+                              body={sliceHoleInfoCommentBody(comment.body)}
+                              variant={'bodyMedium'}
+                              style={{ color: theme.colors.surfaceVariant }}
+                            />
+                          </View>
                         </View>
-                      </View>
-                    ))}
-                </View>
-              </>
-            )}
+                      ))}
+                  </View>
+                </>
+              )}
+            </View>
           </View>
-        </View>
-      </TouchableRipple>
-    </View>
+        </TouchableRipple>
+      </View>
+    </>
   )
 }
 

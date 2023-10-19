@@ -9,13 +9,12 @@ import { ReplyBody } from '@/components/reply/body'
 import { ImageList } from '@/components/image/ImageList'
 import { ReportType } from '@/shared/validators/report'
 import { CommentReplyBottomAction } from '@/pages/hole/components/sheet/CommentReplyBottomAction'
-import { Text, TouchableRipple, useTheme } from 'react-native-paper'
+import { TouchableRipple, useTheme } from 'react-native-paper'
 import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
   withSpring,
 } from 'react-native-reanimated'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'

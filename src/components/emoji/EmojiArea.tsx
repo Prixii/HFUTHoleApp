@@ -16,8 +16,7 @@ export function EmojiArea(props: Props) {
     <>
       {props.expandArea ? (
         <ScrollView
-          className={'h-56 py-2'}
-          style={{ backgroundColor: theme.colors.background }}
+          className={'h-56 py-2 bg-background'}
           keyboardShouldPersistTaps={'handled'}
         >
           <View className={'flex-row space-y-4 items-center flex-wrap'}>

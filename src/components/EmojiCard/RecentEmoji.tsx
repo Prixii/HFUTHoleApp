@@ -1,8 +1,3 @@
-/**
- * @author prixii
- * @date 2023-09-19 19
- */
-
 import { EmojiList } from '@/assets/emoji'
 import { Pressable, Text, View } from 'react-native'
 import { Emoji } from '../emoji/Emoji'
@@ -49,9 +44,11 @@ export const RecentEmoji = () => {
   }
 
   return (
-    <View>
-      <Text style={{ marginVertical: 8 }}>最近使用</Text>
-      <ListTile group={5} />
+    <View className={'space-y-2'}>
+      <Text className={'text-surfaceVariant text-xs'}>最近使用</Text>
+      <View>
+        <ListTile group={5} />
+      </View>
     </View>
   )
 }

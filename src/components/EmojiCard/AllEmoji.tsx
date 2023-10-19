@@ -68,10 +68,10 @@ export const AllEmoji = () => {
   }
 
   return (
-    <>
-      <Text style={{ marginTop: 8 }}>所有表情</Text>
+    <View className={'space-y-2'}>
+      <Text className={'text-xs text-surfaceVariant'}>所有表情</Text>
       <FlatList
-        style={{ height: 5 * ITEM_HEIGHT + 20 }}
+        className={'h-48'}
         data={groupId}
         getItemLayout={(_data, index) => ({
           length: ITEM_HEIGHT,
@@ -83,6 +83,6 @@ export const AllEmoji = () => {
         )}
         initialNumToRender={5}
       />
-    </>
+    </View>
   )
 }

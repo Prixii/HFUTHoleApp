@@ -16,7 +16,6 @@ import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
 import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
 import { PopoverCard } from '@/components/PopoverCard/PopoverCard'
 
-
 const Tab = createMaterialTopTabNavigator()
 
 interface TopTabBarIconProps {
@@ -99,8 +98,6 @@ export function TopTabs() {
           />
         ))}
       </Tab.Navigator>
-      {/* 这只是一个示例 */}
-      <PopoverCard coordinateY={100} child={<EmojiCard />}></PopoverCard>
     </>
   )
 }
