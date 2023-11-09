@@ -19,7 +19,6 @@ import { useHoleSearchRoute } from '@/shared/hooks/route/useHoleSearchRoute'
 import { sliceHoleInfoCommentBody } from '@/pages/hole/components/utils'
 import { HoleBottomAction } from './sheet/HoleBottomAction'
 import { Categories } from '@/shared/constants/category'
-import { EmojiActionCard } from '@/components/emoji/EmojiActionCard'
 import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
 import { useBoolean } from 'ahooks'
 
@@ -159,8 +158,6 @@ export const HoleInfoBody: React.FC<{ data: Data; isDetail?: boolean }> = ({
   data,
   isDetail = false,
 }) => {
-  const theme = useTheme()
-
   const { goResult } = useHoleSearchRoute()
 
   return (
