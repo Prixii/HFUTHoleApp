@@ -1,18 +1,11 @@
 import { useHoleCategoryList } from '@/swr/hole/category'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { CategoryDetailHeader } from '@/pages/hole/category/detail/CategoryDetailHeader'
-import React, { useMemo, useState } from 'react'
-import { ScrollView, StatusBar, View } from 'react-native'
+import React, { useState } from 'react'
+import { StatusBar } from 'react-native'
 import { CategoryDetailList } from '@/pages/hole/category/detail/CategoryDetailList'
-import Animated, {
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated'
-import { ITabViewTabs, TabView, TabViewBar } from '@/components/TabView'
+
 import { Tabs } from 'react-native-collapsible-tab-view'
-import { Text, TouchableRipple } from 'react-native-paper'
-import { Indicator, TabBar } from '@/pages/hole/category/components/Indicator'
 
 /**
  * TODO
@@ -25,6 +18,8 @@ export function CategoryDetailScreen() {
   const [activeClassification, setActiveClassification] = useState<string>(
     subName || category.children[0]
   )
+
+  // TODO
 
   return (
     <LoadingScreen isLoading={isLoading}>
