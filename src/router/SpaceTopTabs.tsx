@@ -20,6 +20,7 @@ import { SpaceLoginScreen } from '@/pages/space/login/SpaceLoginScreen'
 import { CurrentSemesterContextProvider } from '@/shared/context/space/semester'
 import type { Screen } from './stacks/user.stacks'
 import { Platform } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Tab = createMaterialTopTabNavigator()
 const SpaceStack = createNativeStackNavigator()
@@ -86,7 +87,7 @@ const ScoreScreens: Screen[] = [
 
 export const SpaceStacks = () => {
   return (
-    <>
+    <SafeAreaView className={'bg-background flex-1'}>
       <SpaceStack.Navigator screenOptions={{ header: Header }}>
         {ScoreScreens.map((screen) => (
           <SpaceStack.Screen
@@ -99,7 +100,7 @@ export const SpaceStacks = () => {
           />
         ))}
       </SpaceStack.Navigator>
-    </>
+    </SafeAreaView>
   )
 }
 
@@ -115,7 +116,7 @@ export const SpaceTopTabs = () => {
   return (
     <>
       {isLogin ? (
-        <>
+        <SafeAreaView className={'flex-1 bg-background'}>
           <CurrentSemesterContextProvider>
             <Tab.Navigator
               initialRouteName={'day'}
@@ -138,7 +139,7 @@ export const SpaceTopTabs = () => {
               ))}
             </Tab.Navigator>
           </CurrentSemesterContextProvider>
-        </>
+        </SafeAreaView>
       ) : (
         <SpaceAuthStack.Navigator
           screenOptions={{

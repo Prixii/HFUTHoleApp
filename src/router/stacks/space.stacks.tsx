@@ -12,6 +12,7 @@ import { SchoolCourseScreen } from '@/pages/space/service/school-course/SchoolCo
 import { SchoolCalendarScreen } from '@/pages/space/service/school-calendar/SchoolCalendarScreen'
 import { Exam } from '@/pages/space/service/exam/ExamScreen'
 import type { Screen } from './user.stacks'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SpaceStack = createNativeStackNavigator()
 
@@ -97,7 +98,7 @@ const ScoreScreens: Screen[] = [
 
 export const SpaceStacks = () => {
   return (
-    <>
+    <SafeAreaView className={'flex-1 bg-white'}>
       <SpaceStack.Navigator screenOptions={{ header: Header }}>
         {ScoreScreens.map((screen) => (
           <SpaceStack.Screen
@@ -110,6 +111,6 @@ export const SpaceStacks = () => {
           />
         ))}
       </SpaceStack.Navigator>
-    </>
+    </SafeAreaView>
   )
 }

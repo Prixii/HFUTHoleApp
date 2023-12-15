@@ -14,7 +14,6 @@ import React from 'react'
 import { HoleHot } from '@/pages/hole/hot/HoleHot'
 import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useTheme } from 'react-native-paper'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -73,17 +72,15 @@ const TopTabBar: React.FC<MaterialTopTabBarProps> = (props) => {
   const route = useHoleSearchRoute()
 
   return (
-    <SafeAreaView className={'bg-background'}>
-      <TopTabHeader {...props} onRightPress={route.goIndex}>
-        <SearchIcon />
-      </TopTabHeader>
-    </SafeAreaView>
+    <TopTabHeader {...props} onRightPress={route.goIndex}>
+      <SearchIcon />
+    </TopTabHeader>
   )
 }
 
 export function TopTabs() {
   return (
-    <>
+    <SafeAreaView className={'h-screen bg-background'}>
       <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabBar}>
         {HoleTopTabs.map((item) => (
           <Tab.Screen
@@ -100,6 +97,6 @@ export function TopTabs() {
           />
         ))}
       </Tab.Navigator>
-    </>
+    </SafeAreaView>
   )
 }
