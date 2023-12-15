@@ -105,8 +105,6 @@ export const SpaceStacks = () => {
             name={screen.name}
             component={screen.component}
             options={{
-              statusBarColor: '#fff',
-              statusBarStyle: 'dark',
               ...screen.options,
             }}
           />

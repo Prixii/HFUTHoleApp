@@ -11,8 +11,6 @@ export const AuthStacks = () => {
     <AuthStack.Navigator
       screenOptions={{
         headerShown: false,
-        statusBarColor: '#fff',
-        statusBarStyle: 'dark',
       }}
     >
       <AuthStack.Screen

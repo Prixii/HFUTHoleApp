@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "肥工小宇宙",
+    "name": "小肥书",
     "slug": "hfuthole",
     "version": "0.0.1",
     "orientation": "portrait",
@@ -10,13 +10,21 @@
       "image": "./assets/bg.png",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1",
-      "supportsTablet": true,
-      "bundleIdentifier": "com.hfuthole.app"
+      "bundleIdentifier": "snowingfox.hfut.book"
     },
     "android": {
       "versionCode": 1,
@@ -33,19 +41,16 @@
       "favicon": "./assets/splash.png"
     },
     "extra": {
+      "update-message": "",
       "eas": {
         "projectId": "dba5ed50-696a-4891-ab2e-cd94660925e7"
-      },
-      "update-message": ""
+      }
     },
     "owner": "snowingfox",
     "updates": {
       "url": "http://42.192.127.54:8082/api/manifest",
       "enabled": true,
       "fallbackToCacheTimeout": 0
-    },
-    "runtimeVersion": {
-      "policy": "nativeVersion"
     }
   }
 }

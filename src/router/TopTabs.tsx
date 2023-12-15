@@ -13,8 +13,8 @@ import { HoleLatest } from '@/pages/hole/latest/HoleLatest'
 import React from 'react'
 import { HoleHot } from '@/pages/hole/hot/HoleHot'
 import { HoleCategoryScreen } from '@/pages/hole/category/HoleCategoryScreen'
-import { EmojiCard } from '@/components/EmojiCard/EmojiCard'
-import { PopoverCard } from '@/components/PopoverCard/PopoverCard'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useTheme } from 'react-native-paper'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -73,9 +73,11 @@ const TopTabBar: React.FC<MaterialTopTabBarProps> = (props) => {
   const route = useHoleSearchRoute()
 
   return (
-    <TopTabHeader {...props} onRightPress={route.goIndex}>
-      <SearchIcon />
-    </TopTabHeader>
+    <SafeAreaView className={'bg-background'}>
+      <TopTabHeader {...props} onRightPress={route.goIndex}>
+        <SearchIcon />
+      </TopTabHeader>
+    </SafeAreaView>
   )
 }
 

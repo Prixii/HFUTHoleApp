@@ -15,17 +15,11 @@ export const HoleNestedStacks = () => {
       <HoleStack.Navigator
         screenOptions={{
           headerShown: false,
-          statusBarStyle: 'dark',
-          statusBarAnimation: 'fade',
         }}
       >
         <HoleStack.Screen name={'post'} component={HolePost} />
         <HoleStack.Screen name={'search'} component={HoleSearchStacks} />
-        <HoleStack.Screen
-          name={'detail'}
-          component={HoleDetailStacks}
-          options={{ statusBarStyle: 'dark', statusBarColor: '#fff' }}
-        />
+        <HoleStack.Screen name={'detail'} component={HoleDetailStacks} />
         <HoleStack.Screen name={'category'} component={HoleCategoryStacks} />
       </HoleStack.Navigator>
     </HoleDetailCommentContextProvider>

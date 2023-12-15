@@ -27,8 +27,6 @@ const UserScreens: Screen[] = [
     component: ProfileScreen,
     options: {
       headerShown: false,
-      statusBarTranslucent: true,
-      statusBarColor: 'transparent',
     },
   },
   {
@@ -36,8 +34,6 @@ const UserScreens: Screen[] = [
     component: EditProfileScreen,
     options: {
       title: '编辑个人信息',
-      statusBarColor: '#fff',
-      statusBarStyle: 'dark',
     },
   },
   {
@@ -45,8 +41,6 @@ const UserScreens: Screen[] = [
     component: EditUsernameScreen,
     options: {
       title: '更改用户名',
-      statusBarColor: '#fff',
-      statusBarStyle: 'dark',
     },
   },
   {
@@ -54,8 +48,6 @@ const UserScreens: Screen[] = [
     component: SettingsScreen,
     options: {
       title: '应用设置',
-      statusBarColor: '#fff',
-      statusBarStyle: 'dark',
     },
   },
   {
@@ -63,8 +55,6 @@ const UserScreens: Screen[] = [
     component: AboutScreen,
     options: {
       title: '关于我们',
-      statusBarColor: '#fff',
-      statusBarStyle: 'dark',
     },
   },
   {
@@ -72,8 +62,6 @@ const UserScreens: Screen[] = [
     component: UserCommentScreen,
     options: {
       title: '发布的评论',
-      statusBarColor: '#fff',
-      statusBarStyle: 'dark',
     },
   },
   {
@@ -81,8 +69,6 @@ const UserScreens: Screen[] = [
     component: HoleDraftScreen,
     options: {
       title: '草稿箱',
-      statusBarColor: '#fff',
-      statusBarStyle: 'dark',
     },
   },
 ]

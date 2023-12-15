@@ -19,7 +19,7 @@
   "include": [
     "src",
     "App.tsx",
-    "app.d.ts",
+    "src/app.d.ts",
     "@types/**/**.d.ts",
     "@types/**.d.ts",
     "@theme/**.js",

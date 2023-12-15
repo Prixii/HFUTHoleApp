@@ -1,6 +1,7 @@
 import { View, ViewProps } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from 'react-native-paper'
+import clsx from 'clsx'
 
 export function Page(props: ViewProps) {
   const theme = useTheme()
@@ -8,7 +9,7 @@ export function Page(props: ViewProps) {
   return (
     <View
       {...props}
-      className={`min-h-full w-full px-3 ${props.className}`}
+      className={clsx('min-h-full w-full px-3', props.className)}
       style={{
         backgroundColor: theme.colors.background,
       }}

@@ -6,7 +6,6 @@ import * as MediaLibrary from 'expo-media-library'
 import { Toast } from '@/shared/utils/toast'
 import * as FileSystem from 'expo-file-system'
 import { store } from '@/store/store'
-import { StatusBar } from 'react-native'
 
 export const getQAQFont = (key: keyof IQAQ) => getRandomQAQ(key)[0]
 

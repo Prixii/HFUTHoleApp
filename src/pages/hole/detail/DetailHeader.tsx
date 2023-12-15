@@ -7,6 +7,7 @@ import { useParams } from '@/shared/hooks/useParams'
 import { HoleReplyListRouteParams } from '@/shared/types/interface/ReplyListRouteParams.interface'
 import { useHoleDetailRoute } from '@/shared/hooks/route/useHoleDetailRoute'
 import { Button } from 'react-native-paper'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export function HoleDetailHeader() {
   const { data, isSuccess } = useHoleDetail()
@@ -14,7 +15,7 @@ export function HoleDetailHeader() {
   const holeRoute = useHoleDetailRoute()
 
   return (
-    <>
+    <SafeAreaView className={'bg-white'}>
       <BaseAppBar>
         {isSuccess && (
           <View className={'flex-1'}>
@@ -31,6 +32,6 @@ export function HoleDetailHeader() {
           </View>
         )}
       </BaseAppBar>
-    </>
+    </SafeAreaView>
   )
 }

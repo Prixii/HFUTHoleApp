@@ -7,15 +7,15 @@
       },
       "channel": "prod"
     },
-    "preview2": {
+    "production": {
       "android": {
-        "gradleCommand": ":app:assembleRelease"
+        "buildType": "apk",
+        "image": "latest"
       },
-      "channel": "preview2"
-    },
-    "preview3": {
-      "developmentClient": true,
-      "channel": "preview3"
+      "ios": {}
     }
+  },
+  "cli": {
+    "promptToConfigurePushNotifications": false
   }
 }

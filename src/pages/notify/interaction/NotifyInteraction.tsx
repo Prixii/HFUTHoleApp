@@ -1,6 +1,6 @@
 import { useInteractiveNotificationsQuery } from '@/swr/notify/useInteractiveNotifications'
 import { LoadingScreen } from '@/components/LoadingScreen'
-import { StatusBar, View } from 'react-native'
+import { View } from 'react-native'
 import { RefreshingInteractiveNotifications } from '@/pages/notify/interaction/components/RefreshingInteractiveNotifications'
 import { useReadNotifications } from '@/pages/notify/utils'
 

@@ -5,10 +5,7 @@ export function HoleCategoryStacks() {
   return (
     <HoleStack.Navigator
       screenOptions={{
-        statusBarTranslucent: true,
-        statusBarColor: 'transparent',
         headerShown: false,
-        statusBarAnimation: 'fade',
       }}
     >
       <HoleStack.Screen name={'detail'} component={CategoryDetailScreen} />

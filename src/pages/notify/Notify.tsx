@@ -6,7 +6,7 @@ import { useBaseNotificationsQuery } from '@/swr/notify/useBaseNotifications'
 import React, { useMemo } from 'react'
 import { Badge } from '@/components/Badge'
 import { useNotifyRoute } from '@/shared/hooks/route/useNotifyRoute'
-import { useStatusBarStyle } from '@/shared/hooks/useStatusBarStyle'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export function Notify() {
   const { data } = useBaseNotificationsQuery()
@@ -39,12 +39,12 @@ export function Notify() {
         onPress: goToInteraction,
       },
     ],
-    [data]
+    [data],
   )
 
   return (
     <>
-      <View className={'bg-white h-full'}>
+      <SafeAreaView className={'bg-white h-full'}>
         <FlatList
           data={list}
           ListFooterComponent={() => (
@@ -91,7 +91,7 @@ export function Notify() {
             </TouchableRipple>
           )}
         />
-      </View>
+      </SafeAreaView>
     </>
   )
 }

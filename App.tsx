@@ -13,31 +13,34 @@ import { PortalProvider } from '@gorhom/portal'
 import { KeyboardContextProvider } from '@/shared/context/keyboard'
 import { BottomCommentContext } from '@/shared/context/hole/comment'
 import { Layout } from '@/layouts/layout'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ReactQueryProvider>
-          <PortalProvider>
-            <PaperProvider>
-              <BottomCommentContext>
-                <NavigationContainer>
-                  <KeyboardContextProvider>
-                    <HolePostContextProvider>
-                      <NativeBaseProvider>
-                        <GestureHandlerRootView style={{ flex: 1 }}>
-                          <BottomSheetModalProvider>
-                            <Layout />
-                          </BottomSheetModalProvider>
-                        </GestureHandlerRootView>
-                      </NativeBaseProvider>
-                    </HolePostContextProvider>
-                  </KeyboardContextProvider>
-                </NavigationContainer>
-              </BottomCommentContext>
-            </PaperProvider>
-          </PortalProvider>
+          <SafeAreaProvider className={'flex-1'}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <PortalProvider>
+                <PaperProvider>
+                  <BottomCommentContext>
+                    <NavigationContainer>
+                      <KeyboardContextProvider>
+                        <HolePostContextProvider>
+                          <NativeBaseProvider>
+                            <BottomSheetModalProvider>
+                              <Layout />
+                            </BottomSheetModalProvider>
+                          </NativeBaseProvider>
+                        </HolePostContextProvider>
+                      </KeyboardContextProvider>
+                    </NavigationContainer>
+                  </BottomCommentContext>
+                </PaperProvider>
+              </PortalProvider>
+            </GestureHandlerRootView>
+          </SafeAreaProvider>
         </ReactQueryProvider>
       </PersistGate>
     </Provider>

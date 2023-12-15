@@ -94,8 +94,6 @@ export const SpaceStacks = () => {
             name={screen.name}
             component={screen.component}
             options={{
-              statusBarColor: '#fff',
-              statusBarStyle: 'dark',
               ...screen.options,
             }}
           />
@@ -145,9 +143,6 @@ export const SpaceTopTabs = () => {
         <SpaceAuthStack.Navigator
           screenOptions={{
             headerShown: false,
-            statusBarStyle: 'dark',
-            statusBarColor: '#fff',
-            statusBarAnimation: 'fade',
           }}
         >
           <SpaceAuthStack.Screen name={'login'} component={SpaceLoginScreen} />

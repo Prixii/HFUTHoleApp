@@ -1,5 +1,5 @@
 import { Routes } from '@/router/routes'
-import { Platform, SafeAreaView, View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 import React, { ReactNode } from 'react'
 import { useWindowDimensions } from 'react-native'
@@ -26,26 +26,12 @@ const renderScene = SceneMap({
  * @returns 返回子组件
  */
 
-export const PageWithSafeArea = (prop: {
+export const PageWithSafeArea = (props: {
   children: ReactNode
   topStyle?: string
   bottomStyle?: string
 }) => {
-  const isIOS = Platform.OS === 'ios'
-  if (isIOS) {
-    const topAreaClassName = 'flex-0 ' + (prop.topStyle ?? 'bg-background')
-    const bottomAreaClassName = 'flex-1 ' + (prop.bottomStyle ?? 'bg-white')
-    return (
-      <>
-        <SafeAreaView className={topAreaClassName} />
-        <SafeAreaView className={bottomAreaClassName}>
-          {prop.children}
-        </SafeAreaView>
-      </>
-    )
-  } else {
-    return prop.children
-  }
+  return props.children
 }
 
 export function TabViewExample() {
@@ -70,7 +56,12 @@ export function TabViewExample() {
 export function Layout() {
   return (
     <>
-      <View className={'w-screen min-h-[100vh]'}>
+      <StatusBar
+        translucent
+        backgroundColor={'transparent'}
+        barStyle={'dark-content'}
+      />
+      <View className={'flex-1 bg-black'}>
         <Routes />
         <Toast />
       </View>
