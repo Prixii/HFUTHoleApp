@@ -11,7 +11,10 @@ import { AboutScreen } from '@/pages/user/about/AboutScreen'
 import { SettingsScreen } from '@/pages/user/settings/SettingsScreen'
 import { UserCommentScreen } from '@/pages/user/comment/UserCommentScreen'
 import { HoleDraftScreen } from '@/pages/user/draft/HoleDraftScreen'
-import { PageWithSafeArea } from '@/layouts/layout'
+import { useRoute } from '@react-navigation/native'
+import { useParams } from '@/shared/hooks/useParams'
+import { View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const UserStack = createNativeStackNavigator()
 
@@ -73,9 +76,17 @@ const UserScreens: Screen[] = [
   },
 ]
 
+const excludeSafeAreaScreens = ['profile']
+
 export const UserStacks = () => {
+  const { screen } = useParams<{ screen: string }>()
+
+  const isExcludeSafeAreaScreen = excludeSafeAreaScreens.find(
+    (item) => item === screen,
+  )
+  const ViewComponent = isExcludeSafeAreaScreen ? View : SafeAreaView
   return (
-    <PageWithSafeArea topStyle="bg-white">
+    <ViewComponent className={'flex-1 bg-white'}>
       <UserStack.Navigator
         screenOptions={{
           header: Header,
@@ -90,6 +101,6 @@ export const UserStacks = () => {
           />
         ))}
       </UserStack.Navigator>
-    </PageWithSafeArea>
+    </ViewComponent>
   )
 }

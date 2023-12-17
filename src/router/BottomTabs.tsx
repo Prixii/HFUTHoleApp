@@ -6,7 +6,6 @@ import { Notify } from '@/pages/notify/Notify'
 import { TopTabs } from '@/router/TopTabs'
 import { SpaceTopTabs } from '@/router/SpaceTopTabs'
 import { User } from '@/pages/user/User'
-import { PageWithSafeArea } from '@/layouts/layout'
 
 const Tab = createBottomTabNavigator()
 const NotifyStack = createNativeStackNavigator()
@@ -21,7 +20,7 @@ const NotifyStacks = () => {
 
 export function BottomTabs() {
   return (
-    <PageWithSafeArea topStyle="bg-white">
+    <>
       <Tab.Navigator
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
@@ -34,6 +33,6 @@ export function BottomTabs() {
         <Tab.Screen name={'notify'} component={NotifyStacks} />
         <Tab.Screen name={'user'} component={User} />
       </Tab.Navigator>
-    </PageWithSafeArea>
+    </>
   )
 }

@@ -15,7 +15,7 @@ export function HoleDetailHeader() {
   const holeRoute = useHoleDetailRoute()
 
   return (
-    <SafeAreaView className={'bg-white'}>
+    <>
       <BaseAppBar>
         {isSuccess && (
           <View className={'flex-1'}>
@@ -32,6 +32,6 @@ export function HoleDetailHeader() {
           </View>
         )}
       </BaseAppBar>
-    </SafeAreaView>
+    </>
   )
 }

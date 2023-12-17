@@ -2,14 +2,14 @@ import { Appbar, Text, TouchableRipple, useTheme } from 'react-native-paper'
 import React, { MutableRefObject, useMemo, useRef, useState } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { BottomActionSheet } from '@/components/sheet/BottomActionSheet'
-import { GestureResponderEvent, Vibration, View } from 'react-native'
+import { GestureResponderEvent, View } from 'react-native'
 import {
   ReportAction,
   ReportActionProps,
 } from '@/pages/hole/detail/components/ReportAction'
 import { Func, PartialExcludeField } from '@/shared/types'
-import { ReportType } from '@/shared/validators/report'
 import { DangerIcon } from '@/components/icon'
+import * as Haptics from 'expo-haptics'
 
 interface Props {
   list: {
@@ -42,11 +42,11 @@ export function MoreActionWithSheet(props: Props) {
         keepAliveAfterClick: true,
       },
     ],
-    [props.list, theme.colors.error]
+    [props.list, theme.colors.error],
   )
 
   const openSheet = () => {
-    Vibration.vibrate(3)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
 
     sheetRef.current?.present()
   }

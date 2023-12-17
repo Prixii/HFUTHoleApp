@@ -4,10 +4,11 @@ import { HoleReply } from '@/pages/hole/detail/reply/HoleReply'
 import React from 'react'
 import { HoleStack } from './hole-nested.stacks'
 import { PageWithSafeArea } from '@/layouts/layout'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const HoleDetailStacks = () => {
   return (
-    <PageWithSafeArea topStyle="bg-white">
+    <SafeAreaView className={'flex-1 bg-white'}>
       <HoleStack.Navigator
         initialRouteName={'index'}
         screenOptions={{ header: () => <HoleDetailHeader /> }}
@@ -15,6 +16,6 @@ export const HoleDetailStacks = () => {
         <HoleStack.Screen name={'index'} component={HoleDetail} />
         <HoleStack.Screen name={'reply'} component={HoleReply} />
       </HoleStack.Navigator>
-    </PageWithSafeArea>
+    </SafeAreaView>
   )
 }
