@@ -20,7 +20,7 @@ export function useSpaceData() {
     return (
       courseInfo.exams
         ?.map((item) => {
-          const date = item.date.replace(/-/g, '/')
+          const date = item.date
           const startDate = new Date(`${date} ${item.startTime}`)
           const endDate = new Date(`${date} ${item.endTime}`)
           const currentDate = new Date()
@@ -36,7 +36,7 @@ export function useSpaceData() {
           }
         })
         ?.sort(
-          (prev, cur) => (prev.startDate as any) - (cur.startDate as any)
+          (prev, cur) => (prev.startDate as any) - (cur.startDate as any),
         ) || []
     )
   }, [courseInfo.exams])

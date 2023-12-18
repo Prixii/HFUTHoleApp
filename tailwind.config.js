@@ -12,6 +12,7 @@ const SECONDARY = {
   dark: '#1939B7',
   darker: '#091A7A',
 }
+
 const INFO = {
   lighter: '#D0F2FF',
   light: '#74CAFF',
@@ -104,7 +105,6 @@ const colors = {
   onSurfaceDisabled: 'rgba(26, 28, 24, 0.38)',
   backdrop: 'rgba(44, 50, 41, 0.4)',
 }
-
 
 module.exports = {
   content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],

@@ -116,7 +116,7 @@ export const SpaceTopTabs = () => {
   return (
     <>
       {isLogin ? (
-        <SafeAreaView className={'flex-1 bg-background'}>
+        <SafeAreaView className={'flex-1 bg-background'} edges={['top']}>
           <CurrentSemesterContextProvider>
             <Tab.Navigator
               initialRouteName={'day'}

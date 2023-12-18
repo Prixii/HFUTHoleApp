@@ -10,6 +10,7 @@ import { useSpaceCourse } from '@/swr/space/course'
 import { deleteScheduleRequest } from '@/request/space/user'
 import { useCurrentSemester } from '@/shared/context/space/semester'
 import type { UnitSchedule } from '@/pages/space/@utils/types'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface Props {
   schedule?: UnitSchedule
@@ -30,7 +31,7 @@ export const ScheduleSheet = forwardRef<BottomSheetModal, Props>(
             ? ['40%', '60%']
             : ['60%', '80%']
           : ['60%', '80%'],
-      [schedule]
+      [schedule],
     )
 
     const closeSheet = () => {
@@ -61,7 +62,7 @@ export const ScheduleSheet = forwardRef<BottomSheetModal, Props>(
         footerText={'查看挂科率'}
       >
         {schedule ? (
-          <>
+          <SafeAreaView className={'flex-1'} edges={['bottom']}>
             <ScheduleSheetContent schedule={schedule} />
             {schedule.type === 'Diy' ? (
               <CustomScheduleBottomButton
@@ -71,7 +72,7 @@ export const ScheduleSheet = forwardRef<BottomSheetModal, Props>(
             ) : (
               <View className={'mx-4 rounded-lg overflow-hidden bg-[#80f]'}>
                 <TouchableRipple onPress={goCourseFailureRatePage}>
-                  <View className={'p-4'}>
+                  <View className={'p-5'}>
                     <Text className={'text-center text-white font-[800]'}>
                       查看挂科率
                     </Text>
@@ -79,9 +80,9 @@ export const ScheduleSheet = forwardRef<BottomSheetModal, Props>(
                 </TouchableRipple>
               </View>
             )}
-          </>
+          </SafeAreaView>
         ) : null}
       </BottomActionSheet>
     )
-  }
+  },
 )

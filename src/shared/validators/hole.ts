@@ -54,7 +54,7 @@ export class PostHoleValidator {
 
   @IsBoolean()
   @IsOptional()
-  isMultipleVote = false
+  isMultipleVote: boolean
 
   @Validate((value: string) => value.startsWith('BV'), {
     message: 'BV号格式不正确',

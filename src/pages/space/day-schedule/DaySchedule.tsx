@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView } from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 import { PlainPage } from '@/components/Page'
 import { useSpaceAuth } from '@/pages/space/@utils/useSpaceAuth'
 import { Header } from '@/pages/space/day-schedule/components/Header'
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { useIsFocused } from '@react-navigation/native'
 import { useInitializeSpace } from '@/pages/space/@utils/useInitializeSpace'
 import { useSpaceCourse } from '@/swr/space/course'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const DaySchedule = () => {
   const { isFetching, refetch } = useSpaceCourse()
@@ -27,13 +28,11 @@ export const DaySchedule = () => {
   }, [isLogin, isFocused])
 
   return (
-    <KeyboardAvoidingView behavior="padding">
-      <PlainPage>
-        <ScheduleScrollWrapper isFetching={isFetching} onRefresh={refetch}>
-          <Header />
-          <ScheduleList />
-        </ScheduleScrollWrapper>
-      </PlainPage>
-    </KeyboardAvoidingView>
+    <View className={'flex-1'}>
+      <ScheduleScrollWrapper isFetching={isFetching} onRefresh={refetch}>
+        <Header />
+        <ScheduleList />
+      </ScheduleScrollWrapper>
+    </View>
   )
 }

@@ -6,6 +6,7 @@ import LocationSvg from '@/assets/svg/icons/location.svg'
 import ClockSvg from '@/assets/svg/icons/clock.svg'
 import { Svg } from '@/components/svg/Svg'
 import { type ReactNode } from 'react'
+import clsx from 'clsx'
 
 export const Exam = () => {
   const { exams } = useSpaceData()
@@ -26,9 +27,12 @@ export const Exam = () => {
 const Card = ({ examInfo }: { examInfo: ExamInfo }) => {
   return (
     <View
-      className={`relative w-full rounded-md ${
-        examInfo.isExpired ? 'bg-gray-200' : 'bg-white'
-      }`}
+      className={clsx([
+        'relative w-full rounded-md bg-white p-1',
+        {
+          'bg-gray-200': examInfo.isExpired,
+        },
+      ])}
     >
       {!examInfo.isExpired && (
         <View className="absolute right-2 p-2">
@@ -52,7 +56,7 @@ const Card = ({ examInfo }: { examInfo: ExamInfo }) => {
           <CardText isExpired={examInfo.isExpired}>
             {`${format(examInfo.startDate, 'MM-dd HH:mm')} - ${format(
               examInfo.endDate,
-              'HH:mm'
+              'HH:mm',
             )}`}
           </CardText>
         </View>
