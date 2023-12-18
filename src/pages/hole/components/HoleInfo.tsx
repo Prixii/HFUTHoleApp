@@ -123,7 +123,7 @@ export const HoleInfoHeader: React.FC<{ data: Data }> = ({ data }) => {
 
 export const HoleInfoTitle: React.FC<{ data: Data }> = ({ data }) => {
   const classification = Categories.find(
-    (item) => item.name === data.classification?.name
+    (item) => item.name === data.classification?.name,
   )
 
   return (
@@ -235,22 +235,21 @@ export const HoleInfo = ({
   bottom,
   className,
   showComment = true,
-  isScroll,
 }: Props) => {
   const theme = useTheme()
   const [isOpenEmojiAction, openEmojiActions] = useBoolean(false)
 
-  useEffect(() => {
-    if (isScroll) {
-      openEmojiActions.setFalse()
-    }
-  }, [isScroll])
+  // useEffect(() => {
+  //   if (isScroll) {
+  //     openEmojiActions.setFalse()
+  //   }
+  // }, [isScroll])
 
   return (
     <>
-      <View className={'absolute z-[2] left-0 right-0'}>
-        {isOpenEmojiAction && <EmojiCard />}
-      </View>
+      {/*<View className={'absolute z-[2] left-0 right-0'}>*/}
+      {/*  {isOpenEmojiAction && <EmojiCard />}*/}
+      {/*</View>*/}
       <View className={'bg-white mt-2 rounded-2xl overflow-hidden z-[1]'}>
         <TouchableRipple
           onPress={onPress}

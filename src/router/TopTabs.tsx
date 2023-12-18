@@ -80,7 +80,7 @@ const TopTabBar: React.FC<MaterialTopTabBarProps> = (props) => {
 
 export function TopTabs() {
   return (
-    <SafeAreaView className={'h-screen bg-background'}>
+    <SafeAreaView className={'h-full bg-background'} edges={['top']}>
       <Tab.Navigator initialRouteName={'latest'} tabBar={TopTabBar}>
         {HoleTopTabs.map((item) => (
           <Tab.Screen

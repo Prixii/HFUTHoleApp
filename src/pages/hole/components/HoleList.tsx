@@ -10,6 +10,7 @@ import { Empty } from '@/components/image/Empty'
 import { flatInfiniteQueryData } from '@/swr/utils'
 import React, {
   forwardRef,
+  memo,
   type MutableRefObject,
   useRef,
   useState,
@@ -20,7 +21,7 @@ import { useBoolean } from 'ahooks'
 
 // TODO 完善类型
 export type RefreshableHoleListProps<
-  T extends IHoleListResponse = IHoleListResponse
+  T extends IHoleListResponse = IHoleListResponse,
 > = UseInfiniteQueryResult<T, any> & {
   invalidateQuery: Func
   FlatListComponent?: any
@@ -37,8 +38,22 @@ type PickedFlatListProps<T> = Partial<
   >
 >
 
+const Item = memo(({ item }: { item: IHole }) => {
+  const { go } = useHoleDetailRoute()
+
+  return (
+    <HoleInfo
+      key={item!.id}
+      data={item!}
+      onPress={() => {
+        go(item!.id)
+      }}
+    />
+  )
+})
+
 function InnerRefreshableHoleList<
-  T extends IHoleListResponse = IHoleListResponse
+  T extends IHoleListResponse = IHoleListResponse,
 >({
   isSuccess,
   data,
@@ -48,8 +63,6 @@ function InnerRefreshableHoleList<
   ListHeaderComponent,
   ...props
 }: RefreshableHoleListProps<T>) {
-  const { go } = useHoleDetailRoute()
-
   const { data: flatListData, isEmpty: isHoleListEmpty } =
     flatInfiniteQueryData(data)
 
@@ -112,16 +125,7 @@ function InnerRefreshableHoleList<
               </View>
             )
           }
-          renderItem={({ item }) => (
-            <HoleInfo
-              key={item!.id}
-              data={item!}
-              onPress={() => {
-                go(item!.id)
-              }}
-              isScroll={isScroll}
-            />
-          )}
+          renderItem={({ item }) => <Item key={item.id} item={item} />}
           {...props}
         />
       ) : (
