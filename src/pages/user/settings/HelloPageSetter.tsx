@@ -1,10 +1,11 @@
 import { Center, View } from 'native-base'
-import { Text, FlatList, Button } from 'react-native'
+import { Text, FlatList, Button, Pressable } from 'react-native'
 import { dispatch, store, useAppDispatch } from '@/store/store'
 import { Page } from '@/shared/enums'
 import { setHelloPage } from '@/store/reducer/user'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { TouchableRipple } from 'react-native-paper'
 
 interface PageData {
   label: string
@@ -40,25 +41,20 @@ export function PageIconButton(props: PageData) {
   return (
     <View>
       <Center>
-        <View
-          className={`h-10 ml-1 mr-1 bg-white 
-        `}
+        <TouchableRipple
+          onPress={() => {
+            dispatch(setHelloPage(props.page))
+          }}
         >
-          <Button
-            title={props.label}
-            color={isActive ? 'green' : 'lightgray'}
-            onPress={() => {
-              dispatch(setHelloPage(props.page))
-            }}
+          <View
+            className={`h-10 ml-1 mr-1 mb-0 w-12 pt-2
+            border-b-4 ${isActive ? 'border-green-600' : 'border-transparent'}`}
           >
-            {props.label}
-          </Button>
-        </View>
-        <View
-          className={`h-2 w-10  border-b-4  bg-white p-0 m-0 ${
-            isActive ? 'border-green-600' : 'border-transparent'
-          }`}
-        />
+            <Center>
+              <Text>{props.label}</Text>
+            </Center>
+          </View>
+        </TouchableRipple>
       </Center>
     </View>
   )

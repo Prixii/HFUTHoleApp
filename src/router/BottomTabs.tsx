@@ -7,6 +7,7 @@ import { TopTabs } from '@/router/TopTabs'
 import { SpaceTopTabs } from '@/router/SpaceTopTabs'
 import { User } from '@/pages/user/User'
 import { PageWithSafeArea } from '@/layouts/layout'
+import { store } from '@/store/store'
 
 const Tab = createBottomTabNavigator()
 const NotifyStack = createNativeStackNavigator()
@@ -23,6 +24,7 @@ export function BottomTabs() {
   return (
     <PageWithSafeArea topStyle="bg-white">
       <Tab.Navigator
+        initialRouteName={store.getState().user?.helloPage ?? 'home'}
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarIcon: () => <LikeIcon size={20} />,

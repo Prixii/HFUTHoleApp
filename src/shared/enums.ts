@@ -36,8 +36,8 @@ export enum NotifyEventType {
 }
 
 export enum Page {
-  hole = 'hole',
-  spaceNested = 'space-nested',
-  notifyNested = 'notify-nested',
-  userNested = 'user-nested',
+  hole = 'home',
+  spaceNested = 'space',
+  notifyNested = 'notify',
+  userNested = 'user',
 }
