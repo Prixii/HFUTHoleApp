@@ -51,7 +51,11 @@ export function PageIconButton(props: PageData) {
             border-b-4 ${isActive ? 'border-green-600' : 'border-transparent'}`}
           >
             <Center>
-              <Text>{props.label}</Text>
+              <Text
+                className={`${isActive ? 'text-green-600' : 'text-gray-400'}`}
+              >
+                {props.label}
+              </Text>
             </Center>
           </View>
         </TouchableRipple>
