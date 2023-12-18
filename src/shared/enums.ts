@@ -34,3 +34,10 @@ export enum NotifyEventType {
   reply = 'reply',
   like = 'like',
 }
+
+export enum Page {
+  hole = 'hole',
+  spaceNested = 'space-nested',
+  notifyNested = 'notify-nested',
+  userNested = 'user-nested',
+}

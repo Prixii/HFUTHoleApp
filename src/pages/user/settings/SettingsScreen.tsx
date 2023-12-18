@@ -5,6 +5,7 @@ import { Portal, Text } from 'react-native-paper'
 import { Dialog } from '@/components/Dialog'
 import { useBoolean } from 'ahooks'
 import { Button } from '@/components/button'
+import { HelloPageSetter } from './HelloPageSetter'
 
 export function SettingsScreen() {
   const [visible, visibleActions] = useBoolean(false)
@@ -19,6 +20,7 @@ export function SettingsScreen() {
 
   return (
     <View className={'p-4'}>
+      <HelloPageSetter />
       <Portal>
         <Dialog
           title={'退出登录'}

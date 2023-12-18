@@ -1,3 +1,4 @@
+import { Page } from '@/shared/enums'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: {
@@ -5,9 +6,11 @@ const initialState: {
   meta: {
     token: string
   } | null
+  helloPage: Page
 } = {
   isLogin: false,
   meta: null,
+  helloPage: Page.hole,
 }
 
 export const userSlice = createSlice({
@@ -23,9 +26,12 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.isLogin = false
     },
+    setHelloPage: (state, action: PayloadAction<Page>) => {
+      state.helloPage = action.payload
+    },
   },
 })
 
-export const { login, logout } = userSlice.actions
+export const { login, logout, setHelloPage } = userSlice.actions
 
 export const UserReducer = userSlice.reducer
